@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<FormConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeName>ArwicEngine.Forms.Form</TypeName>
+  <Name>frmCityReturnBuy</Name>
+  <Text />
+  <Color>
+    <B>255</B>
+    <G>255</G>
+    <R>255</R>
+    <A>255</A>
+    <PackedValue>4294967295</PackedValue>
+  </Color>
+  <Children>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnReturnToMap</Name>
+      <Text>Return to Map</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>10</LocationX>
+      <LocationY>45</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnBuyTile</Name>
+      <Text>Buy a Tile</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>10</LocationX>
+      <LocationY>10</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+  </Children>
+  <LocationX>0</LocationX>
+  <LocationY>0</LocationY>
+  <LocationWidth>250</LocationWidth>
+  <LocationHeight>85</LocationHeight>
+  <Draggable>false</Draggable>
+  <CloseButtonEnabled>false</CloseButtonEnabled>
+  <HotKey>0</HotKey>
+  <DrawTitlebar>false</DrawTitlebar>
+</FormConfig>

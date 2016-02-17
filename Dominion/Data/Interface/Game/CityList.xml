@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<FormConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeName>ArwicEngine.Forms.Form</TypeName>
+  <Name>frmCityList</Name>
+  <Text>$(capital) Cities</Text>
+  <Color>
+    <B>255</B>
+    <G>255</G>
+    <R>255</R>
+    <A>255</A>
+    <PackedValue>4294967295</PackedValue>
+  </Color>
+  <Children>
+    <Child xsi:type="ScrollBoxConfig">
+      <TypeName>ArwicEngine.Forms.ScrollBox</TypeName>
+      <Name>sbCityList</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>5</LocationX>
+      <LocationY>40</LocationY>
+      <LocationWidth>220</LocationWidth>
+      <LocationHeight>555</LocationHeight>
+      <BackgroundSpritePath>Graphics/Interface/Controls/ScrollBox_Back</BackgroundSpritePath>
+      <SelectedItemSpritePath>Graphics/Interface/Controls/ScrollBox_Selected</SelectedItemSpritePath>
+      <ListItemSpritePath>Graphics/Interface/Controls/ScrollBox_Button</ListItemSpritePath>
+      <ScrubberSpritePath>Graphics/Interface/Controls/ScrollBox_Scrubber</ScrubberSpritePath>
+      <ScrollBarWidth>15</ScrollBarWidth>
+      <ItemHeight>30</ItemHeight>
+    </Child>
+  </Children>
+  <LocationX>0</LocationX>
+  <LocationY>0</LocationY>
+  <LocationWidth>230</LocationWidth>
+  <LocationHeight>600</LocationHeight>
+  <Draggable>false</Draggable>
+  <CloseButtonEnabled>true</CloseButtonEnabled>
+  <HotKey>0</HotKey>
+  <DrawTitlebar>true</DrawTitlebar>
+</FormConfig>

@@ -1,0 +1,7 @@
+﻿polish unit combat
+polish/implment city combat
+implement propper unit vision
+implement science fully
+implement culture
+implement diplomacy
+implement other victory types?

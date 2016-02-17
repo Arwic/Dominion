@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UnitFactory xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Unit>
+    <ID>0</ID>
+	<GraphicID>0</GraphicID>
+    <Name>Settler</Name>
+    <GoldCost>100</GoldCost>
+    <GoldUpkeep>0</GoldUpkeep>
+    <Command>1</Command>
+	<Command>5</Command>
+    <Command>3</Command>
+    <Command>4</Command>
+	<Command>2</Command>
+    <MaxHP>100</MaxHP>
+    <CombatStrength>1</CombatStrength>
+    <Movement>2</Movement>
+  </Unit>
+  <Unit>
+    <ID>1</ID>
+    <Name>Warrior</Name>
+    <GraphicID>1</GraphicID>
+	<GoldCost>200</GoldCost>
+    <GoldUpkeep>5</GoldUpkeep>
+    <Command>1</Command>
+	<Command>6</Command>
+    <Command>3</Command>
+    <Command>4</Command>
+	<Command>2</Command>
+    <MaxHP>200</MaxHP>
+    <Attack>100</Attack>
+    <CombatStrength>50</CombatStrength>
+    <Movement>2</Movement>
+  </Unit>
+</UnitFactory>

@@ -1,0 +1,286 @@
+<?xml version="1.0"?>
+<FormConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeName>ArwicEngine.Forms.Form</TypeName>
+  <Name>frmLobby</Name>
+  <Text>USER's Lobby</Text>
+  <Color>
+    <B>255</B>
+    <G>255</G>
+    <R>255</R>
+    <A>255</A>
+    <PackedValue>4294967295</PackedValue>
+  </Color>
+  <Children>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnBack</Name>
+      <Text>Back</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>475</LocationX>
+      <LocationY>465</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnStart</Name>
+      <Text>Start</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>475</LocationX>
+      <LocationY>430</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ScrollBoxConfig">
+      <TypeName>ArwicEngine.Forms.ScrollBox</TypeName>
+      <Name>sbPlayers</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>5</LocationX>
+      <LocationY>40</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>455</LocationHeight>
+      <BackgroundSpritePath>Graphics/Interface/Controls/ScrollBox_Back</BackgroundSpritePath>
+      <SelectedItemSpritePath>Graphics/Interface/Controls/ScrollBox_Selected</SelectedItemSpritePath>
+      <ListItemSpritePath>Graphics/Interface/Controls/ScrollBox_Button</ListItemSpritePath>
+      <ScrubberSpritePath>Graphics/Interface/Controls/ScrollBox_Scrubber</ScrubberSpritePath>
+      <ScrollBarWidth>15</ScrollBarWidth>
+      <ItemHeight>30</ItemHeight>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnEmpire</Name>
+      <Text>Empire: EMPIRE</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>240</LocationX>
+      <LocationY>40</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnWorldSize</Name>
+      <Text>World Size: WORLDSIZE</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>240</LocationX>
+      <LocationY>75</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnWorldType</Name>
+      <Text>World Type: WORLDTYPE</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>240</LocationX>
+      <LocationY>110</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnGameSpeed</Name>
+      <Text>Game Speed: GAMESPEED</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>240</LocationX>
+      <LocationY>145</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnVictoryTypes</Name>
+      <Text>Victory Types</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>240</LocationX>
+      <LocationY>180</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnBan</Name>
+      <Text>Ban Selected</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>240</LocationX>
+      <LocationY>466</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnKick</Name>
+      <Text>Kick Selected</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>240</LocationX>
+      <LocationY>431</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnOtherOptions</Name>
+      <Text>Other Options</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>240</LocationX>
+      <LocationY>215</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+  </Children>
+  <LocationX>0</LocationX>
+  <LocationY>0</LocationY>
+  <LocationWidth>710</LocationWidth>
+  <LocationHeight>500</LocationHeight>
+  <Draggable>false</Draggable>
+  <CloseButtonEnabled>false</CloseButtonEnabled>
+  <HotKey>0</HotKey>
+  <DrawTitlebar>true</DrawTitlebar>
+</FormConfig>

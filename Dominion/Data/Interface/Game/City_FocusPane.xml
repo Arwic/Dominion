@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<FormConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeName>ArwicEngine.Forms.Form</TypeName>
+  <Name>frmCityFocus</Name>
+  <Text />
+  <Color>
+    <B>255</B>
+    <G>255</G>
+    <R>255</R>
+    <A>255</A>
+    <PackedValue>4294967295</PackedValue>
+  </Color>
+  <Children>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnDemolish</Name>
+      <Text>Demolish</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>5</LocationX>
+      <LocationY>705</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ScrollBoxConfig">
+      <TypeName>ArwicEngine.Forms.ScrollBox</TypeName>
+      <Name>sbBuildingList</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>5</LocationX>
+      <LocationY>255</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>450</LocationHeight>
+      <BackgroundSpritePath>Graphics/Interface/Controls/ScrollBox_Back</BackgroundSpritePath>
+      <SelectedItemSpritePath>Graphics/Interface/Controls/ScrollBox_Selected</SelectedItemSpritePath>
+      <ListItemSpritePath>Graphics/Interface/Controls/ScrollBox_Button</ListItemSpritePath>
+      <ScrubberSpritePath>Graphics/Interface/Controls/ScrollBox_Scrubber</ScrubberSpritePath>
+      <ScrollBarWidth>15</ScrollBarWidth>
+      <ItemHeight>30</ItemHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>ArwicEngine.Forms.Label</Name>
+      <Text>Buildings</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>5</LocationX>
+      <LocationY>232</LocationY>
+      <LocationWidth>74</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>ArwicEngine.Forms.Label</Name>
+      <Text>Citizen Focus</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>5</LocationX>
+      <LocationY>8</LocationY>
+      <LocationWidth>111</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child xsi:type="ScrollBoxConfig">
+      <TypeName>ArwicEngine.Forms.ScrollBox</TypeName>
+      <Name>sbCitizenFocus</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>5</LocationX>
+      <LocationY>30</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>200</LocationHeight>
+      <BackgroundSpritePath>Graphics/Interface/Controls/ScrollBox_Back</BackgroundSpritePath>
+      <SelectedItemSpritePath>Graphics/Interface/Controls/ScrollBox_Selected</SelectedItemSpritePath>
+      <ListItemSpritePath>Graphics/Interface/Controls/ScrollBox_Button</ListItemSpritePath>
+      <ScrubberSpritePath>Graphics/Interface/Controls/ScrollBox_Scrubber</ScrubberSpritePath>
+      <ScrollBarWidth>15</ScrollBarWidth>
+      <ItemHeight>30</ItemHeight>
+    </Child>
+  </Children>
+  <LocationX>0</LocationX>
+  <LocationY>0</LocationY>
+  <LocationWidth>240</LocationWidth>
+  <LocationHeight>740</LocationHeight>
+  <Draggable>false</Draggable>
+  <CloseButtonEnabled>false</CloseButtonEnabled>
+  <HotKey>0</HotKey>
+  <DrawTitlebar>false</DrawTitlebar>
+</FormConfig>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BuildingFactory xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Building>
+    <ID>0</ID>
+    <Name>Palace</Name>
+    <Description>Indicates this City is the $(CAPITAL) Capital of the empire. Connecting other Cities to the capital Capital by Road will produce additional gold Gold.</Description>
+	<IconID>0</IconID>
+	
+	<IncomeScience>3</IncomeScience>
+	<IncomeGold>3</IncomeGold>
+	<IncomeProduction>3</IncomeProduction>
+	<IncomeHappiness>0</IncomeHappiness>
+	<IncomeFood>0</IncomeFood>
+	<IncomeCulture>1</IncomeCulture>
+	
+	<ModScience>1</ModScience>
+	<ModGold>1</ModGold>
+	<ModProduction>1</ModProduction>
+	<ModHappiness>1</ModHappiness>
+	<ModFood>1</ModFood>
+	<ModCulture>1</ModCulture>
+  </Building>
+  <Building>
+    <ID>1</ID>
+    <Name>Monument</Name>
+    <Description>The Monument increases the Culture of a city speeding the growth of the city's territory and the civilization's acquisition of Social Policies.</Description>
+    <IconID>0</IconID>
+	
+	<IncomeScience>0</IncomeScience>
+	<IncomeGold>0</IncomeGold>
+	<IncomeProduction>0</IncomeProduction>
+	<IncomeHappiness>0</IncomeHappiness>
+	<IncomeFood>0</IncomeFood>
+	<IncomeCulture>2</IncomeCulture>
+	
+	<ModScience>1</ModScience>
+	<ModGold>1</ModGold>
+	<ModProduction>1</ModProduction>
+	<ModHappiness>1</ModHappiness>
+	<ModFood>1</ModFood>
+	<ModCulture>1</ModCulture>
+  </Building>
+  <Building>
+    <ID>2</ID>
+    <Name>Granary</Name>
+    <Description>Each source of Wheat Bananas and Deer worked by this City produce +1 Food.</Description>
+    <IconID>0</IconID>
+	
+	<IncomeScience>0</IncomeScience>
+	<IncomeGold>0</IncomeGold>
+	<IncomeProduction>0</IncomeProduction>
+	<IncomeHappiness>0</IncomeHappiness>
+	<IncomeFood>2</IncomeFood>
+	<IncomeCulture>0</IncomeCulture>
+	
+	<ModScience>1</ModScience>
+	<ModGold>1</ModGold>
+	<ModProduction>1</ModProduction>
+	<ModHappiness>1</ModHappiness>
+	<ModFood>1</ModFood>
+	<ModCulture>1</ModCulture>
+  </Building>
+  <Building>
+    <ID>3</ID>
+    <Name>Stone Works</Name>
+    <Description>Each source of Marble and Stone worked by this City produce +1 Production. City must have at least one of these resources improved with a Quarry. City must not be in Plains.</Description>
+    <IconID>0</IconID>
+	
+	<IncomeScience>0</IncomeScience>
+	<IncomeGold>0</IncomeGold>
+	<IncomeProduction>1</IncomeProduction>
+	<IncomeHappiness>0</IncomeHappiness>
+	<IncomeFood>0</IncomeFood>
+	<IncomeCulture>0</IncomeCulture>
+	
+	<ModScience>1</ModScience>
+	<ModGold>1</ModGold>
+	<ModProduction>1</ModProduction>
+	<ModHappiness>1</ModHappiness>
+	<ModFood>1</ModFood>
+	<ModCulture>1</ModCulture>
+  </Building>
+  <Building>
+    <ID>4</ID>
+    <Name>Library</Name>
+    <Description>+1 Science for every 2 Citizens in this City.</Description>
+    <IconID>0</IconID>
+	
+	<IncomeScience>0</IncomeScience>
+	<IncomeGold>0</IncomeGold>
+	<IncomeProduction>0</IncomeProduction>
+	<IncomeHappiness>0</IncomeHappiness>
+	<IncomeFood>0</IncomeFood>
+	<IncomeCulture>0</IncomeCulture>
+	
+	<ModScience>1</ModScience>
+	<ModGold>1</ModGold>
+	<ModProduction>1</ModProduction>
+	<ModHappiness>1</ModHappiness>
+	<ModFood>1</ModFood>
+	<ModCulture>1</ModCulture>
+  </Building>
+  <Building>
+    <ID>5</ID>
+    <Name>Circus</Name>
+    <Description>City must have an improved source of Horses or Ivory nearby.</Description>
+    <IconID>0</IconID>
+	
+	<IncomeScience>0</IncomeScience>
+	<IncomeGold>0</IncomeGold>
+	<IncomeProduction>0</IncomeProduction>
+	<IncomeHappiness>2</IncomeHappiness>
+	<IncomeFood>0</IncomeFood>
+	<IncomeCulture>0</IncomeCulture>
+	
+	<ModScience>1</ModScience>
+	<ModGold>1</ModGold>
+	<ModProduction>1</ModProduction>
+	<ModHappiness>1</ModHappiness>
+	<ModFood>1</ModFood>
+	<ModCulture>1</ModCulture>
+  </Building>
+  
+</BuildingFactory>

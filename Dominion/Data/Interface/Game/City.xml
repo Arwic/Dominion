@@ -1,0 +1,585 @@
+<?xml version="1.0"?>
+<FormConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeName>ArwicEngine.Forms.Form</TypeName>
+  <Name>ArwicEngine.Forms.Form</Name>
+  <Text>City Managment</Text>
+  <Color>
+    <B>255</B>
+    <G>255</G>
+    <R>255</R>
+    <A>255</A>
+    <PackedValue>4294967295</PackedValue>
+  </Color>
+  <Children>
+    <Child xsi:type="ScrollBoxConfig">
+      <TypeName>ArwicEngine.Forms.ScrollBox</TypeName>
+      <Name>sbProductionQueue</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>5</LocationX>
+      <LocationY>65</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>340</LocationHeight>
+      <BackgroundSpritePath>Graphics/Interface/Controls/ScrollBox_Back</BackgroundSpritePath>
+      <SelectedItemSpritePath>Graphics/Interface/Controls/ScrollBox_Selected</SelectedItemSpritePath>
+      <ListItemSpritePath>Graphics/Interface/Controls/ScrollBox_Button</ListItemSpritePath>
+      <ScrubberSpritePath>Graphics/Interface/Controls/ScrollBox_Scrubber</ScrubberSpritePath>
+      <ScrollBarWidth>15</ScrollBarWidth>
+      <ItemHeight>30</ItemHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>ArwicEngine.Forms.Label</Name>
+      <Text>Name:</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>475</LocationX>
+      <LocationY>45</LocationY>
+      <LocationWidth>54</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblFoodDesc</Name>
+      <Text>$(food) Food</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>470</LocationX>
+      <LocationY>125</LocationY>
+      <LocationWidth>65</LocationWidth>
+      <LocationHeight>23</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblProductionDesc</Name>
+      <Text>$(production) Production</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>470</LocationX>
+      <LocationY>150</LocationY>
+      <LocationWidth>115</LocationWidth>
+      <LocationHeight>23</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblScienceDesc</Name>
+      <Text>$(science) Science</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>470</LocationX>
+      <LocationY>200</LocationY>
+      <LocationWidth>88</LocationWidth>
+      <LocationHeight>23</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblCultureDesc</Name>
+      <Text>$(culture) Culture</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>470</LocationX>
+      <LocationY>225</LocationY>
+      <LocationWidth>89</LocationWidth>
+      <LocationHeight>23</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblGoldDesc</Name>
+      <Text>$(gold) Gold</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>470</LocationX>
+      <LocationY>175</LocationY>
+      <LocationWidth>101</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnMoveDown</Name>
+      <Text>Move Down</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>6</LocationX>
+      <LocationY>465</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnQueueProduction</Name>
+      <Text>Queue</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>235</LocationX>
+      <LocationY>465</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ScrollBoxConfig">
+      <TypeName>ArwicEngine.Forms.ScrollBox</TypeName>
+      <Name>sbProductionList</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>235</LocationX>
+      <LocationY>65</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>340</LocationHeight>
+      <BackgroundSpritePath>Graphics/Interface/Controls/ScrollBox_Back</BackgroundSpritePath>
+      <SelectedItemSpritePath>Graphics/Interface/Controls/ScrollBox_Selected</SelectedItemSpritePath>
+      <ListItemSpritePath>Graphics/Interface/Controls/ScrollBox_Button</ListItemSpritePath>
+      <ScrubberSpritePath>Graphics/Interface/Controls/ScrollBox_Scrubber</ScrubberSpritePath>
+      <ScrollBarWidth>15</ScrollBarWidth>
+      <ItemHeight>30</ItemHeight>
+    </Child>
+    <Child xsi:type="TextBoxConfig">
+      <TypeName>ArwicEngine.Forms.TextBox</TypeName>
+      <Name>tbName</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>531</LocationX>
+      <LocationY>42</LocationY>
+      <LocationWidth>165</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <Masked>false</Masked>
+      <MaskedCharacter>0</MaskedCharacter>
+      <MaxCharacters>2147483647</MaxCharacters>
+      <SpritePath>Graphics/Interface/Controls/TextBox</SpritePath>
+      <TextOffset>
+        <X>10</X>
+        <Y>5</Y>
+      </TextOffset>
+      <CaretBlinkTimer>500</CaretBlinkTimer>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>ArwicEngine.Forms.Label</Name>
+      <Text>Production Queue</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>10</LocationX>
+      <LocationY>45</LocationY>
+      <LocationWidth>149</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>ArwicEngine.Forms.Label</Name>
+      <Text>Possible Productions</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>240</LocationX>
+      <LocationY>45</LocationY>
+      <LocationWidth>171</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnMoveUp</Name>
+      <Text>Move Up</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>5</LocationX>
+      <LocationY>435</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnCancelProduction</Name>
+      <Text>Cancel</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>5</LocationX>
+      <LocationY>405</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnChangeProduction</Name>
+      <Text>Change</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>235</LocationX>
+      <LocationY>435</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ScrollBoxConfig">
+      <TypeName>ArwicEngine.Forms.ScrollBox</TypeName>
+      <Name>sbCitizenFocus</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>465</LocationX>
+      <LocationY>275</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>220</LocationHeight>
+      <BackgroundSpritePath>Graphics/Interface/Controls/ScrollBox_Back</BackgroundSpritePath>
+      <SelectedItemSpritePath>Graphics/Interface/Controls/ScrollBox_Selected</SelectedItemSpritePath>
+      <ListItemSpritePath>Graphics/Interface/Controls/ScrollBox_Button</ListItemSpritePath>
+      <ScrubberSpritePath>Graphics/Interface/Controls/ScrollBox_Scrubber</ScrubberSpritePath>
+      <ScrollBarWidth>15</ScrollBarWidth>
+      <ItemHeight>30</ItemHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblPopulationDesc</Name>
+      <Text>$(population) Population</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>470</LocationX>
+      <LocationY>75</LocationY>
+      <LocationWidth>106</LocationWidth>
+      <LocationHeight>23</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblPopGrowthDesc</Name>
+      <Text>$(barchart) Population grows in</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>470</LocationX>
+      <LocationY>100</LocationY>
+      <LocationWidth>190</LocationWidth>
+      <LocationHeight>23</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblPopulationValue</Name>
+      <Text>New Label</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>665</LocationX>
+      <LocationY>75</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblPopGrowthValue</Name>
+      <Text>New Label</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>665</LocationX>
+      <LocationY>100</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblFoodValue</Name>
+      <Text>New Label</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>665</LocationX>
+      <LocationY>125</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblProductionValue</Name>
+      <Text>New Label</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>665</LocationX>
+      <LocationY>150</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblGoldValue</Name>
+      <Text>New Label</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>665</LocationX>
+      <LocationY>175</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblScienceValue</Name>
+      <Text>New Label</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>665</LocationX>
+      <LocationY>201</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblCultureValue</Name>
+      <Text>New Label</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>665</LocationX>
+      <LocationY>225</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnBuy</Name>
+      <Text>Purchase</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>235</LocationX>
+      <LocationY>405</LocationY>
+      <LocationWidth>230</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblBorderGrowthDesc</Name>
+      <Text>$(expand) Border expands in</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>470</LocationX>
+      <LocationY>250</LocationY>
+      <LocationWidth>172</LocationWidth>
+      <LocationHeight>23</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblBorderGrowthValue</Name>
+      <Text>New Label</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>665</LocationX>
+      <LocationY>250</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+  </Children>
+  <LocationX>0</LocationX>
+  <LocationY>0</LocationY>
+  <LocationWidth>700</LocationWidth>
+  <LocationHeight>500</LocationHeight>
+  <Draggable>false</Draggable>
+  <CloseButtonEnabled>true</CloseButtonEnabled>
+  <HotKey>0</HotKey>
+  <DrawTitlebar>true</DrawTitlebar>
+</FormConfig>

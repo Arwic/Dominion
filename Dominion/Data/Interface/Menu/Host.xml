@@ -1,0 +1,243 @@
+<?xml version="1.0"?>
+<FormConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeName>ArwicEngine.Forms.Form</TypeName>
+  <Name>frmHost</Name>
+  <Text>Host game</Text>
+  <Color>
+    <B>255</B>
+    <G>255</G>
+    <R>255</R>
+    <A>255</A>
+    <PackedValue>4294967295</PackedValue>
+  </Color>
+  <Children>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnHost</Name>
+      <Text>Host</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>204</LocationX>
+      <LocationY>262</LocationY>
+      <LocationWidth>190</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnBack</Name>
+      <Text>Back</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>8</LocationX>
+      <LocationY>262</LocationY>
+      <LocationWidth>190</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Graphics/Interface/Controls/Button</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="TextBoxConfig">
+      <TypeName>ArwicEngine.Forms.TextBox</TypeName>
+      <Name>tbAddress</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>5</LocationX>
+      <LocationY>60</LocationY>
+      <LocationWidth>300</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <Masked>false</Masked>
+      <MaskedCharacter>0</MaskedCharacter>
+      <MaxCharacters>2147483647</MaxCharacters>
+      <SpritePath>Graphics/Interface/Controls/TextBox</SpritePath>
+      <TextOffset>
+        <X>10</X>
+        <Y>5</Y>
+      </TextOffset>
+      <CaretBlinkTimer>500</CaretBlinkTimer>
+    </Child>
+    <Child xsi:type="TextBoxConfig">
+      <TypeName>ArwicEngine.Forms.TextBox</TypeName>
+      <Name>tbPort</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>305</LocationX>
+      <LocationY>60</LocationY>
+      <LocationWidth>90</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <Masked>false</Masked>
+      <MaskedCharacter>0</MaskedCharacter>
+      <MaxCharacters>2147483647</MaxCharacters>
+      <SpritePath>Graphics/Interface/Controls/TextBox</SpritePath>
+      <TextOffset>
+        <X>10</X>
+        <Y>5</Y>
+      </TextOffset>
+      <CaretBlinkTimer>500</CaretBlinkTimer>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>ArwicEngine.Forms.Label</Name>
+      <Text>Current WAN Address</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>9</LocationX>
+      <LocationY>37</LocationY>
+      <LocationWidth>184</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>ArwicEngine.Forms.Label</Name>
+      <Text>Port</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>309</LocationX>
+      <LocationY>36</LocationY>
+      <LocationWidth>34</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child xsi:type="TextBoxConfig">
+      <TypeName>ArwicEngine.Forms.TextBox</TypeName>
+      <Name>tbUsername</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>5</LocationX>
+      <LocationY>120</LocationY>
+      <LocationWidth>390</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <Masked>false</Masked>
+      <MaskedCharacter>0</MaskedCharacter>
+      <MaxCharacters>2147483647</MaxCharacters>
+      <SpritePath>Graphics/Interface/Controls/TextBox</SpritePath>
+      <TextOffset>
+        <X>10</X>
+        <Y>5</Y>
+      </TextOffset>
+      <CaretBlinkTimer>500</CaretBlinkTimer>
+    </Child>
+    <Child xsi:type="TextBoxConfig">
+      <TypeName>ArwicEngine.Forms.TextBox</TypeName>
+      <Name>tbPassword</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>5</LocationX>
+      <LocationY>180</LocationY>
+      <LocationWidth>390</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <Masked>false</Masked>
+      <MaskedCharacter>0</MaskedCharacter>
+      <MaxCharacters>2147483647</MaxCharacters>
+      <SpritePath>Graphics/Interface/Controls/TextBox</SpritePath>
+      <TextOffset>
+        <X>10</X>
+        <Y>5</Y>
+      </TextOffset>
+      <CaretBlinkTimer>500</CaretBlinkTimer>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>ArwicEngine.Forms.Label</Name>
+      <Text>Username</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>10</LocationX>
+      <LocationY>96</LocationY>
+      <LocationWidth>84</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>ArwicEngine.Forms.Label</Name>
+      <Text>Server Password</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>10</LocationX>
+      <LocationY>156</LocationY>
+      <LocationWidth>139</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+  </Children>
+  <LocationX>0</LocationX>
+  <LocationY>0</LocationY>
+  <LocationWidth>400</LocationWidth>
+  <LocationHeight>300</LocationHeight>
+  <Draggable>false</Draggable>
+  <CloseButtonEnabled>false</CloseButtonEnabled>
+  <HotKey>0</HotKey>
+  <DrawTitlebar>false</DrawTitlebar>
+</FormConfig>

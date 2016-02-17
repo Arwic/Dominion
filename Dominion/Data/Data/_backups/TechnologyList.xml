@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TechTree xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Node>
+    <ID>0</ID>
+    <Name>Science</Name>
+    <Cost>0</Cost>
+    <Description>the intellectual and practical activity encompassing the systematic study of the structure and behaviour of the physical and natural world through observation and experiment.</Description>
+    <GridX>0</GridX>
+    <GridY>5</GridY>
+  </Node>
+  <Node>
+    <ID>1</ID>
+    <Name>Computing</Name>
+    <Cost>20</Cost>
+    <Description>the use or operation of computers.</Description>
+    <GridX>1</GridX>
+    <GridY>2</GridY>
+    <Prerequisite>0</Prerequisite>
+  </Node>
+  <Node>
+    <ID>2</ID>
+    <Name>Fuel Efficiency</Name>
+    <Cost>20</Cost>
+    <Description>the capacity of an engine, especially that of a vehicle, to obtain energy from fuel.</Description>
+    <GridX>1</GridX>
+    <GridY>3</GridY>
+    <Prerequisite>0</Prerequisite>
+  </Node>
+  <Node>
+    <ID>3</ID>
+    <Name>Genetics</Name>
+    <Cost>20</Cost>
+    <Description>the study of heredity and the variation of inherited characteristics.</Description>
+    <GridX>1</GridX>
+    <GridY>6</GridY>
+    <Prerequisite>0</Prerequisite>
+  </Node>
+  <Node>
+    <ID>4</ID>
+    <Name>Ecology</Name>
+    <Cost>20</Cost>
+    <Description>the branch of biology that deals with the relations of organisms to one another and to their physical surroundings.</Description>
+    <GridX>1</GridX>
+    <GridY>7</GridY>
+    <Prerequisite>0</Prerequisite>
+  </Node>
+  <Node>
+    <ID>5</ID>
+    <Name>Artificial Intelligence</Name>
+    <Cost>20</Cost>
+    <Description>the theory and development of computer systems able to perform tasks normally requiring human intelligence, such as visual perception, speech recognition, decision-making, and translation between languages.</Description>
+    <GridX>2</GridX>
+    <GridY>1</GridY>
+    <Prerequisite>1</Prerequisite>
+  </Node>
+  <Node>
+    <ID>6</ID>
+    <Name>Communications</Name>
+    <Cost>20</Cost>
+    <Description>means of sending or receiving information, such as telephone lines or computers.</Description>
+    <GridX>2</GridX>
+    <GridY>2</GridY>
+    <Prerequisite>1</Prerequisite>
+  </Node>
+  <Node>
+    <ID>7</ID>
+    <Name>Advanced Rocketry</Name>
+    <Cost>20</Cost>
+    <Description>the branch of science that deals with rockets and rocket propulsion.</Description>
+    <GridX>2</GridX>
+    <GridY>3</GridY>
+    <Prerequisite>2</Prerequisite>
+  </Node>
+  <Node>
+    <ID>8</ID>
+    <Name>Augmentation</Name>
+    <Cost>20</Cost>
+    <Description>the action or process of making or becoming greater in size or amount.</Description>
+    <GridX>2</GridX>
+    <GridY>6</GridY>
+    <Prerequisite>3</Prerequisite>
+  </Node>
+  <Node>
+    <ID>9</ID>
+    <Name>Terraforming</Name>
+    <Cost>20</Cost>
+    <Description>transform (a planet) so as to resemble the earth, especially so that it can support human life.</Description>
+    <GridX>2</GridX>
+    <GridY>7</GridY>
+    <Prerequisite>4</Prerequisite>
+  </Node>
+</TechTree>

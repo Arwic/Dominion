@@ -1,0 +1,406 @@
+<?xml version="1.0"?>
+<FormConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeName>ArwicEngine.Forms.Form</TypeName>
+  <Name>frmCityStats</Name>
+  <Text />
+  <Color>
+    <B>255</B>
+    <G>255</G>
+    <R>255</R>
+    <A>255</A>
+    <PackedValue>4294967295</PackedValue>
+  </Color>
+  <Children>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblTourismValue</Name>
+      <Text>New Label</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>220</LocationX>
+      <LocationY>215</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblFaithValue</Name>
+      <Text>New Label</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>220</LocationX>
+      <LocationY>190</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblTourismDesc</Name>
+      <Text>$(tourism) Tourism</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>11</LocationX>
+      <LocationY>215</LocationY>
+      <LocationWidth>71</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblFaithDesc</Name>
+      <Text>$(faith) Faith</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>11</LocationX>
+      <LocationY>190</LocationY>
+      <LocationWidth>45</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblBorderGrowthValue</Name>
+      <Text>New Label</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>220</LocationX>
+      <LocationY>265</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblBorderGrowthDesc</Name>
+      <Text>$(expand) Border expands in</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>10</LocationX>
+      <LocationY>265</LocationY>
+      <LocationWidth>172</LocationWidth>
+      <LocationHeight>23</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblCultureValue</Name>
+      <Text>New Label</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>220</LocationX>
+      <LocationY>240</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblScienceValue</Name>
+      <Text>New Label</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>220</LocationX>
+      <LocationY>165</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblGoldValue</Name>
+      <Text>New Label</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>220</LocationX>
+      <LocationY>140</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblProductionValue</Name>
+      <Text>New Label</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>220</LocationX>
+      <LocationY>115</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblFoodValue</Name>
+      <Text>New Label</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>220</LocationX>
+      <LocationY>90</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblPopGrowthValue</Name>
+      <Text>New Label</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>220</LocationX>
+      <LocationY>65</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblPopulationValue</Name>
+      <Text>New Label</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>220</LocationX>
+      <LocationY>40</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblPopGrowthDesc</Name>
+      <Text>$(barchart) Population grows in</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>10</LocationX>
+      <LocationY>65</LocationY>
+      <LocationWidth>190</LocationWidth>
+      <LocationHeight>23</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblPopulationDesc</Name>
+      <Text>$(population) Population</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>10</LocationX>
+      <LocationY>40</LocationY>
+      <LocationWidth>106</LocationWidth>
+      <LocationHeight>23</LocationHeight>
+    </Child>
+    <Child xsi:type="TextBoxConfig">
+      <TypeName>ArwicEngine.Forms.TextBox</TypeName>
+      <Name>tbName</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>65</LocationX>
+      <LocationY>5</LocationY>
+      <LocationWidth>195</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <Masked>false</Masked>
+      <MaskedCharacter>0</MaskedCharacter>
+      <MaxCharacters>2147483647</MaxCharacters>
+      <SpritePath>Graphics/Interface/Controls/TextBox</SpritePath>
+      <TextOffset>
+        <X>10</X>
+        <Y>5</Y>
+      </TextOffset>
+      <CaretBlinkTimer>500</CaretBlinkTimer>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblGoldDesc</Name>
+      <Text>$(gold) Gold</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>10</LocationX>
+      <LocationY>140</LocationY>
+      <LocationWidth>62</LocationWidth>
+      <LocationHeight>23</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblCultureDesc</Name>
+      <Text>$(culture) Culture</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>10</LocationX>
+      <LocationY>240</LocationY>
+      <LocationWidth>89</LocationWidth>
+      <LocationHeight>23</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblScienceDesc</Name>
+      <Text>$(science) Science</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>10</LocationX>
+      <LocationY>165</LocationY>
+      <LocationWidth>88</LocationWidth>
+      <LocationHeight>23</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblProductionDesc</Name>
+      <Text>$(production) Production</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>10</LocationX>
+      <LocationY>115</LocationY>
+      <LocationWidth>115</LocationWidth>
+      <LocationHeight>23</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>lblFoodDesc</Name>
+      <Text>$(food) Food</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>10</LocationX>
+      <LocationY>90</LocationY>
+      <LocationWidth>65</LocationWidth>
+      <LocationHeight>23</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>ArwicEngine.Forms.Label</Name>
+      <Text>Name:</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>10</LocationX>
+      <LocationY>10</LocationY>
+      <LocationWidth>54</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+  </Children>
+  <LocationX>0</LocationX>
+  <LocationY>0</LocationY>
+  <LocationWidth>265</LocationWidth>
+  <LocationHeight>295</LocationHeight>
+  <Draggable>false</Draggable>
+  <CloseButtonEnabled>false</CloseButtonEnabled>
+  <HotKey>0</HotKey>
+  <DrawTitlebar>false</DrawTitlebar>
+</FormConfig>

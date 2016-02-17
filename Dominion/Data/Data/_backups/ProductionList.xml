@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProductionFactory xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Production>
+	<!-- Unit - Settler /-->
+    <ID>0</ID>
+    <Cost>5</Cost>
+	<ResultID>0</ResultID>
+	<ResultType>0</ResultType>
+  </Production>
+  <Production>
+	<!-- Unit - Warrior /-->
+	<ID>1</ID>
+    <Cost>5</Cost>
+	<ResultID>1</ResultID>
+	<ResultType>0</ResultType>
+  </Production>
+  <Production>
+	<!-- Building - Factory /-->
+	<ID>2</ID>
+    <Cost>10</Cost>
+	<ResultID>0</ResultID>
+	<ResultType>1</ResultType>
+  </Production>
+  <Production>
+	<!-- Building - University /-->
+	<ID>3</ID>
+    <Cost>10</Cost>
+	<ResultID>1</ResultID>
+	<ResultType>1</ResultType>
+  </Production>
+</ProductionFactory>
