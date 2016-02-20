@@ -7,7 +7,7 @@ using static ArwicEngine.Constants;
 
 namespace ArwicEngine.Graphics
 {
-    public class GraphicsManager : IEngineComponent
+    public class GraphicsManager
     {
         public Engine Engine { get; set; }
 

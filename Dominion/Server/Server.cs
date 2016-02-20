@@ -18,7 +18,7 @@ namespace Dominion.Server
         Game
     }
 
-    public class Server : IEngineComponent
+    public class Server
     {
         public Engine Engine { get; }
         public bool Running => server == null ? false : server.Running;

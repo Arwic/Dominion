@@ -112,7 +112,7 @@ namespace Dominion.Client
         }
     }
 
-    public class Client : IEngineComponent
+    public class Client
     {
         public static object _lock_cacheUpdate = new object();
 

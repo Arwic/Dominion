@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// ControlConfig.cs
+// This file contains classes that define configuration objects that allow controls to be saved and loaded from xml
+
+using ArwicEngine.Core;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;

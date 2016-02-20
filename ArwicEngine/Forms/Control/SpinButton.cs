@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿// Dominion - Copyright (C) Timothy Ings
+// SpinButton.cs
+// This file contains classes that define a spin button
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;

@@ -1,7 +1,10 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// NetServer.cs
+// This file contains classes that define net server
+
+using ArwicEngine.Core;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -11,13 +14,44 @@ namespace ArwicEngine.Net
 {
     public class NetServerStats
     {
+        /// <summary>
+        /// Gets the size of the net client's recieve buffer
+        /// </summary>
         public int RecieveBufferSize { get; set; }
+
+        /// <summary>
+        /// Gets the size of the net client's send buffer
+        /// </summary>
         public int SendBufferSize { get; set; }
+
+        /// <summary>
+        /// Gets the number of packets recieved by the net client
+        /// </summary>
         public int PacketsRecieved { get; set; }
+
+        /// <summary>
+        /// Gets the number of packets sent by the net client
+        /// </summary>
         public int PacketsSent { get; set; }
+
+        /// <summary>
+        /// Gets the number of bytes recieved by the net client
+        /// </summary>
         public int BytesRecieved { get; set; }
+
+        /// <summary>
+        /// Gets the number of bytes send by the net client
+        /// </summary>
         public int BytesSent { get; set; }
+
+        /// <summary>
+        /// Gets the port the net server is listening on
+        /// </summary>
         public int Port { get; set; }
+
+        /// <summary>
+        /// Gets the number of clients currently connected to the net server
+        /// </summary>
         public int ConnectionCount { get; set; }
     }
 
@@ -31,8 +65,11 @@ namespace ArwicEngine.Net
         }
     }
 
-    public class NetServer : IEngineComponent
+    public class NetServer
     {
+        /// <summary>
+        /// Reference to the engine
+        /// </summary>
         public Engine Engine { get; }
 
         /// <summary>
@@ -94,6 +131,10 @@ namespace ArwicEngine.Net
         }
         #endregion
 
+        /// <summary>
+        /// Creates a new net server
+        /// </summary>
+        /// <param name="e"></param>
         public NetServer(Engine e)
         {
             Engine = e;
@@ -167,14 +208,18 @@ namespace ArwicEngine.Net
             {
                 try
                 {
+                    // await a new client, with cancelation
                     TcpClient client = await listener.AcceptTcpClientAsync().WithCancellation(listenNewClientsToken.Token);
+                    // set up the new client
                     client.NoDelay = true;
+                    // create a connection object to hold the client
                     Connection conn = new Connection(this, client);
                     connections.Add(conn);
                     Statistics.ConnectionCount = connections.Count;
                     Engine.Console.WriteLine($"Client connected {conn.Client.Client.RemoteEndPoint.ToString()}", MsgType.ServerInfo);
                     OnConnectionAccepted(new ConnectionEventArgs(conn));
                     conn.Listening = true;
+                    // begin listening to the new connection
                     new Thread(() => HandleClient(conn)).Start();
                 }
                 catch (Exception e) { Engine.Console.WriteLine($"Error accepting client, {e.Message}", MsgType.ServerWarning); }
@@ -203,16 +248,16 @@ namespace ArwicEngine.Net
                             int offset = 0;
                             do
                             {
-                                packetLength = BitConverter.ToInt32(buffer, offset + 4) + 8;
-                                byte[] data = new byte[packetLength];
-                                Buffer.BlockCopy(buffer, offset, data, 0, packetLength);
-                                offset = packetLength;
-                                bytesLeft -= packetLength;
-                                Packet p = new Packet(data, conn);
+                                packetLength = BitConverter.ToInt32(buffer, offset + 4) + 8; // get the length of the next packet in the stream
+                                byte[] data = new byte[packetLength]; // read only the next packet's data from the stream
+                                Buffer.BlockCopy(buffer, offset, data, 0, packetLength); // copy the packet data from the buffer to the data array
+                                offset = packetLength; // update the offset as we have already parsed the packet(s) before it
+                                bytesLeft -= packetLength; // update the number of bytes left to parse
+                                Packet p = new Packet(data, conn); // parse the packet
                                 //Engine.Console.WriteLine($"Constructed a packet of {packetLength} bytes, {bytesLeft} bytes remaining", MsgType.ServerInfo);
                                 Statistics.PacketsRecieved++;
                                 OnPacketRecieved(new PacketRecievedEventArgs(p));
-                            } while (bytesLeft > 0);
+                            } while (bytesLeft > 0); // keep parsing packets from the buffer until there are none left
                         }
                     }
                     catch (Exception e)
@@ -223,7 +268,11 @@ namespace ArwicEngine.Net
             }
         }
 
-        private void DissconnectClient(Connection conn)
+        /// <summary>
+        /// Dissconnects the given client from the server
+        /// </summary>
+        /// <param name="conn"></param>
+        public void DissconnectClient(Connection conn)
         {
             Engine.Console.WriteLine($"Client {conn.Address} dissconnected", MsgType.ServerInfo);
             conn.Listening = false;

@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// ProgressBar.cs
+// This file contains classes that define a progress bar
+
+using ArwicEngine.Core;
 using ArwicEngine.Graphics;
 using ArwicEngine.TypeConverters;
 using Microsoft.Xna.Framework;

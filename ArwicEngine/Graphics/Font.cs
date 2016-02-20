@@ -1,10 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿// Dominion - Copyright (C) Timothy Ings
+// Font.cs
+// This file contains wrapper classes for xna sprite fonts
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
-using System.Runtime.Serialization;
 
 namespace ArwicEngine.Graphics
 {
@@ -15,20 +17,39 @@ namespace ArwicEngine.Graphics
 
         private SpriteFont spriteFont;
 
+        /// <summary>
+        /// Create a new font
+        /// </summary>
+        /// <param name="cm"></param>
+        /// <param name="path"></param>
+        /// <param name="defaultChar"></param>
         public Font(ContentManager cm, string path, char defaultChar = DEFAULT_CHAR)
         {
             spriteFont = cm.Load<SpriteFont>(path);
             spriteFont.DefaultCharacter = defaultChar;
         }
 
+        /// <summary>
+        /// Draws the given string with in the given font
+        /// </summary>
+        /// <param name="sb">sprite batch to draw to</param>
+        /// <param name="text">text to draw</param>
+        /// <param name="pos">position to draw to</param>
+        /// <param name="col">tint to be applied, defaults to white</param>
+        /// <param name="scale">scale to be applied</param>
         public void DrawString(SpriteBatch sb, string text, Vector2 pos, Color? col = null, float scale = FONT_SCALE)
         {
-            if (col == null) col = Color.White;
-            if (text == null)
+            if (col == null) col = Color.White; // default to white is no colour provided
+            if (text == null) // don't try and draw nothing
                 return;
             sb.DrawString(spriteFont, text, pos, col.Value, 0f, new Vector2(0,0), scale, SpriteEffects.None, 1f);
         }
 
+        /// <summary>
+        /// Measures the size of the given string in the given font
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public Vector2 MeasureString(string text)
         {
             return spriteFont.MeasureString(text) * FONT_SCALE;
@@ -42,29 +63,38 @@ namespace ArwicEngine.Graphics
         /// <returns></returns>
         public List<string> Wrap(string s, float width)
         {
+            // lines to return
             List<string> lines = new List<string>();
 
+            // calc length of the string
             float stringLen = spriteFont.MeasureString(s).X;
+            // calc the number of lines required if we are to split string up and have every line below the given width
             float numLines = stringLen / width;
 
+            // if the number of lines required is less than one, the wrpa is already done
             if (numLines < 1f)
             {
                 lines.Add(s);
                 return lines;
             }
 
+            // calc the avg width of a character in the string
             float avgCharWidth = stringLen / s.Length;
+            // calc the number of characters there will be per line, based on the average char width
             float charPerLine = width / avgCharWidth;
 
+            // set up the lines list with foramtted lines
             for (int i = 0; i < numLines; i++)
             {
                 string line = "";
+                // add the next charPerLine chars to the current line
                 for (int j = 0; j < charPerLine - 1; j++)
                 {
                     int index = j + Convert.ToInt32(Math.Floor(charPerLine)) * i;
                     if (index < s.Length)
                         line += s[index];
                 }
+                // add the line to the list of all lines
                 lines.Add(line);
             }
             return lines;
@@ -72,6 +102,7 @@ namespace ArwicEngine.Graphics
 
         /// <summary>
         /// Wraps the given string into a number of lines containing words that are not longer than the given width
+        /// Words are defined as strings of characters seperated by a space ' '
         /// </summary>
         /// <param name="s">the string of words to wrap</param>
         /// <param name="width">the max width</param>

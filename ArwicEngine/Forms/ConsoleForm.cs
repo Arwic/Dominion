@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// ConsoleForm.cs
+// This file contains classes that define a standard console form
+
+using ArwicEngine.Core;
 using ArwicEngine.Graphics;
 using ArwicEngine.Input;
 using Microsoft.Xna.Framework;

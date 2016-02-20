@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// ComboBox.cs
+// This file contains classes that define a combo box
+
+using ArwicEngine.Core;
 using ArwicEngine.Graphics;
 using ArwicEngine.TypeConverters;
 using Microsoft.Xna.Framework;

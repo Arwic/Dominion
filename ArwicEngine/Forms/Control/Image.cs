@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Graphics;
+﻿// Dominion - Copyright (C) Timothy Ings
+// Image.cs
+// This file contains classes that define an image container
+
+using ArwicEngine.Graphics;
 using ArwicEngine.TypeConverters;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;

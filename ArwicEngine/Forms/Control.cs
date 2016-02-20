@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// Control.cs
+// This file contains classes that define an abstract base control
+
+using ArwicEngine.Core;
 using ArwicEngine.Graphics;
 using ArwicEngine.Input;
 using ArwicEngine.TypeConverters;

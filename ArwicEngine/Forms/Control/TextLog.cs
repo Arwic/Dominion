@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Graphics;
+﻿// Dominion - Copyright (C) Timothy Ings
+// TextLog.cs
+// This file contains classes that define a text log
+
+using ArwicEngine.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;

@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Forms;
+﻿// Dominion - Copyright (C) Timothy Ings
+// RichTextConverter.cs
+// This file contains classes that define a type converter for rich text
+
+using ArwicEngine.Forms;
 using Microsoft.Xna.Framework;
 using System;
 using System.ComponentModel;

@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿// Dominion - Copyright (C) Timothy Ings
+// Label.cs
+// This file contains classes that define a label
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;

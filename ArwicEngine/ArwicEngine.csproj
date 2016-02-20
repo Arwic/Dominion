@@ -66,7 +66,6 @@
     <Compile Include="Core\Engine.cs" />
     <Compile Include="Input\EventInput.cs" />
     <Compile Include="Core\FrameCounter.cs" />
-    <Compile Include="Core\IEngineComponent.cs" />
     <Compile Include="Core\ConfigManager.cs" />
     <Compile Include="Core\ConsoleManager.cs" />
     <Compile Include="Graphics\GraphicsManager.cs" />
@@ -80,7 +79,6 @@
     <Compile Include="Graphics\Sprite.cs" />
     <Compile Include="Graphics\SpriteAnimation.cs" />
     <Compile Include="Graphics\SpriteAtlas.cs" />
-    <Compile Include="Graphics\Transform2.cs" />
     <Compile Include="Forms\Canvas.cs" />
     <Compile Include="Forms\Control.cs" />
     <Compile Include="Forms\Control\Button.cs" />

@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Forms;
+﻿// Dominion - Copyright (C) Timothy Ings
+// ConsoleManager.cs
+// This file defines classes that manage the console
+
+using ArwicEngine.Forms;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -24,13 +28,27 @@ namespace ArwicEngine.Core
         ServerDebug
     }
 
-    public class ConsoleManager : IEngineComponent
+    public class ConsoleManager
     {
+        /// <summary>
+        /// Reference to the engine
+        /// </summary>
         public Engine Engine { get; set; }
+        /// <summary>
+        /// Gets the lines in the console output
+        /// </summary>
         public List<string> Lines { get; }
+
         private Dictionary<string, Func<List<string>, int>> commands = new Dictionary<string, Func<List<string>, int>>();
 
+        /// <summary>
+        /// Occurs when a line is written to the console output
+        /// </summary>
         public event EventHandler<TextLogLineEventArgs> LineWritten;
+
+        /// <summary>
+        /// Occurs when the console's output is cleared
+        /// </summary>
         public event EventHandler ClearLines;
 
         protected virtual void OnLineWritten(TextLogLineEventArgs e)
@@ -44,35 +62,53 @@ namespace ArwicEngine.Core
                 ClearLines(this, e);
         }
 
+        /// <summary>
+        /// Creates a new console manager
+        /// </summary>
+        /// <param name="engine"></param>
         public ConsoleManager(Engine engine)
         {
+            // init vars
             Engine = engine;
             Lines = new List<string>();
-            commands.Add("set", f_set);
-            commands.Add("echo", f_get);
-            commands.Add("get", f_get);
-            commands.Add("gfx_apply", f_gfx_apply);
-            commands.Add("aud_apply", f_aud_apply);
-            commands.Add("quit", f_quit);
-            commands.Add("exit", f_quit);
-            commands.Add("config_defaults", f_config_defaults);
-            commands.Add("clc", f_clear);
-            commands.Add("cls", f_clear);
-            commands.Add("clear", f_clear);
-            commands.Add("config_save", f_config_save);
-            commands.Add("print_details", f_printdetails);
+
+            // register default commands
+            RegisterCommand("set", f_set);
+            RegisterCommand("echo", f_get);
+            RegisterCommand("get", f_get);
+            RegisterCommand("gfx_apply", f_gfx_apply);
+            RegisterCommand("aud_apply", f_aud_apply);
+            RegisterCommand("quit", f_quit);
+            RegisterCommand("exit", f_quit);
+            RegisterCommand("config_defaults", f_config_defaults);
+            RegisterCommand("clc", f_clear);
+            RegisterCommand("cls", f_clear);
+            RegisterCommand("clear", f_clear);
+            RegisterCommand("config_save", f_config_save);
+            RegisterCommand("print_details", f_printdetails);
         }
 
+        /// <summary>
+        /// Registers a command with the console
+        /// </summary>
+        /// <param name="call"></param>
+        /// <param name="func"></param>
         public void RegisterCommand(string call, Func<List<string>, int> func)
         {
             commands.Add(call, func);
         }
 
+        /// <summary>
+        /// Unregisters a command from the console
+        /// </summary>
+        /// <param name="call"></param>
+        /// <param name="func"></param>
         public void UnregisterCommand(string call, Func<List<string>, int> func)
         {
             commands.Remove(call);
         }
 
+        // default commands
         private int f_set(List<string> args)
         {
             if (args.Count < 2)
@@ -142,6 +178,11 @@ namespace ArwicEngine.Core
             return 0;
         }
 
+        /// <summary>
+        /// Formats and then writes a line to the console
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="type"></param>
         public void WriteLine(string msg, MsgType type = MsgType.Info)
         {
             // create a prefix string
@@ -236,6 +277,11 @@ namespace ArwicEngine.Core
             }
         }
 
+        /// <summary>
+        /// Attempts to run a command
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="silent"></param>
         public void RunCommand(string input, bool silent = false)
         {
             string[] split = input.Split(' ');
@@ -260,6 +306,11 @@ namespace ArwicEngine.Core
                 WriteLine("Command does not exist", MsgType.Failed);
         }
 
+        /// <summary>
+        /// Runs a list of commands from a script file
+        /// This should be used for loading user config on startup
+        /// </summary>
+        /// <param name="path"></param>
         public void RunScript(string path)
         {
             if (!File.Exists(path))

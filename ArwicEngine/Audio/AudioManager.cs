@@ -1,12 +1,12 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// AudioManager.cs
+// This file defines classes that manage audio playback
+
+using ArwicEngine.Core;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 using static ArwicEngine.Constants;
 
@@ -29,22 +29,50 @@ namespace ArwicEngine.Audio
             SoundEffect = soundEffect;
         }
     }
-
-    public class AudioManager : IEngineComponent
+    
+    /// <summary>
+    /// Manages audio playback
+    /// </summary>
+    public class AudioManager
     {
+        /// <summary>
+        /// Reference to the engine object
+        /// </summary>
         public Engine Engine { get; }
 
+        /// <summary>
+        /// Gets or sets the value the defines the state of the music player
+        /// </summary>
         public MusicPlayerState PlayerState { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of sound effects to be played
+        /// </summary>
         public LinkedList<SoundEffect> MusicQueue { get; set; }
+
         private LinkedListNode<SoundEffect> currentQueueNode;
         private SoundEffect currentMusicEffect;
         private SoundEffectInstance currentMusic;
         private Thread musicWorker;
         private bool musicWorker_running;
+
+        /// <summary>
+        /// Gets the name of the currently playing music track
+        /// </summary>
         public string CurrentTrackName => currentMusicEffect.Name;
+
+        /// <summary>
+        /// Gets or sets the current music playback volume
+        /// </summary>
         public float MusicVolume { get; private set; }
 
+        /// <summary>
+        /// Occurs when the music track is changed
+        /// </summary>
         public event EventHandler<SoundEffectEventArgs> MusicChanged;
+        /// <summary>
+        /// Occurs when the music queue has ended
+        /// </summary>
         public event EventHandler MusicQueueEnded;
 
         protected virtual void OnMusicChanged(SoundEffectEventArgs args)
@@ -58,6 +86,10 @@ namespace ArwicEngine.Audio
                 MusicQueueEnded(this, args);
         }
 
+        /// <summary>
+        /// Creates a new audio manager
+        /// </summary>
+        /// <param name="engine"></param>
         public AudioManager(Engine engine)
         {
             Engine = engine;
@@ -68,23 +100,35 @@ namespace ArwicEngine.Audio
             musicWorker.Start();
         }
 
+        /// <summary>
+        /// Applies settings to the currently playing audio
+        /// </summary>
         public void Apply()
         {
             try
             {
+                // set variables
                 MusicVolume = Convert.ToSingle(Engine.Config.GetVar(CONFIG_MUSICVOLUME));
+
+                // update current music with new variables
                 if (currentMusic != null)
                     currentMusic.Volume = MusicVolume;
             }
             catch (Exception)
             {
-
+                // report error
+                Engine.Console.WriteLine("Error applying audio settings", MsgType.Failed);
             }
         }
 
+        /// <summary>
+        /// Stops the audio manager
+        /// </summary>
         public void Shutdown()
         {
+            // stops music worker thread
             musicWorker_running = false;
+            // stops music playing
             StopMusic();
         }
 
@@ -94,24 +138,33 @@ namespace ArwicEngine.Audio
             {
                 if (currentMusic == null)
                 {
+                    // don't run too fast
                     Thread.Sleep(10);
+                    // if the current track is over, play the next track
                     if (currentMusic == null)
                         NextMusicTrack();
                 }
                 else if (currentMusic.State == SoundState.Stopped)
                 {
+                    // don't run too fast
                     Thread.Sleep(10);
+                    // if the current track has been stopped, play the next track
                     if (currentMusic.State == SoundState.Stopped)
                         NextMusicTrack();
                 }
             }
         }
 
+        /// <summary>
+        /// Plays the next music track in the music queue
+        /// </summary>
         public void NextMusicTrack()
         {
+            // stop the current track
             StopMusic();
             switch (PlayerState)
             {
+                // play track queue in order
                 case MusicPlayerState.Ordered:
                     if (MusicQueue != null && MusicQueue.Count > 0)
                     {
@@ -123,6 +176,7 @@ namespace ArwicEngine.Audio
                         OnMusicQueueEnded(new SoundEffectEventArgs(null));
                     }
                     break;
+                // play a random track from the queue
                 case MusicPlayerState.Shuffle:
                     if (MusicQueue != null && MusicQueue.Count > 0)
                     {
@@ -136,6 +190,7 @@ namespace ArwicEngine.Audio
                         PlayMusic(currentMusicEffect);
                     }
                     break;
+                // play the music queue over and over
                 case MusicPlayerState.RepeatOrder:
                     if (currentQueueNode.Next == null)
                         currentQueueNode = MusicQueue.First;
@@ -143,6 +198,7 @@ namespace ArwicEngine.Audio
                         currentQueueNode = currentQueueNode.Next;
                     PlayMusic(currentQueueNode.Value);
                     break;
+                // play the same track over and over
                 case MusicPlayerState.RepeatOne:
                     PlayMusic(currentMusicEffect);
                     break;
@@ -151,35 +207,55 @@ namespace ArwicEngine.Audio
             }
         }
 
+        /// <summary>
+        /// Plays the current music track
+        /// </summary>
+        /// <param name="music"></param>
         public void PlayMusic(SoundEffect music)
         {
+            // stop the current track
             StopMusic();
+            // set up new track
             currentMusicEffect = music;
             currentMusic = currentMusicEffect.CreateInstance();
             currentMusic.IsLooped = false;
             currentMusic.Volume = MusicVolume;
+            // play the new track
             currentMusic.Play();
             Engine.Console.WriteLine($"Now playing: {currentMusicEffect.Name} ({currentMusicEffect.Duration})");
         }
 
+        /// <summary>
+        /// Resumes the currently paused music track
+        /// </summary>
         public void ResumeMusic()
         {
             if (currentMusic != null)
                 currentMusic.Resume();
         }
 
+        /// <summary>
+        /// Pauses the currently playing music track
+        /// </summary>
         public void PauseMusic()
         {
             if (currentMusic != null)
                 currentMusic.Pause();
         }
 
+        /// <summary>
+        /// Stops the currently playing muci track
+        /// </summary>
         public void StopMusic()
         {
             if (currentMusic != null)
                 currentMusic.Stop();
         }
 
+        /// <summary>
+        /// Returns the current sound state
+        /// </summary>
+        /// <returns></returns>
         public SoundState GetMusicState()
         {
             if (currentMusic != null)

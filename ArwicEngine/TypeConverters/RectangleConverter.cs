@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿// Dominion - Copyright (C) Timothy Ings
+// RectangleConverter.cs
+// This file contains classes that define a type converter for xna rectangle
+
+using Microsoft.Xna.Framework;
 using System;
 using System.ComponentModel;
 using System.Globalization;

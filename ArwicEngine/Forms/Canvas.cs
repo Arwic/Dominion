@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// Canvas.cs
+// This file contains classes that define a canvas that is used to manage forms
+
+using ArwicEngine.Core;
 using ArwicEngine.Input;
 using Microsoft.Xna.Framework;
 using System;

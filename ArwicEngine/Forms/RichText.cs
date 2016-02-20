@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Graphics;
+﻿// Dominion - Copyright (C) Timothy Ings
+// RichText.cs
+// This file contains classes that define the rich text system
+
+using ArwicEngine.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;

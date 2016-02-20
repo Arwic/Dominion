@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿// Dominion - Copyright (C) Timothy Ings
+// ContentExtensions.cs
+// This file defines extension methods for the xna content pipline
+
+using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using System.IO;
 
@@ -6,6 +10,13 @@ namespace ArwicEngine.Core
 {
     public static class ContentExtensions
     {
+        /// <summary>
+        /// Loads all content of type T in the given directory and returns a dictionaray containing it
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="contentManager"></param>
+        /// <param name="contentFolder"></param>
+        /// <returns></returns>
         public static Dictionary<string, T> LoadListContent<T>(this ContentManager contentManager, string contentFolder)
         {
             DirectoryInfo dir = new DirectoryInfo(contentManager.RootDirectory + "/" + contentFolder);
@@ -16,8 +27,12 @@ namespace ArwicEngine.Core
             FileInfo[] files = dir.GetFiles("*.*");
             foreach (FileInfo file in files)
             {
-                string key = Path.GetFileNameWithoutExtension(file.Name);
-                result[key] = contentManager.Load<T>($"{contentFolder}/{key}");
+                try
+                {
+                    string key = Path.GetFileNameWithoutExtension(file.Name);
+                    result[key] = contentManager.Load<T>($"{contentFolder}/{key}");
+                }
+                catch (System.Exception) { }
             }
             return result;
         }

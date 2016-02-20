@@ -1,5 +1,8 @@
-﻿using ArwicEngine.Forms;
-using Microsoft.Xna.Framework;
+﻿// Dominion - Copyright (C) Timothy Ings
+// EventInput.cs
+// This file contains classes and helper methods that implement raw win32 event input for use with text input
+
+using ArwicEngine.Forms;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Runtime.InteropServices;

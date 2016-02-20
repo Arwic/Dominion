@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// TextBox.cs
+// This file contains classes that define a raw input text box
+
+using ArwicEngine.Core;
 using ArwicEngine.Graphics;
 using ArwicEngine.Input;
 using ArwicEngine.TypeConverters;

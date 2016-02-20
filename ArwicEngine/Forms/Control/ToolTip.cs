@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// ToolTip.cs
+// This file contains classes that define a tool tip
+
+using ArwicEngine.Core;
 using ArwicEngine.Graphics;
 using ArwicEngine.Input;
 using Microsoft.Xna.Framework;

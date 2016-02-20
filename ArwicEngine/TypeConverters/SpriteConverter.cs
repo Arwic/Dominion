@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Graphics;
+﻿// Dominion - Copyright (C) Timothy Ings
+// SpriteConverter.cs
+// This file contains classes that define a type converter for sprites
+
+using ArwicEngine.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System;

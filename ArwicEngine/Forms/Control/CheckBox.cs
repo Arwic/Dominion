@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// CheckBox.cs
+// This file contains classes that define a check box
+
+using ArwicEngine.Core;
 using ArwicEngine.Graphics;
 using ArwicEngine.TypeConverters;
 using Microsoft.Xna.Framework;

@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// Button.cs
+// This file contains classes that define a button
+
+using ArwicEngine.Core;
 using ArwicEngine.Graphics;
 using ArwicEngine.Input;
 using ArwicEngine.TypeConverters;

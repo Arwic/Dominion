@@ -1,4 +1,9 @@
-﻿namespace ArwicEngine
+﻿// Dominion - Copyright (C) Timothy Ings
+// Constants.cs
+// This file defines constants that are used throughout the engine
+// The functionality of this file probabbly could be implemented better somewhere else
+
+namespace ArwicEngine
 {
     public static class Constants
     {

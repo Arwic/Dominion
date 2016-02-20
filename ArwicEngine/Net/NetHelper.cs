@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// NetHelper.cs
+// This file contains helper classes for networks
+
+using ArwicEngine.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +17,7 @@ namespace ArwicEngine.Net
     public static class NetHelper
     {
         /// <summary>
-        /// Gets the public Ip address of this computer
+        /// Gets the public address of this computer
         /// </summary>
         /// <returns></returns>
         public static async Task<string> GetPublicIPAsync()
@@ -30,6 +34,11 @@ namespace ArwicEngine.Net
             return a4;
         }
 
+        /// <summary>
+        /// Returns the ip address of the given host name
+        /// </summary>
+        /// <param name="host"></param>
+        /// <returns></returns>
         public static string DnsResolve(string host)
         {
             IPAddress[] ipv4Addresses = Array.FindAll(Dns.GetHostEntry(host).AddressList, a => a.AddressFamily == AddressFamily.InterNetwork);

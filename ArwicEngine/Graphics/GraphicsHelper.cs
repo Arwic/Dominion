@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿// Dominion - Copyright (C) Timothy Ings
+// GraphicsHelper.cs
+// This file contains graphics related helper methods
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
@@ -47,6 +51,12 @@ namespace ArwicEngine.Graphics
         //        InBounds(camera, new Vector2(rect.X + rect.Width, rect.Y));
         //}
 
+        /// <summary>
+        /// Calculates the number of radians between two vector2s
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <returns></returns>
         public static float Rotation(Vector2 p1, Vector2 p2)
         {
             float adj = p1.X - p2.X;
@@ -59,6 +69,14 @@ namespace ArwicEngine.Graphics
             return res;
         }
 
+        /// <summary>
+        /// Draws a line begging at p1 and ending at p2 with a given thickness
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <param name="thickness"></param>
+        /// <param name="c"></param>
         public static void DrawLine(SpriteBatch sb, Vector2 p1, Vector2 p2, int thickness, Color c)
         {
             float length = Vector2.Distance(p1, p2);
@@ -67,6 +85,15 @@ namespace ArwicEngine.Graphics
             sb.Draw(pixel, new Rectangle((int)p1.X - thickness / 2, (int)p1.Y - thickness / 2, (int)length, thickness), new Rectangle(0, 0, 1, 1), c, rotation, Vector2.Zero, SpriteEffects.None, 0.0f);
         }
 
+        /// <summary>
+        /// Draws a hexagon with given paramaters
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="centre"></param>
+        /// <param name="size"></param>
+        /// <param name="thickness"></param>
+        /// <param name="c"></param>
+        /// <param name="orientation"></param>
         public static void DrawHexagon(SpriteBatch sb, Vector2 centre, int size, int thickness, Color c, HexagonOrientation orientation = HexagonOrientation.Pointy)
         {
             switch (orientation)
@@ -79,6 +106,16 @@ namespace ArwicEngine.Graphics
             }
         }
 
+        /// <summary>
+        /// Draws an approximation of a circle
+        /// The smoothness defines how many lines make up the circle's circumference
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="centre"></param>
+        /// <param name="radius"></param>
+        /// <param name="smoothness"></param>
+        /// <param name="thickness"></param>
+        /// <param name="c"></param>
         public static void DrawCircle(SpriteBatch sb, Vector2 centre, int radius, int smoothness, int thickness, Color c)
         {
             double segmentAngle = 2 * Math.PI / smoothness;
@@ -91,6 +128,13 @@ namespace ArwicEngine.Graphics
             }
         }
 
+        /// <summary>
+        /// Draws the outline of a rectangle
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="rect"></param>
+        /// <param name="thickness"></param>
+        /// <param name="c"></param>
         public static void DrawRect(SpriteBatch sb, Rectangle rect, int thickness, Color c)
         {
             DrawLine(sb, new Vector2(rect.X, rect.Y), new Vector2(rect.X + rect.Width, rect.Y), thickness, c);
@@ -99,18 +143,24 @@ namespace ArwicEngine.Graphics
             DrawLine(sb, new Vector2(rect.X + rect.Width + 1, rect.Y + thickness), new Vector2(rect.X + rect.Width + 1, rect.Y + rect.Height + thickness), thickness, c);
         }
 
+        /// <summary>
+        /// Draws a filled rectangle
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="rect"></param>
+        /// <param name="c"></param>
         public static void DrawRectFill(SpriteBatch sb, Rectangle rect, Color c)
         {
             sb.Draw(pixel, rect, null, c);
         }
 
         /// <summary>
-        /// Algorithm that checks if a point is inside a polygon. Checks how may times a line
-        /// originating from a point will cross each side. An odd result means it is inside the polygon.
+        /// Algorithm that checks if a point is inside a polygon. 
+        /// Checks how may times a line originating from a point will cross each side. 
+        /// An odd result means it is inside the polygon.
         /// http://astronomy.swin.edu.au/~pbourke/geometry/insidepoly/
         /// </summary>
         /// <param name="polygonVerts"></param>
-        /// <param name="N"></param>
         /// <param name="testPoint"></param>
         /// <returns></returns>
         public static bool InsidePolygon(Vector2[] polygonVerts, Vector2 testPoint)

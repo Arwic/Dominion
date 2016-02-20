@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿// Dominion - Copyright (C) Timothy Ings
+// Sprite.cs
+// This file contains classes that define a 2d sprite
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -28,11 +32,40 @@ namespace ArwicEngine.Graphics
 
         public const string DEFAULT_TEXTURE_PATH = "Graphics/Util/Default";
 
+        /// <summary>
+        /// Gets the texture used to render the sprite, will return the first texture of a layered texture sprites
+        /// Valid only for texture and layered texture sprites
+        /// </summary>
         public Texture2D Texture => Layers[0].Texture;
+
+        /// <summary>
+        /// Gets the path of the texture's file on disk
+        /// Valid only for texture sprites
+        /// </summary>
         public string Path { get; }
+        
+        /// <summary>
+        /// Gets the layers used to render the sprite, order matters
+        /// Valid only for txture amd layered texture sprites
+        /// </summary>
         public List<SpriteLayer> Layers { get; }
+
+        /// <summary>
+        /// Gets the atlas used to render the sprite
+        /// Valid only for atlas sprites
+        /// </summary>
         public SpriteAtlas Atlas { get; }
+
+        /// <summary>
+        /// Gets or sets the index that will be used to get the texture
+        /// Valid only for atlas sprites
+        /// </summary>
         public int AtlasIndex { get; private set; }
+
+        /// <summary>
+        /// Gets the width of the sprite
+        /// Returns a value based on the first layer of a layered texture sprite
+        /// </summary>
         public int Width
         {
             get
@@ -42,6 +75,11 @@ namespace ArwicEngine.Graphics
                 return Texture.Width;
             }
         }
+
+        /// <summary>
+        /// Gets the height of the sprite
+        /// Returns a value based on the first layer of a layered texture sprite
+        /// </summary>
         public int Height
         {
             get
@@ -120,6 +158,16 @@ namespace ArwicEngine.Graphics
             spriteType = SpriteType.Atlas;
         }
 
+        /// <summary>
+        /// Draws the sprite
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="dest"></param>
+        /// <param name="source"></param>
+        /// <param name="color"></param>
+        /// <param name="scale"></param>
+        /// <param name="origin"></param>
+        /// <param name="rotation"></param>
         public void Draw(SpriteBatch sb, Rectangle dest, Rectangle? source = null, Color? color = null, Vector2? scale = null, Vector2? origin = null, float rotation = 0f)
         {
             // setup values
@@ -153,6 +201,19 @@ namespace ArwicEngine.Graphics
             }
         }
 
+        /// <summary>
+        /// Draws the sprite using the nine cut method
+        /// This is mostly useful for gui elements like forms and buttons
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="dest"></param>
+        /// <param name="source"></param>
+        /// <param name="color"></param>
+        /// <param name="destEdge"></param>
+        /// <param name="sourceEdge"></param>
+        /// <param name="scale"></param>
+        /// <param name="origin"></param>
+        /// <param name="rotation"></param>
         public void DrawNineCut(SpriteBatch sb, Rectangle dest, Rectangle? source = null, Color? color = null, int? destEdge = null, int? sourceEdge = null, Vector2? scale = null, Vector2? origin = null, float rotation = 0f)
         {
             // setup values
