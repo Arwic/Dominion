@@ -29,6 +29,7 @@ namespace Dominion.Client.Scenes
         private Canvas canvas;
         private BoardRenderer boardRenderer;
         private UnitRenderer unitRenderer;
+        public GUI_GameMenu GameMenu { get; private set; }
         public GUI_Tech TechTree { get; private set; }
         public GUI_CityList CityList { get; private set; }
         public GUI_UnitList UnitList { get; private set; }
@@ -126,6 +127,7 @@ namespace Dominion.Client.Scenes
             CityManagment = new GUI_CityManagment(Engine, manager.Client, this, canvas);
             GUI_NamePlates namePlates = new GUI_NamePlates(Engine, manager.Client, canvas, camera, boardRenderer);
             TechTree = new GUI_Tech(Engine, manager.Client, this, canvas);
+            GameMenu = new GUI_GameMenu(Engine, manager.Client, this, canvas);
         }
 
         public void HideForms(bool hideCityManagment = true, bool hideUnitActions = true)

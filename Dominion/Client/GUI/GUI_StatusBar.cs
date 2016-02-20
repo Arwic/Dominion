@@ -44,10 +44,17 @@ namespace Dominion.Client.GUI
 
                 int toolTipWidth = 250;
 
-                Button btnMenu = (Button)form.GetChild("btnMenu");
+                Button btnMenu = (Button)form.GetChildByName("btnMenu");
                 btnMenu.ToolTip = new ToolTip("Opens the game menu", toolTipWidth);
+                btnMenu.MouseClick += (s, a) =>
+                {
+                    if (sceneGame.GameMenu.Visible)
+                        sceneGame.GameMenu.Hide();
+                    else
+                        sceneGame.GameMenu.Show();
+                };
 
-                Button btnTech = (Button)form.GetChild("btnTech");
+                Button btnTech = (Button)form.GetChildByName("btnTech");
                 btnTech.ToolTip = new ToolTip("Opens the technology tree interface", toolTipWidth);
                 btnTech.MouseClick += (s, a) =>
                 {
@@ -57,13 +64,13 @@ namespace Dominion.Client.GUI
                         sceneGame.TechTree.Show();
                 };
 
-                Button btnSocialPolicy = (Button)form.GetChild("btnSocialPolicy");
+                Button btnSocialPolicy = (Button)form.GetChildByName("btnSocialPolicy");
                 btnSocialPolicy.ToolTip = new ToolTip("Opens the social policy interface", toolTipWidth);
 
-                Button btnDiplomacy = (Button)form.GetChild("btnDiplomacy");
+                Button btnDiplomacy = (Button)form.GetChildByName("btnDiplomacy");
                 btnDiplomacy.ToolTip = new ToolTip("Opens the diplomacy interface", toolTipWidth);
 
-                Button btnCityList = (Button)form.GetChild("btnCityList");
+                Button btnCityList = (Button)form.GetChildByName("btnCityList");
                 btnCityList.ToolTip = new ToolTip("Opens a list of your empire's controlled cities", toolTipWidth);
                 btnCityList.MouseClick += (s, a) =>
                 {
@@ -73,7 +80,7 @@ namespace Dominion.Client.GUI
                         sceneGame.CityList.Show();
                 };
 
-                Button btnUnitList = (Button)form.GetChild("btnUnitList");
+                Button btnUnitList = (Button)form.GetChildByName("btnUnitList");
                 btnUnitList.ToolTip = new ToolTip("Opens a list of your empire's controlled units", toolTipWidth);
                 btnUnitList.MouseClick += (s, a) =>
                 {
@@ -83,7 +90,7 @@ namespace Dominion.Client.GUI
                         sceneGame.UnitList.Show();
                 };
 
-                lblResources = (Label)form.GetChild("lblResources");
+                lblResources = (Label)form.GetChildByName("lblResources");
                 UpdateResourceLabel();
             }
         }

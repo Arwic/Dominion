@@ -914,7 +914,7 @@ namespace ArwicEngine.Forms
             Cursor.Enable();
         }
 
-        public Control GetChild(string name)
+        public Control GetChildByName(string name)
         {
             foreach (Control child in Children)
             {

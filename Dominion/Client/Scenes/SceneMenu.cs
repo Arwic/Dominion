@@ -141,13 +141,13 @@ namespace Dominion.Client.Scenes
                 canvas.RemoveChild(frm_main);
                 frm_main = new Form(formConfig, canvas);
                 frm_main.CentreControl();
-                Button btnHost = (Button)frm_main.GetChild("btnHost");
+                Button btnHost = (Button)frm_main.GetChildByName("btnHost");
                 btnHost.MouseClick += Main_BtnHost_MouseClick;
-                Button btnJoin = (Button)frm_main.GetChild("btnJoin");
+                Button btnJoin = (Button)frm_main.GetChildByName("btnJoin");
                 btnJoin.MouseClick += Main_BtnJoin_MouseClick;
-                Button btnOptions = (Button)frm_main.GetChild("btnOptions");
+                Button btnOptions = (Button)frm_main.GetChildByName("btnOptions");
                 btnOptions.MouseClick += Main_BtnOptions_MouseClick;
-                Button btnQuit = (Button)frm_main.GetChild("btnQuit");
+                Button btnQuit = (Button)frm_main.GetChildByName("btnQuit");
                 btnQuit.MouseClick += Main_BtnQuit_MouseClick;
             }
         }
@@ -187,22 +187,22 @@ namespace Dominion.Client.Scenes
                 canvas.RemoveChild(frm_hostGame);
                 frm_hostGame = new Form(formConfig, canvas);
                 frm_hostGame.CentreControl();
-                tbAddress = (TextBox)frm_hostGame.GetChild("tbAddress");
+                tbAddress = (TextBox)frm_hostGame.GetChildByName("tbAddress");
                 tbAddress.Text = "Retrieving WAN Address...";
                 tbAddress.ToolTip = new ToolTip("This is your public IP address that people can use join to join your game over the internet", 500);
                 SetCurrentAddressAsync();
-                tbPort = (TextBox)frm_hostGame.GetChild("tbPort");
+                tbPort = (TextBox)frm_hostGame.GetChildByName("tbPort");
                 tbPort.Text = "7894";
                 tbPort.ToolTip = new ToolTip("You need to forward this TCP port to play over the internet", 500);
-                tbUsername = (TextBox)frm_hostGame.GetChild("tbUsername");
+                tbUsername = (TextBox)frm_hostGame.GetChildByName("tbUsername");
                 tbUsername.Text = Environment.MachineName;
                 tbUsername.ToolTip = new ToolTip("This is the name other players will see you as", 500);
-                tbPassword = (TextBox)frm_hostGame.GetChild("tbPassword");
+                tbPassword = (TextBox)frm_hostGame.GetChildByName("tbPassword");
                 tbPassword.Text = "dog";
                 tbPassword.ToolTip = new ToolTip("This is the password people will need to join your lobby", 500);
-                Button btnBack = (Button)frm_hostGame.GetChild("btnBack");
+                Button btnBack = (Button)frm_hostGame.GetChildByName("btnBack");
                 btnBack.MouseClick += Host_BtnBack_MouseClick;
-                Button btnHost = (Button)frm_hostGame.GetChild("btnHost");
+                Button btnHost = (Button)frm_hostGame.GetChildByName("btnHost");
                 btnHost.MouseClick += Host_BtnHost_MouseClick;
             }
         }
@@ -274,15 +274,15 @@ namespace Dominion.Client.Scenes
                 canvas.RemoveChild(frm_joinGame);
                 frm_joinGame = new Form(formConfig, canvas);
                 frm_joinGame.Location = new Point(Engine.Graphics.Viewport.Width / 2 - frm_joinGame.Size.Width / 2, Engine.Graphics.Viewport.Height / 2 - frm_joinGame.Size.Height / 2);
-                tbAddress = (TextBox)frm_joinGame.GetChild("tbAddress");
+                tbAddress = (TextBox)frm_joinGame.GetChildByName("tbAddress");
                 tbAddress.Text = Engine.Config.GetVar(CONFIG_NET_CLIENT_ADDRESS);
-                tbUsername = (TextBox)frm_joinGame.GetChild("tbUsername");
+                tbUsername = (TextBox)frm_joinGame.GetChildByName("tbUsername");
                 tbUsername.Text = Environment.MachineName;
-                tbPassword = (TextBox)frm_joinGame.GetChild("tbPassword");
+                tbPassword = (TextBox)frm_joinGame.GetChildByName("tbPassword");
                 tbPassword.Text = "dog";
-                Button btnBack = (Button)frm_joinGame.GetChild("btnBack");
+                Button btnBack = (Button)frm_joinGame.GetChildByName("btnBack");
                 btnBack.MouseClick += Join_BtnBack_MouseClick;
-                Button btnJoin = (Button)frm_joinGame.GetChild("btnJoin");
+                Button btnJoin = (Button)frm_joinGame.GetChildByName("btnJoin");
                 btnJoin.MouseClick += Join_BtnJoin_MouseClick;
             }
         }
@@ -330,43 +330,43 @@ namespace Dominion.Client.Scenes
                 frm_lobby = new Form(formConfig, canvas);
                 frm_lobby.CentreControl();
 
-                Button btnStart = (Button)frm_lobby.GetChild("btnStart");
+                Button btnStart = (Button)frm_lobby.GetChildByName("btnStart");
                 if (host) btnStart.MouseClick += Lobby_BtnStart_MouseClick;
                 else btnStart.Enabled = false;
 
-                Button btnBack = (Button)frm_lobby.GetChild("btnBack");
+                Button btnBack = (Button)frm_lobby.GetChildByName("btnBack");
                 btnBack.MouseClick += Lobby_BtnBack_MouseClick;
 
-                Button btnKick = (Button)frm_lobby.GetChild("btnKick");
+                Button btnKick = (Button)frm_lobby.GetChildByName("btnKick");
                 if (host) btnKick.MouseClick += Lobby_BtnKick_MouseClick;
                 else btnKick.Enabled = false;
 
-                Button btnBan = (Button)frm_lobby.GetChild("btnBan");
+                Button btnBan = (Button)frm_lobby.GetChildByName("btnBan");
                 if (host) btnBan.MouseClick += Lobby_BtnBan_MouseClick;
                 else btnBan.Enabled = false;
 
-                lobby_btnEmpireSelect = (Button)frm_lobby.GetChild("btnEmpire");
+                lobby_btnEmpireSelect = (Button)frm_lobby.GetChildByName("btnEmpire");
                 lobby_btnEmpireSelect.MouseClick += Lobby_BtnEmpireSelect_MouseClick;
 
-                lobby_btnWorldSize = (Button)frm_lobby.GetChild("btnWorldSize");
+                lobby_btnWorldSize = (Button)frm_lobby.GetChildByName("btnWorldSize");
                 if (host) lobby_btnWorldSize.MouseClick += Lobby_BtnWorldSize_MouseClick;
                 else lobby_btnWorldSize.Enabled = false;
 
-                lobby_btnWorldType = (Button)frm_lobby.GetChild("btnWorldType");
+                lobby_btnWorldType = (Button)frm_lobby.GetChildByName("btnWorldType");
                 if (host) lobby_btnWorldType.MouseClick += Lobby_BtnWorldType_MouseClick;
                 else lobby_btnWorldType.Enabled = false;
 
-                lobby_btnGameSpeed = (Button)frm_lobby.GetChild("btnGameSpeed");
+                lobby_btnGameSpeed = (Button)frm_lobby.GetChildByName("btnGameSpeed");
                 if (host) lobby_btnGameSpeed.MouseClick += Lobby_BtnGameSpeed_MouseClick;
                 else lobby_btnGameSpeed.Enabled = false;
 
-                lobby_btnVictoryTypes = (Button)frm_lobby.GetChild("btnVictoryTypes");
+                lobby_btnVictoryTypes = (Button)frm_lobby.GetChildByName("btnVictoryTypes");
                 lobby_btnVictoryTypes.MouseClick += Lobby_BtnVictoryTypes_MouseClick;
 
-                lobby_btnOtherOptions = (Button)frm_lobby.GetChild("btnOtherOptions");
+                lobby_btnOtherOptions = (Button)frm_lobby.GetChildByName("btnOtherOptions");
                 lobby_btnOtherOptions.MouseClick += Lobby_BtnOtherOptions_MouseClick;
 
-                lobby_sbPlayers = (ScrollBox)frm_lobby.GetChild("sbPlayers");
+                lobby_sbPlayers = (ScrollBox)frm_lobby.GetChildByName("sbPlayers");
                 lobby_sbPlayers.Items = GetPlayers();
 
                 Lobby_BtnEmpireSelect_MouseClick(lobby_btnEmpireSelect, new MouseEventArgs(false, false, false, Point.Zero, 0));

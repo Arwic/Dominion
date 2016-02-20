@@ -115,68 +115,68 @@ namespace Dominion.Client.GUI
                 frmReturnBuy.Location = new Point(frmReturnBuy.Location.X, 1080 - 100 - frmReturnBuy.Size.Height);
                 
                 // Stats 
-                Label lblPopulationValue = (Label)frmStats.GetChild("lblPopulationValue");
+                Label lblPopulationValue = (Label)frmStats.GetChildByName("lblPopulationValue");
                 lblPopulationValue.Text = $"{client.SelectedCity.Population}".ToRichText();
-                Label lblPopGrowthValue = (Label)frmStats.GetChild("lblPopGrowthValue");
+                Label lblPopGrowthValue = (Label)frmStats.GetChildByName("lblPopGrowthValue");
                 int turnsUntilGrowth = client.SelectedCity.TurnsUntilPopulationGrowth;
                 if (turnsUntilGrowth == -1) lblPopGrowthValue.Text = $"Inf".ToRichText();
                 else if (turnsUntilGrowth == -2) lblPopGrowthValue.Text = $"~".ToRichText();
                 else lblPopGrowthValue.Text = $"{turnsUntilGrowth}".ToRichText();
-                Label lblFoodValue = (Label)frmStats.GetChild("lblFoodValue");
+                Label lblFoodValue = (Label)frmStats.GetChildByName("lblFoodValue");
                 lblFoodValue.Text = $"+{client.SelectedCity.IncomeFood}".ToRichText();
-                Label lblProductionValue = (Label)frmStats.GetChild("lblProductionValue");
+                Label lblProductionValue = (Label)frmStats.GetChildByName("lblProductionValue");
                 lblProductionValue.Text = $"+{client.SelectedCity.IncomeProduction}".ToRichText();
-                Label lblGoldValue = (Label)frmStats.GetChild("lblGoldValue");
+                Label lblGoldValue = (Label)frmStats.GetChildByName("lblGoldValue");
                 lblGoldValue.Text = $"+{client.SelectedCity.IncomeGold}".ToRichText();
-                Label lblScienceValue = (Label)frmStats.GetChild("lblScienceValue");
+                Label lblScienceValue = (Label)frmStats.GetChildByName("lblScienceValue");
                 lblScienceValue.Text = $"+{client.SelectedCity.IncomeScience}".ToRichText();
-                Label lblCultureValue = (Label)frmStats.GetChild("lblCultureValue");
+                Label lblCultureValue = (Label)frmStats.GetChildByName("lblCultureValue");
                 lblCultureValue.Text = $"+{client.SelectedCity.IncomeCulture}".ToRichText();
-                Label lblBorderGrowthValue = (Label)frmStats.GetChild("lblBorderGrowthValue");
+                Label lblBorderGrowthValue = (Label)frmStats.GetChildByName("lblBorderGrowthValue");
                 lblBorderGrowthValue.Text = $"+{client.SelectedCity.IncomeCulture}".ToRichText();
                 int turnsUntilBorderGrowth = client.SelectedCity.TurnsUntilBorderGrowth;
                 if (turnsUntilBorderGrowth == -1) lblBorderGrowthValue.Text = $"Inf".ToRichText();
                 else if (turnsUntilBorderGrowth == -2) lblBorderGrowthValue.Text = $"~".ToRichText();
                 else lblBorderGrowthValue.Text = $"{turnsUntilBorderGrowth}".ToRichText();
-                TextBox tbName = (TextBox)frmStats.GetChild("tbName");
+                TextBox tbName = (TextBox)frmStats.GetChildByName("tbName");
                 tbName.Text = client.SelectedCity.Name;
                 tbName.EnterPressed += TbName_EnterPressed;
 
                 // Production
-                sbProductionQueue = (ScrollBox)frmProduction.GetChild("sbProductionQueue");
+                sbProductionQueue = (ScrollBox)frmProduction.GetChildByName("sbProductionQueue");
                 sbProductionQueue.Items = GetProductionQueueListItems();
                 sbProductionQueue.SelectedIndex = sbProductionQueueSelected;
                 sbProductionQueue.SelectedChanged += (s, a) => sbProductionQueueSelected = sbProductionQueue.SelectedIndex;
-                sbProductionList = (ScrollBox)frmProduction.GetChild("sbProductionList");
+                sbProductionList = (ScrollBox)frmProduction.GetChildByName("sbProductionList");
                 sbProductionList.Items = GetProductionListListItems();
                 sbProductionList.SelectedIndex = sbProductionListSelected;
                 sbProductionList.SelectedChanged += (s, a) => sbProductionListSelected = sbProductionList.SelectedIndex;
-                Button btnCancelProduction = (Button)frmProduction.GetChild("btnCancelProduction");
+                Button btnCancelProduction = (Button)frmProduction.GetChildByName("btnCancelProduction");
                 btnCancelProduction.MouseClick += BtnCancelProduction_MouseClick;
-                Button btnMoveUp = (Button)frmProduction.GetChild("btnMoveUp");
+                Button btnMoveUp = (Button)frmProduction.GetChildByName("btnMoveUp");
                 btnMoveUp.MouseClick += BtnMoveUp_MouseClick;
-                Button btnMoveDown = (Button)frmProduction.GetChild("btnMoveDown");
+                Button btnMoveDown = (Button)frmProduction.GetChildByName("btnMoveDown");
                 btnMoveDown.MouseClick += BtnMoveDown_MouseClick;
-                Button btnChangeProduction = (Button)frmProduction.GetChild("btnChangeProduction");
+                Button btnChangeProduction = (Button)frmProduction.GetChildByName("btnChangeProduction");
                 btnChangeProduction.MouseClick += BtnChangeProduction_MouseClick;
-                Button btnQueueProduction = (Button)frmProduction.GetChild("btnQueueProduction");
+                Button btnQueueProduction = (Button)frmProduction.GetChildByName("btnQueueProduction");
                 btnQueueProduction.MouseClick += BtnQueueProduction_MouseClick;
 
                 // Focus
-                sbCitizenFocus = (ScrollBox)frmFocus.GetChild("sbCitizenFocus");
+                sbCitizenFocus = (ScrollBox)frmFocus.GetChildByName("sbCitizenFocus");
                 sbCitizenFocus.Items = GetCitizenFocusListItems();
                 sbCitizenFocus.SelectedIndex = (int)client.SelectedCity.CitizenFocus;
                 sbCitizenFocus.SelectedChanged += SbCitizenFocus_SelectedChanged;
-                sbBuildingList = (ScrollBox)frmFocus.GetChild("sbBuildingList");
+                sbBuildingList = (ScrollBox)frmFocus.GetChildByName("sbBuildingList");
                 sbBuildingList.Items = GetBuildingList();
                 sbBuildingList.SelectedIndex = 0;
-                Button btnDemolish = (Button)frmFocus.GetChild("btnDemolish");
+                Button btnDemolish = (Button)frmFocus.GetChildByName("btnDemolish");
                 btnDemolish.MouseClick += BtnDemolish_MouseClick;
 
                 // Return/Buy
-                Button btnBuyTile = (Button)frmReturnBuy.GetChild("btnBuyTile");
+                Button btnBuyTile = (Button)frmReturnBuy.GetChildByName("btnBuyTile");
                 btnBuyTile.MouseClick += (s, a) => buyingTiles = true;
-                Button btnReturnToMap = (Button)frmReturnBuy.GetChild("btnReturnToMap");
+                Button btnReturnToMap = (Button)frmReturnBuy.GetChildByName("btnReturnToMap");
                 btnReturnToMap.MouseClick += (s, a) => Hide();
             }
         }

@@ -69,7 +69,7 @@ namespace Dominion.Client.GUI
                 form = new Form(formConfig, canvas);
                 form.Location = new Point(0, 200);
 
-                ScrollBox sbUnitList = (ScrollBox)form.GetChild("sbUnitList");
+                ScrollBox sbUnitList = (ScrollBox)form.GetChildByName("sbUnitList");
                 sbUnitList.Items = unitListItems;
                 sbUnitList.SelectedChanged += SbUnitList_SelectedChanged;
             }

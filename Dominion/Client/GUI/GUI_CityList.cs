@@ -78,7 +78,7 @@ namespace Dominion.Client.GUI
                 form = new Form(formConfig, canvas);
                 form.Location = new Point(0, 200);
 
-                ScrollBox sbCities = (ScrollBox)form.GetChild("sbCityList");
+                ScrollBox sbCities = (ScrollBox)form.GetChildByName("sbCityList");
                 sbCities.Items = cityListItems;
                 sbCities.SelectedIndex = -1;
                 sbCities.SelectedChanged += SbCities_SelectedChanged;

@@ -80,6 +80,9 @@ namespace Dominion.Server
         }
         private void Server_ConnectionLost(object sender, ConnectionEventArgs e)
         {
+            if (controllers.Player.GetAllPlayers().Count == 0)
+                StopServer();
+
             Player player = controllers.Player.GetPlayer(e.Connection);
             controllers.Player.RemovePlayer(player.InstanceID);
             if (ServerState == ServerState.Lobby)
