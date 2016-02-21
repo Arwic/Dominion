@@ -1,6 +1,7 @@
 ﻿using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using ArwicEngine.Graphics;
+using ArwicEngine.Input;
 using Dominion.Common.Entities;
 using Dominion.Common.Factories;
 using Microsoft.Xna.Framework;
@@ -93,8 +94,6 @@ namespace Dominion.Client.Renderers
             }
         }
 
-        public Engine Engine { get; set; }
-
         public bool DrawResourceIcons { get; set; }
         public bool DrawGrid { get; set; }
         public bool DrawHighlight { get; set; }
@@ -142,9 +141,8 @@ namespace Dominion.Client.Renderers
         public int TileWidth => (int)(sqrt3on2 * TileHeight);
         public Rectangle Bounds => new Rectangle(0, 0, client.Board.Tiles[0].Length * TileWidth, client.Board.Tiles.Length * TileHeight - (int)(0.25 * (client.Board.Tiles.Length + 1) * TileHeight));
 
-        public BoardRenderer(Engine engine, Client client, Camera2 camera)
+        public BoardRenderer(Client client, Camera2 camera)
         {
-            Engine = engine;
             this.client = client;
             this.camera = camera;
 
@@ -172,30 +170,30 @@ namespace Dominion.Client.Renderers
         }
         private void LoadResources()
         {
-            cloudSprite = new Sprite(Engine.Content, "Graphics/Game/Tiles/Cloud");
-            citySprite = new Sprite(Engine.Content, "Graphics/Game/Cities/City");
-            tileOverlaySprite = new Sprite(Engine.Content, "Graphics/Game/Tiles/TileOverlay");
-            tileOutlineSprite = new Sprite(Engine.Content, "Graphics/Game/Tiles/TileOutline");
+            cloudSprite = new Sprite("Graphics/Game/Tiles/Cloud");
+            citySprite = new Sprite("Graphics/Game/Cities/City");
+            tileOverlaySprite = new Sprite("Graphics/Game/Tiles/TileOverlay");
+            tileOutlineSprite = new Sprite("Graphics/Game/Tiles/TileOutline");
 
             string[] resource = Enum.GetNames(typeof(TileResource));
             resourceSprites = new Sprite[resource.Length];
             for (int i = 0; i < resourceSprites.Length; i++)
-                resourceSprites[i] = new Sprite(Engine.Content, $"Graphics/Game/Tiles/Resource/{i}");
+                resourceSprites[i] = new Sprite($"Graphics/Game/Tiles/Resource/{i}");
 
             string[] terrainBase = Enum.GetNames(typeof(TileTerrainBase));
             terrainBaseSprites = new Sprite[terrainBase.Length];
             for (int i = 0; i < terrainBaseSprites.Length; i++)
-                terrainBaseSprites[i] = new Sprite(Engine.Content, $"Graphics/Game/Tiles/TerrainBase/{i}");
+                terrainBaseSprites[i] = new Sprite($"Graphics/Game/Tiles/TerrainBase/{i}");
 
             string[] terrainFeature = Enum.GetNames(typeof(TileTerrainFeature));
             terrainFeatureSprites = new Sprite[terrainFeature.Length];
             for (int i = 0; i < terrainFeatureSprites.Length; i++)
-                terrainFeatureSprites[i] = new Sprite(Engine.Content, $"Graphics/Game/Tiles/TerrainFeature/{i}");
+                terrainFeatureSprites[i] = new Sprite($"Graphics/Game/Tiles/TerrainFeature/{i}");
 
             string[] tileImprovment = Enum.GetNames(typeof(TileImprovment));
             improvmentSprites = new Sprite[tileImprovment.Length + 1];
             for (int i = 0; i < improvmentSprites.Length; i++)
-                improvmentSprites[i] = new Sprite(Engine.Content, $"Graphics/Game/Tiles/Improvment/{i}");
+                improvmentSprites[i] = new Sprite($"Graphics/Game/Tiles/Improvment/{i}");
         }
         private void BuildTileIcons()
         {
@@ -303,7 +301,7 @@ namespace Dominion.Client.Renderers
         }
         private void DrawTiles(SpriteBatch sb)
         {
-            Tile tileUnderMouse = GetTileAtPoint(Engine.Input.MouseWorldPos(camera));
+            Tile tileUnderMouse = GetTileAtPoint(InputManager.Instance.MouseWorldPos(camera));
             List<int> myCityIDs = client.GetMyCityIDs();
             for (int y = 0; y < client.Board.Tiles.Length; y++)
             {
@@ -413,7 +411,7 @@ namespace Dominion.Client.Renderers
         }
         private void DrawCities(SpriteBatch sb)
         {
-            foreach (City city in client.Cities)
+            foreach (City city in client.Cities.ToArray())
             {
                 Tile tile = client.GetCachedTile(city.Location);
                 if (tile == null)
@@ -463,7 +461,7 @@ namespace Dominion.Client.Renderers
                     if (tile == null)
                         continue;
                     Vector2[] localCorners = GetTileCorners(x, y);
-                    if (GraphicsHelper.InsidePolygon(localCorners, Engine.Input.MouseWorldPos(camera)))
+                    if (GraphicsHelper.InsidePolygon(localCorners, InputManager.Instance.MouseWorldPos(camera)))
                     {
                         for (int i = 0; i < 5; i++)
                             GraphicsHelper.DrawLine(sb, localCorners[i], localCorners[i + 1], 2, Color.CornflowerBlue);

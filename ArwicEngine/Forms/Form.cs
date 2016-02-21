@@ -22,10 +22,10 @@ namespace ArwicEngine.Forms
         public static Sprite DefaultBackgroundSprite;
         public static Sprite DefaultCloseButtonSprite;
 
-        public static new void InitDefaults(Engine e)
+        public static new void InitDefaults()
         {
-            DefaultBackgroundSprite = new Sprite(e.Content, CONTROL_FORM_BACK);
-            DefaultCloseButtonSprite = new Sprite(e.Content, CONTROL_FORM_CLOSE);
+            DefaultBackgroundSprite = new Sprite(CONTROL_FORM_BACK);
+            DefaultCloseButtonSprite = new Sprite(CONTROL_FORM_CLOSE);
         }
         #endregion
 

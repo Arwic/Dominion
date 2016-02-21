@@ -50,7 +50,6 @@ namespace Dominion.Client.GUI
             }
         }
 
-        private Engine engine;
         private Client client;
         private SceneGame sceneGame;
         private Canvas canvas;
@@ -72,13 +71,12 @@ namespace Dominion.Client.GUI
         private int sbProductionListSelected;
         private bool buyingTiles;
 
-        public GUI_CityManagment(Engine engine, Client client, SceneGame sceneGame, Canvas canvas)
+        public GUI_CityManagment(Client client, SceneGame sceneGame, Canvas canvas)
         {
             frmFocusConfig = FormConfig.FromFile("Content/Interface/Game/City_FocusPane.xml");
             frmProductionConfig = FormConfig.FromFile("Content/Interface/Game/City_ProductionPane.xml");
             frmStatsConfig = FormConfig.FromFile("Content/Interface/Game/City_StatsPane.xml");
             frmReturnBuyConfig = FormConfig.FromFile("Content/Interface/Game/City_ReturnBuyPane.xml");
-            this.engine = engine;
             this.client = client;
             this.sceneGame = sceneGame;
             this.canvas = canvas;

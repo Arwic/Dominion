@@ -12,24 +12,42 @@ namespace ArwicEngine.Core
     /// <summary>
     /// Manages a list of variables
     /// </summary>
-    public class ConfigManager
+    public sealed class ConfigManager
     {
-        /// <summary>
-        /// Reference to the engine
-        /// </summary>
-        public Engine Engine { get; set; }
+        private class Variable
+        {
+            public string Var { get; set; }
+            public string Val { get; set; }
 
-        private List<string> vars = new List<string>();
-        private List<string> vals = new List<string>();
+            public Variable(string var, string val)
+            {
+                Var = var;
+                Val = val;
+            }
+        }
+
+        // Singleton pattern
+        private static object _lock_instance = new object();
+        private static readonly ConfigManager _instance = new ConfigManager();
+        public static ConfigManager Instance
+        {
+            get
+            {
+                lock (_lock_instance)
+                {
+                    return _instance;
+                }
+            }
+        }
+
+        //private List<string> vars = new List<string>();
+        //private List<string> vals = new List<string>();
+        private List<Variable> vars = new List<Variable>();
 
         /// <summary>
         /// Creates a new config manager
         /// </summary>
-        /// <param name="engine"></param>
-        public ConfigManager(Engine engine)
-        {
-            Engine = engine;
-        }
+        private ConfigManager() { }
 
         /// <summary>
         /// Returns a variable's value
@@ -43,7 +61,7 @@ namespace ArwicEngine.Core
             // loop through all variables
             for (i = 0; i < vars.Count; i++)
             {
-                if (vars[i] == var)
+                if (vars[i].Var == var)
                 {
                     // break when we have found the var
                     exists = true;
@@ -52,7 +70,7 @@ namespace ArwicEngine.Core
             }
             // if we have found the var, return its value
             if (exists)
-                return vals[i];
+                return vars[i].Val;
             // else return null
             return "NULL";
         }
@@ -69,7 +87,7 @@ namespace ArwicEngine.Core
             int i;
             for (i = 0; i < vars.Count; i++)
             {
-                if (vars[i] == var)
+                if (vars[i].Var == var)
                 {
                     exists = true;
                     break;
@@ -78,14 +96,13 @@ namespace ArwicEngine.Core
             // if it does, set the var to val
             if (exists)
             {
-                vals[i] = val;
+                vars[i].Val = val;
                 return;
             }
             // else, add var = val as a new variable
             else
             {
-                vars.Add(var);
-                vals.Add(val);
+                vars.Add(new Variable(var, val));
             }
         }
 
@@ -94,11 +111,10 @@ namespace ArwicEngine.Core
         /// </summary>
         public void SetDefaults()
         {
-            Engine?.Console?.WriteLine("Setting defaults", MsgType.Info);
+            ConsoleManager.Instance.WriteLine("Setting defaults", MsgType.Info);
 
             // clear/reset vars and vals
-            vars = new List<string>();
-            vals = new List<string>();
+            vars = new List<Variable>();
 
             // set default variables
             SetVar(CONFIG_RESOLUTION, "1920x1080");
@@ -119,9 +135,6 @@ namespace ArwicEngine.Core
         /// <param name="path"></param>
         public void Write(string path)
         {
-            if (vars.Count != vals.Count)
-                throw new Exception("Config parity lost");
-
             List<string> file = new List<string>();
             if (File.Exists(path))
             {
@@ -136,21 +149,21 @@ namespace ArwicEngine.Core
                 for (int fi = 0; fi < file.Count; fi++)
                 {
                     string fileVar = file[fi].Split(' ')?[1];
-                    if (string.Compare(fileVar, vars[vi]) == 0)
+                    if (string.Compare(fileVar, vars[vi].Var) == 0)
                     {
-                        file[fi] = $"set {vars[vi]} {vals[vi]}";
+                        file[fi] = $"set {vars[vi].Var} {vars[vi].Val}";
                         found = true;
                         break;
                     }
                 }
                 if (!found)
-                    file.Add($"set {vars[vi]} {vals[vi]}");
+                    file.Add($"set {vars[vi].Var} {vars[vi].Val}");
             }
 
             if (File.Exists(path))
                 File.Delete(path);
             File.WriteAllLines(path, file);
-            Engine?.Console?.WriteLine($"Saved config vars to '{path}'");
+            ConsoleManager.Instance.WriteLine($"Saved config vars to '{path}'");
         }
     }
 }

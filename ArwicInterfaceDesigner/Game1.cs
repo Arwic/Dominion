@@ -1,5 +1,6 @@
 ﻿using ArwicEngine.Core;
 using ArwicEngine.Forms;
+using ArwicEngine.Scenes;
 using ArwicEngine.TypeConverters;
 using Microsoft.Xna.Framework;
 using System;
@@ -9,17 +10,15 @@ namespace ArwicInterfaceDesigner
 {
     public class Game1 : Game
     {
-        public Engine Engine { get; set; }
         public Scene1 Scene { get; set; }
 
         public Game1(IntPtr drawSurface)
         {
-            Engine = new Engine(this, drawSurface);
+            Engine.Init(this, drawSurface);
             System.Windows.Forms.Form gameForm = (System.Windows.Forms.Form)System.Windows.Forms.Control.FromHandle(Window.Handle);
             gameForm.Opacity = 0;
             gameForm.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             gameForm.Text = "ArwicEngine Renderer - This window has an opacity of 0, use the main form";
-            Control.Content = Engine.Content;
             RichText.RichTextRules = new List<RichTextParseRule>()
             {
                 new RichTextParseRule("population", ((char)FontSymbol.Person).ToString(), Color.White, RichText.SymbolFont),
@@ -41,21 +40,21 @@ namespace ArwicInterfaceDesigner
                 new RichTextParseRule("expand", ((char)FontSymbol.ResizeArrows).ToString(), Color.White, RichText.SymbolFont),
 
             };
-            SpriteConverter.Content = Engine.Content;
-            Scene = new Scene1(Engine);
-            Engine.Scene.RegisterScene(Scene);
-            Engine.Scene.ChangeScene(0);
+            SpriteConverter.Content = Engine.Instance.Content;
+            Scene = new Scene1();
+            SceneManager.Instance.RegisterScene(Scene);
+            SceneManager.Instance.ChangeScene(0);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            Engine.Update(gameTime);
+            Engine.Instance.Update(gameTime);
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            Engine.Draw(gameTime);
+            Engine.Instance.Draw(gameTime);
             base.Draw(gameTime);
         }
     }

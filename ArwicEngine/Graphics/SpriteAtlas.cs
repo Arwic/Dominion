@@ -36,9 +36,9 @@ namespace ArwicEngine.Graphics
         /// <param name="cm"></param>
         /// <param name="sourcePath"></param>
         /// <param name="iconDim"></param>
-        public SpriteAtlas(ContentManager cm, string sourcePath, int iconDim)
+        public SpriteAtlas(string sourcePath, int iconDim)
         {
-            Source = new Sprite(cm, sourcePath);
+            Source = new Sprite(sourcePath);
             ItemDim = iconDim;
             Width = Source.Width / ItemDim;
             Height = Source.Height / ItemDim;

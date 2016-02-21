@@ -1,6 +1,7 @@
 ﻿using ArwicEngine;
 using ArwicEngine.Core;
 using ArwicEngine.Net;
+using ArwicEngine.Scenes;
 using Dominion.Common;
 using Dominion.Common.Entities;
 using Dominion.Common.Factories;
@@ -116,7 +117,6 @@ namespace Dominion.Client
     {
         public static object _lock_cacheUpdate = new object();
 
-        public Engine Engine { get; }
         public int NetOperationTimeOut { get; private set; }
         public bool Running => client == null ? false : client.Listening;
         private NetClient client;
@@ -379,19 +379,18 @@ namespace Dominion.Client
         }
         #endregion
 
-        public Client(Engine engine)
+        public Client()
         {
-            Engine = engine;
             AllUnits = new List<Unit>();
             Cities = new List<City>();
             CachedUnits = new List<Unit>();
             CachedCities = new List<City>();
-            NetOperationTimeOut = Convert.ToInt32(Engine.Config.GetVar(Constants.CONFIG_NET_CLIENT_TIMEOUT));
+            NetOperationTimeOut = Convert.ToInt32(ConfigManager.Instance.GetVar(Constants.CONFIG_NET_CLIENT_TIMEOUT));
         }
 
         public async Task<bool> ConnectAsync(string address = "127.0.0.1", int port = 7894)
         {
-            client = new NetClient(Engine);
+            client = new NetClient();
             client.PacketRecieved += Client_PacketRecieved;
             bool connected = await client.ConnectAsync(address, port);
             if (!connected)
@@ -401,7 +400,7 @@ namespace Dominion.Client
         }
         public bool Connect(string userName, string address = "127.0.0.1", int port = 7894, string password = "")
         {
-            client = new NetClient(Engine);
+            client = new NetClient();
             client.PacketRecieved += Client_PacketRecieved;
             client.LostConnection += Client_LostConnection;
             bool connected = client.Connect(address, port);
@@ -424,16 +423,16 @@ namespace Dominion.Client
         }
         private void Client_LostConnection(object sender, EventArgs e)
         {
-            Engine.Console.WriteLine("Client lost connection to the serer", MsgType.Warning);
+            ConsoleManager.Instance.WriteLine("Client lost connection to the serer", MsgType.Warning);
             OnLostConnection(e);
             Dissconnect();
-            Engine.Scene.ChangeScene(0);
+            SceneManager.Instance.ChangeScene((int)Scene.Menu);
         }
 
         private void ParsePacket(Packet p)
         {
             PacketHeader header = (PacketHeader)p.Header;
-            Engine.Console.WriteLine($"Parsing a packet with header {header}");
+            ConsoleManager.Instance.WriteLine($"Parsing a packet with header {header}");
             try
             {
                 switch (header)
@@ -491,12 +490,12 @@ namespace Dominion.Client
             catch (Exception e)
             {
                 consecutiveParsingErrors++;
-                Engine.Console.WriteLine($"Error parsing {(PacketHeader)p.Header}", MsgType.Failed);
+                ConsoleManager.Instance.WriteLine($"Error parsing {(PacketHeader)p.Header}", MsgType.Failed);
                 Exception exp = e;
                 int i = 0;
                 while (exp != null)
                 {
-                    Engine.Console.WriteLine($"{i++}: {exp.Message}", MsgType.Failed);
+                    ConsoleManager.Instance.WriteLine($"{i++}: {exp.Message}", MsgType.Failed);
                     exp = exp.InnerException;
                 }
                 if (consecutiveParsingErrors >= maxConsecutiveParsingErrors)
@@ -513,26 +512,26 @@ namespace Dominion.Client
             EmpireFactory = (EmpireFactory)p.Items[i++];
             ProductionFactory = (ProductionFactory)p.Items[i++];
             UnitFactory = (UnitFactory)p.Items[i++];
-            Engine.Console.WriteLine("Initialised factories");
+            ConsoleManager.Instance.WriteLine("Initialised factories");
         }
         private void ParseLobbyStateSync(Packet p)
         {
             LobbyState = (LobbyState)p.Item;
-            Engine.Console.WriteLine($"LobbyState was updated", MsgType.Info);
+            ConsoleManager.Instance.WriteLine($"LobbyState was updated", MsgType.Info);
         }
         private void ParseLobbyKick(Packet p)
         {
             string reason = (string)p.Item;
             Dissconnect();
-            Engine.Scene.ChangeScene(0);
-            Engine.Console.WriteLine($"The host has kicked you from the game\nReason: {reason}");
+            SceneManager.Instance.ChangeScene((int)Scene.Menu);
+            ConsoleManager.Instance.WriteLine($"The host has kicked you from the game\nReason: {reason}");
         }
         private void ParseLobbyBan(Packet p)
         {
             string reason = (string)p.Item;
             Dissconnect();
-            Engine.Scene.ChangeScene(0);
-            Engine.Console.WriteLine($"The host has banned you from the game\nReason: {reason}");
+            SceneManager.Instance.ChangeScene((int)Scene.Menu);
+            ConsoleManager.Instance.WriteLine($"The host has banned you from the game\nReason: {reason}");
         }
         private void ParseLobbyStartGame(Packet p)
         {
@@ -549,8 +548,8 @@ namespace Dominion.Client
             _selectedCityID = -1;
             _selectedUnitID = -1;
             TurnState = TurnState.Begin;
-            Engine.Console.WriteLine("The host has started the game");
-            Engine.Scene.ChangeScene(1);
+            ConsoleManager.Instance.WriteLine("The host has started the game");
+            SceneManager.Instance.ChangeScene((int)Scene.Game);
         }
         private void ParseTurnData(Packet p)
         {
@@ -563,7 +562,7 @@ namespace Dominion.Client
             AllUnits = (List<Unit>)p.Items[i++];
             UpdateCache();
             SelectedUnit = AllUnits.Find(u => u.InstanceID == _lastSelectedUnitID);
-            Engine.Console.WriteLine($"Recieved data for turn {TurnNumber}");
+            ConsoleManager.Instance.WriteLine($"Recieved data for turn {TurnNumber}");
             TurnState = TurnState.Begin;
             TurnTimer.Restart();
         }
@@ -581,7 +580,7 @@ namespace Dominion.Client
             UnitFactory.Reconstruct(unit);
             AllUnits.Add(unit);
             UpdateCache();
-            Engine.Console.WriteLine($"Updated unit {unit.InstanceID}:{unit.UnitID}:{unit.Name}");
+            ConsoleManager.Instance.WriteLine($"Updated unit {unit.InstanceID}:{unit.UnitID}:{unit.Name}");
             OnUnitsUpdated(new UnitListEventArgs(AllUnits));
         }
         private void ParseUnitAdded(Packet p)
@@ -590,7 +589,7 @@ namespace Dominion.Client
             UnitFactory.Reconstruct(unit);
             AllUnits.Add(unit);
             UpdateCache();
-            Engine.Console.WriteLine($"Added a unit {unit.InstanceID}:{unit.UnitID}:{unit.Name}");
+            ConsoleManager.Instance.WriteLine($"Added a unit {unit.InstanceID}:{unit.UnitID}:{unit.Name}");
             OnUnitsUpdated(new UnitListEventArgs(AllUnits));
         }
         private void ParseUnitRemoved(Packet p)
@@ -599,7 +598,7 @@ namespace Dominion.Client
             Unit unit = AllUnits.Find(u => u.InstanceID == unitInstanceID);
             AllUnits.Remove(unit);
             UpdateCache();
-            Engine.Console.WriteLine($"Removed unit {unit.InstanceID}:{unit.UnitID}:{unit.Name}");
+            ConsoleManager.Instance.WriteLine($"Removed unit {unit.InstanceID}:{unit.UnitID}:{unit.Name}");
             OnUnitsUpdated(new UnitListEventArgs(AllUnits));
         }
         private void ParseCityUpdate(Packet p)
@@ -608,7 +607,7 @@ namespace Dominion.Client
             Cities.RemoveAll(c => c.InstanceID == city.InstanceID);
             Cities.Add(city);
             UpdateCache();
-            Engine.Console.WriteLine($"Updated a city {city.InstanceID}:{city.EmpireID}:{city.Name}");
+            ConsoleManager.Instance.WriteLine($"Updated a city {city.InstanceID}:{city.EmpireID}:{city.Name}");
             OnCityUpdated(new CityEventArgs(city));
         }
         private void ParseCityAdded(Packet p)
@@ -616,7 +615,7 @@ namespace Dominion.Client
             City city = (City)p.Item;
             Cities.Add(city);
             UpdateCache();
-            Engine.Console.WriteLine($"Added a city {city.InstanceID}:{city.EmpireID}:{city.Name}");
+            ConsoleManager.Instance.WriteLine($"Added a city {city.InstanceID}:{city.EmpireID}:{city.Name}");
             OnCityAdded(new CityEventArgs(city));
         }
         private void ParseCityRemoved(Packet p)
@@ -625,7 +624,7 @@ namespace Dominion.Client
             City city = Cities.Find(c => c.InstanceID == cityID);
             Cities.Remove(city);
             UpdateCache();
-            Engine.Console.WriteLine($"Removed a city {city.InstanceID}:{city.EmpireID}:{city.Name}");
+            ConsoleManager.Instance.WriteLine($"Removed a city {city.InstanceID}:{city.EmpireID}:{city.Name}");
             OnCityRemoved(new CityEventArgs(city));
         }
         private void ParsePlayerUpdate(Packet p)
@@ -634,16 +633,16 @@ namespace Dominion.Client
             if (player.InstanceID != Player.InstanceID)
                 return;
             Player = player;
-            Engine.Console.WriteLine($"Updated player {player.InstanceID}:{player.EmpireID}:{player.Name}");
+            ConsoleManager.Instance.WriteLine($"Updated player {player.InstanceID}:{player.EmpireID}:{player.Name}");
         }
         private void ParseGameOver(Packet p)
         {
             int i = 0;
             Player winner = (Player)p.Items[i++];
             VictoryType vtype = (VictoryType)p.Items[i++];
-            Engine.Console.WriteLine($"Game over! {winner.Name} of {EmpireFactory.GetEmpire(winner.EmpireID).Name} has won a {vtype} victory");
+            ConsoleManager.Instance.WriteLine($"Game over! {winner.Name} of {EmpireFactory.GetEmpire(winner.EmpireID).Name} has won a {vtype} victory");
             Dissconnect();
-            Engine.Scene.ChangeScene(0);
+            SceneManager.Instance.ChangeScene((int)Scene.Menu);
         }
 
         public void AdvanceTurn()
@@ -651,14 +650,14 @@ namespace Dominion.Client
             //// Our turn is already over
             //if (TurnState == TurnState.WaitingForPlayers)
             //{
-            //    Engine.Console.WriteLine($"TurnState = {TurnState}");
+            //    ConsoleManager.Instance.WriteLine($"TurnState = {TurnState}");
             //    return;
             //}
             //// Check if we need to choose a new research node
             //if (RequireNewResearch())
             //{
             //    TurnState = TurnState.ChooseResearch;
-            //    Engine.Console.WriteLine($"TurnState = {TurnState}");
+            //    ConsoleManager.Instance.WriteLine($"TurnState = {TurnState}");
             //    return;
             //}
 
@@ -666,7 +665,7 @@ namespace Dominion.Client
             //if (RequireNewSocialPolicy())
             //{
             //    TurnState = TurnState.ChooseSocialPolicy;
-            //    Engine.Console.WriteLine($"TurnState = {TurnState}");
+            //    ConsoleManager.Instance.WriteLine($"TurnState = {TurnState}");
             //    return;
             //}
 
@@ -674,7 +673,7 @@ namespace Dominion.Client
             //if (RequireNewProduction())
             //{
             //    TurnState = TurnState.ChooseProduction;
-            //    Engine.Console.WriteLine($"TurnState = {TurnState}");
+            //    ConsoleManager.Instance.WriteLine($"TurnState = {TurnState}");
             //    return;
             //}
 
@@ -682,13 +681,13 @@ namespace Dominion.Client
             //if (RequireUnitOrders())
             //{
             //    TurnState = TurnState.UnitOrders;
-            //    Engine.Console.WriteLine($"TurnState = {TurnState}");
+            //    ConsoleManager.Instance.WriteLine($"TurnState = {TurnState}");
             //    return;
             //}
 
             // If nothing needs to be done, end our turn
             TurnState = TurnState.WaitingForPlayers;
-            Engine.Console.WriteLine($"Ending turn");
+            ConsoleManager.Instance.WriteLine($"Ending turn");
             Player.EndedTurn = true;
             Packet pOut = new Packet((int)PacketHeader.TurnState, Player.EndedTurn);
             client.SendData(pOut);
@@ -826,20 +825,20 @@ namespace Dominion.Client
 
         public void CommandUnit(UnitCommand cmd)
         {
-            Engine.Console.WriteLine($"Commanded {AllUnits.Find(u => u.InstanceID == cmd.UnitInstanceID).Name} - {cmd.CommandID}");
+            ConsoleManager.Instance.WriteLine($"Commanded {AllUnits.Find(u => u.InstanceID == cmd.UnitInstanceID).Name} - {cmd.CommandID}");
             Packet p = new Packet((int)PacketHeader.UnitCommand, cmd);
             SelectedCommand = UnitCommandID.Null;
             client.SendData(p);
         }
         public void CommandCity(CityCommand cmd)
         {
-            Engine.Console.WriteLine($"Commanded {Cities.Find(c => c.InstanceID == cmd.CityID).Name} - {cmd.CommandID}");
+            ConsoleManager.Instance.WriteLine($"Commanded {Cities.Find(c => c.InstanceID == cmd.CityID).Name} - {cmd.CommandID}");
             Packet p = new Packet((int)PacketHeader.CityCommand, cmd);
             client.SendData(p);
         }
         public void CommandPlayer(PlayerCommand cmd)
         {
-            Engine.Console.WriteLine($"Commanded Player - {cmd.CommandID}");
+            ConsoleManager.Instance.WriteLine($"Commanded Player - {cmd.CommandID}");
             Packet p = new Packet((int)PacketHeader.PlayerCommand, cmd);
             client.SendData(p);
         }

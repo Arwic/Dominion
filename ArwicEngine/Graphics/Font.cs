@@ -2,6 +2,7 @@
 // Font.cs
 // This file contains wrapper classes for xna sprite fonts
 
+using ArwicEngine.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,9 +24,9 @@ namespace ArwicEngine.Graphics
         /// <param name="cm"></param>
         /// <param name="path"></param>
         /// <param name="defaultChar"></param>
-        public Font(ContentManager cm, string path, char defaultChar = DEFAULT_CHAR)
+        public Font(string path, char defaultChar = DEFAULT_CHAR)
         {
-            spriteFont = cm.Load<SpriteFont>(path);
+            spriteFont = Engine.Instance.Content.Load<SpriteFont>(path);
             spriteFont.DefaultCharacter = defaultChar;
         }
 

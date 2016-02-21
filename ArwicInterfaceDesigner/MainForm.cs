@@ -1,4 +1,5 @@
 ﻿using ArwicEngine.Core;
+using ArwicEngine.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -237,9 +238,9 @@ namespace ArwicInterfaceDesigner
 
         private void pb_drawSurface_SizeChanged(object sender, EventArgs e)
         {
-            Game.Engine.Graphics.DeviceManager.PreferredBackBufferWidth = pb_drawSurface.Size.Width;
-            Game.Engine.Graphics.DeviceManager.PreferredBackBufferHeight = pb_drawSurface.Size.Height;
-            Game.Engine.Graphics.DeviceManager.ApplyChanges();
+            GraphicsManager.Instance.DeviceManager.PreferredBackBufferWidth = pb_drawSurface.Size.Width;
+            GraphicsManager.Instance.DeviceManager.PreferredBackBufferHeight = pb_drawSurface.Size.Height;
+            GraphicsManager.Instance.DeviceManager.ApplyChanges();
         }
 
         private void btn_deleteSelected_Click(object sender, EventArgs e)

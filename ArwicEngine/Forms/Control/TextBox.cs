@@ -22,11 +22,11 @@ namespace ArwicEngine.Forms
         public static new Cursor DefaultCursor;
         public static new Font DefaultFont;
 
-        public static new void InitDefaults(Engine e)
+        public static new void InitDefaults()
         {
-            DefaultSprite = new Sprite(e.Content, CONTROL_TEXTBOX);
-            DefaultCursor = new Cursor(e.Window, CURSOR_TEXT_PATH);
-            DefaultFont = new Font(e.Content, FONT_CONSOLAS_PATH);
+            DefaultSprite = new Sprite(CONTROL_TEXTBOX);
+            DefaultCursor = new Cursor(CURSOR_TEXT_PATH);
+            DefaultFont = new Font(FONT_CONSOLAS_PATH);
         }
         #endregion
 
@@ -190,7 +190,7 @@ namespace ArwicEngine.Forms
             Masked = config.Masked;
             MaskedCharacter = config.MaskedCharacter;
             MaxCharacters = config.MaxCharacters;
-            Sprite = new Sprite(Content, config.SpritePath);
+            Sprite = new Sprite(config.SpritePath);
             TextOffset = config.TextOffset;
             CaretBlinkTimer = new Timer(config.CaretBlinkTimer);
         }
@@ -474,9 +474,9 @@ namespace ArwicEngine.Forms
             }
         }
 
-        public override bool Update(InputManager input)
+        public override bool Update()
         {
-            if (!AbsoluteBounds.Contains(input.MouseScreenPos()) && input.OnMouseDown(MouseButton.Left))
+            if (!AbsoluteBounds.Contains(InputManager.Instance.MouseScreenPos()) && InputManager.Instance.OnMouseDown(MouseButton.Left))
                 RequestUnCapture();
 
             if (Text == null)
@@ -501,7 +501,7 @@ namespace ArwicEngine.Forms
                     CaretBlinkTimer.Start();
                 }
 
-                if (input.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Right) || input.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Left))
+                if (InputManager.Instance.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Right) || InputManager.Instance.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Left))
                     displayCaret = true;
             }
             else
@@ -509,7 +509,7 @@ namespace ArwicEngine.Forms
                 displayCaret = false;
             }
 
-            return base.Update(input);
+            return base.Update();
         }
 
         public override void Draw(SpriteBatch sb)

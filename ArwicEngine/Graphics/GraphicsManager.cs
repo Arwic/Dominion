@@ -7,9 +7,21 @@ using static ArwicEngine.Constants;
 
 namespace ArwicEngine.Graphics
 {
-    public class GraphicsManager
+    public sealed class GraphicsManager
     {
-        public Engine Engine { get; set; }
+        // Singleton pattern
+        private static object _lock_instance = new object();
+        private static GraphicsManager _instance;
+        public static GraphicsManager Instance
+        {
+            get
+            {
+                lock (_lock_instance)
+                {
+                    return _instance;
+                }
+            }
+        }
 
         public Matrix ScaleMatrix { get; private set; }
         public float Scale { get; set; }
@@ -18,24 +30,28 @@ namespace ArwicEngine.Graphics
         public Viewport Viewport => Device.Viewport;
         private IntPtr? drawSurface;
 
-        public GraphicsManager(Engine engine, Game game, IntPtr? drawSurface = null)
+        private GraphicsManager() { }
+
+        public static void Init(Game game, IntPtr? drawSurface = null)
         {
-            Engine = engine;
-            DeviceManager = new GraphicsDeviceManager(game);
+            if (_instance != null)
+                throw new InvalidOperationException("Init cannot be called more than once");
+
+            _instance = new GraphicsManager();
+
+            Instance.DeviceManager = new GraphicsDeviceManager(game);
             if (drawSurface != null)
             {
-                this.drawSurface = drawSurface.Value;
-                DeviceManager.PreparingDeviceSettings += new EventHandler<PreparingDeviceSettingsEventArgs>(graphics_PreparingDeviceSettings);
+                Instance.drawSurface = drawSurface.Value;
+                Instance.DeviceManager.PreparingDeviceSettings += (s, a) =>
+                {
+                    if (drawSurface != null)
+                        a.GraphicsDeviceInformation.PresentationParameters.DeviceWindowHandle = drawSurface.Value;
+                };
             }
-            DeviceManager.CreateDevice();
+            Instance.DeviceManager.CreateDevice();
 
-            Apply();
-        }
-
-        private void graphics_PreparingDeviceSettings(object sender, PreparingDeviceSettingsEventArgs e)
-        {
-            if (drawSurface != null)
-                e.GraphicsDeviceInformation.PresentationParameters.DeviceWindowHandle = drawSurface.Value;
+            Instance.Apply();
         }
 
         public static float Angle(Vector2 v1, Vector2 v2)
@@ -53,11 +69,11 @@ namespace ArwicEngine.Graphics
                 if (true || drawSurface == null)
                 {
                     // Sets graphics values
-                    string[] resolution = Engine.Config.GetVar(CONFIG_RESOLUTION).Split('x');
+                    string[] resolution = ConfigManager.Instance.GetVar(CONFIG_RESOLUTION).Split('x');
                     int resX = Convert.ToInt32(resolution[0]);
                     int resY = Convert.ToInt32(resolution[1]);
-                    bool fullscreen = Convert.ToInt32(Engine.Config.GetVar(CONFIG_DISPLAYMODE)) == 1;
-                    bool vsync = Convert.ToInt32(Engine.Config.GetVar(CONFIG_VSYNC)) == 1;
+                    bool fullscreen = Convert.ToInt32(ConfigManager.Instance.GetVar(CONFIG_DISPLAYMODE)) == 1;
+                    bool vsync = Convert.ToInt32(ConfigManager.Instance.GetVar(CONFIG_VSYNC)) == 1;
 
                     DeviceManager.PreferredBackBufferWidth = resX;
                     DeviceManager.PreferredBackBufferHeight = resY;
@@ -75,8 +91,8 @@ namespace ArwicEngine.Graphics
             {
                 var result = MessageBox.Show("Would you like to reset the configuration file to its defaults before exiting?", "Error Applying Graphics Settings", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
-                    Engine.Config.SetDefaults();
-                Engine.Exit(EXIT_FAILURE);
+                    ConfigManager.Instance.SetDefaults();
+                Engine.Instance.Exit(EXIT_FAILURE);
             }
         }
     }

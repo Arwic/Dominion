@@ -100,8 +100,8 @@ namespace Dominion.Client.Scenes
         private CancellationTokenSource getWANcancellationToken;
         private int lastEmpireID;
 
-        public SceneMenu(Engine engine, GameManager manager)
-            : base (engine)
+        public SceneMenu(GameManager manager)
+            : base ()
         {
             this.manager = manager;
             manager.Client.LobbyStateChanged += Client_LobbyStateChanged;
@@ -113,19 +113,19 @@ namespace Dominion.Client.Scenes
             manager.Client.Dissconnect();
             manager.Server.StopServer();
 
-            sbGUI = new SpriteBatch(Engine.Graphics.Device);
+            sbGUI = new SpriteBatch(GraphicsManager.Instance.Device);
 
-            canvas = new Canvas(Engine.Graphics.Viewport.Bounds);
-            ConsoleForm consoleForm = new ConsoleForm(Engine.Console, canvas);
-            background = new Image(new Rectangle(0, 0, 1920, 1080), new Sprite(Engine.Content, $"Graphics/Backgrounds/Menu_{RandomHelper.Next(0, 6)}"), null, null);
-            empireAnthems = Engine.Content.LoadListContent<SoundEffect>("Audio/Music/Anthems");
+            canvas = new Canvas(GraphicsManager.Instance.Viewport.Bounds);
+            ConsoleForm consoleForm = new ConsoleForm(canvas);
+            background = new Image(new Rectangle(0, 0, 1920, 1080), new Sprite($"Graphics/Backgrounds/Menu_{RandomHelper.Next(0, 6)}"), null, null);
+            empireAnthems = Engine.Instance.Content.LoadListContent<SoundEffect>("Audio/Music/Anthems");
             SetUpMainForm();
 
             // Play all anthems on shuffle
-            Engine.Audio.MusicQueue.Clear();
+            AudioManager.Instance.MusicQueue.Clear();
             foreach (KeyValuePair<string, SoundEffect> pair in empireAnthems)
-                Engine.Audio.MusicQueue.Enqueue(pair.Value);
-            Engine.Audio.PlayerState = MusicPlayerState.Shuffle;
+                AudioManager.Instance.MusicQueue.Enqueue(pair.Value);
+            AudioManager.Instance.PlayerState = MusicPlayerState.Shuffle;
         }
 
         public override void Leave()
@@ -153,7 +153,7 @@ namespace Dominion.Client.Scenes
         }
         private void Main_BtnQuit_MouseClick(object sender, MouseEventArgs e)
         {
-            Engine.Exit(EXIT_SUCCESS);
+            Engine.Instance.Exit(EXIT_SUCCESS);
         }
         private void Main_BtnOptions_MouseClick(object sender, MouseEventArgs e)
         {
@@ -217,7 +217,7 @@ namespace Dominion.Client.Scenes
                 return;
             if (tbUsername.Text.Equals(""))
             {
-                Engine.Console.WriteLine("Invalid username");
+                ConsoleManager.Instance.WriteLine("Invalid username");
                 return;
             }
             string address = NetHelper.DnsResolve("localhost");
@@ -238,7 +238,7 @@ namespace Dominion.Client.Scenes
                 manager.Client.Dissconnect();
                 manager.Client.LobbyStateChanged += Client_LobbyStateChanged;
                 manager.Server.StopServer();
-                manager.Server = new Server.Server(Engine);
+                manager.Server = new Server.Server();
                 return;
             }
             host = true;
@@ -273,9 +273,9 @@ namespace Dominion.Client.Scenes
                 FormConfig formConfig = FormConfig.FromFile("Content/Interface/Menu/Join.xml");
                 canvas.RemoveChild(frm_joinGame);
                 frm_joinGame = new Form(formConfig, canvas);
-                frm_joinGame.Location = new Point(Engine.Graphics.Viewport.Width / 2 - frm_joinGame.Size.Width / 2, Engine.Graphics.Viewport.Height / 2 - frm_joinGame.Size.Height / 2);
+                frm_joinGame.Location = new Point(GraphicsManager.Instance.Viewport.Width / 2 - frm_joinGame.Size.Width / 2, GraphicsManager.Instance.Viewport.Height / 2 - frm_joinGame.Size.Height / 2);
                 tbAddress = (TextBox)frm_joinGame.GetChildByName("tbAddress");
-                tbAddress.Text = Engine.Config.GetVar(CONFIG_NET_CLIENT_ADDRESS);
+                tbAddress.Text = ConfigManager.Instance.GetVar(CONFIG_NET_CLIENT_ADDRESS);
                 tbUsername = (TextBox)frm_joinGame.GetChildByName("tbUsername");
                 tbUsername.Text = Environment.MachineName;
                 tbPassword = (TextBox)frm_joinGame.GetChildByName("tbPassword");
@@ -297,7 +297,7 @@ namespace Dominion.Client.Scenes
                 return;
             if (tbUsername.Text.Equals(""))
             {
-                Engine.Console.WriteLine("Invalid username");
+                ConsoleManager.Instance.WriteLine("Invalid username");
                 return;
             }
             string addressPort = tbAddress.Text;
@@ -322,7 +322,7 @@ namespace Dominion.Client.Scenes
         {
             lock (_lock_guiSetUp)
             {
-                Engine.Audio.PlayerState = MusicPlayerState.RepeatOne;
+                AudioManager.Instance.PlayerState = MusicPlayerState.RepeatOne;
                 manager.Client.LostConnection += Client_LostConnection;
 
                 canvas.RemoveChild(frm_lobby);
@@ -557,12 +557,12 @@ namespace Dominion.Client.Scenes
         private void Lobby_BtnBack_MouseClick(object sender, MouseEventArgs e)
         {
             manager.Client.Dissconnect();
-            manager.Client = new Client(Engine);
+            manager.Client = new Client();
             manager.Client.LobbyStateChanged += Client_LobbyStateChanged;
             if (host)
             {
                 manager.Server.StopServer();
-                manager.Server = new Server.Server(Engine);
+                manager.Server = new Server.Server();
             }
             RemoveAllForms();
             SetUpMainForm();
@@ -605,12 +605,12 @@ namespace Dominion.Client.Scenes
             try
             {
                 SoundEffect anthem = empireAnthems[empireName];
-                Engine.Audio.PlayMusic(anthem);
-                Engine.Audio.PlayerState = MusicPlayerState.RepeatOne;
+                AudioManager.Instance.PlayMusic(anthem);
+                AudioManager.Instance.PlayerState = MusicPlayerState.RepeatOne;
             }
             catch (Exception)
             {
-                Engine.Console.WriteLine($"Could not find an anthem for {empireName}", MsgType.Warning);
+                ConsoleManager.Instance.WriteLine($"Could not find an anthem for {empireName}", MsgType.Warning);
             }
         }
 
@@ -635,12 +635,12 @@ namespace Dominion.Client.Scenes
             }
         }
 
-        public override void Update(float delta)
+        public override void Update()
         {
-            canvas.Update(Engine.Input);
+            canvas.Update();
         }
 
-        public override void Draw(float delta)
+        public override void Draw()
         {
             lock (_lock_guiSetUp)
             {

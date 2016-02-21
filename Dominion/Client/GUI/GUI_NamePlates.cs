@@ -21,7 +21,6 @@ namespace Dominion.Client.GUI
         private const int unitLabelHeight = 30;
         private const int unitLabelPadding = 5;
 
-        private Engine engine;
         private Client client;
         private Canvas canvas;
         private Camera2 camera;
@@ -30,9 +29,8 @@ namespace Dominion.Client.GUI
         private Sprite cityLabelSprite;
         private Sprite unitLabelSprite;
 
-        public GUI_NamePlates(Engine engine, Client client, Canvas canvas, Camera2 camera, BoardRenderer boardRenderer)
+        public GUI_NamePlates(Client client, Canvas canvas, Camera2 camera, BoardRenderer boardRenderer)
         {
-            this.engine = engine;
             this.client = client;
             this.canvas = canvas;
             this.camera = camera;
@@ -43,8 +41,8 @@ namespace Dominion.Client.GUI
 
         private void LoadResources()
         {
-            cityLabelSprite = new Sprite(engine.Content, "Graphics/Interface/Controls/Button");
-            unitLabelSprite = new Sprite(engine.Content, "Graphics/Interface/Controls/ScrollBox_Back");
+            cityLabelSprite = new Sprite("Graphics/Interface/Controls/Button");
+            unitLabelSprite = new Sprite("Graphics/Interface/Controls/ScrollBox_Back");
         }
 
         public void Show()

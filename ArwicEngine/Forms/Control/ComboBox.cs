@@ -18,9 +18,9 @@ namespace ArwicEngine.Forms
         #region Defaults
         public static Sprite DefaultButtonSprite;
 
-        public static new void InitDefaults(Engine e)
+        public static new void InitDefaults()
         {
-            DefaultButtonSprite = new Sprite(e.Content, CONTROL_COMBOBOX_BUTTON);
+            DefaultButtonSprite = new Sprite(CONTROL_COMBOBOX_BUTTON);
         }
         #endregion
 
@@ -241,8 +241,8 @@ namespace ArwicEngine.Forms
             : base(config, parent)
         {
             Initialize(new List<IListItem>());
-            HeadButtonSprite = new Sprite(Content, config.HeadButtonSpritePath);
-            ListButtonSprite = new Sprite(Content, config.ListButtonSpritePath);
+            HeadButtonSprite = new Sprite(config.HeadButtonSpritePath);
+            ListButtonSprite = new Sprite(config.ListButtonSpritePath);
         }
 
         private void Initialize(List<IListItem> items)

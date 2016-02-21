@@ -33,12 +33,21 @@ namespace ArwicEngine.Audio
     /// <summary>
     /// Manages audio playback
     /// </summary>
-    public class AudioManager
+    public sealed class AudioManager
     {
-        /// <summary>
-        /// Reference to the engine object
-        /// </summary>
-        public Engine Engine { get; }
+        // Singleton pattern
+        private static object _lock_instance = new object();
+        private static readonly AudioManager _instance = new AudioManager();
+        public static AudioManager Instance
+        {
+            get
+            {
+                lock (_lock_instance)
+                {
+                    return _instance;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the value the defines the state of the music player
@@ -48,13 +57,13 @@ namespace ArwicEngine.Audio
         /// <summary>
         /// Gets or sets a list of sound effects to be played
         /// </summary>
-        public LinkedList<SoundEffect> MusicQueue { get; set; }
+        public LinkedList<SoundEffect> MusicQueue { get; set; } = new LinkedList<SoundEffect>();
 
         private LinkedListNode<SoundEffect> currentQueueNode;
         private SoundEffect currentMusicEffect;
         private SoundEffectInstance currentMusic;
         private Thread musicWorker;
-        private bool musicWorker_running;
+        private bool musicWorker_running = true;
 
         /// <summary>
         /// Gets the name of the currently playing music track
@@ -75,12 +84,12 @@ namespace ArwicEngine.Audio
         /// </summary>
         public event EventHandler MusicQueueEnded;
 
-        protected virtual void OnMusicChanged(SoundEffectEventArgs args)
+        private void OnMusicChanged(SoundEffectEventArgs args)
         {
             if (MusicChanged != null)
                 MusicChanged(this, args);
         }
-        protected virtual void OnMusicQueueEnded(EventArgs args)
+        private void OnMusicQueueEnded(EventArgs args)
         {
             if (MusicQueueEnded != null)
                 MusicQueueEnded(this, args);
@@ -89,13 +98,9 @@ namespace ArwicEngine.Audio
         /// <summary>
         /// Creates a new audio manager
         /// </summary>
-        /// <param name="engine"></param>
-        public AudioManager(Engine engine)
+        private AudioManager()
         {
-            Engine = engine;
-            MusicQueue = new LinkedList<SoundEffect>();
             Apply();
-            musicWorker_running = true;
             musicWorker = new Thread(MusicWorker_Go);
             musicWorker.Start();
         }
@@ -108,7 +113,7 @@ namespace ArwicEngine.Audio
             try
             {
                 // set variables
-                MusicVolume = Convert.ToSingle(Engine.Config.GetVar(CONFIG_MUSICVOLUME));
+                MusicVolume = Convert.ToSingle(ConfigManager.Instance.GetVar(CONFIG_MUSICVOLUME));
 
                 // update current music with new variables
                 if (currentMusic != null)
@@ -117,7 +122,7 @@ namespace ArwicEngine.Audio
             catch (Exception)
             {
                 // report error
-                Engine.Console.WriteLine("Error applying audio settings", MsgType.Failed);
+                ConsoleManager.Instance.WriteLine("Error applying audio settings", MsgType.Failed);
             }
         }
 
@@ -222,7 +227,7 @@ namespace ArwicEngine.Audio
             currentMusic.Volume = MusicVolume;
             // play the new track
             currentMusic.Play();
-            Engine.Console.WriteLine($"Now playing: {currentMusicEffect.Name} ({currentMusicEffect.Duration})");
+            ConsoleManager.Instance.WriteLine($"Now playing: {currentMusicEffect.Name} ({currentMusicEffect.Duration})");
         }
 
         /// <summary>

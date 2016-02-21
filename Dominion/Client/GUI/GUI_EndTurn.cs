@@ -1,5 +1,6 @@
 ﻿using ArwicEngine.Core;
 using ArwicEngine.Forms;
+using ArwicEngine.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,14 @@ namespace Dominion.Client.GUI
 {
     class GUI_EndTurn : IGUIElement
     {
-        private Engine engine;
         private Canvas canvas;
         private Client client;
         private TurnState turnState;
         private Form form;
         private Button btnEndTurn;
 
-        public GUI_EndTurn(Engine engine, Client client, Canvas canvas)
+        public GUI_EndTurn(Client client, Canvas canvas)
         {
-            this.engine = engine;
             this.canvas = canvas;
             this.client = client;
             turnState = TurnState.Begin;
@@ -70,7 +69,7 @@ namespace Dominion.Client.GUI
                 int height = 50;
                 int xOffset = -20;
                 int yOffset = -220;
-                form = new Form(new Rectangle(engine.Graphics.Viewport.Bounds.Width - width + xOffset, engine.Graphics.Viewport.Bounds.Height - height + yOffset, width, height), canvas);
+                form = new Form(new Rectangle(GraphicsManager.Instance.Viewport.Bounds.Width - width + xOffset, GraphicsManager.Instance.Viewport.Bounds.Height - height + yOffset, width, height), canvas);
                 form.CloseButtonEnabled = false;
                 form.DrawTitlebar = false;
                 form.Draggable = false;

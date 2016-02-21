@@ -32,7 +32,7 @@ namespace ArwicEngine.TypeConverters
                 throw new InvalidOperationException("SpriteConverter.Content must be assigned to use this function");
             if (value is string)
             {
-                return new Sprite(Content, (string)value);
+                return new Sprite((string)value);
             }
             return base.ConvertFrom(context, culture, value);
         }

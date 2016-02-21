@@ -30,8 +30,8 @@ namespace ArwicInterfaceDesigner
         public Form DefaultForm => new Form(new Rectangle(0, 0, 400, 600));
         private SpriteBatch sb;
 
-        public Scene1(Engine engine)
-            : base(engine)
+        public Scene1()
+            : base()
         {
         }
 
@@ -53,7 +53,7 @@ namespace ArwicInterfaceDesigner
                     comboBox.Text = "New ComboBox".ToRichText();
                     break;
                 case "image":
-                    Image image = new Image(new Rectangle(START_POS_X, START_POS_Y, 200, 200), new Sprite(Engine.Content, "Graphics/Util/Default"), null, Form);
+                    Image image = new Image(new Rectangle(START_POS_X, START_POS_Y, 200, 200), new Sprite("Graphics/Util/Default"), null, Form);
                     break;
                 case "label":
                     Label label = new Label(new Rectangle(START_POS_X, START_POS_Y, 0, 0), "New Label".ToRichText(), Form);
@@ -90,7 +90,7 @@ namespace ArwicInterfaceDesigner
 
         public override void Enter()
         {
-            sb = new SpriteBatch(Engine.Graphics.Device);
+            sb = new SpriteBatch(GraphicsManager.Instance.Device);
             Form = DefaultForm;
         }
 
@@ -98,17 +98,17 @@ namespace ArwicInterfaceDesigner
         {
         }
 
-        public override void Update(float delta)
+        public override void Update()
         {
             if (Form != null)
             {
                 Form.Visible = true;
                 Form.Location = new Point(0, 0);
-                Form.Update(Engine.Input);
+                Form.Update();
             }
         }
 
-        public override void Draw(float delta)
+        public override void Draw()
         {
             sb.Begin();
             if (Form != null)

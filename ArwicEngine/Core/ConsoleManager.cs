@@ -2,7 +2,9 @@
 // ConsoleManager.cs
 // This file defines classes that manage the console
 
+using ArwicEngine.Audio;
 using ArwicEngine.Forms;
+using ArwicEngine.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -28,16 +30,26 @@ namespace ArwicEngine.Core
         ServerDebug
     }
 
-    public class ConsoleManager
+    public sealed class ConsoleManager
     {
-        /// <summary>
-        /// Reference to the engine
-        /// </summary>
-        public Engine Engine { get; set; }
+        // Singleton pattern
+        private static object _lock_instance = new object();
+        private static readonly ConsoleManager _instance = new ConsoleManager();
+        public static ConsoleManager Instance
+        {
+            get
+            {
+                lock (_lock_instance)
+                {
+                    return _instance;
+                }
+            }
+        }
+
         /// <summary>
         /// Gets the lines in the console output
         /// </summary>
-        public List<string> Lines { get; }
+        public List<string> Lines { get; } = new List<string>();
 
         private Dictionary<string, Func<List<string>, int>> commands = new Dictionary<string, Func<List<string>, int>>();
 
@@ -51,12 +63,12 @@ namespace ArwicEngine.Core
         /// </summary>
         public event EventHandler ClearLines;
 
-        protected virtual void OnLineWritten(TextLogLineEventArgs e)
+        private void OnLineWritten(TextLogLineEventArgs e)
         {
             if (LineWritten != null)
                 LineWritten(this, e);
         }
-        protected virtual void OnClearLines(EventArgs e)
+        private void OnClearLines(EventArgs e)
         {
             if (ClearLines != null)
                 ClearLines(this, e);
@@ -65,13 +77,8 @@ namespace ArwicEngine.Core
         /// <summary>
         /// Creates a new console manager
         /// </summary>
-        /// <param name="engine"></param>
-        public ConsoleManager(Engine engine)
+        private ConsoleManager()
         {
-            // init vars
-            Engine = engine;
-            Lines = new List<string>();
-
             // register default commands
             RegisterCommand("set", f_set);
             RegisterCommand("echo", f_get);
@@ -116,24 +123,24 @@ namespace ArwicEngine.Core
             StringBuilder sb = new StringBuilder();
             foreach (string s in args)
                 sb.Append(s);
-            Engine.Config.SetVar(args[0], args[1]);
+            ConfigManager.Instance.SetVar(args[0], args[1]);
             return EXIT_SUCCESS; ;
         }
         private int f_get(List<string> args)
         {
             if (args.Count < 1)
                 return EXIT_FAILURE;
-            WriteLine($"{Engine.Config.GetVar(args[0])}", MsgType.Return);
+            WriteLine($"{ConfigManager.Instance.GetVar(args[0])}", MsgType.Return);
             return EXIT_SUCCESS;
         }
         private int f_gfx_apply(List<string> args)
         {
-            Engine.Graphics.Apply();
+            GraphicsManager.Instance.Apply();
             return EXIT_SUCCESS;
         }
         private int f_aud_apply(List<string> args)
         {
-            Engine.Audio.Apply();
+            AudioManager.Instance.Apply();
             return 0;
         }
         private int f_quit(List<string> args)
@@ -146,7 +153,7 @@ namespace ArwicEngine.Core
         }
         private int f_config_defaults(List<string> args)
         {
-            Engine.Config.SetDefaults();
+            ConfigManager.Instance.SetDefaults();
             return EXIT_SUCCESS;
         }
         private int f_clear(List<string> args)
@@ -160,7 +167,7 @@ namespace ArwicEngine.Core
             string path = CONFIG_PATH;
             if (args.Count > 0)
                 path = args[0];
-            Engine.Config.Write(path);
+            ConfigManager.Instance.Write(path);
             return EXIT_SUCCESS;
         }
         private int f_printdetails(List<string> args)

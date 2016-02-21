@@ -156,7 +156,7 @@ namespace ArwicEngine.Forms
         public Image(ImageConfig config, Control parent = null)
             : base(config, parent)
         {
-            Sprite = new Sprite(Content, config.SpritePath);
+            Sprite = new Sprite(config.SpritePath);
             Source = config.Source;
             Rotation = config.Rotation;
             Origin = config.Origin;

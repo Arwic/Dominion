@@ -20,10 +20,10 @@ namespace ArwicEngine.Forms
         public static Sprite DefaultBarSprite;
         public static Sprite DefaultBackSprite;
 
-        public static new void InitDefaults(Engine e)
+        public static new void InitDefaults()
         {
-            DefaultBarSprite = new Sprite(e.Content, CONTROL_PROGRESSBAR_FILL);
-            DefaultBackSprite = new Sprite(e.Content, CONTROL_PROGRESSBAR_BACK);
+            DefaultBarSprite = new Sprite(CONTROL_PROGRESSBAR_FILL);
+            DefaultBackSprite = new Sprite(CONTROL_PROGRESSBAR_BACK);
         }
         #endregion
 
@@ -113,8 +113,8 @@ namespace ArwicEngine.Forms
         public ProgressBar(ProgressBarConfig config, Control parent = null)
             : base(config, parent)
         {
-            BarSprite = new Sprite(Content, config.BarSpritePath);
-            BackSprite = new Sprite(Content, config.BackSpritePath);
+            BarSprite = new Sprite(config.BarSpritePath);
+            BackSprite = new Sprite(config.BackSpritePath);
             Maximum = config.Maximum;
             Value = config.Value;
         }

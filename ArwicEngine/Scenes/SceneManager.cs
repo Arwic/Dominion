@@ -9,28 +9,29 @@ namespace ArwicEngine.Scenes
 {
     public class SceneManager
     {
-        /// <summary>
-        /// Reference to the engine
-        /// </summary>
-        public Engine Engine { get; }
+        // Singleton pattern
+        private static object _lock_instance = new object();
+        private static readonly SceneManager _instance = new SceneManager();
+        public static SceneManager Instance
+        {
+            get
+            {
+                lock (_lock_instance)
+                {
+                    return _instance;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets the name of the current scene
         /// </summary>
         public string CurrentSceneName => currentScene?.SceneName;
 
-        private List<BaseScene> scenes;
+        private List<BaseScene> scenes = new List<BaseScene>();
         private BaseScene currentScene;
 
-        /// <summary>
-        /// Creates a new scene manager
-        /// </summary>
-        /// <param name="engine"></param>
-        public SceneManager(Engine engine)
-        {
-            Engine = engine;
-            scenes = new List<BaseScene>();
-        }
+        private SceneManager() { }
 
         /// <summary>
         /// Registers the given scene so it can be switched to
@@ -54,11 +55,11 @@ namespace ArwicEngine.Scenes
                 {
                     // Call the current scene's leave method
                     currentScene.Leave();
-                    Engine.Console.WriteLine($"SceneManager: Changed scene '{currentScene.SceneName}' with '{scenes[id].SceneName}'", MsgType.Info);
+                    ConsoleManager.Instance.WriteLine($"SceneManager: Changed scene '{currentScene.SceneName}' with '{scenes[id].SceneName}'", MsgType.Info);
                 }
                 else
                 {
-                    Engine.Console.WriteLine($"SceneManager: Changed scene to '{scenes[id].SceneName}'", MsgType.Info);
+                    ConsoleManager.Instance.WriteLine($"SceneManager: Changed scene to '{scenes[id].SceneName}'", MsgType.Info);
                 }
                 // Call the new scene's enter method
                 scenes[id].Enter();
@@ -70,21 +71,19 @@ namespace ArwicEngine.Scenes
         /// <summary>
         /// Updates the current scene
         /// </summary>
-        /// <param name="delta"></param>
-        public void Update(float delta)
+        public void Update()
         {
             if (currentScene != null)
-                currentScene.Update(delta);
+                currentScene.Update();
         }
 
         /// <summary>
         /// Draws the current scene
         /// </summary>
-        /// <param name="delta"></param>
-        public void Draw(float delta)
+        public void Draw()
         {
             if (currentScene != null)
-                currentScene.Draw(delta);
+                currentScene.Draw();
         }
     }
 }

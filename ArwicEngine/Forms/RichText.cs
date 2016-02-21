@@ -203,7 +203,7 @@ namespace ArwicEngine.Forms
 
         public static void Init(ContentManager cm)
         {
-            SymbolFont = new Font(cm, "Fonts/ArwicSymbol", (char)FontSymbol.ExclamationCircle);
+            SymbolFont = new Font("Fonts/ArwicSymbol", (char)FontSymbol.ExclamationCircle);
         }
 
         [TypeConverter(typeof(CollectionConverter))]

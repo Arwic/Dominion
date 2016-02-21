@@ -16,12 +16,10 @@ namespace ArwicEngine.Forms
     {
         #region Defaults
         public static Sprite DefaultSprite;
-        private static Viewport viewport;
 
-        public static new void InitDefaults(Engine e)
+        public static new void InitDefaults()
         {
-            viewport = e.Graphics.Viewport;
-            DefaultSprite = new Sprite(e.Content, CONTROL_FORM_BACK);
+            DefaultSprite = new Sprite(CONTROL_FORM_BACK);
         }
         #endregion
 
@@ -142,19 +140,19 @@ namespace ArwicEngine.Forms
             }
         }
 
-        public override bool Update(InputManager input)
+        public override bool Update()
         {
             if (Parent != null)
             {
-                Visible = Parent.AbsoluteBounds.Contains(input.MouseScreenPos());
+                Visible = Parent.AbsoluteBounds.Contains(InputManager.Instance.MouseScreenPos());
 
                 if (Visible)
                 {
                     if (FollowCurosr)
                     {
                         AbsoluteBounds = new Rectangle(
-                            CursorOffset.X + input.MouseScreenPos().X,
-                            CursorOffset.Y + input.MouseScreenPos().Y,
+                            CursorOffset.X + InputManager.Instance.MouseScreenPos().X,
+                            CursorOffset.Y + InputManager.Instance.MouseScreenPos().Y,
                             Size.Width,
                             (2 * padding + (lineSpacing + lineHeight) * wrappedText.Length - 1));
                     }
@@ -169,14 +167,14 @@ namespace ArwicEngine.Forms
                 }
             }
 
-            return base.Update(input);
+            return base.Update();
         }
 
         public override void Draw(SpriteBatch sb)
         {
             if (Visible)
             {
-                if (AbsoluteLocation.X + Size.Width > viewport.Width)
+                if (AbsoluteLocation.X + Size.Width > GraphicsManager.Instance.Viewport.Width)
                 {
                     AbsoluteLocation = new Point(AbsoluteLocation.X - Size.Width, AbsoluteLocation.Y);
                 }

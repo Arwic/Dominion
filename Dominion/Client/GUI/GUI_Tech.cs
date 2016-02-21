@@ -31,7 +31,6 @@ namespace Dominion.Client.GUI
             }
         }
 
-        private Engine engine;
         private Client client;
         private SceneGame sceneGame;
         private Canvas canvas;
@@ -45,9 +44,8 @@ namespace Dominion.Client.GUI
         private List<Line> lines;
         public bool Visible { get { if (form != null) return form.Visible; else return false; } }
 
-        public GUI_Tech(Engine engine, Client client, SceneGame sceneGame, Canvas canvas)
+        public GUI_Tech(Client client, SceneGame sceneGame, Canvas canvas)
         {
-            this.engine = engine;
             this.client = client;
             this.sceneGame = sceneGame;
             this.canvas = canvas;
@@ -77,10 +75,10 @@ namespace Dominion.Client.GUI
                 if (node.GridX > maxScrollIndex)
                     maxScrollIndex = node.GridX;
 
-            techLockedSprite = new Sprite(engine.Content, "Graphics/Interface/Controls/ScrollBox_Back");
-            techUnlockedSprite = new Sprite(engine.Content, "Graphics/Interface/Controls/ScrollBox_Button");
-            techSelectedSprite = new Sprite(engine.Content, "Graphics/Interface/Controls/Form_Back");
-            techSelectable = new Sprite(engine.Content, "Graphics/Interface/Controls/ScrollBox_Back");
+            techLockedSprite = new Sprite("Graphics/Interface/Controls/ScrollBox_Back");
+            techUnlockedSprite = new Sprite("Graphics/Interface/Controls/ScrollBox_Button");
+            techSelectedSprite = new Sprite("Graphics/Interface/Controls/Form_Back");
+            techSelectable = new Sprite("Graphics/Interface/Controls/ScrollBox_Back");
         }
 
         public void Show()

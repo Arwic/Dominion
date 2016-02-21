@@ -21,52 +21,38 @@ namespace ArwicEngine.Core
     /// <summary>
     /// A class that provides references to most things in the engine
     /// </summary>
-    public class Engine
+    public sealed class Engine
     {
+        // Singleton pattern
+        private static object _lock_instance = new object();
+        private static Engine _instance;
+        public static Engine Instance
+        {
+            get
+            {
+                lock (_lock_instance)
+                {
+                    if (_instance == null)
+                        throw new InvalidOperationException("Engine.Init() must be called first");
+                    return _instance;
+                }
+            }
+        }
+
         /// <summary>
         /// Gets the version of the engine
         /// </summary>
-        public string Version { get; }
-
-        /// <summary>
-        /// Gets the graphics manager
-        /// </summary>
-        public GraphicsManager Graphics { get; }
-
-        /// <summary>
-        /// Gets the audio manager
-        /// </summary>
-        public AudioManager Audio { get; }
-
-        /// <summary>
-        /// Gets the console manager
-        /// </summary>
-        public ConsoleManager Console { get; }
-
-        /// <summary>
-        /// Gets the scene manager
-        /// </summary>
-        public SceneManager Scene { get; }
-
-        /// <summary>
-        /// Gets the config manager
-        /// </summary>
-        public ConfigManager Config { get; }
-
-        /// <summary>
-        /// Gets the input manager
-        /// </summary>
-        public InputManager Input { get; }
+        public string Version { get; private set; }
 
         /// <summary>
         /// Gets the frame counter
         /// </summary>
-        public FrameCounter FrameCounter { get; }
+        public FrameCounter FrameCounter { get; } = new FrameCounter();
 
         /// <summary>
         /// Gets the content manager
         /// </summary>
-        public ContentManager Content { get; }
+        public ContentManager Content { get; private set; }
 
         /// <summary>
         /// Gets the a value indicating whether or not the game window is active
@@ -79,41 +65,67 @@ namespace ArwicEngine.Core
         public GameWindow Window => game.Window;
 
         /// <summary>
+        /// Gets or sets the xna gameTime value
+        /// </summary>
+        public GameTime GameTime { get; private set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public float DeltaTime
+        {
+            get
+            {
+                if (GameTime == null)
+                    return 0f;
+                return (float)GameTime.ElapsedGameTime.TotalSeconds;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the color to which the graphics device is set to before rendering the next frame
         /// </summary>
         public Color ClearColor { get; set; }
 
         private Game game;
 
+        // Singleton
+        private Engine() { }
+
         /// <summary>
         /// Creates a new engine with an optional pointer to a draw surface, if none is provided a window is used
         /// </summary>
         /// <param name="game"></param>
         /// <param name="drawSurface"></param>
-        public Engine(Game game, IntPtr? drawSurface = null)
+        public static void Init(Game game, IntPtr? drawSurface = null)
         {
+            if (_instance != null)
+                throw new InvalidOperationException("Init cannot be called more than once");
+
+            _instance = new Engine();
+
             // Set engine variables
-            ClearColor = Color.Black;
-            this.game = game;
+            Instance.ClearColor = Color.Black;
+            Instance.game = game;
             game.IsFixedTimeStep = false;
             game.IsMouseVisible = true;
-            Content = game.Content;
+            Instance.Content = game.Content;
 
             // Make sure to stop audio and save the config before exiting
             game.Exiting += (s, a) =>
             {
-                Audio.Shutdown();
-                Config.Write(CONFIG_PATH);
+                AudioManager.Instance.Shutdown();
+                ConfigManager.Instance.Write(CONFIG_PATH);
                 Environment.Exit(0);
             };
 
             CultureInfo.CurrentCulture = new CultureInfo("en-GB");
-            Version = RetrieveLinkerTimestamp().ToString("dd MMM yyyy HH:mm");
+            Instance.Version = RetrieveLinkerTimestamp().ToString("dd MMM yyyy HH:mm");
 
             // set up a normal window
             if (drawSurface == null)
             {
-                game.Window.Title = $"{ENGINE_NAME} - {Version}";
+                game.Window.Title = $"{ENGINE_NAME} - {Instance.Version}";
                 System.Windows.Forms.Form form = (System.Windows.Forms.Form)System.Windows.Forms.Control.FromHandle(game.Window.Handle);
                 form.Location = new System.Drawing.Point(0, 0);
             }
@@ -129,42 +141,31 @@ namespace ArwicEngine.Core
             EventInput.Init(game.Window.Handle);
 
             // set up managers
-            Content.RootDirectory = "Content";
-            Config = new ConfigManager(this);
-            Console = new ConsoleManager(this);
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            Instance.Content.RootDirectory = "Content";
+            AppDomain.CurrentDomain.UnhandledException += (s, a) => Console.WriteLine($"UNHANDLED EXCEPTION: {a.ExceptionObject.ToString()}", MsgType.Failed);
             // run the config file as a script
-            Console.RunScript(CONFIG_PATH);
-            Audio = new AudioManager(this);
-            Graphics = new GraphicsManager(this, game, drawSurface);
+            ConsoleManager.Instance.RunScript(CONFIG_PATH);
+            GraphicsManager.Init(game, drawSurface);
             InitGUIDefaults();
-            GraphicsHelper.Init(Graphics.Device);
-            Input = new InputManager(this);
-            Scene = new SceneManager(this);
-            FrameCounter = new FrameCounter();
-            RichText.Init(Content);
+            GraphicsHelper.Init(GraphicsManager.Instance.Device);
+            RichText.Init(Instance.Content);
 #if DEBUG
             Console.WriteLine("ASSEMBLY IN DEBUG MODE", MsgType.Warning);
 #endif
         }
 
-        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            Console.WriteLine($"UNHANDLED EXCEPTION: {e.ExceptionObject.ToString()}", MsgType.Failed);
-        }
-
-        private void InitGUIDefaults()
+        private static void InitGUIDefaults()
         {
             // initialise defaults for the gui system
-            Control.InitDefaults(this);
-            Button.InitDefaults(this);
-            CheckBox.InitDefaults(this);
-            ComboBox.InitDefaults(this);
-            Form.InitDefaults(this);
-            ProgressBar.InitDefaults(this);
-            ScrollBox.InitDefaults(this);
-            TextBox.InitDefaults(this);
-            ToolTip.InitDefaults(this);
+            Control.InitDefaults();
+            Button.InitDefaults();
+            CheckBox.InitDefaults();
+            ComboBox.InitDefaults();
+            Form.InitDefaults();
+            ProgressBar.InitDefaults();
+            ScrollBox.InitDefaults();
+            TextBox.InitDefaults();
+            ToolTip.InitDefaults();
         }
         
         /// <summary>
@@ -173,7 +174,7 @@ namespace ArwicEngine.Core
         /// <param name="exitCode"></param>
         public void Exit(int exitCode)
         {
-            Config.Write(CONFIG_PATH);
+            ConfigManager.Instance.Write(CONFIG_PATH);
             Environment.Exit(exitCode);
         }
 
@@ -222,10 +223,10 @@ namespace ArwicEngine.Core
         /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
-            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            FrameCounter.Update(delta);
-            Scene.Update(delta);
-            Input.Update();
+            GameTime = gameTime;
+            FrameCounter.Update(DeltaTime);
+            SceneManager.Instance.Update();
+            InputManager.Instance.Update();
         }
 
         /// <summary>
@@ -234,9 +235,9 @@ namespace ArwicEngine.Core
         /// <param name="gameTime"></param>
         public void Draw(GameTime gameTime)
         {
-            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Graphics.Device.Clear(ClearColor);
-            Scene.Draw(delta);
+            GameTime = gameTime;
+            GraphicsManager.Instance.Device.Clear(ClearColor);
+            SceneManager.Instance.Draw();
         }
     }
 }

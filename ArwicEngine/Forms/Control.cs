@@ -162,8 +162,6 @@ namespace ArwicEngine.Forms
 
     public abstract class Control
     {
-        public static ContentManager Content { get; set; }
-
         #region Defaults
         /// <summary>
         /// Gets the default color of the control
@@ -178,11 +176,11 @@ namespace ArwicEngine.Forms
         /// </summary>
         public static Cursor DefaultCursor;
 
-        public static void InitDefaults(Engine e)
+        public static void InitDefaults()
         {
             DefaultColor = Color.White;
-            DefaultCursor = new Cursor(e.Window, CURSOR_NORMAL_PATH);
-            DefaultFont = new Font(e.Content, FONT_ARIAL_PATH);
+            DefaultCursor = new Cursor(CURSOR_NORMAL_PATH);
+            DefaultFont = new Font(FONT_ARIAL_PATH);
         }
         #endregion
 
@@ -939,44 +937,44 @@ namespace ArwicEngine.Forms
         /// <summary>
         /// Updates the control and its events
         /// </summary>
-        public virtual bool Update(InputManager input)
+        public virtual bool Update()
         {
             bool interacted = false;
             if (Visible && Enabled)
             {
                 foreach (Control child in Children)
                 {
-                    child.UpdateEnterLeave(input);
+                    child.UpdateEnterLeave();
                 }
                 foreach (Control child in Children)
                 {
-                    interacted = child.Update(input);
+                    interacted = child.Update();
                     if (interacted)
                         break;
                 }
                 if (ToolTip != null)
-                    ToolTip.Update(input);
+                    ToolTip.Update();
                 
                 if (!interacted)
                 {
-                    Point mouseScreenPos = input.MouseScreenPos();
+                    Point mouseScreenPos = InputManager.Instance.MouseScreenPos();
                     bool containsMouse = AbsoluteBounds.Contains(mouseScreenPos);
 
                     if (containsMouse)
                     {
-                        bool leftMouseDown = input.IsMouseDown(MouseButton.Left);
-                        bool rightMouseDown = input.IsMouseDown(MouseButton.Right);
-                        bool middleMouseDown = input.IsMouseDown(MouseButton.Middle);
-                        bool onLeftMouseDown = input.OnMouseDown(MouseButton.Left);
-                        bool onRightMouseDown = input.OnMouseDown(MouseButton.Right);
-                        bool onMiddleMouseDown = input.OnMouseDown(MouseButton.Middle);
-                        bool onLeftMouseUp = input.OnMouseUp(MouseButton.Left);
-                        bool onRightMouseUp = input.OnMouseUp(MouseButton.Right);
-                        bool onMiddleMouseUp = input.OnMouseUp(MouseButton.Middle);
+                        bool leftMouseDown = InputManager.Instance.IsMouseDown(MouseButton.Left);
+                        bool rightMouseDown = InputManager.Instance.IsMouseDown(MouseButton.Right);
+                        bool middleMouseDown = InputManager.Instance.IsMouseDown(MouseButton.Middle);
+                        bool onLeftMouseDown = InputManager.Instance.OnMouseDown(MouseButton.Left);
+                        bool onRightMouseDown = InputManager.Instance.OnMouseDown(MouseButton.Right);
+                        bool onMiddleMouseDown = InputManager.Instance.OnMouseDown(MouseButton.Middle);
+                        bool onLeftMouseUp = InputManager.Instance.OnMouseUp(MouseButton.Left);
+                        bool onRightMouseUp = InputManager.Instance.OnMouseUp(MouseButton.Right);
+                        bool onMiddleMouseUp = InputManager.Instance.OnMouseUp(MouseButton.Middle);
 
-                        Point lastMouseScreenPos = input.LastMouseScreenPos();
-                        int mouseScrollWheelValue = input.CurrentMouseScrollWheelValue();
-                        int lastMouseScrollWheelValue = input.LastMouseScrollWheelValue();
+                        Point lastMouseScreenPos = InputManager.Instance.LastMouseScreenPos();
+                        int mouseScrollWheelValue = InputManager.Instance.CurrentMouseScrollWheelValue();
+                        int lastMouseScrollWheelValue = InputManager.Instance.LastMouseScrollWheelValue();
                         int mouseScrollWheelDelta = lastMouseScrollWheelValue - mouseScrollWheelValue;
                         bool lastContainsMouse = AbsoluteBounds.Contains(lastMouseScreenPos);
 
@@ -1019,17 +1017,17 @@ namespace ArwicEngine.Forms
             return interacted;
         }
 
-        private void UpdateEnterLeave(InputManager input)
+        private void UpdateEnterLeave()
         {
-            bool leftMouseDown = input.IsMouseDown(MouseButton.Left);
-            bool rightMouseDown = input.IsMouseDown(MouseButton.Right);
-            bool middleMouseDown = input.IsMouseDown(MouseButton.Middle);
-            bool onLeftMouseDown = input.OnMouseDown(MouseButton.Left);
+            bool leftMouseDown = InputManager.Instance.IsMouseDown(MouseButton.Left);
+            bool rightMouseDown = InputManager.Instance.IsMouseDown(MouseButton.Right);
+            bool middleMouseDown = InputManager.Instance.IsMouseDown(MouseButton.Middle);
+            bool onLeftMouseDown = InputManager.Instance.OnMouseDown(MouseButton.Left);
 
-            Point mouseScreenPos = input.MouseScreenPos();
-            Point lastMouseScreenPos = input.LastMouseScreenPos();
-            int mouseScrollWheelValue = input.CurrentMouseScrollWheelValue();
-            int lastMouseScrollWheelValue = input.LastMouseScrollWheelValue();
+            Point mouseScreenPos = InputManager.Instance.MouseScreenPos();
+            Point lastMouseScreenPos = InputManager.Instance.LastMouseScreenPos();
+            int mouseScrollWheelValue = InputManager.Instance.CurrentMouseScrollWheelValue();
+            int lastMouseScrollWheelValue = InputManager.Instance.LastMouseScrollWheelValue();
             int mouseScrollWheelDelta = lastMouseScrollWheelValue - mouseScrollWheelValue;
             bool containsMouse = AbsoluteBounds.Contains(mouseScreenPos);
             bool lastContainsMouse = AbsoluteBounds.Contains(lastMouseScreenPos);

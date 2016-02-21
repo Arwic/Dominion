@@ -1,5 +1,6 @@
 ﻿using ArwicEngine.Core;
 using ArwicEngine.Forms;
+using ArwicEngine.Scenes;
 using Dominion.Client.Scenes;
 using Dominion.Server;
 using Microsoft.Xna.Framework;
@@ -16,12 +17,9 @@ namespace Dominion.Client
 
     public class Dominion : Game
     {
-        private Engine engine;
-
         public Dominion()
         {
-            engine = new Engine(this);
-            Control.Content = engine.Content;
+            Engine.Init(this);
 
             RichText.RichTextRules = new List<RichTextParseRule>()
             {
@@ -58,22 +56,22 @@ namespace Dominion.Client
             //}
 
             GameManager manager = new GameManager();
-            manager.Client = new Client(engine);
-            manager.Server = new Server.Server(engine);
-            engine.Scene.RegisterScene(new SceneMenu(engine, manager));
-            engine.Scene.RegisterScene(new SceneGame(engine, manager));
-            engine.Scene.ChangeScene(0);
+            manager.Client = new Client();
+            manager.Server = new Server.Server();
+            SceneManager.Instance.RegisterScene(new SceneMenu(manager));
+            SceneManager.Instance.RegisterScene(new SceneGame(manager));
+            SceneManager.Instance.ChangeScene((int)Scene.Menu);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            engine.Update(gameTime);
+            Engine.Instance.Update(gameTime);
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            engine.Draw(gameTime);
+            Engine.Instance.Draw(gameTime);
             base.Draw(gameTime);
         }
     }

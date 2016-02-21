@@ -20,7 +20,6 @@ namespace Dominion.Server
 
     public class Server
     {
-        public Engine Engine { get; }
         public bool Running => server == null ? false : server.Running;
         public LobbyState LobbyState { get; private set; }
         private NetServer server;
@@ -34,9 +33,8 @@ namespace Dominion.Server
         public int TurnTimeLimit { get; private set; }
         public int TurnNumber { get; private set; }
 
-        public Server(Engine engine)
+        public Server()
         {
-            Engine = engine;
         }
 
         // Initialisation & Finalisation
@@ -46,7 +44,7 @@ namespace Dominion.Server
             ServerPassword = password;
             ServerState = ServerState.Lobby;
             LobbyState = new LobbyState();
-            server = new NetServer(Engine);
+            server = new NetServer();
             server.PacketRecieved += Server_PacketRecieved;
             server.ConnectionLost += Server_ConnectionLost;
             server.Start(port);
@@ -437,7 +435,7 @@ namespace Dominion.Server
             Packet pOut = new Packet((int)PacketHeader.LobbyBan, "Host banned you");
             server.SendData(pOut, player.Connection);
             player.Connection.Close(1000);
-            Engine.Console.WriteLine($"Banned {bannedAddress}", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"Banned {bannedAddress}", MsgType.ServerInfo);
         }
         public void KickPlayer(int playerID)
         {
@@ -448,7 +446,7 @@ namespace Dominion.Server
             Packet pOut = new Packet((int)PacketHeader.LobbyKick, "Host kicked you");
             server.SendData(pOut, player.Connection);
             player.Connection.Close(1000);
-            Engine.Console.WriteLine($"Kicked {player.Connection.Address.Split(':')}", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"Kicked {player.Connection.Address.Split(':')}", MsgType.ServerInfo);
         }
 
         // React to changes
@@ -523,7 +521,7 @@ namespace Dominion.Server
         private void ParsePacket(Packet p)
         {
             PacketHeader header = (PacketHeader)p.Header;
-            Engine.Console.WriteLine($"Parsing a packet with header {header}", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"Parsing a packet with header {header}", MsgType.ServerInfo);
             try
             {
                 switch (header)
@@ -550,7 +548,7 @@ namespace Dominion.Server
             }
             catch (Exception e)
             {
-                Engine.Console.WriteLine($"Error parsing {(PacketHeader)p.Header}, {e.Message}", MsgType.ServerFailed);
+                ConsoleManager.Instance.WriteLine($"Error parsing {(PacketHeader)p.Header}, {e.Message}", MsgType.ServerFailed);
             }
         }
         private void ParseLobbyInit(Packet p)
@@ -670,13 +668,13 @@ namespace Dominion.Server
         }
         private void EndTurn(TurnEndReason reason)
         {
-            Engine.Console.WriteLine($"Turn {TurnNumber} has ended, reason {reason}", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"Turn {TurnNumber} has ended, reason {reason}", MsgType.ServerInfo);
 
             controllers.ProcessTurn();
             TurnNumber++;
             TurnTimer.Restart();
 
-            Engine.Console.WriteLine($"Turn {TurnNumber} has begun", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"Turn {TurnNumber} has begun", MsgType.ServerInfo);
             foreach (Player player in controllers.Player.GetAllPlayers())
             {
                 Packet p = new Packet((int)PacketHeader.TurnData,
@@ -708,7 +706,7 @@ namespace Dominion.Server
         }
         private void SendGameOver(Player winner, VictoryType vtype)
         {
-            Engine.Console.WriteLine($"Game over! {winner.Name}, {controllers.Factory.Empire.GetEmpire(winner.EmpireID).Name}, has won with a {vtype} victory", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"Game over! {winner.Name}, {controllers.Factory.Empire.GetEmpire(winner.EmpireID).Name}, has won with a {vtype} victory", MsgType.ServerInfo);
             Packet pOut = new Packet((int)PacketHeader.GameOver, winner, vtype);
             server.SendDataToAll(pOut);
             StopServer();

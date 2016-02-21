@@ -20,10 +20,10 @@ namespace ArwicEngine.Forms
         public static Sprite DefaultSprite;
         public static new Cursor DefaultCursor;
 
-        public static new void InitDefaults(Engine e)
+        public static new void InitDefaults()
         {
-            DefaultSprite = new Sprite(e.Content, CONTROL_BUTTON);
-            DefaultCursor = new Cursor(e.Window, CURSOR_LINK_PATH);
+            DefaultSprite = new Sprite(CONTROL_BUTTON);
+            DefaultCursor = new Cursor(CURSOR_LINK_PATH);
         }
         #endregion
 
@@ -76,7 +76,7 @@ namespace ArwicEngine.Forms
             : base(config, parent)
         {
             Initialize();
-            Sprite = new Sprite(Content, config.SpritePath);
+            Sprite = new Sprite(config.SpritePath);
             OverColorPercent = config.OverColorPercent;
             DownColorPercent = config.DownColorPercent;
             DisabledColorPercent = config.DisabledColorPercent;
@@ -111,11 +111,11 @@ namespace ArwicEngine.Forms
         private void Button_MouseHover(object sender, MouseEventArgs e) => mouseOver = true;
         private void Button_MouseMove(object sender, MouseEventArgs e) => mouseOver = true;
 
-        public override bool Update(InputManager input)
+        public override bool Update()
         {
             mouseDown = false;
             mouseOver = false;
-            return base.Update(input);
+            return base.Update();
         }
 
         /// <summary>

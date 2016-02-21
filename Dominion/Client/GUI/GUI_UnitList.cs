@@ -26,7 +26,6 @@ namespace Dominion.Client.GUI
             }
         }
 
-        public Engine Engine { get; }
         private FormConfig formConfig;
         private Client client;
         private SceneGame sceneGame;
@@ -35,10 +34,9 @@ namespace Dominion.Client.GUI
         public bool Visible { get { if (form != null) return form.Visible; else return false; } }
         private List<IListItem> unitListItems;
 
-        public GUI_UnitList(Engine engine, Client client, SceneGame sceneGame, Canvas canvas)
+        public GUI_UnitList(Client client, SceneGame sceneGame, Canvas canvas)
         {
             formConfig = FormConfig.FromFile("Content/Interface/Game/UnitList.xml");
-            Engine = engine;
             this.client = client;
             this.sceneGame = sceneGame;
             this.canvas = canvas;

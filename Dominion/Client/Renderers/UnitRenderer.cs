@@ -1,5 +1,6 @@
 ﻿using ArwicEngine.Core;
 using ArwicEngine.Graphics;
+using ArwicEngine.Input;
 using Dominion.Common.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,7 +13,6 @@ namespace Dominion.Client.Renderers
     {
         private object _lock_updateMoveTargets = new object();
 
-        private Engine engine;
         private BoardRenderer boardRenderer;
         private int playerID;
         private Client client;
@@ -27,9 +27,8 @@ namespace Dominion.Client.Renderers
         private List<Tile> moveTargets;
         private LinkedList<Point> movePath;
 
-        public UnitRenderer(Engine engine, BoardRenderer boardRenderer, Camera2 camera, Client client)
+        public UnitRenderer(BoardRenderer boardRenderer, Camera2 camera, Client client)
         {
-            this.engine = engine;
             this.client = client;
             this.camera = camera;
             playerID = client.Player.InstanceID;
@@ -101,12 +100,12 @@ namespace Dominion.Client.Renderers
 
         private void LoadResources()
         {
-            tileHighlightSprite = new Sprite(engine.Content, "Graphics/Game/Tiles/TileOverlay");
+            tileHighlightSprite = new Sprite("Graphics/Game/Tiles/TileOverlay");
 
             int count = Enum.GetNames(typeof(UnitGraphicID)).Length;
             unitSprites = new Sprite[count];
             for (int i = 0; i < count; i++)
-                unitSprites[i] = new Sprite(engine.Content, $"Graphics/Game/Units/{i}");
+                unitSprites[i] = new Sprite($"Graphics/Game/Units/{i}");
         }
 
         public void Draw(SpriteBatch sb, Font font)
@@ -178,7 +177,7 @@ namespace Dominion.Client.Renderers
                             break;
                         foreach (Tile tileLoc in moveTargets)
                             tileHighlightSprite.Draw(sb, boardRenderer.GetTileRenderRect(tileLoc), null, Color.CornflowerBlue);
-                        Tile tileUnderMouse = boardRenderer.GetTileAtPoint(engine.Input.MouseWorldPos(camera));
+                        Tile tileUnderMouse = boardRenderer.GetTileAtPoint(InputManager.Instance.MouseWorldPos(camera));
                         if (tileUnderMouse != null && client.GetCachedTile(tileUnderMouse.Location) != null)
                             DrawPath(sb, client.SelectedUnit.Location, Board.FindPath(client.SelectedUnit.Location, tileUnderMouse.Location, client.Board), Color.Yellow);
                     }

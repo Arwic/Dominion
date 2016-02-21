@@ -11,7 +11,6 @@ namespace Dominion.Client.GUI
 {
     public class GUI_UnitActions : IGUIElement
     {
-        private Engine engine;
         private Form form;
         private Canvas canvas;
         private SceneGame sceneGame;
@@ -20,9 +19,8 @@ namespace Dominion.Client.GUI
         private Camera2 camera;
         private BoardRenderer boardRenderer;
 
-        public GUI_UnitActions(Engine engine, Client client, SceneGame sceneGame, Camera2 camera, BoardRenderer boardRenderer, Canvas canvas)
+        public GUI_UnitActions(Client client, SceneGame sceneGame, Camera2 camera, BoardRenderer boardRenderer, Canvas canvas)
         {
-            this.engine = engine;
             this.client = client;
             this.sceneGame = sceneGame;
             this.camera = camera;
@@ -82,7 +80,7 @@ namespace Dominion.Client.GUI
                     btnCmd.MouseClick += (s, a) =>
                     {
                         UnitCommandID cmdID = (UnitCommandID)commandIds[locali];
-                        engine.Console.WriteLine($"Select a new command, {cmdID}");
+                        ConsoleManager.Instance.WriteLine($"Select a new command, {cmdID}");
                         if (UnitCommand.GetTargetType(cmdID) == UnitCommandTargetType.Instant)
                         {
                             if (client.SelectedUnit != null)

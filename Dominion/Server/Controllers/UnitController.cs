@@ -346,6 +346,7 @@ namespace Dominion.Server.Controllers
 
         public void MeleeAttack(Unit attacker, Unit defender)
         {
+            Console.WriteLine($"{attacker.Name} is attacking {defender.Name}");
             if (attacker.PlayerID == defender.PlayerID)
                 return;
 

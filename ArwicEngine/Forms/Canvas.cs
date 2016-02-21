@@ -3,6 +3,7 @@
 // This file contains classes that define a canvas that is used to manage forms
 
 using ArwicEngine.Core;
+using ArwicEngine.Graphics;
 using ArwicEngine.Input;
 using Microsoft.Xna.Framework;
 using System;
@@ -88,9 +89,8 @@ namespace ArwicEngine.Forms
         /// <summary>
         /// Updates the canvas, returns true if a ui element is capturing the mouse
         /// </summary>
-        /// <param name="input"></param>
         /// <returns></returns>
-        public override bool Update(InputManager input)
+        public override bool Update()
         {
             bool interacted = false;
             foreach (Control child in Children)
@@ -100,27 +100,27 @@ namespace ArwicEngine.Forms
                     if (child.Visible && child.Enabled)
                     {
                         Form form = child as Form;
-                        if (form.AbsoluteBounds.Contains(input.MouseScreenPos()) && input.OnMouseUp(MouseButton.Left))
+                        if (form.AbsoluteBounds.Contains(InputManager.Instance.MouseScreenPos()) && InputManager.Instance.OnMouseUp(MouseButton.Left))
                             BringToFront(form);
 
-                        if (form.Draggable && formDragging == null && input.OnMouseDown(MouseButton.Left))
+                        if (form.Draggable && formDragging == null && InputManager.Instance.OnMouseDown(MouseButton.Left))
                         {
                             Rectangle titleBar = new Rectangle(form.AbsoluteLocation.X, form.AbsoluteLocation.Y, form.Size.Width - (FORM_CLOSEBUTTON_DIM + FORM_CLOSEBUTTON_PADDING), FORM_CLOSEBUTTON_DIM + FORM_CLOSEBUTTON_PADDING);
-                            if (titleBar.Contains(input.MouseScreenPos()))
+                            if (titleBar.Contains(InputManager.Instance.MouseScreenPos()))
                             {
-                                formDragOffset = input.MouseScreenPos() - form.AbsoluteLocation;
+                                formDragOffset = InputManager.Instance.MouseScreenPos() - form.AbsoluteLocation;
                                 formDragging = form;
                                 BringToFront(formDragging);
                             }
                         }
-                        if (formDragging != null && !input.IsMouseDown(MouseButton.Left))
+                        if (formDragging != null && !InputManager.Instance.IsMouseDown(MouseButton.Left))
                             formDragging = null;
                         if (formDragging != null)
-                            formDragging.AbsoluteLocation = input.MouseScreenPos() - formDragOffset;
+                            formDragging.AbsoluteLocation = InputManager.Instance.MouseScreenPos() - formDragOffset;
                     }
                 }
 
-                interacted = child.Update(input);
+                interacted = child.Update();
                 if (interacted)
                     break;
             }
@@ -136,10 +136,10 @@ namespace ArwicEngine.Forms
 
                 ToolTip tt = control as ToolTip;
                 if (tt != null)
-                    tt.Visible = tt.Parent.AbsoluteBounds.Contains(input.MouseScreenPos());
+                    tt.Visible = tt.Parent.AbsoluteBounds.Contains(InputManager.Instance.MouseScreenPos());
             }
 
-            if (!input.Engine.Graphics.Viewport.Bounds.Contains(input.MouseScreenPos()))
+            if (!GraphicsManager.Instance.Viewport.Bounds.Contains(InputManager.Instance.MouseScreenPos()))
                 interacted = true;
             if (!interacted)
                 DefaultCursor.Enable();

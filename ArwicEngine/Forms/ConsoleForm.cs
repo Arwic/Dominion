@@ -16,19 +16,15 @@ namespace ArwicEngine.Forms
 {
     public class ConsoleForm : Form
     {
-        public ConsoleManager ConsoleManager { get; set; }
-
         private TextLog messageLog;
         private TextBox commandBox;
         private List<string> commandHistory = new List<string>();
         private int historyIndex = 0;
 
-        public ConsoleForm(ConsoleManager cm, Control parent = null)
-            : base(new Rectangle(0, 0, cm.Engine.Graphics.Viewport.Width, Math.Min(500, cm.Engine.Graphics.Viewport.Height)), parent)
+        public ConsoleForm(Control parent = null)
+            : base(new Rectangle(0, 0, GraphicsManager.Instance.Viewport.Width, Math.Min(500, GraphicsManager.Instance.Viewport.Height)), parent)
         {
-            ConsoleManager = cm;
-
-            Text = $"{ENGINE_NAME} - {ConsoleManager.Engine.Version}".ToRichText();
+            Text = $"{ENGINE_NAME} - {Engine.Instance.Version}".ToRichText();
             Draggable = false;
             Visible = false;
             DrawTitlebar = false;
@@ -37,7 +33,7 @@ namespace ArwicEngine.Forms
             if (parent != null && parent as Canvas != null)
                 (parent as Canvas).AlwayOnTop = this;
 
-            Font = new Font(ConsoleManager.Engine.Content, FONT_CONSOLAS_PATH);
+            Font = new Font(FONT_CONSOLAS_PATH);
 
             int commandBoxHeight = 30;
             commandBox = new TextBox(new Rectangle(0, Bounds.Height - commandBoxHeight, Bounds.Width, commandBoxHeight), this);
@@ -46,14 +42,14 @@ namespace ArwicEngine.Forms
 
             messageLog = new TextLog(new Rectangle(0, 0, Bounds.Width, Bounds.Height - commandBox.Bounds.Height), this);
             messageLog.Font = Font;
-            foreach (string line in cm.Lines.ToArray())
+            foreach (string line in ConsoleManager.Instance.Lines.ToArray())
                 messageLog.WriteLine(new RichText(line, Color, Font));
             messageLog.WriteLine(new RichText(new RichTextSection("---- End of backlog ----", Color.Red)));
 
             EventInput.KeyUp += EventInput_KeyUp;
             VisibleChanged += Form_VisibleChanged;
-            ConsoleManager.LineWritten += ConsoleManager_LineWritten;
-            ConsoleManager.ClearLines += ConsoleManager_ClearLines;
+            ConsoleManager.Instance.LineWritten += ConsoleManager_LineWritten;
+            ConsoleManager.Instance.ClearLines += ConsoleManager_ClearLines;
         }
 
         private void Form_VisibleChanged(object sender, EventArgs e)
@@ -93,7 +89,7 @@ namespace ArwicEngine.Forms
             if (Visible && commandBox.Text.Trim() != "")
             {
                 commandHistory.Add(commandBox.Text);
-                ConsoleManager.RunCommand(commandBox.Text);
+                ConsoleManager.Instance.RunCommand(commandBox.Text);
                 commandBox.Text = "";
                 historyIndex = 0;
             }

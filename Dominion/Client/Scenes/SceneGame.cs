@@ -1,4 +1,5 @@
-﻿using ArwicEngine.Core;
+﻿using ArwicEngine.Audio;
+using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using ArwicEngine.Graphics;
 using ArwicEngine.Input;
@@ -49,16 +50,16 @@ namespace Dominion.Client.Scenes
         private Vector2 cameraZoomMax = new Vector2(2f, 2f);
         private Vector2 cameraZoomMin = new Vector2(0.5f, 0.5f);
 
-        public SceneGame(Engine engine, GameManager manager)
-            : base(engine)
+        public SceneGame(GameManager manager)
+            : base()
         {
-            defaultCursor = new Cursor(engine.Window, "Content/Cursors/normal.cur");
-            unitCommandTargetCursor = new Cursor(engine.Window, "Content/Cursors/link.cur");
+            defaultCursor = new Cursor("Content/Cursors/normal.cur");
+            unitCommandTargetCursor = new Cursor("Content/Cursors/link.cur");
             this.manager = manager;
             manager.Client.SelectedCommandChanged += Client_SelectedCommandChanged;
 
 #if DEBUG
-            engine.Console.RegisterCommand("cache_all", f_cachAll);
+            ConsoleManager.Instance.RegisterCommand("cache_all", f_cachAll);
 #endif
         }
 
@@ -66,11 +67,11 @@ namespace Dominion.Client.Scenes
         {
             if (args.Count != 1)
             {
-                Engine.Console.WriteLine("Usage: <cachable-object>");
-                Engine.Console.WriteLine("Usage: Objects;");
-                Engine.Console.WriteLine("Usage: tile");
-                Engine.Console.WriteLine("Usage: unit");
-                Engine.Console.WriteLine("Usage: city");
+                ConsoleManager.Instance.WriteLine("Usage: <cachable-object>");
+                ConsoleManager.Instance.WriteLine("Usage: Objects;");
+                ConsoleManager.Instance.WriteLine("Usage: tile");
+                ConsoleManager.Instance.WriteLine("Usage: unit");
+                ConsoleManager.Instance.WriteLine("Usage: city");
                 return 1;
             }
 
@@ -104,30 +105,29 @@ namespace Dominion.Client.Scenes
 
         public override void Enter()
         {
-            sbGUI = new SpriteBatch(Engine.Graphics.Device);
-            sbFore = new SpriteBatch(Engine.Graphics.Device);
-            sbBack = new SpriteBatch(Engine.Graphics.Device);
-            font = new Font(Engine.Content, "fonts/consolas");
-            fps = new FrameCounter();
+            sbGUI = new SpriteBatch(GraphicsManager.Instance.Device);
+            sbFore = new SpriteBatch(GraphicsManager.Instance.Device);
+            sbBack = new SpriteBatch(GraphicsManager.Instance.Device);
+            font = new Font("fonts/consolas");
             
-            camera = new Camera2(Engine.Graphics);
-            boardRenderer = new BoardRenderer(Engine, manager.Client, camera);
-            unitRenderer = new UnitRenderer(Engine, boardRenderer, camera, manager.Client);
+            camera = new Camera2();
+            boardRenderer = new BoardRenderer(manager.Client, camera);
+            unitRenderer = new UnitRenderer(boardRenderer, camera, manager.Client);
             camera.Translation = boardRenderer.GetTileCentre(manager.Client.GetMyUnits()[0].Location);
 
             camera.TranslationTarget = camera.Translation;
-            canvas = new Canvas(Engine.Graphics.Viewport.Bounds);
-            ConsoleForm consoleForm = new ConsoleForm(Engine.Console, canvas);
-            GUI_Map map = new GUI_Map(Engine, camera, manager.Client, boardRenderer, canvas);
-            GUI_StatusBar statusBar = new GUI_StatusBar(Engine, manager.Client, this, canvas);
-            GUI_EndTurn endTurn = new GUI_EndTurn(Engine, manager.Client, canvas);
-            CityList = new GUI_CityList(Engine, manager.Client, this, canvas);
-            UnitList = new GUI_UnitList(Engine, manager.Client, this, canvas);
-            UnitActions = new GUI_UnitActions(Engine, manager.Client, this, camera, boardRenderer, canvas);
-            CityManagment = new GUI_CityManagment(Engine, manager.Client, this, canvas);
-            GUI_NamePlates namePlates = new GUI_NamePlates(Engine, manager.Client, canvas, camera, boardRenderer);
-            TechTree = new GUI_Tech(Engine, manager.Client, this, canvas);
-            GameMenu = new GUI_GameMenu(Engine, manager.Client, this, canvas);
+            canvas = new Canvas(GraphicsManager.Instance.Viewport.Bounds);
+            ConsoleForm consoleForm = new ConsoleForm(canvas);
+            GUI_Map map = new GUI_Map(camera, manager.Client, boardRenderer, canvas);
+            GUI_StatusBar statusBar = new GUI_StatusBar(manager.Client, this, canvas);
+            GUI_EndTurn endTurn = new GUI_EndTurn(manager.Client, canvas);
+            CityList = new GUI_CityList(manager.Client, this, canvas);
+            UnitList = new GUI_UnitList(manager.Client, this, canvas);
+            UnitActions = new GUI_UnitActions(manager.Client, this, camera, boardRenderer, canvas);
+            CityManagment = new GUI_CityManagment(manager.Client, this, canvas);
+            GUI_NamePlates namePlates = new GUI_NamePlates(manager.Client, canvas, camera, boardRenderer);
+            TechTree = new GUI_Tech(manager.Client, this, canvas);
+            GameMenu = new GUI_GameMenu(manager.Client, this, canvas);
         }
 
         public void HideForms(bool hideCityManagment = true, bool hideUnitActions = true)
@@ -145,29 +145,28 @@ namespace Dominion.Client.Scenes
         {
         }
 
-        public override void Update(float delta)
+        public override void Update()
         {
-            fps.Update(delta);
-            bool interacted = canvas.Update(Engine.Input);
+            bool interacted = canvas.Update();
             UpdateBoardInteraction(interacted);
-            UpdateCamera(delta, interacted);
+            UpdateCamera(Engine.Instance.DeltaTime, interacted);
 
             if (!interacted && !canvas.IsCapturingText())
             {
-                if (Engine.Input.WasKeyDown(Keys.Enter))
+                if (InputManager.Instance.WasKeyDown(Keys.Enter))
                     manager.Client.AdvanceTurn();
             }
             
-            if (Engine.Input.WasKeyDown(Keys.F1))
+            if (InputManager.Instance.WasKeyDown(Keys.F1))
                 flag_drawInfo_client = !flag_drawInfo_client;
-            if (Engine.Input.WasKeyDown(Keys.F2))
+            if (InputManager.Instance.WasKeyDown(Keys.F2))
                 flag_drawInfo_server = !flag_drawInfo_server;
 
-            if (Engine.Input.WasKeyDown(Keys.F5))
+            if (InputManager.Instance.WasKeyDown(Keys.F5))
                 boardRenderer.DrawGrid = !boardRenderer.DrawGrid;
-            if (Engine.Input.WasKeyDown(Keys.F6))
+            if (InputManager.Instance.WasKeyDown(Keys.F6))
                 boardRenderer.DrawHighlight = !boardRenderer.DrawHighlight;
-            if (Engine.Input.WasKeyDown(Keys.F7))
+            if (InputManager.Instance.WasKeyDown(Keys.F7))
                 boardRenderer.DrawResourceIcons = !boardRenderer.DrawResourceIcons;
         }
 
@@ -175,32 +174,32 @@ namespace Dominion.Client.Scenes
         {
             camera.Update(delta);
 
-            if (Engine.Input.IsKeyDown(Keys.Up))
+            if (InputManager.Instance.IsKeyDown(Keys.Up))
                 camera.TranslationTarget += new Vector2(0, -cameraTranslationSpeed) * delta;
-            if (Engine.Input.IsKeyDown(Keys.Down))
+            if (InputManager.Instance.IsKeyDown(Keys.Down))
                 camera.TranslationTarget += new Vector2(0, cameraTranslationSpeed) * delta;
-            if (Engine.Input.IsKeyDown(Keys.Left))
+            if (InputManager.Instance.IsKeyDown(Keys.Left))
                 camera.TranslationTarget += new Vector2(cameraTranslationSpeed, 0) * delta;
-            if (Engine.Input.IsKeyDown(Keys.Right))
+            if (InputManager.Instance.IsKeyDown(Keys.Right))
                 camera.TranslationTarget += new Vector2(-cameraTranslationSpeed, 0) * delta;
 
             if (!interacted)
             {
                 // Panning
-                if (Engine.Input.OnMouseDown(MouseButton.Left))
+                if (InputManager.Instance.OnMouseDown(MouseButton.Left))
                 {
                     cameraPanning = true;
-                    cameraPanLastMouse = Engine.Input.MouseScreenPos().ToVector2() / camera.Zoom.X;
+                    cameraPanLastMouse = InputManager.Instance.MouseScreenPos().ToVector2() / camera.Zoom.X;
                 }
                 // Zoom
-                if (Engine.Input.ScrolledUp())
+                if (InputManager.Instance.ScrolledUp())
                 {
                     cameraPanning = false;
                     camera.ZoomTarget += Vector2.One * cameraZoomDelta * delta;
                     if (camera.ZoomTarget.X > cameraZoomMax.X)
                         camera.ZoomTarget = cameraZoomMax;
                 }
-                else if (Engine.Input.ScrolledDown())
+                else if (InputManager.Instance.ScrolledDown())
                 {
                     cameraPanning = false;
                     camera.ZoomTarget -= Vector2.One * cameraZoomDelta * delta;
@@ -210,13 +209,13 @@ namespace Dominion.Client.Scenes
             }
             if (cameraPanning)
             {
-                Vector2 curMouse = Engine.Input.MouseScreenPos().ToVector2() / camera.Zoom;
+                Vector2 curMouse = InputManager.Instance.MouseScreenPos().ToVector2() / camera.Zoom;
                 Vector2 diff = cameraPanLastMouse - curMouse;
                 camera.Translation = camera.TranslationTarget + diff;
                 camera.TranslationTarget = camera.Translation;
                 cameraPanLastMouse = curMouse;
 
-                if (Engine.Input.OnMouseUp(MouseButton.Left))
+                if (InputManager.Instance.OnMouseUp(MouseButton.Left))
                     cameraPanning = false;
             }
         }
@@ -225,10 +224,10 @@ namespace Dominion.Client.Scenes
         {
             if (!interacted)
             {
-                if (Engine.Input.OnMouseUp(MouseButton.Left))
+                if (InputManager.Instance.OnMouseUp(MouseButton.Left))
                 {
                     // Get the tile clicked
-                    Tile tile = boardRenderer.GetCachedTileAtPoint(Engine.Input.MouseWorldPos(camera));
+                    Tile tile = boardRenderer.GetCachedTileAtPoint(InputManager.Instance.MouseWorldPos(camera));
                     if (tile == null)
                         return;
                     // Check if we cicked a unit
@@ -237,7 +236,7 @@ namespace Dominion.Client.Scenes
                     {
                         manager.Client.SelectedUnit = unit;
                         manager.Client.SelectedCommand = UnitCommandID.Null;
-                        Engine.Console.WriteLine($"Selected a unit, id:{manager.Client.SelectedUnit.UnitID}, name:{manager.Client.SelectedUnit.Name}");
+                        ConsoleManager.Instance.WriteLine($"Selected a unit, id:{manager.Client.SelectedUnit.UnitID}, name:{manager.Client.SelectedUnit.Name}");
                     }
                     // Check if we should execute a unti command
                     else if (manager.Client.SelectedCommand != UnitCommandID.Null)
@@ -261,13 +260,13 @@ namespace Dominion.Client.Scenes
                         }
                     }
                 }
-                else if (Engine.Input.OnMouseDown(MouseButton.Right) && manager.Client.SelectedUnit != null)
+                else if (InputManager.Instance.OnMouseDown(MouseButton.Right) && manager.Client.SelectedUnit != null)
                 {
                     manager.Client.SelectedCommand = UnitCommandID.Move;
                 }
-                else if (Engine.Input.OnMouseUp(MouseButton.Right))
+                else if (InputManager.Instance.OnMouseUp(MouseButton.Right))
                 {
-                    Tile tile = boardRenderer.GetCachedTileAtPoint(Engine.Input.MouseWorldPos(camera));
+                    Tile tile = boardRenderer.GetCachedTileAtPoint(InputManager.Instance.MouseWorldPos(camera));
                     if (tile == null)
                         return;
                     if (manager.Client.SelectedUnit != null)
@@ -276,11 +275,11 @@ namespace Dominion.Client.Scenes
             }
         }
 
-        public override void Draw(float delta)
+        public override void Draw()
         {
 
             sbBack.Begin();
-            sbFore.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, camera.GetForegroundTransformation(Engine.Graphics.Scale));
+            sbFore.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, camera.GetForegroundTransformation(GraphicsManager.Instance.Scale));
             sbGUI.Begin();
 
             boardRenderer.Draw(sbFore, font);
@@ -302,14 +301,14 @@ namespace Dominion.Client.Scenes
             string[] texts =
             {
                 $"DOMINION CLIENT INFO",
-                $"Version: {Engine.Version}",
+                $"Version: {Engine.Instance.Version}",
                 $"CLR Version: {Environment.Version}",
                 $"OS Version: {Environment.OSVersion}",
                 $"FPS: {fps.AverageFramesPerSecond}",
-                $"Cursor Screen: {Engine.Input.MouseScreenPos()}",
-                $"Cursor World: {Engine.Input.MouseWorldPos(camera)}",
+                $"Cursor Screen: {InputManager.Instance.MouseScreenPos()}",
+                $"Cursor World: {InputManager.Instance.MouseWorldPos(camera)}",
                 $"Camera Position: {camera.Translation}",
-                $"Resolution: {Engine.Graphics.Viewport.Width}x{Engine.Graphics.Viewport.Height}",
+                $"Resolution: {GraphicsManager.Instance.Viewport.Width}x{GraphicsManager.Instance.Viewport.Height}",
                 $"Processor Count: {Environment.ProcessorCount}",
                 $"Memory: {(Environment.WorkingSet * 1e-6).ToString("0.00")} MB",
                 $"Bytes Recieved: {(manager.Client.ClientStatistics.BytesRecieved * 0.001).ToString("0.00")} KB",
@@ -318,11 +317,11 @@ namespace Dominion.Client.Scenes
                 $"Packets Sent: {manager.Client.ClientStatistics.PacketsSent}",
                 $"Recieve Buffer Size: {(manager.Client.ClientStatistics.RecieveBufferSize * 0.001).ToString("0.00")} KB",
                 $"Send Buffer Size: {(manager.Client.ClientStatistics.SendBufferSize * 0.001).ToString("0.00")} KB",
-                $"CurrentScene: {Engine.Scene.CurrentSceneName}",
-                $"SpriteScale: {Engine.Graphics.Scale}",
-                $"Audio Track Title: {Engine.Audio.CurrentTrackName}",
-                $"Audio Music Volume: {Engine.Audio.MusicVolume}",
-                $"Audio PlayerState: {Engine.Audio.PlayerState}",
+                $"CurrentScene: {SceneManager.Instance.CurrentSceneName}",
+                $"SpriteScale: {GraphicsManager.Instance.Scale}",
+                $"Audio Track Title: {AudioManager.Instance.CurrentTrackName}",
+                $"Audio Music Volume: {AudioManager.Instance.MusicVolume}",
+                $"Audio PlayerState: {AudioManager.Instance.PlayerState}",
                 $"Cached Tile Count: {manager.Client.GetAllCachedTiles().Count}",
                 $"Tile Count: {manager.Client.Board.GetAllTiles().Count}",
                 $"Cached City Count: {manager.Client.CachedCities.Count}",

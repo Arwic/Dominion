@@ -18,10 +18,19 @@ namespace ArwicEngine.Input
 
     public class InputManager
     {
-        /// <summary>
-        /// Reference to the engine
-        /// </summary>
-        public Engine Engine { get; }
+        // Singleton pattern
+        private static object _lock_instance = new object();
+        private static readonly InputManager _instance = new InputManager();
+        public static InputManager Instance
+        {
+            get
+            {
+                lock (_lock_instance)
+                {
+                    return _instance;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the state of the keyboard last frame
@@ -33,17 +42,10 @@ namespace ArwicEngine.Input
         /// </summary>
         public MouseState LastMouseState { get; private set; }
 
-        // is this still needed?
-        private float yFix { get { return (Engine.Graphics.DeviceManager.IsFullScreen ? 1f : /*1.025f*/ 1f ); } }
+        // this fixes the strange issue with the y mouse coord when in windowed mode
+        private float yFix { get { return (GraphicsManager.Instance.DeviceManager.IsFullScreen ? 1f : 1.025f ); } }
 
-        /// <summary>
-        /// Create a new input manager
-        /// </summary>
-        /// <param name="engine"></param>
-        public InputManager(Engine engine)
-        {
-            Engine = engine;
-        }
+        private InputManager() { }
 
         /// <summary>
         /// Updates the input manager
@@ -62,7 +64,7 @@ namespace ArwicEngine.Input
         /// <returns></returns>
         public bool IsMouseDown(MouseButton button)
         {
-            if (!Engine.WindowActive)
+            if (!Engine.Instance.WindowActive)
                 return false;
 
             switch (button)
@@ -93,7 +95,7 @@ namespace ArwicEngine.Input
         /// <returns></returns>
         public bool OnMouseUp(MouseButton button)
         {
-            if (!Engine.WindowActive)
+            if (!Engine.Instance.WindowActive)
                 return false;
 
             switch (button)
@@ -124,7 +126,7 @@ namespace ArwicEngine.Input
         /// <returns></returns>
         public bool OnMouseDown(MouseButton button)
         {
-            if (!Engine.WindowActive)
+            if (!Engine.Instance.WindowActive)
                 return false;
 
             switch (button)
@@ -154,7 +156,7 @@ namespace ArwicEngine.Input
         /// <returns></returns>
         public bool ScrolledUp()
         {
-            if (!Engine.WindowActive)
+            if (!Engine.Instance.WindowActive)
                 return false;
 
             if (LastMouseState.ScrollWheelValue < Mouse.GetState().ScrollWheelValue)
@@ -168,7 +170,7 @@ namespace ArwicEngine.Input
         /// <returns></returns>
         public bool ScrolledDown()
         {
-            if (!Engine.WindowActive)
+            if (!Engine.Instance.WindowActive)
                 return false;
 
             if (LastMouseState.ScrollWheelValue > Mouse.GetState().ScrollWheelValue)
@@ -201,7 +203,7 @@ namespace ArwicEngine.Input
         /// <returns></returns>
         public bool IsKeyDown(Keys key)
         {
-            if (!Engine.WindowActive)
+            if (!Engine.Instance.WindowActive)
                 return false;
 
             switch (key)
@@ -233,7 +235,7 @@ namespace ArwicEngine.Input
         /// <returns></returns>
         public bool WasKeyDown(Keys key)
         {
-            if (!Engine.WindowActive)
+            if (!Engine.Instance.WindowActive)
                 return false;
 
             if (LastKeyboardState.IsKeyDown(key))
@@ -267,7 +269,7 @@ namespace ArwicEngine.Input
         public Point MouseScreenPos()
         {
             Point pos = Mouse.GetState().Position;
-            return new Point((int)(pos.X * Engine.Graphics.Scale), (int)(pos.Y * Engine.Graphics.Scale * yFix));
+            return new Point((int)(pos.X * GraphicsManager.Instance.Scale), (int)(pos.Y * GraphicsManager.Instance.Scale * yFix));
         }
 
         /// <summary>
@@ -287,7 +289,7 @@ namespace ArwicEngine.Input
         public Point LastMouseScreenPos()
         {
             Point pos = LastMouseState.Position;
-            return new Point((int)(pos.X * Engine.Graphics.Scale), (int)(pos.Y * Engine.Graphics.Scale * yFix));
+            return new Point((int)(pos.X * GraphicsManager.Instance.Scale), (int)(pos.Y * GraphicsManager.Instance.Scale * yFix));
         }
 
         /// <summary>

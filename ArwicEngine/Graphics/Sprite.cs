@@ -2,6 +2,7 @@
 // Sprite.cs
 // This file contains classes that define a 2d sprite
 
+using ArwicEngine.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -130,15 +131,15 @@ namespace ArwicEngine.Graphics
         /// </summary>
         /// <param name="cm">content manager</param>
         /// <param name="path">path to files</param>
-        public Sprite(ContentManager cm, string path)
+        public Sprite(string path)
         {
             Path = path;
             Layers = new List<SpriteLayer>();
             SpriteLayer layer = new SpriteLayer();
-            try { layer.Texture = cm.Load<Texture2D>(path); }
+            try { layer.Texture = Engine.Instance.Content.Load<Texture2D>(path); }
             catch (Exception)
             {
-                try { layer.Texture = cm.Load<Texture2D>(DEFAULT_TEXTURE_PATH); }
+                try { layer.Texture = Engine.Instance.Content.Load<Texture2D>(DEFAULT_TEXTURE_PATH); }
                 catch (Exception e) { throw new Exception($"Error loading default texture, {e.Message}"); }
             }
             layer.Color = Color.White;

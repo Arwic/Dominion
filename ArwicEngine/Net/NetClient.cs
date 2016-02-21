@@ -82,11 +82,6 @@ namespace ArwicEngine.Net
     public class NetClient
     {
         /// <summary>
-        /// Reference to the engine
-        /// </summary>
-        public Engine Engine { get; }
-
-        /// <summary>
         /// Gets a value indicating whether the client is connected to a server
         /// </summary>
         public bool Connected => client.GetState() == TcpState.Established;
@@ -128,11 +123,9 @@ namespace ArwicEngine.Net
         /// <summary>
         /// Creates a new net client
         /// </summary>
-        /// <param name="e"></param>
-        public NetClient(Engine e)
+        public NetClient()
         {
             // set up values
-            Engine = e;
             client = new TcpClient();
             client.NoDelay = true;
             client.ReceiveBufferSize = 1048576;
@@ -157,16 +150,16 @@ namespace ArwicEngine.Net
 
             try
             {
-                Engine.Console.WriteLine($"Attempting to connect to {address}:{port}", MsgType.Info);
+                ConsoleManager.Instance.WriteLine($"Attempting to connect to {address}:{port}", MsgType.Info);
                 await client.ConnectAsync(address, port);
-                Engine.Console.WriteLine($"Connected to {address}:{port}", MsgType.Info);
+                ConsoleManager.Instance.WriteLine($"Connected to {address}:{port}", MsgType.Info);
                 Statistics.ServerPort = port;
                 Statistics.ServerAddress = address;
                 return true;
             }
             catch (SocketException e)
             {
-                Engine.Console.WriteLine($"Unable to reach {address}:{port}. Error: {e.Message}", MsgType.Info);
+                ConsoleManager.Instance.WriteLine($"Unable to reach {address}:{port}. Error: {e.Message}", MsgType.Info);
                 return false;
             }
         }
@@ -185,16 +178,16 @@ namespace ArwicEngine.Net
 
             try
             {
-                Engine.Console.WriteLine($"Attempting to connect to {address}:{port}", MsgType.Info);
+                ConsoleManager.Instance.WriteLine($"Attempting to connect to {address}:{port}", MsgType.Info);
                 client.Connect(address, port);
-                Engine.Console.WriteLine($"Connected to {address}:{port}", MsgType.Info);
+                ConsoleManager.Instance.WriteLine($"Connected to {address}:{port}", MsgType.Info);
                 Statistics.ServerPort = port;
                 Statistics.ServerAddress = address;
                 return true;
             }
             catch (SocketException e)
             {
-                Engine.Console.WriteLine($"Unable to reach {address}:{port}. Error: {e.Message}", MsgType.Info);
+                ConsoleManager.Instance.WriteLine($"Unable to reach {address}:{port}. Error: {e.Message}", MsgType.Info);
                 return false;
             }
         }
@@ -253,7 +246,7 @@ namespace ArwicEngine.Net
                         OnPacketRecieved(new PacketRecievedEventArgs(p));
                     } while (bytesLeft > 0); // keep parsing packets from the buffer until there are none left
                 }
-                catch (Exception e) { Engine.Console.WriteLine($"Error recieving data, {e.Message}", MsgType.Warning); }
+                catch (Exception e) { ConsoleManager.Instance.WriteLine($"Error recieving data, {e.Message}", MsgType.Warning); }
             }
             OnLostConnection(EventArgs.Empty);
         }

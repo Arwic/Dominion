@@ -18,7 +18,6 @@ namespace Dominion.Client.GUI
         private static Color mapTileColor_unit = Color.White;
         private static Color mapTileColor_city = Color.White;
 
-        private Engine engine;
         private Canvas canvas;
         private Form form;
         private Camera2 camera;
@@ -28,15 +27,14 @@ namespace Dominion.Client.GUI
         private Sprite blankTileSprite;
         private Sprite tileOutlineSprite;
 
-        public GUI_Map(Engine engine, Camera2 camera, Client client, BoardRenderer boardRenderer, Canvas canvas)
+        public GUI_Map(Camera2 camera, Client client, BoardRenderer boardRenderer, Canvas canvas)
         {
-            this.engine = engine;
             this.camera = camera;
             this.boardRenderer = boardRenderer;
             this.client = client;
             this.canvas = canvas;
-            blankTileSprite = new Sprite(engine.Content, "Graphics/Game/Tiles/BlankTile");
-            tileOutlineSprite = new Sprite(engine.Content, "Graphics/Game/Tiles/TileOutline");
+            blankTileSprite = new Sprite("Graphics/Game/Tiles/BlankTile");
+            tileOutlineSprite = new Sprite("Graphics/Game/Tiles/TileOutline");
             Show();
         }
 
@@ -54,7 +52,7 @@ namespace Dominion.Client.GUI
                 int height = 200;
                 int xOffset = -20;
                 int yOffset = -20;
-                form = new Form(new Rectangle(engine.Graphics.Viewport.Bounds.Width - width + xOffset, engine.Graphics.Viewport.Bounds.Height - height + yOffset, width, height), canvas);
+                form = new Form(new Rectangle(GraphicsManager.Instance.Viewport.Bounds.Width - width + xOffset, GraphicsManager.Instance.Viewport.Bounds.Height - height + yOffset, width, height), canvas);
                 form.CloseButtonEnabled = false;
                 form.DrawTitlebar = false;
                 form.Draggable = false;
@@ -74,7 +72,7 @@ namespace Dominion.Client.GUI
 
         private void Form_MouseMove(object sender, MouseEventArgs e)
         {
-            if (engine.Input.IsMouseDown(MouseButton.Left))
+            if (InputManager.Instance.IsMouseDown(MouseButton.Left))
             {
                 Vector2 panTarget = GetPanTarget();
                 camera.Translation = panTarget;
@@ -84,9 +82,9 @@ namespace Dominion.Client.GUI
 
         private Vector2 GetPanTarget()
         {
-            Point mousePos = engine.Input.MouseScreenPos();
+            Point mousePos = InputManager.Instance.MouseScreenPos();
             mousePos -= form.AbsoluteLocation;
-            return new Vector2((mousePos.X / (form.Size.Width / engine.Graphics.Scale) / engine.Graphics.Scale) * boardRenderer.Bounds.Width, (mousePos.Y / (form.Size.Height / engine.Graphics.Scale) / engine.Graphics.Scale) * boardRenderer.Bounds.Height);
+            return new Vector2((mousePos.X / (form.Size.Width / GraphicsManager.Instance.Scale) / GraphicsManager.Instance.Scale) * boardRenderer.Bounds.Width, (mousePos.Y / (form.Size.Height / GraphicsManager.Instance.Scale) / GraphicsManager.Instance.Scale) * boardRenderer.Bounds.Height);
         }
 
         private void Form_Drawn(object sender, DrawEventArgs e)
@@ -99,7 +97,7 @@ namespace Dominion.Client.GUI
         {
             if (form != null && form.Visible)
             {
-                Vector2 camTranslation = camera.Translation - new Vector2(engine.Graphics.Device.Viewport.Width / 2 / camera.Zoom.X, engine.Graphics.Viewport.Height / 2 / camera.Zoom.Y);
+                Vector2 camTranslation = camera.Translation - new Vector2(GraphicsManager.Instance.Device.Viewport.Width / 2 / camera.Zoom.X, GraphicsManager.Instance.Viewport.Height / 2 / camera.Zoom.Y);
                 Rectangle camRect = new Rectangle(
                     (int)(camTranslation.X / boardRenderer.Bounds.Width * form.Size.Width + form.AbsoluteLocation.X),
                     (int)(camTranslation.Y / boardRenderer.Bounds.Height * form.Size.Height + form.AbsoluteLocation.Y),

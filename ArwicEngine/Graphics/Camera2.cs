@@ -46,16 +46,14 @@ namespace ArwicEngine.Graphics
         public Vector2 AutoFollowSpeed { get; set; }
 
         private Vector2 origin;
-        private GraphicsManager graphics;
 
         /// <summary>
         /// Creates a new camera
         /// </summary>
         /// <param name="gm"></param>
-        public Camera2(GraphicsManager gm)
+        public Camera2()
         {
             // setup defaults
-            graphics = gm;
             Translation = Vector2.Zero;
             Zoom = Vector2.One;
             TranslationTarget = Vector2.Zero;
@@ -85,9 +83,9 @@ namespace ArwicEngine.Graphics
         public Vector2 ConvertScreenToWorld(Vector2 p)
         {
             Vector2 pos = p;
-            pos = new Vector2(pos.X / graphics.Scale, pos.Y / graphics.Scale);
+            pos = new Vector2(pos.X / GraphicsManager.Instance.Scale, pos.Y / GraphicsManager.Instance.Scale);
             pos = new Vector2(pos.X / Zoom.X, pos.Y / Zoom.Y);
-            pos = new Vector2(pos.X - graphics.Device.Viewport.Width / 2 / Zoom.X, pos.Y - graphics.Device.Viewport.Height / 2 / Zoom.Y);
+            pos = new Vector2(pos.X - GraphicsManager.Instance.Device.Viewport.Width / 2 / Zoom.X, pos.Y - GraphicsManager.Instance.Device.Viewport.Height / 2 / Zoom.Y);
             pos = new Vector2(pos.X + Translation.X, pos.Y + Translation.Y);
             return pos;
         }
@@ -113,7 +111,7 @@ namespace ArwicEngine.Graphics
         {
             Vector2 pos = p;
             pos = new Vector2(pos.X - Translation.X, pos.Y - Translation.Y);
-            pos = new Vector2(pos.X + graphics.Device.Viewport.Width / 2 / Zoom.X, pos.Y + graphics.Device.Viewport.Height / 2 / Zoom.Y);
+            pos = new Vector2(pos.X + GraphicsManager.Instance.Device.Viewport.Width / 2 / Zoom.X, pos.Y + GraphicsManager.Instance.Device.Viewport.Height / 2 / Zoom.Y);
             pos = new Vector2(pos.X * Zoom.X, pos.Y * Zoom.Y);
             return pos;
         }
@@ -138,7 +136,7 @@ namespace ArwicEngine.Graphics
             }
 
             // calculate the camera's origin
-            origin = new Vector2(graphics.Device.Viewport.Width / 2 / Zoom.X, graphics.Device.Viewport.Height / 2 / Zoom.Y);
+            origin = new Vector2(GraphicsManager.Instance.Device.Viewport.Width / 2 / Zoom.X, GraphicsManager.Instance.Device.Viewport.Height / 2 / Zoom.Y);
 
             // adjust the camera's translation towards its translation target, if its not already there
             if (TranslationTarget != Translation)
@@ -175,26 +173,26 @@ namespace ArwicEngine.Graphics
             if (ViewLimit.X != -1 && ViewLimit.Y != -1 && ViewLimit.Width != -1 && ViewLimit.Height != -1)
             {
                 // clamp translation and translation target on both axis and both signs
-                if (Translation.X - graphics.Device.Viewport.Width / 2 < ViewLimit.X)
+                if (Translation.X - GraphicsManager.Instance.Device.Viewport.Width / 2 < ViewLimit.X)
                 {
-                    Translation = new Vector2(ViewLimit.X + graphics.Device.Viewport.Width / 2, Translation.Y);
-                    TranslationTarget = new Vector2(ViewLimit.X + graphics.Device.Viewport.Width / 2, TranslationTarget.Y);
+                    Translation = new Vector2(ViewLimit.X + GraphicsManager.Instance.Device.Viewport.Width / 2, Translation.Y);
+                    TranslationTarget = new Vector2(ViewLimit.X + GraphicsManager.Instance.Device.Viewport.Width / 2, TranslationTarget.Y);
                 }
-                else if (Translation.X + graphics.Device.Viewport.Width / 2 > ViewLimit.Width)
+                else if (Translation.X + GraphicsManager.Instance.Device.Viewport.Width / 2 > ViewLimit.Width)
                 {
-                    Translation = new Vector2(ViewLimit.Width - graphics.Device.Viewport.Width / 2, Translation.Y);
-                    TranslationTarget = new Vector2(ViewLimit.Width - graphics.Device.Viewport.Width / 2, TranslationTarget.Y);
+                    Translation = new Vector2(ViewLimit.Width - GraphicsManager.Instance.Device.Viewport.Width / 2, Translation.Y);
+                    TranslationTarget = new Vector2(ViewLimit.Width - GraphicsManager.Instance.Device.Viewport.Width / 2, TranslationTarget.Y);
                 }
 
-                if (Translation.Y - graphics.Device.Viewport.Height / 2 < ViewLimit.Y)
+                if (Translation.Y - GraphicsManager.Instance.Device.Viewport.Height / 2 < ViewLimit.Y)
                 {
-                    Translation = new Vector2(Translation.X, ViewLimit.Y + graphics.Device.Viewport.Height / 2);
-                    TranslationTarget = new Vector2(TranslationTarget.X, ViewLimit.Y + graphics.Device.Viewport.Height / 2);
+                    Translation = new Vector2(Translation.X, ViewLimit.Y + GraphicsManager.Instance.Device.Viewport.Height / 2);
+                    TranslationTarget = new Vector2(TranslationTarget.X, ViewLimit.Y + GraphicsManager.Instance.Device.Viewport.Height / 2);
                 }
-                else if (Translation.Y + graphics.Device.Viewport.Height / 2 > ViewLimit.Height)
+                else if (Translation.Y + GraphicsManager.Instance.Device.Viewport.Height / 2 > ViewLimit.Height)
                 {
-                    Translation = new Vector2(Translation.X, ViewLimit.Height - graphics.Device.Viewport.Height / 2);
-                    TranslationTarget = new Vector2(TranslationTarget.X, ViewLimit.Height - graphics.Device.Viewport.Height / 2);
+                    Translation = new Vector2(Translation.X, ViewLimit.Height - GraphicsManager.Instance.Device.Viewport.Height / 2);
+                    TranslationTarget = new Vector2(TranslationTarget.X, ViewLimit.Height - GraphicsManager.Instance.Device.Viewport.Height / 2);
                 }
             }
         }

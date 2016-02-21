@@ -1,5 +1,6 @@
 ﻿using ArwicEngine.Core;
 using ArwicEngine.Forms;
+using ArwicEngine.Scenes;
 using Dominion.Client.Scenes;
 using Dominion.Common.Entities;
 using Microsoft.Xna.Framework;
@@ -9,7 +10,6 @@ namespace Dominion.Client.GUI
 {
     public class GUI_GameMenu : IGUIElement
     {
-        public Engine Engine { get; }
         private FormConfig formConfig;
         private Client client;
         private SceneGame sceneGame;
@@ -18,10 +18,9 @@ namespace Dominion.Client.GUI
         public bool Visible { get { if (form != null) return form.Visible; else return false; } }
         private List<IListItem> cityListItems;
 
-        public GUI_GameMenu(Engine engine, Client client, SceneGame sceneGame, Canvas canvas)
+        public GUI_GameMenu(Client client, SceneGame sceneGame, Canvas canvas)
         {
             formConfig = FormConfig.FromFile("Content/Interface/Game/GameMenu.xml");
-            Engine = engine;
             this.client = client;
             this.sceneGame = sceneGame;
             this.canvas = canvas;
@@ -46,7 +45,7 @@ namespace Dominion.Client.GUI
                 btnMainMenu.MouseClick += (s, a) =>
                 {
                     client.Dissconnect();
-                    Engine.Scene.ChangeScene(0);
+                    SceneManager.Instance.ChangeScene(0);
                 };
 
                 Button btnReturnToGame = (Button)form.GetChildByName("btnReturnToGame");

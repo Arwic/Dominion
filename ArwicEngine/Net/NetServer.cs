@@ -68,11 +68,6 @@ namespace ArwicEngine.Net
     public class NetServer
     {
         /// <summary>
-        /// Reference to the engine
-        /// </summary>
-        public Engine Engine { get; }
-
-        /// <summary>
         /// Gets or sets an object that tracks this server's statistics
         /// </summary>
         public NetServerStats Statistics { get; private set; } 
@@ -135,9 +130,8 @@ namespace ArwicEngine.Net
         /// Creates a new net server
         /// </summary>
         /// <param name="e"></param>
-        public NetServer(Engine e)
+        public NetServer()
         {
-            Engine = e;
             Running = false;
             connections = new List<Connection>();
             Statistics = new NetServerStats();
@@ -157,12 +151,12 @@ namespace ArwicEngine.Net
 
             Statistics.Port = port;
 
-            Engine.Console.WriteLine($"Starting server on {port}", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"Starting server on {port}", MsgType.ServerInfo);
             listener = new TcpListener(IPAddress.Any, port);
             Statistics.RecieveBufferSize = listener.Server.ReceiveBufferSize;
             Statistics.SendBufferSize = listener.Server.SendBufferSize;
             listener.Start(100);
-            Engine.Console.WriteLine($"Listening on {port}", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"Listening on {port}", MsgType.ServerInfo);
 
             AcceptClients();
         }
@@ -216,13 +210,13 @@ namespace ArwicEngine.Net
                     Connection conn = new Connection(this, client);
                     connections.Add(conn);
                     Statistics.ConnectionCount = connections.Count;
-                    Engine.Console.WriteLine($"Client connected {conn.Client.Client.RemoteEndPoint.ToString()}", MsgType.ServerInfo);
+                    ConsoleManager.Instance.WriteLine($"Client connected {conn.Client.Client.RemoteEndPoint.ToString()}", MsgType.ServerInfo);
                     OnConnectionAccepted(new ConnectionEventArgs(conn));
                     conn.Listening = true;
                     // begin listening to the new connection
                     new Thread(() => HandleClient(conn)).Start();
                 }
-                catch (Exception e) { Engine.Console.WriteLine($"Error accepting client, {e.Message}", MsgType.ServerWarning); }
+                catch (Exception e) { ConsoleManager.Instance.WriteLine($"Error accepting client, {e.Message}", MsgType.ServerWarning); }
             }
         }
 
@@ -262,7 +256,7 @@ namespace ArwicEngine.Net
                     }
                     catch (Exception e)
                     {
-                        Engine.Console.WriteLine($"Error recieving data from {conn.Address}, {e.Message}", MsgType.ServerWarning);
+                        ConsoleManager.Instance.WriteLine($"Error recieving data from {conn.Address}, {e.Message}", MsgType.ServerWarning);
                     }
                 }
             }
@@ -274,7 +268,7 @@ namespace ArwicEngine.Net
         /// <param name="conn"></param>
         public void DissconnectClient(Connection conn)
         {
-            Engine.Console.WriteLine($"Client {conn.Address} dissconnected", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"Client {conn.Address} dissconnected", MsgType.ServerInfo);
             conn.Listening = false;
             conn.Client.Close();
             connections.Remove(conn);

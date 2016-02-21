@@ -23,12 +23,12 @@ namespace ArwicEngine.Forms
         public static Sprite DefaultListItemSprite;
         public static Sprite DefaultScrubberSprite;
 
-        public static new void InitDefaults(Engine e)
+        public static new void InitDefaults()
         {
-            DefaultBackgroundSprite = new Sprite(e.Content, CONTROL_SCROLLBOX_BACK);
-            DefaultSelectedItemSprite = new Sprite(e.Content, CONTROL_SCROLLBOX_SELECTED);
-            DefaultScrubberSprite = new Sprite(e.Content, CONTROL_SCROLLBOX_SCRUBBER);
-            DefaultListItemSprite = new Sprite(e.Content, CONTROL_SCROLLBOX_BUTTON);
+            DefaultBackgroundSprite = new Sprite(CONTROL_SCROLLBOX_BACK);
+            DefaultSelectedItemSprite = new Sprite(CONTROL_SCROLLBOX_SELECTED);
+            DefaultScrubberSprite = new Sprite(CONTROL_SCROLLBOX_SCRUBBER);
+            DefaultListItemSprite = new Sprite(CONTROL_SCROLLBOX_BUTTON);
         }
         #endregion
 
@@ -350,10 +350,10 @@ namespace ArwicEngine.Forms
             : base(config, parent)
         {
             Initialize(null);
-            BackgroundSprite = new Sprite(Content, config.BackgroundSpritePath);
-            SelectedItemSprite = new Sprite(Content, config.SelectedItemSpritePath);
-            ListItemSprite = new Sprite(Content, config.ListItemSpritePath);
-            ScrubberSprite = new Sprite(Content, config.ScrubberSpritePath);
+            BackgroundSprite = new Sprite(config.BackgroundSpritePath);
+            SelectedItemSprite = new Sprite(config.SelectedItemSpritePath);
+            ListItemSprite = new Sprite(config.ListItemSpritePath);
+            ScrubberSprite = new Sprite(config.ScrubberSpritePath);
             ScrollBarWidth = config.ScrollBarWidth;
             ItemHeight = config.ItemHeight;
         }
@@ -441,20 +441,20 @@ namespace ArwicEngine.Forms
                 Selected.Button.Sprite = SelectedItemSprite;
         }
 
-        public override bool Update(InputManager input)
+        public override bool Update()
         {
-            if (scrubberPos.Contains(input.MouseScreenPos()) && input.OnMouseDown(MouseButton.Left))
+            if (scrubberPos.Contains(InputManager.Instance.MouseScreenPos()) && InputManager.Instance.OnMouseDown(MouseButton.Left))
             {
-                scrubberDragOffset = input.MouseScreenPos() - new Point(scrubberPos.X, scrubberPos.Y);
+                scrubberDragOffset = InputManager.Instance.MouseScreenPos() - new Point(scrubberPos.X, scrubberPos.Y);
                 scrubberDragging = true;
             }
 
-            if (scrubberDragging && input.OnMouseUp(MouseButton.Left))
+            if (scrubberDragging && InputManager.Instance.OnMouseUp(MouseButton.Left))
                 scrubberDragging = false;
 
             if (scrubberDragging)
             {
-                int mousePos = input.MouseScreenPos().Y - scrubberDragOffset.Y - AbsoluteLocation.Y;
+                int mousePos = InputManager.Instance.MouseScreenPos().Y - scrubberDragOffset.Y - AbsoluteLocation.Y;
                 if (Items == null)
                     ScrollIndex = 0;
                 else
@@ -477,7 +477,7 @@ namespace ArwicEngine.Forms
                 ScrollBarWidth,
                 scrubberHeight);
 
-            return base.Update(input);
+            return base.Update();
         }
 
         public override void Draw(SpriteBatch sb)

@@ -9,11 +9,6 @@ namespace ArwicEngine.Scenes
     public abstract class BaseScene
     {
         /// <summary>
-        /// Reference to the engine
-        /// </summary>
-        public Engine Engine { get; }
-
-        /// <summary>
         /// Gets the name of the scene
         /// </summary>
         public string SceneName { get; }
@@ -28,9 +23,8 @@ namespace ArwicEngine.Scenes
         /// Creates a new scene
         /// </summary>
         /// <param name="engine"></param>
-        public BaseScene(Engine engine)
+        public BaseScene()
         {
-            Engine = engine;
             SceneName = GetType().Name;
         }
 
@@ -48,12 +42,12 @@ namespace ArwicEngine.Scenes
         /// Occurs when the engine updates
         /// </summary>
         /// <param name="delta"></param>
-        public abstract void Update(float delta);
+        public abstract void Update();
 
         /// <summary>
         /// Occurs when the engine draws
         /// </summary>
         /// <param name="delta"></param>
-        public abstract void Draw(float delta);
+        public abstract void Draw();
     }
 }

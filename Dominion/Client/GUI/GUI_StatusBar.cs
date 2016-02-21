@@ -8,7 +8,6 @@ namespace Dominion.Client.GUI
 {
     public class GUI_StatusBar : IGUIElement
     {
-        private Engine engine;
         private Canvas canvas;
         private Form form;
         private FormConfig formConfig;
@@ -16,9 +15,8 @@ namespace Dominion.Client.GUI
         private SceneGame sceneGame;
         private Client client;
 
-        public GUI_StatusBar(Engine engine, Client client, SceneGame sceneGame, Canvas canvas)
+        public GUI_StatusBar(Client client, SceneGame sceneGame, Canvas canvas)
         {
-            this.engine = engine;
             this.client = client;
             this.sceneGame = sceneGame;
             this.canvas = canvas;

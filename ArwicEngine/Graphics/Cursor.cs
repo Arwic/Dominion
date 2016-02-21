@@ -2,6 +2,7 @@
 // Cursor.cs
 // This file contains classes that define a win32 cursor object
 
+using ArwicEngine.Core;
 using Microsoft.Xna.Framework;
 using System;
 using System.ComponentModel;
@@ -24,9 +25,9 @@ namespace ArwicEngine.Graphics
         /// </summary>
         /// <param name="gw">the xna game winfow</param>
         /// <param name="path">path to the cur file</param>
-        public Cursor(GameWindow gw, string path)
+        public Cursor(string path)
         {
-             winForm = (System.Windows.Forms.Form)System.Windows.Forms.Control.FromHandle(gw.Handle);
+             winForm = (System.Windows.Forms.Form)System.Windows.Forms.Control.FromHandle(Engine.Instance.Window.Handle);
              cursor = LoadCustomCursor(path);
         }
 
