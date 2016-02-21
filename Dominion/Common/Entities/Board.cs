@@ -188,117 +188,117 @@ namespace Dominion.Common.Entities
 
             if (lakeSeedChance != -1 && lakeSpreadChance != -1)
             {
-                Console.WriteLine("Seeding lakes");
+                ConsoleManager.Instance.WriteLine("Seeding lakes", MsgType.ServerInfo);
                 sw.Start();
                 SeedLakes(lakeSeedChance, lakeSpreadChance);
                 sw.Stop();
-                Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+                ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
             }
 
             if (minimunLandSize != -1)
             {
-                Console.WriteLine("Removing small islands");
+                ConsoleManager.Instance.WriteLine("Removing small islands", MsgType.ServerInfo);
                 sw.Start();
                 RemoveSmallLand(minimunLandSize);
                 sw.Stop();
-                Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+                ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
             }
 
             if (minimunWaterSize != -1)
             {
-                Console.WriteLine("Removing small bodies of water");
+                ConsoleManager.Instance.WriteLine("Removing small bodies of water", MsgType.ServerInfo);
                 sw.Start();
                 RemoveSmallWater(minimunWaterSize);
                 sw.Stop();
-                Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+                ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
             }
 
             if (hillSeedChance != -1 && hillDirChangeChance != -1 && hillSpreadChance != -1)
             {
-                Console.WriteLine("Seeding hills");
+                ConsoleManager.Instance.WriteLine("Seeding hills", MsgType.ServerInfo);
                 sw.Start();
                 SeedHillRange(hillSeedChance, hillDirChangeChance, hillSpreadChance);
                 sw.Stop();
-                Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+                ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
             }
 
             if (mountainSeedChance != -1 && mountainDirChangeChance != -1 && mountainSpreadChance != -1)
             {
-                Console.WriteLine("Seeding mountains");
+                ConsoleManager.Instance.WriteLine("Seeding mountains", MsgType.ServerInfo);
                 sw.Start();
                 SeedMountainRange(mountainSeedChance, mountainDirChangeChance, mountainSpreadChance);
                 sw.Stop();
-                Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+                ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
             }
 
             if (forestSeedChance != -1 && forestSpreadChance != -1)
             {
-                Console.WriteLine("Seeding forests");
+                ConsoleManager.Instance.WriteLine("Seeding forests", MsgType.ServerInfo);
                 sw.Start();
                 SeedImprovment(forestSeedChance, forestSpreadChance, TileImprovment.Forest, true);
                 sw.Stop();
-                Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+                ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
             }
 
             if (desertSeedChance != -1 && desertSpreadChance != -1)
             {
-                Console.WriteLine("Seeding deserts");
+                ConsoleManager.Instance.WriteLine("Seeding deserts", MsgType.ServerInfo);
                 sw.Start();
                 SeedDesert(desertSeedChance, desertSpreadChance);
                 sw.Stop();
-                Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+                ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
             }
 
             if (minimumDesertSize != -1)
             {
-                Console.WriteLine("Removing small deserts");
+                ConsoleManager.Instance.WriteLine("Removing small deserts", MsgType.ServerInfo);
                 sw.Start();
                 ReplaceSmallTerrain(minimumDesertSize, TileTerrainBase.Desert, TileTerrainBase.Grassland, true);
                 sw.Stop();
-                Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+                ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
             }
 
             if (resourceSeedChance != -1)
             {
-                Console.WriteLine("Seeding resources");
+                ConsoleManager.Instance.WriteLine("Seeding resources", MsgType.ServerInfo);
                 sw.Start();
                 SeedResources(resourceSeedChance);
                 sw.Stop();
-                Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+                ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
             }
 
             if (tundraLevel != -1)
             {
-                Console.WriteLine("Defining tundra");
+                ConsoleManager.Instance.WriteLine("Defining tundra", MsgType.ServerInfo);
                 sw.Start();
                 DefineTundra(tundraLevel);
                 sw.Stop();
-                Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+                ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
             }
 
             if (snowLevel != -1)
             {
-                Console.WriteLine("Defining snow");
+                ConsoleManager.Instance.WriteLine("Defining snow", MsgType.ServerInfo);
                 sw.Start();
                 DefineSnow(snowLevel);
                 sw.Stop();
-                Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+                ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
             }
 
             if (defineCoast)
             {
-                Console.WriteLine("Defining coast");
+                ConsoleManager.Instance.WriteLine("Defining coast", MsgType.ServerInfo);
                 sw.Start();
                 DefineCoast();
                 sw.Stop();
-                Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+                ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
             }
 
-            Console.WriteLine("Fixing errors");
+            ConsoleManager.Instance.WriteLine("Fixing errors", MsgType.ServerInfo);
             sw.Start();
             FixErrors();
             sw.Stop();
-            Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+            ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
         }
 
         // Generate a pangea map
@@ -331,13 +331,13 @@ namespace Dominion.Common.Entities
 
             Stopwatch sw = new Stopwatch();
 
-            Console.WriteLine("Initializing board");
+            ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
             InstantiateTiles(DimX, DimY, TileResource.None, TileTerrainBase.Sea, TileTerrainFeature.Open, TileImprovment.None);
             sw.Stop();
-            Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+            ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
-            Console.WriteLine("Generating land");
+            ConsoleManager.Instance.WriteLine("Generating land", MsgType.ServerInfo);
             sw.Start();
             Tile centre = GetTile(DimX / 2, DimY / 2);
             for (int i = 0; i < landSpreadItterations; i++)
@@ -349,7 +349,7 @@ namespace Dominion.Common.Entities
             for (int i = 0; i < landSpreadItterations; i++)
                 SpreadTerrainRecursive(centreRight, landSpreadChance, TileTerrainBase.Grassland);
             sw.Stop();
-            Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+            ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
             GenerateFeatures(lakeSeedChance, lakeSpreadChance, minimunWaterSize, minimunLandSize, hillSeedChance, hillDirChangeChance, hillSpreadChance, mountainSeedChance, mountainDirChangeChance, mountainSpreadChance, forestSeedChance, forestSpreadChance, desertSeedChance, desertSpreadChance, minimumDesertSize, resourceSeedChance, snowLevel, tundraLevel, defineCoast);
         }
@@ -384,13 +384,13 @@ namespace Dominion.Common.Entities
 
             Stopwatch sw = new Stopwatch();
 
-            Console.WriteLine("Initializing board");
+            ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
             InstantiateTiles(DimX, DimY, TileResource.None, TileTerrainBase.Sea, TileTerrainFeature.Open, TileImprovment.None);
             sw.Stop();
-            Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+            ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
-            Console.WriteLine("Generating land");
+            ConsoleManager.Instance.WriteLine("Generating land", MsgType.ServerInfo);
             sw.Start();
             foreach (Tile tile in GetAllTiles())
             {
@@ -399,7 +399,7 @@ namespace Dominion.Common.Entities
                 SpreadTerrainRecursive(tile, landSpreadChance, TileTerrainBase.Grassland);
             }
             sw.Stop();
-            Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+            ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
             GenerateFeatures(lakeSeedChance, lakeSpreadChance, minimunWaterSize, minimunLandSize, hillSeedChance, hillDirChangeChance, hillSpreadChance, mountainSeedChance, mountainDirChangeChance, mountainSpreadChance, forestSeedChance, forestSpreadChance, desertSeedChance, desertSpreadChance, minimumDesertSize, resourceSeedChance, snowLevel, tundraLevel, defineCoast);
         }
@@ -434,13 +434,13 @@ namespace Dominion.Common.Entities
 
             Stopwatch sw = new Stopwatch();
 
-            Console.WriteLine("Initializing board");
+            ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
             InstantiateTiles(DimX, DimY, TileResource.None, TileTerrainBase.Sea, TileTerrainFeature.Open, TileImprovment.None);
             sw.Stop();
-            Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+            ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
-            Console.WriteLine("Generating land");
+            ConsoleManager.Instance.WriteLine("Generating land", MsgType.ServerInfo);
             sw.Start();
             Tile centreLeft = GetTile(DimX / 2 - landSeedOffset, DimY / 2);// - (int)(DimY * 0.2));
             for (int i = 0; i < landSpreadItterations; i++)
@@ -449,7 +449,7 @@ namespace Dominion.Common.Entities
             for (int i = 0; i < landSpreadItterations; i++)
                 SpreadTerrainRecursive(centreRight, landSpreadChance, TileTerrainBase.Grassland);
             sw.Stop();
-            Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+            ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
             GenerateFeatures(lakeSeedChance, lakeSpreadChance, minimunWaterSize, minimunLandSize, hillSeedChance, hillDirChangeChance, hillSpreadChance, mountainSeedChance, mountainDirChangeChance, mountainSpreadChance, forestSeedChance, forestSpreadChance, desertSeedChance, desertSpreadChance, minimumDesertSize, resourceSeedChance, snowLevel, tundraLevel, defineCoast);
         }
@@ -483,13 +483,13 @@ namespace Dominion.Common.Entities
 
             Stopwatch sw = new Stopwatch();
 
-            Console.WriteLine("Initializing board");
+            ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
             InstantiateTiles(DimX, DimY, TileResource.None, TileTerrainBase.Sea, TileTerrainFeature.Open, TileImprovment.None);
             sw.Stop();
-            Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+            ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
-            Console.WriteLine("Generating land");
+            ConsoleManager.Instance.WriteLine("Generating land", MsgType.ServerInfo);
             sw.Start();
             float[][] perlinNoise = GeneratePerlinNoise(GenerateWhiteNoise(DimX, DimY), perlinOctaveCount);
             for (int y = 0; y < perlinNoise.Length; y++)
@@ -497,11 +497,11 @@ namespace Dominion.Common.Entities
                     if (RandomHelper.Roll(perlinNoise[y][x] * landChanceModifier))
                         GetTile(x, y).TerrainBase = TileTerrainBase.Grassland;
             sw.Stop();
-            Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+            ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
             
             GenerateFeatures(lakeSeedChance, lakeSpreadChance, minimunWaterSize, minimunLandSize, hillSeedChance, hillDirChangeChance, hillSpreadChance, mountainSeedChance, mountainDirChangeChance, mountainSpreadChance, forestSeedChance, forestSpreadChance, desertSeedChance, desertSpreadChance, minimumDesertSize, resourceSeedChance, snowLevel, tundraLevel, defineCoast);
 
-            Console.WriteLine("Spreading land");
+            ConsoleManager.Instance.WriteLine("Spreading land", MsgType.ServerInfo);
             sw.Start();
             HashSet<Tile> checkedTiles = new HashSet<Tile>();
             foreach (Tile tile in GetAllTiles())
@@ -523,13 +523,13 @@ namespace Dominion.Common.Entities
                 }
             }
             sw.Stop();
-            Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+            ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
-            Console.WriteLine("Defining coast");
+            ConsoleManager.Instance.WriteLine("Defining coast", MsgType.ServerInfo);
             sw.Start();
             DefineCoast();
             sw.Stop();
-            Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+            ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
         }
 
         // Generate a great plains map
@@ -562,13 +562,13 @@ namespace Dominion.Common.Entities
 
             Stopwatch sw = new Stopwatch();
 
-            Console.WriteLine("Initializing board");
+            ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
             InstantiateTiles(DimX, DimY, TileResource.None, TileTerrainBase.Grassland, TileTerrainFeature.Open, TileImprovment.None);
             sw.Stop();
-            Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+            ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
-            Console.WriteLine("Generating sea");
+            ConsoleManager.Instance.WriteLine("Generating sea", MsgType.ServerInfo);
             sw.Start();
             Tile bottomRight = GetTile(DimX - 3, DimY - 3);
             for (int i = 0; i < DimY / seaSpreadIntterations; i++)
@@ -577,7 +577,7 @@ namespace Dominion.Common.Entities
             for (int i = 0; i < DimY / seaSpreadIntterations; i++)
                 SpreadTerrainRecursive(bottomLessRight, seaSpreadChance, TileTerrainBase.Sea);
             sw.Stop();
-            Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+            ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
             GenerateFeatures(lakeSeedChance, lakeSpreadChance, minimunWaterSize, minimunLandSize, hillSeedChance, hillDirChangeChance, hillSpreadChance, mountainSeedChance, mountainDirChangeChance, mountainSpreadChance, forestSeedChance, forestSpreadChance, desertSeedChance, desertSpreadChance, minimumDesertSize, resourceSeedChance, snowLevel, tundraLevel, defineCoast);
         }
@@ -608,11 +608,11 @@ namespace Dominion.Common.Entities
 
             Stopwatch sw = new Stopwatch();
 
-            Console.WriteLine("Initializing board");
+            ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
             InstantiateTiles(DimX, DimY, TileResource.None, TileTerrainBase.Grassland, TileTerrainFeature.Open, TileImprovment.None);
             sw.Stop();
-            Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+            ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
             GenerateFeatures(lakeSeedChance, lakeSpreadChance, minimunWaterSize, minimunLandSize, hillSeedChance, hillDirChangeChance, hillSpreadChance, mountainSeedChance, mountainDirChangeChance, mountainSpreadChance, forestSeedChance, forestSpreadChance, desertSeedChance, desertSpreadChance, minimumDesertSize, resourceSeedChance, snowLevel, tundraLevel, defineCoast);
         }
@@ -647,13 +647,13 @@ namespace Dominion.Common.Entities
 
             Stopwatch sw = new Stopwatch();
 
-            Console.WriteLine("Initializing board");
+            ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
             InstantiateTiles(DimX, DimY, TileResource.None, TileTerrainBase.Grassland, TileTerrainFeature.Open, TileImprovment.None);
             sw.Stop();
-            Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+            ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
-            Console.WriteLine("Generating Sea");
+            ConsoleManager.Instance.WriteLine("Generating Sea", MsgType.ServerInfo);
             sw.Start();
             Tile centre = GetTile(DimX / 2, DimY / 2);
             for (int i = 0; i < seaSpreadIntterations; i++)
@@ -665,7 +665,7 @@ namespace Dominion.Common.Entities
             for (int i = 0; i < seaSpreadIntterations; i++)
                 SpreadTerrainRecursive(centreLeft, terrainSpreadChance, TileTerrainBase.Sea);
             sw.Stop();
-            Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+            ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
             GenerateFeatures(lakeSeedChance, lakeSpreadChance, minimunWaterSize, minimunLandSize, hillSeedChance, hillDirChangeChance, hillSpreadChance, mountainSeedChance, mountainDirChangeChance, mountainSpreadChance, forestSeedChance, forestSpreadChance, desertSeedChance, desertSpreadChance, minimumDesertSize, resourceSeedChance, snowLevel, tundraLevel, defineCoast);
         }
@@ -696,11 +696,11 @@ namespace Dominion.Common.Entities
 
             Stopwatch sw = new Stopwatch();
 
-            Console.WriteLine("Initializing board");
+            ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
             InstantiateTiles(DimX, DimY, TileResource.None, TileTerrainBase.Grassland, TileTerrainFeature.Open, TileImprovment.None);
             sw.Stop();
-            Console.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms");
+            ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
             GenerateFeatures(lakeSeedChance, lakeSpreadChance, minimunWaterSize, minimunLandSize, hillSeedChance, hillDirChangeChance, hillSpreadChance, mountainSeedChance, mountainDirChangeChance, mountainSpreadChance, forestSeedChance, forestSpreadChance, desertSeedChance, desertSpreadChance, minimumDesertSize, resourceSeedChance, snowLevel, tundraLevel, defineCoast);
         }
@@ -955,7 +955,7 @@ namespace Dominion.Common.Entities
                 HashSet<Tile> water = ContigiousWater(tile);
                 if (water.Count < minWaterBodySize)
                 {
-                    //Console.WriteLine($"Removing water body of size {water.Count}");
+                    //ConsoleManager.Instance.WriteLine($"Removing water body of size {water.Count}", MsgType.ServerInfo);
                     foreach (Tile waterTile in water)
                     {
                         waterTile.TerrainBase = TileTerrainBase.Grassland;
@@ -982,7 +982,7 @@ namespace Dominion.Common.Entities
                 HashSet<Tile> land = ContigiousLand(tile);
                 if (land.Count < minLandSize)
                 {
-                    //Console.WriteLine($"Removing island of size {land.Count}");
+                    //ConsoleManager.Instance.WriteLine($"Removing island of size {land.Count}", MsgType.ServerInfo);
                     foreach (Tile landTile in land)
                     {
                         landTile.TerrainBase = TileTerrainBase.Sea;
@@ -1009,7 +1009,7 @@ namespace Dominion.Common.Entities
                 HashSet<Tile> tiles = ContigiousTerrain(tile, tBase, land);
                 if (tiles.Count < minTerrainSize)
                 {
-                    //Console.WriteLine($"Removing island of size {land.Count}");
+                    //ConsoleManager.Instance.WriteLine($"Removing island of size {land.Count}", MsgType.ServerInfo);
                     foreach (Tile baseTile in tiles)
                     {
                         if (baseTile.Land == land)
@@ -1037,7 +1037,7 @@ namespace Dominion.Common.Entities
                 HashSet<Tile> land = ContigiousImprovment(tile, imp);
                 if (land.Count < minImpSize)
                 {
-                    //Console.WriteLine($"Removing island of size {land.Count}");
+                    //ConsoleManager.Instance.WriteLine($"Removing island of size {land.Count}", MsgType.ServerInfo);
                     foreach (Tile impTile in land)
                     {
                         impTile.Improvement = replacement;
@@ -1064,7 +1064,7 @@ namespace Dominion.Common.Entities
                 HashSet<Tile> feature = ContigiousFeature(tile, tFeature);
                 if (feature.Count < minImpSize)
                 {
-                    //Console.WriteLine($"Removing island of size {land.Count}");
+                    //ConsoleManager.Instance.WriteLine($"Removing island of size {land.Count}", MsgType.ServerInfo);
                     foreach (Tile featureTile in feature)
                     {
                         featureTile.TerrainFeature = replacement;

@@ -304,7 +304,7 @@ namespace Dominion.Client.Scenes
                 $"Version: {Engine.Instance.Version}",
                 $"CLR Version: {Environment.Version}",
                 $"OS Version: {Environment.OSVersion}",
-                $"FPS: {fps.AverageFramesPerSecond}",
+                $"FPS: {Engine.Instance.FrameCounter.AverageFramesPerSecond}",
                 $"Cursor Screen: {InputManager.Instance.MouseScreenPos()}",
                 $"Cursor World: {InputManager.Instance.MouseWorldPos(camera)}",
                 $"Camera Position: {camera.Translation}",

@@ -161,22 +161,22 @@ namespace Dominion.Common.Entities
                 MovementQueue.Enqueue(new Point(i[0], i[1]));
         }
 
-        public static int GetDamageDefenderSuffered(int attackerCombatStr, int defenderCombatStr, int attackerHP, int attackerMaxHP)
+        public static int GetDamageDefenderSuffered(float attackerCombatStr, float defenderCombatStr, int attackerHP, int attackerMaxHP)
         {
-            double combatRatio = (double)attackerCombatStr / defenderCombatStr;
-            double woundedRatio = (double)attackerHP / attackerMaxHP;
-            double baseDamage = 3;
-            double finalDamage = baseDamage / 2 + ((baseDamage / 2) * woundedRatio);
-            return (int)Math.Round(finalDamage / combatRatio);
+            float combatRatio = attackerCombatStr / defenderCombatStr;
+            float woundedRatio = attackerHP / attackerMaxHP;
+            float baseDamage = 3;
+            float finalDamage = baseDamage / 2 + ((baseDamage / 2) * woundedRatio);
+            return (int)Math.Round(finalDamage * combatRatio);
         }
 
-        public static int GetDamageAttackerSuffered(int attackerCombatStr, int defenderCombatStr, int attackerHP, int attackerMaxHP)
+        public static int GetDamageAttackerSuffered(float attackerCombatStr, float defenderCombatStr, int attackerHP, int attackerMaxHP)
         {
-            double combatRatio = (double)attackerCombatStr / defenderCombatStr;
-            double woundedRatio = (double)attackerHP / attackerMaxHP;
-            double baseDamage = 3;
-            double finalDamage = baseDamage / 2 + ((baseDamage / 2) * woundedRatio);
-            return (int)Math.Round(finalDamage * combatRatio);
+            float combatRatio = attackerCombatStr / defenderCombatStr;
+            float woundedRatio = attackerHP / attackerMaxHP;
+            float baseDamage = 3;
+            float finalDamage = baseDamage / 2 + ((baseDamage / 2) * woundedRatio);
+            return (int)Math.Round(finalDamage / combatRatio);
         }
     }
 }

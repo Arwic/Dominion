@@ -52,7 +52,7 @@ namespace Dominion.Server.Controllers
                 Move(unit);
                 BuildUnitCommands(unit);
                 unit.Movement = unit.Constants.Movement;
-                unit.Actions = 0;
+                unit.Actions = unit.Constants.Actions;
                 unit.Skipping = false;
             }
         }
@@ -346,31 +346,75 @@ namespace Dominion.Server.Controllers
 
         public void MeleeAttack(Unit attacker, Unit defender)
         {
-            Console.WriteLine($"{attacker.Name} is attacking {defender.Name}");
+            if (attacker.Actions <= 0)
+            {
+                ConsoleManager.Instance.WriteLine("attack has no actions remaining", MsgType.ServerInfo);
+                return;
+            }
+
             if (attacker.PlayerID == defender.PlayerID)
                 return;
 
             if (!Controllers.Board.GetTile(attacker.Location).GetNeighbourTileLocations().Contains(defender.Location))
                 return;
 
+            float attackerModifier = 1f;
+            // +25% for hills
+            if (Controllers.Board.GetTile(attacker.Location).TerrainFeature == TileTerrainFeature.Hill)
+                attackerModifier += 0.25f;
+            // +25% for forests
+            if (Controllers.Board.GetTile(attacker.Location).Improvement == TileImprovment.Forest)
+                attackerModifier += 0.25f;
+            // +25% for jungles
+            if (Controllers.Board.GetTile(attacker.Location).Improvement == TileImprovment.Jungle)
+                attackerModifier += 0.25f;
+
+            float defenderModifier = 1f;
+            // +25% for hills
+            if (Controllers.Board.GetTile(defender.Location).TerrainFeature == TileTerrainFeature.Hill)
+                defenderModifier += 0.25f;
+            // +25% for forests
+            if (Controllers.Board.GetTile(defender.Location).Improvement == TileImprovment.Forest)
+                defenderModifier += 0.25f;
+            // +25% for jungles
+            if (Controllers.Board.GetTile(defender.Location).Improvement == TileImprovment.Jungle)
+                defenderModifier += 0.25f;
+
             attacker.Movement = 0;
             attacker.Actions = 0;
-            attacker.HP -= Unit.GetDamageAttackerSuffered(attacker.Constants.CombatStrength, defender.Constants.CombatStrength, attacker.HP, attacker.Constants.MaxHP);
-            defender.HP -= Unit.GetDamageDefenderSuffered(attacker.Constants.CombatStrength, defender.Constants.CombatStrength, attacker.HP, attacker.Constants.MaxHP);
+            int attackerTakes = Unit.GetDamageAttackerSuffered(attacker.Constants.CombatStrength * attackerModifier,
+                defender.Constants.CombatStrength * defenderModifier,
+                attacker.HP, attacker.Constants.MaxHP);
+            int defenderTakes = Unit.GetDamageDefenderSuffered(attacker.Constants.CombatStrength * attackerModifier,
+                defender.Constants.CombatStrength * defenderModifier,
+                attacker.HP, attacker.Constants.MaxHP);
+
+            attacker.HP -= attackerTakes;
+            defender.HP -= defenderTakes;
+
+            attacker.Actions = 0;
 
             if (defender.HP <= 0)
-                RemoveUnit(defender);
-            if (attacker.HP <= 0)
-                RemoveUnit(attacker);
-            if (attacker.HP > 0 && defender.HP <= 0)
             {
+                RemoveUnit(defender);
+                // keep the attacker alive if the defender dies
+                if (attacker.HP <= 0)
+                    attacker.HP = 1;
                 attacker.MovementQueue.Clear();
                 attacker.Location = defender.Location;
             }
+            if (attacker.HP <= 0)
+                RemoveUnit(attacker);
+            ConsoleManager.Instance.WriteLine($"{Controllers.Player.GetPlayer(attacker.PlayerID).Name}'s {attacker.Name} is melee attacking {Controllers.Player.GetPlayer(defender.PlayerID).Name}'s {defender.Name}", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"attacker had combat strength {attacker.Constants.CombatStrength} (+{(attackerModifier - 1) * 100}%) and suffered {attackerTakes}", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"defender had modifier of {defender.Constants.CombatStrength} (+{(defenderModifier - 1) * 100}%) and suffered {defenderTakes}", MsgType.ServerInfo);
         }
 
         public void MeleeAttack(Unit attacker, City defender)
         {
+            if (attacker.Actions <= 0)
+                return;
+
             if (attacker.PlayerID == defender.PlayerID)
                 return;
 
@@ -381,6 +425,8 @@ namespace Dominion.Server.Controllers
             attacker.Actions = 0;
             attacker.HP -= Unit.GetDamageAttackerSuffered(attacker.Constants.CombatStrength, defender.CombatStrength, attacker.HP, attacker.Constants.MaxHP);
             Controllers.City.DamageCity(defender, Unit.GetDamageDefenderSuffered(attacker.Constants.CombatStrength, defender.CombatStrength, attacker.HP, attacker.Constants.MaxHP));
+
+            attacker.Actions = 0;
 
             if (defender.HP <= 1)
                 Controllers.City.CaptureCity(defender, attacker.PlayerID);

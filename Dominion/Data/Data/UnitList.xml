@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!--Generated with ArwicXmlEditor (17 Jan 2016 19:56) by Tim Ings-->
+<!--Generated with ArwicXmlEditor (21 Feb 2016 20:45) by Tim Ings-->
 <UnitFactory xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Unit>
     <GraphicID>0</GraphicID>
@@ -9,6 +9,7 @@
     <RangedStrength>0</RangedStrength>
     <CombatStrength>0</CombatStrength>
     <Movement>2</Movement>
+    <Actions>1</Actions>
     <Sight>2</Sight>
     <Commands>
       <Command>1</Command>
@@ -26,6 +27,7 @@
     <RangedStrength>0</RangedStrength>
     <CombatStrength>0</CombatStrength>
     <Movement>2</Movement>
+    <Actions>1</Actions>
     <Sight>2</Sight>
     <Commands>
       <Command>1</Command>
@@ -55,6 +57,7 @@
     <RangedStrength>0</RangedStrength>
     <CombatStrength>5</CombatStrength>
     <Movement>4</Movement>
+    <Actions>1</Actions>
     <Sight>2</Sight>
     <Commands>
       <Command>1</Command>
@@ -72,6 +75,7 @@
     <RangedStrength>0</RangedStrength>
     <CombatStrength>8</CombatStrength>
     <Movement>2</Movement>
+    <Actions>1</Actions>
     <Sight>2</Sight>
     <Commands>
       <Command>1</Command>
@@ -89,6 +93,7 @@
     <RangedStrength>7</RangedStrength>
     <CombatStrength>5</CombatStrength>
     <Movement>2</Movement>
+    <Actions>1</Actions>
     <Sight>2</Sight>
     <Commands>
       <Command>1</Command>
@@ -106,6 +111,7 @@
     <RangedStrength>0</RangedStrength>
     <CombatStrength>11</CombatStrength>
     <Movement>2</Movement>
+    <Actions>1</Actions>
     <Sight>2</Sight>
     <Commands>
       <Command>1</Command>
@@ -123,6 +129,7 @@
     <RangedStrength>10</RangedStrength>
     <CombatStrength>6</CombatStrength>
     <Movement>4</Movement>
+    <Actions>1</Actions>
     <Sight>2</Sight>
     <Commands />
   </Unit>
@@ -134,6 +141,7 @@
     <RangedStrength>0</RangedStrength>
     <CombatStrength>10</CombatStrength>
     <Movement>4</Movement>
+    <Actions>1</Actions>
     <Sight>2</Sight>
     <Commands />
   </Unit>

@@ -47,6 +47,11 @@ namespace Dominion.Common.Factories
         [XmlElement("Movement")]
         public int Movement { get; set; }
 
+        [Description("The amount of action points the unit has per turn")]
+        [DisplayName("Actions"), Browsable(true), Category("General")]
+        [XmlElement("Actions")]
+        public int Actions { get; set; }
+
         [Description("The number of tiles this unit can see")]
         [DisplayName("Sight"), Browsable(true), Category("General")]
         [XmlElement("Sight")]
@@ -66,6 +71,7 @@ namespace Dominion.Common.Factories
             Range = 0;
             CombatStrength = 0;
             Movement = 2;
+            Actions = 1;
             Sight = 2;
             Commands = new List<int>();
         }

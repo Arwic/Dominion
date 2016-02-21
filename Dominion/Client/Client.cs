@@ -576,7 +576,8 @@ namespace Dominion.Client
         {
             Unit unit = (Unit)p.Item;
             Unit oldUnit = AllUnits.Find(u => u.InstanceID == unit.InstanceID);
-            AllUnits.Remove(oldUnit);
+            if (!AllUnits.Remove(oldUnit))
+                return;
             UnitFactory.Reconstruct(unit);
             AllUnits.Add(unit);
             UpdateCache();
