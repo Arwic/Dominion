@@ -1,18 +1,18 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// GUI_UnitList.cs
+// This file defines classes that manage the unit list gui elements
+
 using ArwicEngine.Forms;
 using Dominion.Client.Scenes;
 using Dominion.Common.Entities;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dominion.Client.GUI
 {
     public class GUI_UnitList : IGUIElement
     {
+        // defines a list item to hold a unit
         private class UnitListitem : IListItem
         {
             public Button Button { get; set; }
@@ -36,6 +36,7 @@ namespace Dominion.Client.GUI
 
         public GUI_UnitList(Client client, SceneGame sceneGame, Canvas canvas)
         {
+            // load the form config from file
             formConfig = FormConfig.FromFile("Content/Interface/Game/UnitList.xml");
             this.client = client;
             this.sceneGame = sceneGame;
@@ -51,6 +52,7 @@ namespace Dominion.Client.GUI
                 Show();
         }
 
+        // rebuilds the unit list
         private void RebuildUnitList(List<Unit> u)
         {
             unitListItems = new List<IListItem>();
@@ -58,15 +60,20 @@ namespace Dominion.Client.GUI
                 unitListItems.Add(new UnitListitem(unit));
         }
 
+        /// <summary>
+        /// Opens the gui elements
+        /// </summary>
         public void Show()
         {
             lock (SceneGame._lock_guiDrawCall)
             {
+                // setup the form
                 sceneGame.HideForms();
                 canvas.RemoveChild(form);
                 form = new Form(formConfig, canvas);
                 form.Location = new Point(0, 200);
 
+                // get and setup the form elements
                 ScrollBox sbUnitList = (ScrollBox)form.GetChildByName("sbUnitList");
                 sbUnitList.Items = unitListItems;
                 sbUnitList.SelectedChanged += SbUnitList_SelectedChanged;
@@ -75,10 +82,14 @@ namespace Dominion.Client.GUI
 
         private void SbUnitList_SelectedChanged(object sender, ListItemEventArgs e)
         {
+            // select the clicked unit
             UnitListitem item = (UnitListitem)e.ListItem;
             client.SelectedUnit = item.Unit;
         }
 
+        /// <summary>
+        /// Closes the gui elements
+        /// </summary>
         public void Hide()
         {
             if (form != null)

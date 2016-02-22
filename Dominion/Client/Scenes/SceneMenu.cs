@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Audio;
+﻿// Dominion - Copyright (C) Timothy Ings
+// SceneMenu.cs
+// This file defines classes that define the main menu scene
+
+using ArwicEngine.Audio;
 using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using ArwicEngine.Graphics;
@@ -7,11 +11,9 @@ using ArwicEngine.Scenes;
 using Dominion.Common;
 using Dominion.Common.Entities;
 using Dominion.Common.Factories;
-using Dominion.Server;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -21,6 +23,7 @@ namespace Dominion.Client.Scenes
 {
     public class SceneMenu : BaseScene
     {
+        // defines a list item that holds an empire
         private class EmpireListItem : IListItem
         {
             public Button Button { get; set; }
@@ -29,11 +32,13 @@ namespace Dominion.Client.Scenes
 
             public EmpireListItem(Empire empire)
             {
+                // format the text with the empire's colours
                 Empire = empire;
                 Text = $"<[{Empire.PrimaryColor.ToRichFormat()}]{Empire.Name}>".ToRichText();
             }
         }
 
+        // defines a list item that holds a player
         private class PlayerListItem : IListItem
         {
             public Button Button { get; set; }
@@ -43,6 +48,7 @@ namespace Dominion.Client.Scenes
 
             public PlayerListItem(BasicPlayer player, EmpireFactory empireFactory)
             {
+                // format the text with the players name, selected empire and an icon indicating the game host
                 Player = player;
                 Color empireColor = Color.White;
                 if (empireFactory != null)
@@ -60,6 +66,7 @@ namespace Dominion.Client.Scenes
             }
         }
 
+        // defines a list item that holds a string 
         private class StringListItem : IListItem
         {
             public Button Button { get; set; }
@@ -108,13 +115,17 @@ namespace Dominion.Client.Scenes
             lastEmpireID = -1;
         }
         
+        /// <summary>
+        /// Occurs when the scene is entered
+        /// </summary>
         public override void Enter()
         {
+            // reset the client and the local server
             manager.Client.Dissconnect();
             manager.Server.StopServer();
 
+            //load resources
             sbGUI = new SpriteBatch(GraphicsManager.Instance.Device);
-
             canvas = new Canvas(GraphicsManager.Instance.Viewport.Bounds);
             ConsoleForm consoleForm = new ConsoleForm(canvas);
             background = new Image(new Rectangle(0, 0, 1920, 1080), new Sprite($"Graphics/Backgrounds/Menu_{RandomHelper.Next(0, 6)}"), null, null);
@@ -128,19 +139,27 @@ namespace Dominion.Client.Scenes
             AudioManager.Instance.PlayerState = MusicPlayerState.Shuffle;
         }
 
+        /// <summary>
+        /// Occurs when the scene is left
+        /// </summary>
         public override void Leave()
         {
         }
 
         #region Main Form
+        // sets up the main for
         private void SetUpMainForm()
         {
             lock (_lock_guiSetUp)
             {
+                // load the form config from file
                 FormConfig formConfig = FormConfig.FromFile("Content/Interface/Menu/Main.xml");
+                // setup the form
                 canvas.RemoveChild(frm_main);
                 frm_main = new Form(formConfig, canvas);
                 frm_main.CentreControl();
+
+                // get and setup the form elements
                 Button btnHost = (Button)frm_main.GetChildByName("btnHost");
                 btnHost.MouseClick += Main_BtnHost_MouseClick;
                 Button btnJoin = (Button)frm_main.GetChildByName("btnJoin");
@@ -157,6 +176,7 @@ namespace Dominion.Client.Scenes
         }
         private void Main_BtnOptions_MouseClick(object sender, MouseEventArgs e)
         {
+            // NYI
         }
         private void Main_BtnJoin_MouseClick(object sender, MouseEventArgs e)
         {
@@ -179,14 +199,19 @@ namespace Dominion.Client.Scenes
         #endregion
 
         #region Host Game Form
+        // sets up the host game form
         private void SetUpHostGameForm()
         {
             lock (_lock_guiSetUp)
             {
+                // load the form config from file
                 FormConfig formConfig = FormConfig.FromFile("Content/Interface/Menu/Host.xml");
+                // setup the form
                 canvas.RemoveChild(frm_hostGame);
                 frm_hostGame = new Form(formConfig, canvas);
                 frm_hostGame.CentreControl();
+
+                // get and setup the form elements
                 tbAddress = (TextBox)frm_hostGame.GetChildByName("tbAddress");
                 tbAddress.Text = "Retrieving WAN Address...";
                 tbAddress.ToolTip = new ToolTip("This is your public IP address that people can use join to join your game over the internet", 500);
@@ -213,9 +238,9 @@ namespace Dominion.Client.Scenes
         }
         private void Host_BtnHost_MouseClick(object sender, MouseEventArgs e)
         {
-            if (manager.Server.Running)
+            if (manager.Server.Running) // check if a server is already running
                 return;
-            if (tbUsername.Text.Equals(""))
+            if (tbUsername.Text.Equals("")) // check if the user entered a valid user name
             {
                 ConsoleManager.Instance.WriteLine("Invalid username");
                 return;
@@ -228,10 +253,11 @@ namespace Dominion.Client.Scenes
             }
             catch (Exception)
             {
-                return;
+                return; // return if the entered port is invalid
             }
-            manager.Server.StartServer(port, tbPassword.Text);
+            manager.Server.StartServer(port, tbPassword.Text); // start the server
             
+            // connect to the server as a client
             bool connected = manager.Client.Connect(tbUsername.Text, address, port, tbPassword.Text);
             if (!connected)
             {
@@ -241,10 +267,11 @@ namespace Dominion.Client.Scenes
                 manager.Server = new Server.Server();
                 return;
             }
-            host = true;
+            host = true; // flag this client as the server host
 
             RemoveAllForms();
         }
+        // sets the ip address field of the host game form to the user's current public IP address
         private async void SetCurrentAddressAsync()
         {
             int timeOut = 10000;
@@ -318,18 +345,26 @@ namespace Dominion.Client.Scenes
         #endregion
 
         #region Lobby Form
+        // sets up the lobby form
         private void SetUpLobbyForm()
         {
             lock (_lock_guiSetUp)
             {
+                // set the audio manager to play the selected empire's anthem over and over
                 AudioManager.Instance.PlayerState = MusicPlayerState.RepeatOne;
+
+                // register events
                 manager.Client.LostConnection += Client_LostConnection;
 
-                canvas.RemoveChild(frm_lobby);
+                // load the form config from file
                 FormConfig formConfig = FormConfig.FromFile("Content/Interface/Menu/Lobby.xml");
+
+                // setup the form
+                canvas.RemoveChild(frm_lobby);
                 frm_lobby = new Form(formConfig, canvas);
                 frm_lobby.CentreControl();
 
+                // get and setup the for elements
                 Button btnStart = (Button)frm_lobby.GetChildByName("btnStart");
                 if (host) btnStart.MouseClick += Lobby_BtnStart_MouseClick;
                 else btnStart.Enabled = false;
@@ -369,23 +404,27 @@ namespace Dominion.Client.Scenes
                 lobby_sbPlayers = (ScrollBox)frm_lobby.GetChildByName("sbPlayers");
                 lobby_sbPlayers.Items = GetPlayers();
 
+                // fake an event to change the music
                 Lobby_BtnEmpireSelect_MouseClick(lobby_btnEmpireSelect, new MouseEventArgs(false, false, false, Point.Zero, 0));
             }
         }
         private void Lobby_BtnBan_MouseClick(object sender, MouseEventArgs e)
         {
+            // ban the selected player from the server
             BasicPlayer selectedPlayer = ((PlayerListItem)lobby_sbPlayers.Selected).Player;
             if (selectedPlayer.PlayerID != 0)
                 manager.Server.BanPlayer(selectedPlayer.PlayerID);
         }
         private void Lobby_BtnKick_MouseClick(object sender, MouseEventArgs e)
         {
+            // kick the selected player from the server
             BasicPlayer selectedPlayer = ((PlayerListItem)lobby_sbPlayers.Selected).Player;
             if (selectedPlayer.PlayerID != 0)
                 manager.Server.KickPlayer(selectedPlayer.PlayerID);
         }
         private void Client_LobbyStateChanged(object sender, LobbyStateEventArgs e)
         {
+            // update the lobby form's elements when the server sends a new lobby state
             if (e.LobbyState == null)
                 return;
             if (frm_lobby == null)
@@ -412,11 +451,13 @@ namespace Dominion.Client.Scenes
         }
         private void Client_LostConnection(object sender, EventArgs e)
         {
+            // return to the main form
             RemoveAllForms();
             SetUpMainForm();
         }
         private void Lobby_BtnOtherOptions_MouseClick(object sender, MouseEventArgs e)
         {
+            // setup the other options pane in the lobby form
             frm_lobby.RemoveChild(frm_lobby_configWindow);
             frm_lobby_configWindow = new Form(new Rectangle(frm_lobby.Bounds.Width - 235, 40, 230, 390), frm_lobby);
             frm_lobby_configWindow.CloseButtonEnabled = false;
@@ -451,6 +492,7 @@ namespace Dominion.Client.Scenes
         }
         private void Lobby_BtnVictoryTypes_MouseClick(object sender, MouseEventArgs e)
         {
+            // setup the victory type options pane in the lobby form
             frm_lobby.RemoveChild(frm_lobby_configWindow);
             frm_lobby_configWindow = new Form(new Rectangle(frm_lobby.Bounds.Width - 235, 40, 230, 390), frm_lobby);
             frm_lobby_configWindow.CloseButtonEnabled = false;
@@ -485,6 +527,7 @@ namespace Dominion.Client.Scenes
         }
         private void Lobby_BtnGameSpeed_MouseClick(object sender, MouseEventArgs e)
         {
+            // setup the game speed options pane in the lobby form
             frm_lobby.RemoveChild(frm_lobby_configWindow);
             frm_lobby_configWindow = new Form(new Rectangle(frm_lobby.Bounds.Width - 235, 40, 230, 390), frm_lobby);
             frm_lobby_configWindow.CloseButtonEnabled = false;
@@ -502,6 +545,7 @@ namespace Dominion.Client.Scenes
         }
         private void Lobby_BtnWorldType_MouseClick(object sender, MouseEventArgs e)
         {
+            // setup the world tpye options pane in the lobby form
             frm_lobby.RemoveChild(frm_lobby_configWindow);
             frm_lobby_configWindow = new Form(new Rectangle(frm_lobby.Bounds.Width - 235, 40, 230, 390), frm_lobby);
             frm_lobby_configWindow.CloseButtonEnabled = false;
@@ -519,6 +563,7 @@ namespace Dominion.Client.Scenes
         }
         private void Lobby_BtnWorldSize_MouseClick(object sender, MouseEventArgs e)
         {
+            // setup the world size options pane in the lobby form
             frm_lobby.RemoveChild(frm_lobby_configWindow);
             frm_lobby_configWindow = new Form(new Rectangle(frm_lobby.Bounds.Width - 235, 40, 230, 390), frm_lobby);
             frm_lobby_configWindow.CloseButtonEnabled = false;
@@ -536,6 +581,7 @@ namespace Dominion.Client.Scenes
         }
         private void Lobby_BtnEmpireSelect_MouseClick(object sender, MouseEventArgs e)
         {
+            // setup the empire selection pane in the lobby form
             frm_lobby.RemoveChild(frm_lobby_configWindow);
             frm_lobby_configWindow = new Form(new Rectangle(frm_lobby.Bounds.Width - 235, 40, 230, 390), frm_lobby);
             frm_lobby_configWindow.CloseButtonEnabled = false;
@@ -552,14 +598,16 @@ namespace Dominion.Client.Scenes
         }
         private void Lobby_BtnStart_MouseClick(object sender, MouseEventArgs e)
         {
+            // start the game
             manager.Server.StartGame();
         }
         private void Lobby_BtnBack_MouseClick(object sender, MouseEventArgs e)
         {
+            // dissconnect from the server
             manager.Client.Dissconnect();
             manager.Client = new Client();
             manager.Client.LobbyStateChanged += Client_LobbyStateChanged;
-            if (host)
+            if (host) // if this client is the host, also stop and reset the server
             {
                 manager.Server.StopServer();
                 manager.Server = new Server.Server();
@@ -569,6 +617,7 @@ namespace Dominion.Client.Scenes
         }
         #endregion
 
+        // returns all the players in the game as list items
         private List<IListItem> GetPlayers()
         {
             try
@@ -583,6 +632,8 @@ namespace Dominion.Client.Scenes
                 return null;
             }
         }
+
+        // returns all the available empires as list items
         private List<IListItem> GetEmpires()
         {
             if (manager.Client.EmpireFactory.Empires == null)
@@ -592,6 +643,8 @@ namespace Dominion.Client.Scenes
                 items.Add(new EmpireListItem(empire));
             return items;
         }
+
+        // returns the elements of an enum as string list items
         private List<IListItem> GetEnumStringListItems(Type e)
         {
             List<IListItem> items = new List<IListItem>();
@@ -600,6 +653,7 @@ namespace Dominion.Client.Scenes
             return items;
         }
 
+        // plays the anthem of the given empire
         private void PlayAnthem(string empireName)
         {
             try
@@ -613,7 +667,8 @@ namespace Dominion.Client.Scenes
                 ConsoleManager.Instance.WriteLine($"Could not find an anthem for {empireName}", MsgType.Warning);
             }
         }
-
+        
+        // removes and resets all the forms used in this scene
         private void RemoveAllForms()
         {
             if (canvas != null)
@@ -635,11 +690,17 @@ namespace Dominion.Client.Scenes
             }
         }
 
+        /// <summary>
+        /// Occurs when the enging updates
+        /// </summary>
         public override void Update()
         {
             canvas.Update();
         }
 
+        /// <summary>
+        /// Occurs when the engine draws
+        /// </summary>
         public override void Draw()
         {
             lock (_lock_guiSetUp)

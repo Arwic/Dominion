@@ -1,4 +1,7 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// GUI_CityList.cs
+// This file defines classes that manage the city list gui element
+
 using ArwicEngine.Forms;
 using Dominion.Client.Scenes;
 using Dominion.Common.Entities;
@@ -9,6 +12,7 @@ namespace Dominion.Client.GUI
 {
     public class GUI_CityList : IGUIElement
     {
+        // class that represents a list item
         private class CityListitem : IListItem
         {
             public Button Button { get; set; }
@@ -35,6 +39,7 @@ namespace Dominion.Client.GUI
 
         public GUI_CityList(Client client, SceneGame sceneGame, Canvas canvas)
         {
+            // load the form config from file
             formConfig = FormConfig.FromFile("Content/Interface/Game/CityList.xml");
             this.client = client;
             this.sceneGame = sceneGame;
@@ -67,15 +72,19 @@ namespace Dominion.Client.GUI
                 cityListItems.Add(new CityListitem(city));
         }
 
+        /// <summary>
+        /// Opens the gui element
+        /// </summary>
         public void Show()
         {
             lock (SceneGame._lock_guiDrawCall)
             {
-                sceneGame.HideForms();
-                canvas.RemoveChild(form);
-                form = new Form(formConfig, canvas);
-                form.Location = new Point(0, 200);
+                sceneGame.HideForms(); // hide other forms
+                canvas.RemoveChild(form); // remove this form from the canvas
+                form = new Form(formConfig, canvas); // re build the form from the config
+                form.Location = new Point(0, 200); // position the form
 
+                // retrieve form components and set them up
                 ScrollBox sbCities = (ScrollBox)form.GetChildByName("sbCityList");
                 sbCities.Items = cityListItems;
                 sbCities.SelectedIndex = -1;
@@ -85,14 +94,18 @@ namespace Dominion.Client.GUI
 
         private void SbCities_SelectedChanged(object sender, ListItemEventArgs e)
         {
+            // when a list item is clicked in the scroll tell the client to select that city
             ScrollBox sb = (ScrollBox)sender;
             if (sb.SelectedIndex == -1)
                 return;
             CityListitem item = (CityListitem)e.ListItem;
             client.SelectedCity = item.City;
-            sb.SelectedIndex = -1;
+            sb.SelectedIndex = -1; // remove the selection from the scroll box to create desired behaivour
         }
 
+        /// <summary>
+        /// Closes the gui element
+        /// </summary>
         public void Hide()
         {
             if (form != null)

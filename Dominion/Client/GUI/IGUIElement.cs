@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Dominion - Copyright (C) Timothy Ings
+// IGUIElement.cs
+// This file defines interfaces that are used to define gui elements
+// This might not be necessary anymore
 
 namespace Dominion.Client.GUI
 {

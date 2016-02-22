@@ -1,20 +1,20 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// GUI_Tech.cs
+// This file defines classes that manage the tech tree gui elements
+
 using ArwicEngine.Forms;
 using ArwicEngine.Graphics;
 using Dominion.Client.Scenes;
 using Dominion.Common.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dominion.Client.GUI
 {
     public class GUI_Tech : IGUIElement
     {
+        // defines a line that can be drawn
         private class Line
         {
             private Vector2 pos1, pos2;
@@ -25,6 +25,11 @@ namespace Dominion.Client.GUI
                 pos2 = p2;
             }
 
+            /// <summary>
+            /// Draws the line
+            /// </summary>
+            /// <param name="sb"></param>
+            /// <param name="c"></param>
             public void Draw(SpriteBatch sb, Color c)
             {
                 GraphicsHelper.DrawLine(sb, pos1, pos2, 2, c);
@@ -50,6 +55,8 @@ namespace Dominion.Client.GUI
             this.sceneGame = sceneGame;
             this.canvas = canvas;
 
+            // register events
+            // only update the form if it is already open, so it doesn't open all the time
             client.PlayerUpdated += (s, a) =>
             {
                 if (Visible)
@@ -71,20 +78,26 @@ namespace Dominion.Client.GUI
                     Show();
             };
 
+            // calculate the max scroll index
             foreach (TechNode node in client.Player.TechTree.Nodes)
                 if (node.GridX > maxScrollIndex)
                     maxScrollIndex = node.GridX;
 
+            // load sprites
             techLockedSprite = new Sprite("Graphics/Interface/Controls/ScrollBox_Back");
             techUnlockedSprite = new Sprite("Graphics/Interface/Controls/ScrollBox_Button");
             techSelectedSprite = new Sprite("Graphics/Interface/Controls/Form_Back");
             techSelectable = new Sprite("Graphics/Interface/Controls/ScrollBox_Back");
         }
 
+        /// <summary>
+        /// Opens the gui element
+        /// </summary>
         public void Show()
         {
             lock (SceneGame._lock_guiDrawCall)
             {
+                // programatically build the form
                 sceneGame.HideForms();
                 canvas.RemoveChild(form);
                 form = new Form(new Rectangle(0, 40, 1920, 650), canvas);
@@ -102,6 +115,7 @@ namespace Dominion.Client.GUI
                 int sepX = 30;
                 int sepY = 10;
 
+                // build a button for every node in the tech tree
                 for (int i = 0; i < client.Player.TechTree.Nodes.Count; i++)
                 {
                     TechNode tn = client.Player.TechTree.GetNode(i);
@@ -115,12 +129,15 @@ namespace Dominion.Client.GUI
                     string text = tn.Name;
                     if (!tn.Unlocked)
                     {
+                        // -2 indicates the tech will take a very long time to research
                         if (turnsLeft == -2)
                             text = $"{tn.Name} - ~ turns";
                         else if (turnsLeft != -1)
                             text = $"{tn.Name} - {turnsLeft} turns";
                     }
+                    // format the button text
                     b.Text = text.ToRichText();
+                    // pick an appropriate sprite
                     if (tn.Unlocked)
                         b.Sprite = techUnlockedSprite;
                     else if (client.Player.SelectedTechNodeID == i)
@@ -128,9 +145,10 @@ namespace Dominion.Client.GUI
                     else
                         b.Sprite = techLockedSprite;
 
-                    int locali = i;
+                    int locali = i; // cache i because of closure
                     b.MouseClick += (s, a) =>
                     {
+                        // only tell the server to select a new tech if all the prereqs are unlocked
                         TechNode clicked = client.Player.TechTree.GetNode(locali);
                         foreach (int prereqID in clicked.Prerequisites)
                         {
@@ -143,10 +161,13 @@ namespace Dominion.Client.GUI
 
                         client.CommandPlayer(new PlayerCommand(PlayerCommandID.SelectTech, locali));
                     };
+                    // register events
                     b.MouseWheel += Form_MouseWheel;
+                    // add a tool tip with more info about the tech
                     b.ToolTip = new ToolTip(tn.Description, 500);
                     b.ToolTip.FollowCurosr = true;
 
+                    // add a line from the current tech to all its prereqs
                     for (int j = 0; j < tn.Prerequisites.Count; j++)
                     {
                         TechNode prereq = client.Player.TechTree.GetNode(tn.Prerequisites[j]);
@@ -159,6 +180,7 @@ namespace Dominion.Client.GUI
             }
         }
 
+        // returns the number of turns required to research the given node
         private int GetTurnsUntilTech(TechNode node)
         {
             if (client.Player.IncomeScience == 0)
@@ -171,7 +193,7 @@ namespace Dominion.Client.GUI
             {
                 currentProg -= client.Player.IncomeScience;
                 turnsLeft++;
-                if (turnsLeft > 999)
+                if (turnsLeft > 999) // don't bother trying for too long
                     return -2;
             }
 
@@ -182,6 +204,7 @@ namespace Dominion.Client.GUI
         {
             lock (SceneGame._lock_guiDrawCall)
             {
+                // draw the lines
                 foreach (Line line in lines)
                     line.Draw(e.SpriteBatch, Color.White);
             }
@@ -189,6 +212,7 @@ namespace Dominion.Client.GUI
 
         private void Form_MouseWheel(object sender, MouseEventArgs e)
         {
+            // modify the scroll index
             if (e.Delta < 0)
             {
                 scrollIndex--;
@@ -201,10 +225,13 @@ namespace Dominion.Client.GUI
                 if (scrollIndex > maxScrollIndex)
                     scrollIndex = maxScrollIndex;
             }
-
+            // refresh the form
             Show();
         }
 
+        /// <summary>
+        /// Closes the gui element
+        /// </summary>
         public void Hide()
         {
             if (form != null)

@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Audio;
+﻿// Dominion - Copyright (C) Timothy Ings
+// SceneGame.cs
+// This file defines classes that define the game scene
+
+using ArwicEngine.Audio;
 using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using ArwicEngine.Graphics;
@@ -53,16 +57,21 @@ namespace Dominion.Client.Scenes
         public SceneGame(GameManager manager)
             : base()
         {
+            // load resources
             defaultCursor = new Cursor("Content/Cursors/normal.cur");
             unitCommandTargetCursor = new Cursor("Content/Cursors/link.cur");
             this.manager = manager;
+            // register events
             manager.Client.SelectedCommandChanged += Client_SelectedCommandChanged;
 
+            // only register the cache_all command if the assembly was built under the debug config
 #if DEBUG
             ConsoleManager.Instance.RegisterCommand("cache_all", f_cachAll);
 #endif
         }
 
+        // this command is for debugging only
+        // adds all of the given object to the client's cache
         private int f_cachAll(List<string> args)
         {
             if (args.Count != 1)
@@ -97,14 +106,20 @@ namespace Dominion.Client.Scenes
 
         private void Client_SelectedCommandChanged(object sender, UnitCommandIDEventArgs e)
         {
+            // change the cursor based on the selected command
+            // TODO fix this
             if (UnitCommand.GetTargetType(e.UnitCommandID) == UnitCommandTargetType.Tile)
                 unitCommandTargetCursor.Enable();
             else
                 defaultCursor.Enable();
         }
 
+        /// <summary>
+        /// Occurs when this scene is entered
+        /// </summary>
         public override void Enter()
         {
+            // setup graphics resources
             sbGUI = new SpriteBatch(GraphicsManager.Instance.Device);
             sbFore = new SpriteBatch(GraphicsManager.Instance.Device);
             sbBack = new SpriteBatch(GraphicsManager.Instance.Device);
@@ -114,8 +129,9 @@ namespace Dominion.Client.Scenes
             boardRenderer = new BoardRenderer(manager.Client, camera);
             unitRenderer = new UnitRenderer(boardRenderer, camera, manager.Client);
             camera.Translation = boardRenderer.GetTileCentre(manager.Client.GetMyUnits()[0].Location);
-
             camera.TranslationTarget = camera.Translation;
+
+            // set up gui elements
             canvas = new Canvas(GraphicsManager.Instance.Viewport.Bounds);
             ConsoleForm consoleForm = new ConsoleForm(canvas);
             GUI_Map map = new GUI_Map(camera, manager.Client, boardRenderer, canvas);
@@ -130,6 +146,11 @@ namespace Dominion.Client.Scenes
             GameMenu = new GUI_GameMenu(manager.Client, this, canvas);
         }
 
+        /// <summary>
+        /// Hides all the gui forms that can be hidden
+        /// </summary>
+        /// <param name="hideCityManagment"></param>
+        /// <param name="hideUnitActions"></param>
         public void HideForms(bool hideCityManagment = true, bool hideUnitActions = true)
         {
             CityList.Hide();
@@ -141,10 +162,16 @@ namespace Dominion.Client.Scenes
             TechTree.Hide();
         }
 
+        /// <summary>
+        /// Occurs when this scene is left
+        /// </summary>
         public override void Leave()
         {
         }
 
+        /// <summary>
+        /// Occurs when the engine updates
+        /// </summary>
         public override void Update()
         {
             bool interacted = canvas.Update();
@@ -170,6 +197,7 @@ namespace Dominion.Client.Scenes
                 boardRenderer.DrawResourceIcons = !boardRenderer.DrawResourceIcons;
         }
 
+        // updates the camera with user input
         private void UpdateCamera(float delta, bool interacted)
         {
             camera.Update(delta);
@@ -220,6 +248,7 @@ namespace Dominion.Client.Scenes
             }
         }
 
+        // updates the board baserd on user input
         private void UpdateBoardInteraction(bool interacted)
         {
             if (!interacted)
@@ -275,14 +304,19 @@ namespace Dominion.Client.Scenes
             }
         }
 
+        /// <summary>
+        /// Occurs when the engine draws
+        /// </summary>
         public override void Draw()
         {
+            // begine sprite batches
             sbBack.Begin();
             sbFore.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, camera.GetForegroundTransformation(GraphicsManager.Instance.Scale));
             sbGUI.Begin();
 
+            // draw components
             boardRenderer.Draw(sbFore, font);
-            unitRenderer.Draw(sbFore, font);
+            unitRenderer.Draw(sbFore);
             lock (_lock_guiDrawCall)
             {
                 canvas.Draw(sbGUI);
@@ -290,11 +324,13 @@ namespace Dominion.Client.Scenes
             if (flag_drawInfo_client) DrawInfoLayer_Client(font);
             if (flag_drawInfo_server) DrawInfoLayer_Server(font);
 
+            // end sprite batches
             sbBack.End();
             sbFore.End();
             sbGUI.End();
         }
 
+        // draws the client info layer
         private void DrawInfoLayer_Client(Font f)
         {
             string[] texts =
@@ -338,6 +374,7 @@ namespace Dominion.Client.Scenes
             DrawInfoText(f, new Vector2(10, 45), texts);
         }
 
+        // draws the server info layer
         private void DrawInfoLayer_Server(Font f)
         {
             if (manager.Server.Running)
@@ -373,6 +410,8 @@ namespace Dominion.Client.Scenes
             }
         }
 
+        // draws the given array of strings at the given offset
+        // white text on black background
         private void DrawInfoText(Font f, Vector2 offset, string[] texts)
         {
             int textHeight = Convert.ToInt32(font.MeasureString("|").Y);

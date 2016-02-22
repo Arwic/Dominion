@@ -1,10 +1,13 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// GUI_Map.cs
+// This file defines classes that manage the map gui elements
+
 using ArwicEngine.Forms;
 using ArwicEngine.Graphics;
 using ArwicEngine.Input;
-using Dominion.Client.GUI;
 using Dominion.Client.Renderers;
 using Dominion.Common.Entities;
+using Dominion.Common.Factories;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -33,6 +36,7 @@ namespace Dominion.Client.GUI
             this.boardRenderer = boardRenderer;
             this.client = client;
             this.canvas = canvas;
+            // load resources
             blankTileSprite = new Sprite("Graphics/Game/Tiles/BlankTile");
             tileOutlineSprite = new Sprite("Graphics/Game/Tiles/TileOutline");
             Show();
@@ -47,6 +51,7 @@ namespace Dominion.Client.GUI
         {
             lock (Scenes.SceneGame._lock_guiDrawCall)
             {
+                // setup the form programatically
                 canvas.RemoveChild(form);
                 int width = 350;
                 int height = 200;
@@ -56,6 +61,7 @@ namespace Dominion.Client.GUI
                 form.CloseButtonEnabled = false;
                 form.DrawTitlebar = false;
                 form.Draggable = false;
+                // register events
                 form.Drawn += Form_Drawn;
                 form.MouseMove += Form_MouseMove;
                 form.MouseDown += Form_MouseDown;
@@ -66,12 +72,15 @@ namespace Dominion.Client.GUI
 
         private void Form_MouseDown(object sender, MouseEventArgs e)
         {
+            // pan to the point the user clicked
             Vector2 panTarget = GetPanTarget();
             camera.TranslationTarget = panTarget;
         }
 
         private void Form_MouseMove(object sender, MouseEventArgs e)
         {
+            // instantly move the camera to the point the user is over
+            // this prevents the camera from feeling laggy
             if (InputManager.Instance.IsMouseDown(MouseButton.Left))
             {
                 Vector2 panTarget = GetPanTarget();
@@ -80,6 +89,7 @@ namespace Dominion.Client.GUI
             }
         }
 
+        // returns the world position from the map position under the mouse
         private Vector2 GetPanTarget()
         {
             Point mousePos = InputManager.Instance.MouseScreenPos();
@@ -89,27 +99,32 @@ namespace Dominion.Client.GUI
 
         private void Form_Drawn(object sender, DrawEventArgs e)
         {
+            // draw the tiles and camera rectangle
             DrawMapTiles(e.SpriteBatch);
             DrawCameraRect(e.SpriteBatch);
         }
 
+        // draws the camera rectangle and crosshairs
         private void DrawCameraRect(SpriteBatch sb)
         {
             if (form != null && form.Visible)
             {
+                // get the camera's world position
                 Vector2 camTranslation = camera.Translation - new Vector2(GraphicsManager.Instance.Device.Viewport.Width / 2 / camera.Zoom.X, GraphicsManager.Instance.Viewport.Height / 2 / camera.Zoom.Y);
+                // convert it from world to map coords
                 Rectangle camRect = new Rectangle(
                     (int)(camTranslation.X / boardRenderer.Bounds.Width * form.Size.Width + form.AbsoluteLocation.X),
                     (int)(camTranslation.Y / boardRenderer.Bounds.Height * form.Size.Height + form.AbsoluteLocation.Y),
                     (int)((1920.0f / boardRenderer.Bounds.Width) * (float)form.Size.Width / camera.Zoom.X),
                     (int)((1080.0f / boardRenderer.Bounds.Height) * (float)form.Size.Height / camera.Zoom.Y));
                 
+                // calculate the vert and hori lines for the camera crosshairs
                 Vector2 vertA = new Vector2(camRect.X + camRect.Width / 2, form.AbsoluteLocation.Y);
                 Vector2 vertB = new Vector2(vertA.X, form.AbsoluteLocation.Y + form.AbsoluteBounds.Height);
                 Vector2 horiA = new Vector2(form.AbsoluteLocation.X, camRect.Y + camRect.Height / 2);
                 Vector2 horiB = new Vector2(form.AbsoluteLocation.X + form.AbsoluteBounds.Width, horiA.Y);
 
-                // Clamp camRect to the form bounds
+                // clamp cam rect to the form bounds
                 if (camRect.X < form.AbsoluteLocation.X)
                 {
                     camRect.Width -= form.AbsoluteLocation.X - camRect.X;
@@ -129,7 +144,7 @@ namespace Dominion.Client.GUI
                     camRect.Height = form.AbsoluteLocation.Y + form.Size.Height - camRect.Y;
                 }
 
-                // Clamp crosshair to form bounds
+                // clamp crosshair to form bounds
                 if (vertA.X < form.AbsoluteLocation.X)
                 {
                     vertA.X = form.AbsoluteLocation.X;
@@ -151,66 +166,79 @@ namespace Dominion.Client.GUI
                     horiB.Y = horiA.Y;
                 }
 
+                // draw the crosshairs
                 GraphicsHelper.DrawLine(sb, vertA, vertB, 2, color);
                 GraphicsHelper.DrawLine(sb, horiA, horiB, 2, color);
+
+                // don't draw the cam rect if it does not have positive width or height
                 if (camRect.Height < 0 || camRect.Width < 0)
                     return;
+                // draw the cam rect
                 GraphicsHelper.DrawRect(sb, camRect, 2, color);
             }
         }
 
+        // draws the map tiles
         private void DrawMapTiles(SpriteBatch sb)
         {
             lock (Client._lock_cacheUpdate)
             {
+                // draw every tile the client has seen
                 foreach (Tile tile in client.GetAllCachedTiles())
                 {
+                    // if the city id isn't -1, then the tile is owned by a city
                     if (tile.CityID != -1)
                     {
+                        // get the owner city
                         City city = client.Cities.Find(c => c.InstanceID == tile.CityID);
                         if (city != null)
                         {
-                            Color color = client.EmpireFactory.GetEmpire(city.EmpireID).PrimaryColor;
-                            DrawTile(sb, tile, color);
+                            // draw the tile with the empire's colours
+                            Empire empire = client.EmpireFactory.GetEmpire(city.EmpireID);
+                            DrawTile(sb, tile, empire.PrimaryColor, empire.SecondaryColor);
                         }
                     }
+                    // otherwise just draw the tile based on terrain
                     else
                     {
                         switch (tile.TerrainBase)
                         {
                             case TileTerrainBase.Tundra:
-                                DrawTile(sb, tile, Color.DarkGray);
+                                DrawTile(sb, tile, Color.DarkGray, Color.Black);
                                 break;
                             case TileTerrainBase.Grassland:
-                                DrawTile(sb, tile, Color.ForestGreen);
+                                DrawTile(sb, tile, Color.ForestGreen, Color.Black);
                                 break;
                             case TileTerrainBase.Desert:
-                                DrawTile(sb, tile, Color.NavajoWhite);
+                                DrawTile(sb, tile, Color.NavajoWhite, Color.Black);
                                 break;
                             case TileTerrainBase.Sea:
-                                DrawTile(sb, tile, Color.RoyalBlue);
+                                DrawTile(sb, tile, Color.RoyalBlue, Color.Black);
                                 break;
                             case TileTerrainBase.Coast:
-                                DrawTile(sb, tile, Color.LightSeaGreen);
+                                DrawTile(sb, tile, Color.LightSeaGreen, Color.Black);
                                 break;
                             case TileTerrainBase.Snow:
-                                DrawTile(sb, tile, Color.Snow);
+                                DrawTile(sb, tile, Color.Snow, Color.Black);
                                 break;
                         }
                     }
                 }
+                // draw the client's cities
                 foreach (City city in client.GetMyCities())
                 {
-                    DrawTile(sb, client.Board.GetTile(city.Location), Color.White);
+                    DrawTile(sb, client.Board.GetTile(city.Location), Color.White, Color.Black);
                 }
+                // draw the client's units
                 foreach (Unit unit in client.GetMyUnits())
                 {
-                    DrawTile(sb, client.Board.GetTile(unit.Location), Color.White);
+                    DrawTile(sb, client.Board.GetTile(unit.Location), Color.White, Color.Black);
                 }
             }
         }
 
-        private void DrawTile(SpriteBatch sb, Tile tile, Color color)
+        // draw the given tile with the given colour
+        private void DrawTile(SpriteBatch sb, Tile tile, Color fillColor, Color outlineColor)
         {
             Vector2 tilePos = boardRenderer.GetTileCentre(tile) - new Vector2(boardRenderer.TileWidth / 2, boardRenderer.TileHeight / 2);
             Rectangle dest = new Rectangle(
@@ -218,8 +246,8 @@ namespace Dominion.Client.GUI
                 (int)(tilePos.Y / boardRenderer.Bounds.Height * form.Size.Height + form.AbsoluteLocation.Y),
                 (int)(boardRenderer.TileWidth / (float)boardRenderer.Bounds.Width * form.Size.Width),
                 (int)(boardRenderer.TileHeight / (float)boardRenderer.Bounds.Height * form.Size.Height));
-            blankTileSprite.Draw(sb, dest, null, color);
-            tileOutlineSprite.Draw(sb, dest, null, Color.Black);
+            blankTileSprite.Draw(sb, dest, null, fillColor);
+            tileOutlineSprite.Draw(sb, dest, null, outlineColor);
         }
     }
 }

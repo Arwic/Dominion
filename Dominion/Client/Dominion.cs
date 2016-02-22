@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// Dominion.cs
+// This file defines classes that define the engines entry point
+
+using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using ArwicEngine.Scenes;
 using Dominion.Client.Scenes;
@@ -19,8 +23,11 @@ namespace Dominion.Client
     {
         public Dominion()
         {
+            // initialise the engine
             Engine.Init(this);
 
+            // add some rich text rules
+            // TODO this probabbly isn't a good way of doing it
             RichText.RichTextRules = new List<RichTextParseRule>()
             {
                 new RichTextParseRule("population", ((char)FontSymbol.Users).ToString(), Color.White, RichText.SymbolFont),
@@ -44,7 +51,6 @@ namespace Dominion.Client
                 new RichTextParseRule("barchart", ((char)FontSymbol.BarChart).ToString(), Color.White, RichText.SymbolFont),
                 new RichTextParseRule("expand", ((char)FontSymbol.ResizeArrows).ToString(), Color.White, RichText.SymbolFont),
                 new RichTextParseRule("flag", ((char)FontSymbol.Flag).ToString(), Color.White, RichText.SymbolFont),
-
             };
 
             //string[] symbols = Enum.GetNames(typeof(FontSymbol));
@@ -55,9 +61,12 @@ namespace Dominion.Client
             //    RichText.RichTextRules.Add(new RichTextParseRule(symbols[i], cfs.ToString(), Color.White, RichText.SymbolFont));
             //}
 
+            // initialise the game manager
             GameManager manager = new GameManager();
             manager.Client = new Client();
             manager.Server = new Server.Server();
+
+            // register scenes
             SceneManager.Instance.RegisterScene(new SceneMenu(manager));
             SceneManager.Instance.RegisterScene(new SceneGame(manager));
             SceneManager.Instance.ChangeScene((int)Scene.Menu);
@@ -65,13 +74,13 @@ namespace Dominion.Client
 
         protected override void Update(GameTime gameTime)
         {
-            Engine.Instance.Update(gameTime);
+            Engine.Instance.Update(gameTime); // update the engine
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            Engine.Instance.Draw(gameTime);
+            Engine.Instance.Draw(gameTime); // draw the engine
             base.Draw(gameTime);
         }
     }

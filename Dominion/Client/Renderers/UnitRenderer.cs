@@ -1,4 +1,7 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// UnitRenderer.cs
+// This file defines classes that render units
+
 using ArwicEngine.Graphics;
 using ArwicEngine.Input;
 using Dominion.Common.Entities;
@@ -25,7 +28,6 @@ namespace Dominion.Client.Renderers
 
         // Cache
         private List<Tile> moveTargets;
-        private LinkedList<Point> movePath;
 
         public UnitRenderer(BoardRenderer boardRenderer, Camera2 camera, Client client)
         {
@@ -35,23 +37,26 @@ namespace Dominion.Client.Renderers
             this.boardRenderer = boardRenderer;
             pathColor = Color.White;
             moveTargets = new List<Tile>();
+            // register events and load resources
             client.SelectedCommandChanged += Client_SelectedCommandChanged;
             LoadResources();
         }
 
         private void Client_SelectedCommandChanged(object sender, UnitCommandIDEventArgs e)
         {
+            // recalc move targets if the selected command changes
             CalculateMoveTargets(e.UnitCommandID);
         }
 
+        // calculates the tiles to which the select unit can move to
         private void CalculateMoveTargets(UnitCommandID cmd)
         {
             if (cmd != UnitCommandID.Move)
-                return;
+                return; // don't bother if the select command isn't move
 
             lock (_lock_updateMoveTargets)
             {
-                moveTargets.Clear();
+                moveTargets.Clear(); // clear the current move targets
 
                 // Init values
                 if (client.SelectedUnit == null)
@@ -98,6 +103,7 @@ namespace Dominion.Client.Renderers
             }
         }
 
+        // load unit resources
         private void LoadResources()
         {
             tileHighlightSprite = new Sprite("Graphics/Game/Tiles/TileOverlay");
@@ -108,44 +114,52 @@ namespace Dominion.Client.Renderers
                 unitSprites[i] = new Sprite($"Graphics/Game/Units/{i}");
         }
 
-        public void Draw(SpriteBatch sb, Font font)
+        // draw all units to client can see
+        public void Draw(SpriteBatch sb)
         {
             lock (Client._lock_cacheUpdate)
             {
                 foreach (Unit unit in client.CachedUnits.ToArray())
                 {
                     if (unit.PlayerID == playerID)
-                        DrawMovementPath(sb, font, unit);
-                    DrawGraphic(sb, font, unit);
+                        DrawMovementPath(sb, unit);
+                    DrawGraphic(sb, unit);
                 }
-                DrawSelectedMarker(sb, font);
+                DrawSelectedMarker(sb);
                 DrawCommandTarget(sb);
             }
         }
-        private void DrawGraphic(SpriteBatch sb, Font font, Unit unit)
+
+        // draw the given unit's graphic
+        private void DrawGraphic(SpriteBatch sb, Unit unit)
         {
             if (unit == null)
-                return;
+                return; // don't render anything if the unit is null
+            // calculate the units position
             Vector2 tileCentre = boardRenderer.GetTileCentre(unit.Location);
             Rectangle dest = new Rectangle(
                         (int)tileCentre.X - boardRenderer.TileSize / 2,
                         (int)tileCentre.Y - boardRenderer.TileSize / 2,
                         boardRenderer.TileSize,
                         boardRenderer.TileSize);
-            if (unit == null || unit.Constants == null)
-                return;
+            // draw the correct sprite at the unit's position
             unitSprites[unit.Constants.GraphicID].Draw(sb, dest);
         }
-        private void DrawMovementPath(SpriteBatch sb, Font font, Unit unit)
+
+        // draws the given unit's movement path
+        private void DrawMovementPath(SpriteBatch sb, Unit unit)
         {
             if (unit.MovementQueue == null || unit.MovementQueue.Count <= 0)
                 return;
             DrawPath(sb, unit.Location, unit.MovementQueue, pathColor);
         }
+
+        // draws a line following the given path with the given starting point
         private void DrawPath(SpriteBatch sb, Point start, LinkedList<Point> path, Color color)
         {
             if (path == null)
                 return;
+            // draw a line from the last tile centre to the next tile centre
             int i = 0;
             Vector2[] movePath = new Vector2[path.Count + 1];
             movePath[i++] = boardRenderer.GetTileCentre(start);
@@ -154,19 +168,22 @@ namespace Dominion.Client.Renderers
             for (i = 0; i < movePath.Length - 1; i++)
                 GraphicsHelper.DrawLine(sb, movePath[i], movePath[i + 1], 2, color);
         }
-        private void DrawSelectedMarker(SpriteBatch sb, Font font)
+
+        // draws the highlight sprite over the selected unit
+        private void DrawSelectedMarker(SpriteBatch sb)
         {
             if (client.SelectedUnit != null)
                 tileHighlightSprite.Draw(sb, boardRenderer.GetTileRenderRect(client.SelectedUnit.Location), null, Color.White);
-            //GraphicsHelper.DrawCircle(sb, boardRenderer.GetTileCentre(client.SelectedUnit.Location), boardRenderer.TileSize, 100, 3, Color.Red);
         }
+
+        // draws all the valid tiles the selected command can to used on
         private void DrawCommandTarget(SpriteBatch sb)
         {
             if (client.SelectedUnit == null)
-                return;
+                return; // don't continue if there is no selected unit
 
             if (UnitCommand.GetTargetType(client.SelectedCommand) != UnitCommandTargetType.Tile)
-                return;
+                return; // don't continue if the selected command is not of target type tile
 
             switch (client.SelectedCommand)
             {

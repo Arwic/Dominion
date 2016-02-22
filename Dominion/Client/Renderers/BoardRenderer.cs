@@ -1,9 +1,11 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// BoardRenderer.cs
+// This file defines classes that render the game board
+
 using ArwicEngine.Forms;
 using ArwicEngine.Graphics;
 using ArwicEngine.Input;
 using Dominion.Common.Entities;
-using Dominion.Common.Factories;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -17,6 +19,8 @@ namespace Dominion.Client.Renderers
 
         private const float sqrt3on2 = 0.86602540378f;
 
+        // defines a group of rich text icons
+        // used for mainly tile yield icons
         private class TileIcon
         {
             public int[] Income { get; set; }
@@ -101,7 +105,6 @@ namespace Dominion.Client.Renderers
         // Underlying data
         private Client client;
         private Camera2 camera;
-        private bool[][] tileExplored;
         private TileIcon[][] tileIcons;
 
         // Resources
@@ -150,24 +153,26 @@ namespace Dominion.Client.Renderers
             DrawGrid = false;
             DrawResourceIcons = true;
 
-            tileExplored = new bool[client.Board.DimY][];
-            for (int y = 0; y < tileExplored.Length; y++)
-                tileExplored[y] = new bool[client.Board.DimX];
-
             TileSize = 50;
+            // register events
             client.BoardChanged += Client_BoardChanged;
             client.TilesUpdated += Client_TilesUpdated;
+            // load resources and build icons
             LoadResources();
             BuildTileIcons();
         }
+
         private void Client_TilesUpdated(object sender, TileListEventArgs e)
         {
             BuildTileIcons();
         }
+
         private void Client_BoardChanged(object sender, EventArgs e)
         {
             BuildTileIcons();
         }
+        
+        // loads resources used to render the board
         private void LoadResources()
         {
             cloudSprite = new Sprite("Graphics/Game/Tiles/Cloud");
@@ -195,6 +200,8 @@ namespace Dominion.Client.Renderers
             for (int i = 0; i < improvmentSprites.Length; i++)
                 improvmentSprites[i] = new Sprite($"Graphics/Game/Tiles/Improvment/{i}");
         }
+
+        // builds tile yield icons
         private void BuildTileIcons()
         {
             lock (_lock_tileIconUpdate)
@@ -211,19 +218,26 @@ namespace Dominion.Client.Renderers
             }
         }
 
+        // returns the bounds of a tile
         public Rectangle GetTileRenderRect(Tile tile)
         {
             return GetTileRenderRect(tile.Location);
         }
+        
+        // returns the bounds of a tile
         public Rectangle GetTileRenderRect(Point location)
         {
             return GetTileRenderRect(location.X, location.Y);
         }
+        
+        // returns the bounds of a tile
         public Rectangle GetTileRenderRect(int x, int y)
         {
             Vector2[] localCorners = GetTileCorners(x, y);
             return new Rectangle((int)localCorners[2].X, (int)localCorners[4].Y, TileWidth, TileHeight);
         }
+        
+        // returns the corner's of a tile at a given coord
         public Vector2[] GetTileCorners(int x, int y)
         {
             Vector2[] localCorners = new Vector2[6];
@@ -232,10 +246,14 @@ namespace Dominion.Client.Renderers
                 localCorners[i] = tileCentre + corners[i];
             return localCorners;
         }
+        
+        // returns the corner's of a given tile
         public Vector2[] GetTileCorners(Tile tile)
         {
             return GetTileCorners(tile.Location.X, tile.Location.Y);
         }
+        
+        // returns the centre of the tile at a given coord
         public Vector2 GetTileCentre(int x, int y)
         {
             float xOffset = 0f;
@@ -243,16 +261,22 @@ namespace Dominion.Client.Renderers
                 xOffset = sqrt3on2 * TileSize;
             return new Vector2(x * TileWidth + xOffset, y * 1.5f * TileSize);
         }
+        
+        // returns the centre of the tile at a given coord
         public Vector2 GetTileCentre(Point point)
         {
             return GetTileCentre(point.X, point.Y);
         }
+        
+        // returns the centre of a given tile
         public Vector2 GetTileCentre(Tile tile)
         {
             if (tile == null)
                 return Vector2.Zero;
             return GetTileCentre(tile.Location.X, tile.Location.Y);
         }
+
+        // returns the tile at a given point, point is in world space
         public Tile GetTileAtPoint(Vector2 point)
         {
             for (int y = 0; y < client.Board.Tiles.Length; y++)
@@ -265,6 +289,8 @@ namespace Dominion.Client.Renderers
             }
             return null;
         }
+
+        // returns the cached tile at a given point, point is in world space
         public Tile GetCachedTileAtPoint(Vector2 point)
         {
             for (int y = 0; y < client.CachedBoard.Length; y++)
@@ -278,6 +304,7 @@ namespace Dominion.Client.Renderers
             return null;
         }
 
+        // draws the board
         public void Draw(SpriteBatch sb, Font font)
         {
             lock (Client._lock_cacheUpdate)
@@ -291,16 +318,13 @@ namespace Dominion.Client.Renderers
                 //DrawTilePositions(sb, font);
             }
         }
-        private void DrawTilePositions(SpriteBatch sb, Font font)
-        {
-            foreach (Tile tile in client.Board.GetAllTiles())
-            {
-                Vector2 tilePos = GetTileCentre(tile);
-                font.DrawString(sb, tile.Location.ToString(), tilePos, Color.DarkRed, 0.25f);
-            }
-        }
+
+        // draws every tile
+        // tiles the client hasn't explored are covered by clouds
+        // tiles the client has explored but cannot currently see are tinted gray
         private void DrawTiles(SpriteBatch sb)
         {
+            // get the tile under the mouse
             Tile tileUnderMouse = GetTileAtPoint(InputManager.Instance.MouseWorldPos(camera));
             List<int> myCityIDs = client.GetMyCityIDs();
             for (int y = 0; y < client.Board.Tiles.Length; y++)
@@ -331,10 +355,11 @@ namespace Dominion.Client.Renderers
                     // check if explored
                     if (cachedTile == null)
                     {
-                        cloudSprite.Draw(sb, rect);
+                        cloudSprite.Draw(sb, rect); // draw a cloud over the unexplored tile
                         continue; // dont draw the underlying tile
                     }
 
+                    // check if a unit or a city can see the tile
                     bool visible = false;
                     foreach (Unit unit in client.GetMyUnits())
                     {
@@ -361,8 +386,9 @@ namespace Dominion.Client.Renderers
                         }
                     }
 
+                    // visible tiles are white
                     Color color = Color.White;
-                    if (!visible)
+                    if (!visible) // while explored but not currently visible tiles are gray
                         color = Color.Gray;
 
                     // draw the tile
@@ -373,6 +399,7 @@ namespace Dominion.Client.Renderers
                         Sprite tileFeature = terrainFeatureSprites[(int)cachedTile.TerrainFeature];
                         tileFeature.Draw(sb, rect, null, color);
                     }
+                    // draw the improvment if the tile has one
                     if (cachedTile.Improvement != TileImprovment.None)
                     {
                         Sprite tileImprovment = improvmentSprites[(int)cachedTile.Improvement];
@@ -380,11 +407,13 @@ namespace Dominion.Client.Renderers
                         //    tileImprovment = improvmentSprites[$"{tile.Improvement.ToString()}_{tile.TerrainFeature}"];
                         tileImprovment.Draw(sb, rect, null, color);
                     }
+                    // draw a resource icon if the tile has a resource
                     if (cachedTile.Resource != TileResource.None)
                     {
                         Sprite tileResource = resourceSprites[(int)cachedTile.Resource];
                         tileResource.Draw(sb, rect);
                     }
+                    // draw the city border is the tile belongs to a city
                     if (cachedTile.CityID != -1)
                     {
                         City city = client.Cities.Find(c => c.InstanceID == cachedTile.CityID);
@@ -399,6 +428,7 @@ namespace Dominion.Client.Renderers
                             tileOutlineSprite.Draw(sb, rect, null, empColorSec);
                         }
                     }
+                    // draw yield icons if enabled
                     if (DrawResourceIcons)
                     {
                         lock (_lock_tileIconUpdate)
@@ -409,6 +439,8 @@ namespace Dominion.Client.Renderers
                 }
             }
         }
+
+        // draws every city that the client can see
         private void DrawCities(SpriteBatch sb)
         {
             foreach (City city in client.Cities.ToArray())
@@ -429,43 +461,34 @@ namespace Dominion.Client.Renderers
                 }
             }
         }
+
+        // draws the hexgrid over the board
         private void DrawHexGrid(SpriteBatch sb)
         {
             for (int y = 0; y < client.Board.Tiles.Length; y++)
             {
                 for (int x = 0; x < client.Board.Tiles[y].Length; x++)
                 {
-                    Tile tile = client.GetCachedTile(x, y);
-                    if (tile == null)
-                        continue;
                     Color color = Color.White;
-
-                    Vector2[] localCorners = GetTileCorners(x, y);
-                    Rectangle rect = new Rectangle((int)localCorners[2].X, (int)localCorners[4].Y, TileWidth, TileHeight);
+                    Rectangle rect = GetTileRenderRect(x, y);
                     tileOutlineSprite.Draw(sb, rect, null, color);
-                    //int lineThickness = 2;
-                    //Vector2[] localCorners = GetTileCorners(x, y);
-                    //for (int i = 0; i < 5; i++)
-                    //    GraphicsHelper.DrawLine(sb, localCorners[i], localCorners[i + 1], lineThickness, color);
-                    //GraphicsHelper.DrawLine(sb, localCorners[5], localCorners[0], lineThickness, color);
                 }
             }
         }
+
+        // draws an outline around the hex currently under the mouse cursor
         private void DrawHexUnderMouse(SpriteBatch sb)
         {
             for (int y = 0; y < client.Board.Tiles.Length; y++)
             {
                 for (int x = 0; x < client.Board.Tiles[y].Length; x++)
                 {
-                    Tile tile = client.GetCachedTile(x, y);
-                    if (tile == null)
-                        continue;
-                    Vector2[] localCorners = GetTileCorners(x, y);
-                    if (GraphicsHelper.InsidePolygon(localCorners, InputManager.Instance.MouseWorldPos(camera)))
+                    // check if the mouse is inside the tile
+                    if (GraphicsHelper.InsidePolygon(GetTileCorners(x, y), InputManager.Instance.MouseWorldPos(camera)))
                     {
-                        for (int i = 0; i < 5; i++)
-                            GraphicsHelper.DrawLine(sb, localCorners[i], localCorners[i + 1], 2, Color.CornflowerBlue);
-                        GraphicsHelper.DrawLine(sb, localCorners[5], localCorners[0], 2, Color.CornflowerBlue);
+                        // the the tile border
+                        Rectangle rect = GetTileRenderRect(x, y);
+                        tileOutlineSprite.Draw(sb, rect, null, Color.CornflowerBlue);
                     }
                 }
             }

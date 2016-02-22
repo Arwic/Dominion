@@ -1,4 +1,7 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// GUI_CityManagment.cs
+// This file defines classes that manage the city managment gui elements
+
 using ArwicEngine.Forms;
 using Dominion.Client.Scenes;
 using Dominion.Common.Entities;
@@ -11,6 +14,7 @@ namespace Dominion.Client.GUI
 {
     public class GUI_CityManagment : IGUIElement
     {
+        // defines list items that hold city productions
         private class ProductionListItem : IListItem
         {
             public Button Button { get; set; }
@@ -20,6 +24,8 @@ namespace Dominion.Client.GUI
             public ProductionListItem(Production prod, UnitFactory unitFactory, BuildingFactory buildingFactory, int turnsLeft)
             {
                 Production = prod;
+
+                // format the items text to show construction information
                 string suffix = "";
                 if (turnsLeft != -1)
                     suffix = $" - {turnsLeft} turns";
@@ -37,6 +43,7 @@ namespace Dominion.Client.GUI
             }
         }
 
+        // defines a list item that holds an int, used mainly for city focus enum
         private class IntListItem : IListItem
         {
             public Button Button { get; set; }
@@ -53,12 +60,10 @@ namespace Dominion.Client.GUI
         private Client client;
         private SceneGame sceneGame;
         private Canvas canvas;
-        //private FormConfig formConfig;
         private FormConfig frmFocusConfig;
         private FormConfig frmProductionConfig;
         private FormConfig frmStatsConfig;
         private FormConfig frmReturnBuyConfig;
-        //private Form form;
         private Form frmFocus;
         private Form frmProduction;
         private Form frmStats;
@@ -73,6 +78,7 @@ namespace Dominion.Client.GUI
 
         public GUI_CityManagment(Client client, SceneGame sceneGame, Canvas canvas)
         {
+            // load configs from file
             frmFocusConfig = FormConfig.FromFile("Content/Interface/Game/City_FocusPane.xml");
             frmProductionConfig = FormConfig.FromFile("Content/Interface/Game/City_ProductionPane.xml");
             frmStatsConfig = FormConfig.FromFile("Content/Interface/Game/City_StatsPane.xml");
@@ -80,39 +86,47 @@ namespace Dominion.Client.GUI
             this.client = client;
             this.sceneGame = sceneGame;
             this.canvas = canvas;
+            // register events
             client.SelectedCityChnaged += (s, a) => Show();
             client.CityUpdated += (s, a) => Show();
         }
 
+        /// <summary>
+        /// opens the gui element
+        /// </summary>
         public void Show()
         {
             lock (SceneGame._lock_guiDrawCall)
             {
-                sceneGame.HideForms(false);
+                sceneGame.HideForms(false); // hide other forms
 
-                if (client.SelectedCity == null)
+                if (client.SelectedCity == null) // dont't continue if there is no selected city
                     return;
 
                 int yOffset = 40;
 
+                // setup the stats form
                 canvas.RemoveChild(frmStats);
                 frmStats = new Form(frmStatsConfig, canvas);
                 frmStats.Location = new Point(0, yOffset);
 
+                // setup the production list/selection form
                 canvas.RemoveChild(frmProduction);
                 frmProduction = new Form(frmProductionConfig, canvas);
                 frmProduction.Location = new Point(0, 1080 - frmProduction.Size.Height);
 
+                // setup the citizen focus form
                 canvas.RemoveChild(frmFocus);
                 frmFocus = new Form(frmFocusConfig, canvas);
                 frmFocus.Location = new Point(1920 - frmFocus.Size.Width, yOffset);
 
+                // setup the form in the bottom middle of the screen that allows the user to leave the city screen
                 canvas.RemoveChild(frmReturnBuy);
                 frmReturnBuy = new Form(frmReturnBuyConfig, canvas);
                 frmReturnBuy.CentreControl();
                 frmReturnBuy.Location = new Point(frmReturnBuy.Location.X, 1080 - 100 - frmReturnBuy.Size.Height);
                 
-                // Stats 
+                // get and format the stats form elements
                 Label lblPopulationValue = (Label)frmStats.GetChildByName("lblPopulationValue");
                 lblPopulationValue.Text = $"{client.SelectedCity.Population}".ToRichText();
                 Label lblPopGrowthValue = (Label)frmStats.GetChildByName("lblPopGrowthValue");
@@ -140,7 +154,7 @@ namespace Dominion.Client.GUI
                 tbName.Text = client.SelectedCity.Name;
                 tbName.EnterPressed += TbName_EnterPressed;
 
-                // Production
+                // get and setup the production form elements
                 sbProductionQueue = (ScrollBox)frmProduction.GetChildByName("sbProductionQueue");
                 sbProductionQueue.Items = GetProductionQueueListItems();
                 sbProductionQueue.SelectedIndex = sbProductionQueueSelected;
@@ -160,7 +174,7 @@ namespace Dominion.Client.GUI
                 Button btnQueueProduction = (Button)frmProduction.GetChildByName("btnQueueProduction");
                 btnQueueProduction.MouseClick += BtnQueueProduction_MouseClick;
 
-                // Focus
+                // get and setup the citizen focus form elements
                 sbCitizenFocus = (ScrollBox)frmFocus.GetChildByName("sbCitizenFocus");
                 sbCitizenFocus.Items = GetCitizenFocusListItems();
                 sbCitizenFocus.SelectedIndex = (int)client.SelectedCity.CitizenFocus;
@@ -171,7 +185,7 @@ namespace Dominion.Client.GUI
                 Button btnDemolish = (Button)frmFocus.GetChildByName("btnDemolish");
                 btnDemolish.MouseClick += BtnDemolish_MouseClick;
 
-                // Return/Buy
+                // get and setup the return/buy tiles form elements
                 Button btnBuyTile = (Button)frmReturnBuy.GetChildByName("btnBuyTile");
                 btnBuyTile.MouseClick += (s, a) => buyingTiles = true;
                 Button btnReturnToMap = (Button)frmReturnBuy.GetChildByName("btnReturnToMap");
@@ -186,36 +200,43 @@ namespace Dominion.Client.GUI
 
         private void SbCitizenFocus_SelectedChanged(object sender, ListItemEventArgs e)
         {
+            // tell the server to select a new citizen focus for this city
             client.CommandCity(new CityCommand(CityCommandID.ChangeCitizenFocus, client.SelectedCity, (CityCitizenFocus)((IntListItem)sbCitizenFocus.Selected).Int));
         }
 
         private void TbName_EnterPressed(object sender, EventArgs e)
         {
+            // tell the server to rename this city
             TextBox tbName = (TextBox)sender;
             client.CommandCity(new CityCommand(CityCommandID.Rename, client.SelectedCity, tbName.Text));
         }
 
         private void BtnQueueProduction_MouseClick(object sender, MouseEventArgs e)
         {
-            if (sbProductionList.Selected == null)
+            if (sbProductionList.Selected == null) // don't contact the server if no production is selected
                 return;
+            // tell the server to change this city's production
             client.CommandCity(new CityCommand(CityCommandID.QueueProduction, client.SelectedCity, ((ProductionListItem)sbProductionList.Selected).Production.ID));
         }
 
         private void BtnChangeProduction_MouseClick(object sender, MouseEventArgs e)
         {
-            if (sbProductionList.Selected == null)
+            if (sbProductionList.Selected == null)// don't contact the server if no current production is selected
                 return;
+            // tell the server to cancel the selected production
             client.CommandCity(new CityCommand(CityCommandID.ChangeProduction, client.SelectedCity, ((ProductionListItem)sbProductionList.Selected).Production.ID));
         }
 
         private void BtnMoveDown_MouseClick(object sender, MouseEventArgs e)
         {
+            // don't contact the server if no production is selected
             if (sbProductionQueue.SelectedIndex == client.SelectedCity.ProductionQueue.Count - 1 || client.SelectedCity.ProductionQueue.Count == 0 || client.SelectedCity.ProductionQueue.Count == 1)
                 return;
 
+            // tell the server to move the selected production down the queue
             client.CommandCity(new CityCommand(CityCommandID.ReorderProductionMoveDown, client.SelectedCity, sbProductionQueue.SelectedIndex));
 
+            // keep the production we just moved selected
             sbProductionQueue.SelectedIndex++;
             if (sbProductionQueue.SelectedIndex >= sbProductionQueue.Items.Count)
                 sbProductionQueue.SelectedIndex = sbProductionQueue.Items.Count - 1;
@@ -223,11 +244,14 @@ namespace Dominion.Client.GUI
 
         private void BtnMoveUp_MouseClick(object sender, MouseEventArgs e)
         {
+            // don't contact the server if no production is selected
             if (sbProductionQueue.SelectedIndex == 0 || client.SelectedCity.ProductionQueue.Count == 0 || client.SelectedCity.ProductionQueue.Count == 1)
                 return;
 
+            // tell the server to move the selected production up the queue
             client.CommandCity(new CityCommand(CityCommandID.ReorderProductionMoveUp, client.SelectedCity, sbProductionQueue.SelectedIndex));
 
+            // keep the production we just moved selected
             sbProductionQueue.SelectedIndex--;
             if (sbProductionQueue.SelectedIndex < 0)
                 sbProductionQueue.SelectedIndex = 0;
@@ -235,14 +259,15 @@ namespace Dominion.Client.GUI
 
         private void BtnCancelProduction_MouseClick(object sender, MouseEventArgs e)
         {
-            client.CommandCity(new CityCommand(CityCommandID.CancelProduction, client.SelectedCity, sbProductionQueue.SelectedIndex));
+            // don't contact the server if there is no selected production
+            if (sbProductionQueue.SelectedIndex == -1)
+                return;
 
-            client.SelectedCity.ProductionQueue.Remove(sbProductionQueue.SelectedIndex);
-            sbProductionQueue.SelectedIndex--;
-            if (sbProductionQueue.SelectedIndex < 0)
-                sbProductionQueue.SelectedIndex = 0;
+            // tell the server to cancel the selected production
+            client.CommandCity(new CityCommand(CityCommandID.CancelProduction, client.SelectedCity, sbProductionQueue.SelectedIndex));
         }
 
+        // returns formatted list items from the selected city's production list
         private List<IListItem> GetProductionListListItems()
         {
             List<IListItem> items = new List<IListItem>();
@@ -251,6 +276,7 @@ namespace Dominion.Client.GUI
             return items;
         }
 
+        // returns formatted list items from the selected city's production queue
         private List<IListItem> GetProductionQueueListItems()
         {
             List<IListItem> items = new List<IListItem>();
@@ -259,6 +285,7 @@ namespace Dominion.Client.GUI
             return items;
         }
 
+        // returns formatted list items that are valid choices for citizen focus
         private List<IListItem> GetCitizenFocusListItems()
         {
             List<IListItem> items = new List<IListItem>();
@@ -272,6 +299,7 @@ namespace Dominion.Client.GUI
             return items;
         }
 
+        // returns formatted list items from the selected city's building list
         private List<IListItem> GetBuildingList()
         {
             List<IListItem> items = new List<IListItem>();
@@ -283,6 +311,7 @@ namespace Dominion.Client.GUI
             return items;
         }
 
+        // returns the number of turns required to produce the given production at the given city
         private int GetTurnsToProduce(City city, Production prod)
         {
             int prodIncome = city.IncomeProduction;
@@ -297,6 +326,9 @@ namespace Dominion.Client.GUI
             return requiredTurns;
         }
 
+        /// <summary>
+        /// Closes the gui element
+        /// </summary>
         public void Hide()
         {
             client.SelectedCity = null;

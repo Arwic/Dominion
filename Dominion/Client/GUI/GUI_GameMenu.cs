@@ -1,10 +1,11 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// GUI_GameMenu.cs
+// This file defines classes that manage the game menu gui elements
+
+using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using ArwicEngine.Scenes;
 using Dominion.Client.Scenes;
-using Dominion.Common.Entities;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 
 namespace Dominion.Client.GUI
 {
@@ -16,34 +17,40 @@ namespace Dominion.Client.GUI
         private Canvas canvas;
         private Form form;
         public bool Visible { get { if (form != null) return form.Visible; else return false; } }
-        private List<IListItem> cityListItems;
 
         public GUI_GameMenu(Client client, SceneGame sceneGame, Canvas canvas)
         {
+            // load the form from file
             formConfig = FormConfig.FromFile("Content/Interface/Game/GameMenu.xml");
             this.client = client;
             this.sceneGame = sceneGame;
             this.canvas = canvas;
         }
 
+        /// <summary>
+        /// Shows the gui element
+        /// </summary>
         public void Show()
         {
             lock (SceneGame._lock_guiDrawCall)
             {
+                // setup the form and centre it
                 sceneGame.HideForms();
                 canvas.RemoveChild(form);
                 form = new Form(formConfig, canvas);
                 form.CentreControl();
 
-                Button btnSaveGame = (Button)form.GetChildByName("btnSaveGame");
+                // get and setup the for elements
+                Button btnSaveGame = (Button)form.GetChildByName("btnSaveGame"); // NYI
 
-                Button btnLoadGame = (Button)form.GetChildByName("btnLoadGame");
+                Button btnLoadGame = (Button)form.GetChildByName("btnLoadGame"); // NYI
 
-                Button btnOptions = (Button)form.GetChildByName("btnOptions");
+                Button btnOptions = (Button)form.GetChildByName("btnOptions"); // NYI
 
                 Button btnMainMenu = (Button)form.GetChildByName("btnMainMenu");
                 btnMainMenu.MouseClick += (s, a) =>
                 {
+                    // TODO add a confirmation dialogue
                     client.Dissconnect();
                     SceneManager.Instance.ChangeScene(0);
                 };
@@ -75,6 +82,9 @@ namespace Dominion.Client.GUI
             }
         }
 
+        /// <summary>
+        /// Closes the gui element
+        /// </summary>
         public void Hide()
         {
             if (form != null)

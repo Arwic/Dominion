@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Dominion - Copyright (C) Timothy Ings
+// Program.cs
+// This file defines classes that define the application entry point
+
+using System;
 
 namespace Dominion.Client
 {
