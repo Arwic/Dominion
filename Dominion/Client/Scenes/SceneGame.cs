@@ -277,7 +277,6 @@ namespace Dominion.Client.Scenes
 
         public override void Draw()
         {
-
             sbBack.Begin();
             sbFore.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, camera.GetForegroundTransformation(GraphicsManager.Instance.Scale));
             sbGUI.Begin();

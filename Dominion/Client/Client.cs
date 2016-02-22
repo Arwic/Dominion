@@ -214,8 +214,8 @@ namespace Dominion.Client
                     OnSelectedUnitChnaged(new UnitEventArgs(value));
             }
         }
-        private int _selectedUnitID;
-        private int _lastSelectedUnitID;
+        private int _selectedUnitID = -1;
+        private int _lastSelectedUnitID = -1;
         public UnitCommandID SelectedCommand
         {
             get
@@ -546,7 +546,8 @@ namespace Dominion.Client
             Cities = (List<City>)p.Items[i++];
             AllUnits = (List<Unit>)p.Items[i++];
             _selectedCityID = -1;
-            _selectedUnitID = -1;
+            _selectedUnitID = AllUnits.Find(u => u.PlayerID == Player.InstanceID).InstanceID;
+            _lastSelectedUnitID = _selectedUnitID;
             TurnState = TurnState.Begin;
             ConsoleManager.Instance.WriteLine("The host has started the game");
             SceneManager.Instance.ChangeScene((int)Scene.Game);
@@ -561,7 +562,6 @@ namespace Dominion.Client
             Cities = (List<City>)p.Items[i++];
             AllUnits = (List<Unit>)p.Items[i++];
             UpdateCache();
-            SelectedUnit = AllUnits.Find(u => u.InstanceID == _lastSelectedUnitID);
             ConsoleManager.Instance.WriteLine($"Recieved data for turn {TurnNumber}");
             TurnState = TurnState.Begin;
             TurnTimer.Restart();
