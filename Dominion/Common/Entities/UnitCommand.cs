@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Forms;
+﻿// Dominion - Copyright (C) Timothy Ings
+// UnitCommand.cs
+// This file defines classes that define a unit command
+
+using ArwicEngine.Forms;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -48,8 +52,19 @@ namespace Dominion.Common.Entities
     [Serializable()]
     public class UnitCommand
     {
+        /// <summary>
+        /// The command's id
+        /// </summary>
         public UnitCommandID CommandID { get; set; }
+
+        /// <summary>
+        /// The id of the unit being commanded
+        /// </summary>
         public int UnitInstanceID { get; set; }
+        
+        /// <summary>
+        /// The location of the tile target of the command
+        /// </summary>
         public Point TileLocation
         {
             get
@@ -75,6 +90,11 @@ namespace Dominion.Common.Entities
                 TileLocation = tile.Location;
         }
 
+        /// <summary>
+        /// Returns the target type of the command
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static UnitCommandTargetType GetTargetType(UnitCommandID id)
         {
             switch (id)
@@ -91,6 +111,11 @@ namespace Dominion.Common.Entities
             }
         }
 
+        /// <summary>
+        /// Returns the rich text icon of the command
+        /// </summary>
+        /// <param name="cmdid"></param>
+        /// <returns></returns>
         public static RichText GetCommandIcon(UnitCommandID cmdid)
         {
             string iconCode = ((char)FontSymbol.CrossCircle).ToString();

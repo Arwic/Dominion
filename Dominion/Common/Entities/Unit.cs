@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// Unit.cs
+// This file defines classes that define a unit
+
+using ArwicEngine.Core;
 using Dominion.Common.Factories;
 using Microsoft.Xna.Framework;
 using System;
@@ -54,9 +58,10 @@ namespace Dominion.Common.Entities
     [Serializable()]
     public class Unit
     {
-        [NonSerialized()]
-        private UnitTemplate _unitTemplate;
-        public UnitTemplate Constants
+        /// <summary>
+        /// The template the unit is based on
+        /// </summary>
+        public UnitTemplate Template
         {
             get
             {
@@ -67,16 +72,57 @@ namespace Dominion.Common.Entities
                 _unitTemplate = value;
             }
         }
+        [NonSerialized()]
+        private UnitTemplate _unitTemplate;
 
+        /// <summary>
+        /// The unit's id
+        /// </summary>
         public int UnitID { get; set; }
+
+        /// <summary>
+        /// The id of the player that owns the unit
+        /// </summary>
         public int PlayerID { get; set; }
+
+        /// <summary>
+        /// The unit's unique id
+        /// </summary>
         public int InstanceID { get; set; }
+
+        /// <summary>
+        /// The name of the unit
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// The unit's current hp
+        /// </summary>
         public int HP { get; set; }
+
+        /// <summary>
+        /// The units actions available this turn
+        /// </summary>
         public int Actions { get; set; }
+
+        /// <summary>
+        /// The units movement available this turn
+        /// </summary>
         public int Movement { get; set; }
+
+        /// <summary>
+        /// Indicates whether the unit is sleeping
+        /// </summary>
         public bool Sleeping { get; set; }
+
+        /// <summary>
+        /// Indicates whether the unit is skipping this turn
+        /// </summary>
         public bool Skipping { get; set; }
+
+        /// <summary>
+        /// The unit's location on the board
+        /// </summary>
         public Point Location
         {
             get
@@ -91,6 +137,10 @@ namespace Dominion.Common.Entities
         }
         private int _locationX;
         private int _locationY;
+
+        /// <summary>
+        /// The unit's location on the board last turn
+        /// </summary>
         public Point LastLocation
         {
             get
@@ -105,11 +155,16 @@ namespace Dominion.Common.Entities
         }
         private int _lastLocationX;
         private int _lastLocationY;
+
+        /// <summary>
+        /// A list of command id's that the unit can use
+        /// This list is aware of the units current context
+        /// </summary>
         public List<int> Commands { get; set; }
 
-        [NonSerialized()]
-        private LinkedList<Point> _movementQueue;
-        private LinkedList<int[]> _movementQueueInt;
+        /// <summary>
+        /// A list of moves the unit is to make
+        /// </summary>
         public LinkedList<Point> MovementQueue
         {
             get
@@ -121,6 +176,13 @@ namespace Dominion.Common.Entities
                 _movementQueue = value;
             }
         }
+        [NonSerialized()]
+        private LinkedList<Point> _movementQueue;
+        private LinkedList<int[]> _movementQueueInt;
+
+        /// <summary>
+        /// Indicates whether the unit requires orders from the player
+        /// </summary>
         public bool RequiresOrders
         {
             get
@@ -152,6 +214,9 @@ namespace Dominion.Common.Entities
                 _movementQueueInt.Enqueue(new int[2] { point.X, point.Y });
         }
 
+        /// <summary>
+        /// Rebuilds the unit's properties after being sent over a network
+        /// </summary>
         public void Rebuild()
         {
             if (_movementQueueInt == null)
@@ -161,6 +226,14 @@ namespace Dominion.Common.Entities
                 MovementQueue.Enqueue(new Point(i[0], i[1]));
         }
 
+        /// <summary>
+        /// Returns the damage a defending unit will take when it is attacked
+        /// </summary>
+        /// <param name="attackerCombatStr"></param>
+        /// <param name="defenderCombatStr"></param>
+        /// <param name="attackerHP"></param>
+        /// <param name="attackerMaxHP"></param>
+        /// <returns></returns>
         public static int GetDamageDefenderSuffered(float attackerCombatStr, float defenderCombatStr, int attackerHP, int attackerMaxHP)
         {
             float combatRatio = attackerCombatStr / defenderCombatStr;
@@ -170,6 +243,14 @@ namespace Dominion.Common.Entities
             return (int)Math.Round(finalDamage * combatRatio);
         }
 
+        /// <summary>
+        /// Returns the damage an attacking unit will take when it melee attacks another unit or city
+        /// </summary>
+        /// <param name="attackerCombatStr"></param>
+        /// <param name="defenderCombatStr"></param>
+        /// <param name="attackerHP"></param>
+        /// <param name="attackerMaxHP"></param>
+        /// <returns></returns>
         public static int GetDamageAttackerSuffered(float attackerCombatStr, float defenderCombatStr, int attackerHP, int attackerMaxHP)
         {
             float combatRatio = attackerCombatStr / defenderCombatStr;

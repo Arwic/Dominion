@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Dominion - Copyright (C) Timothy Ings
+// CityCommand.cs
+// This file defines classes that define a city command
+
+using System;
 
 namespace Dominion.Common.Entities
 {
@@ -22,9 +22,24 @@ namespace Dominion.Common.Entities
     [Serializable]
     public class CityCommand
     {
+        /// <summary>
+        /// The id of the command
+        /// </summary>
         public CityCommandID CommandID { get; set; }
+
+        /// <summary>
+        /// The city executing the command's id
+        /// </summary>
         public int CityID { get; set; }
+
+        /// <summary>
+        /// The player executing the command's id
+        /// </summary>
         public int PlayerID { get; set; }
+
+        /// <summary>
+        /// The command's arguments
+        /// </summary>
         public object[] Arguments { get; set; }
 
         public CityCommand(CityCommandID cmd, City city, params object[] args)

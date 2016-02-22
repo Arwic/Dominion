@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿// Dominion - Copyright (C) Timothy Ings
+// Tile.cs
+// This file defines classes that define a board tile
+
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
@@ -93,12 +97,39 @@ namespace Dominion.Common.Entities
     [Serializable()]
     public class Tile
     {
+        /// <summary>
+        /// The resource this tile contains
+        /// </summary>
         public TileResource Resource { get; set; }
+
+        /// <summary>
+        /// The quantitiy of the tiles resource
+        /// </summary>
         public int ResourceQuantity { get; set; }
+
+        /// <summary>
+        /// The base terrain type of the tile
+        /// </summary>
         public TileTerrainBase TerrainBase { get; set; }
+
+        /// <summary>
+        /// The tile's terrain feature
+        /// </summary>
         public TileTerrainFeature TerrainFeature { get; set; }
+
+        /// <summary>
+        /// The tile's current improvment construction
+        /// </summary>
         public TileImprovment CurrentConstruction { get; set; }
+
+        /// <summary>
+        /// The tile's current improvments
+        /// </summary>
         public TileImprovment Improvement { get; set; }
+
+        /// <summary>
+        /// The tile's location on the board
+        /// </summary>
         public Point Location
         {
             get
@@ -113,6 +144,10 @@ namespace Dominion.Common.Entities
         }
         private int _locationX;
         private int _locationY;
+
+        /// <summary>
+        /// Indicates whether the tile is passable
+        /// </summary>
         public bool Passable
         {
             get
@@ -120,6 +155,10 @@ namespace Dominion.Common.Entities
                 return GetMovementCost() != -1;
             }
         }
+        
+        /// <summary>
+        /// Indicates whether the tile is land
+        /// </summary>
         public bool Land
         {
             get
@@ -133,10 +172,30 @@ namespace Dominion.Common.Entities
                 return true;
             }
         }
+
+        /// <summary>
+        /// The progress of the tile's current construction
+        /// </summary>
         public int ConstructionProgress { get; set; }
+
+        /// <summary>
+        /// The type of road built on the tile
+        /// </summary>
         public RoadType RoadType { get; set; }
+
+        /// <summary>
+        /// Indicates whether the tile has fallout on it
+        /// </summary>
         public bool Fallout { get; set; }
+        
+        /// <summary>
+        /// Indicates whether the tile's improvment needs to be repaired
+        /// </summary>
         public bool Pillaged { get; set; }
+
+        /// <summary>
+        /// The city this tile belongs to
+        /// </summary>
         public int CityID { get; set; }
 
         public Tile(Point location, TileResource res, TileTerrainBase tbase, TileTerrainFeature tfeature, TileImprovment impr)
@@ -150,6 +209,11 @@ namespace Dominion.Common.Entities
             CityID = -1;
         }
 
+        /// <summary>
+        /// Returns the tile one tile away in the given direction
+        /// </summary>
+        /// <param name="dir"></param>
+        /// <returns></returns>
         public Point GetNeighbour(TileDirection dir)
         {
             if (Location.Y % 2 == 0) // even y
@@ -191,6 +255,10 @@ namespace Dominion.Common.Entities
             return new Point(-1, -1);
         }
 
+        /// <summary>
+        /// Returns a list of all of the tile's neighbours locations
+        /// </summary>
+        /// <returns></returns>
         public List<Point> GetNeighbourTileLocations()
         {
             List<Point> tiles = new List<Point>();
@@ -202,7 +270,12 @@ namespace Dominion.Common.Entities
             }
             return tiles;
         }
-        
+
+        /// <summary>
+        /// Returns a list of all of the tile's neighbours
+        /// </summary>
+        /// <param name="tiles">board to get the neighbour references from</param>
+        /// <returns></returns>
         public List<Tile> GetNeighbourTiles(Tile[][] tiles)
         {
             List<Point> neightbourLocations = GetNeighbourTileLocations();
@@ -219,6 +292,10 @@ namespace Dominion.Common.Entities
             return neighbours;
         }
 
+        /// <summary>
+        /// Returns the movment cost of the tile
+        /// </summary>
+        /// <returns></returns>
         public int GetMovementCost()
         {
             int cost = 0;
@@ -265,6 +342,10 @@ namespace Dominion.Common.Entities
             return cost;
         }
 
+        /// <summary>
+        /// Returns the income the tile generates per turn
+        /// </summary>
+        /// <returns></returns>
         public int[] GetIncome()
         {
             int[] income = new int[Enum.GetValues(typeof(TileIncomeFormat)).Length];

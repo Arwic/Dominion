@@ -1,6 +1,8 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// Board.cs
+// This file defines classes that define a city
+
 using Dominion.Common.Factories;
-using Dominion.Server.Controllers;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -24,15 +26,54 @@ namespace Dominion.Common.Entities
         private const float popGrowthBase = 1.1f;
         private const float popUnhappinessCoeff = 1.1f;
         
+        /// <summary>
+        /// The city's unique id
+        /// </summary>
         public int InstanceID { get; set; }
+
+        /// <summary>
+        /// The id of the player that owns the city
+        /// </summary>
         public int PlayerID { get; set; }
+
+        /// <summary>
+        /// The id of the empire that owns the city
+        /// </summary>
         public int EmpireID { get; set; }
+
+        /// <summary>
+        /// The name of the city
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Indicates whetehr the city is a captial
+        /// </summary>
         public bool IsCapital { get; set; }
+
+        /// <summary>
+        /// The current hp of the city
+        /// </summary>
         public int HP { get; set; }
+
+        /// <summary>
+        /// The maximum hp of the city
+        /// </summary>
         public int MaxHP { get; set; }
+
+        /// <summary>
+        /// The combat strength of the city
+        /// </summary>
         public int CombatStrength { get; set; }
-        public bool Attacked { get; set; }
+
+        /// <summary>
+        /// Indicates whether the city has attacked this turn
+        /// </summary>
+        public bool HasAttacked { get; set; }
+
+        /// <summary>
+        /// The location of the city on the board
+        /// </summary>
         public Point Location
         {
             get
@@ -47,25 +88,105 @@ namespace Dominion.Common.Entities
         }
         private int _locationX;
         private int _locationY;
+
+        /// <summary>
+        /// The population of the city
+        /// </summary>
         public int Population { get; set; }
+
+        /// <summary>
+        /// The amount of gold the city earns per turn
+        /// </summary>
         public int IncomeGold { get; set; }
+
+        /// <summary>
+        /// The amount of science the city earns per turn
+        /// </summary>
         public int IncomeScience { get; set; }
+        
+        /// <summary>
+        /// The amount of happiness the city earns per turn
+        /// </summary>
         public int IncomeHappiness { get; set; }
+
+        /// <summary>
+        /// The amount of production the city earns per turn
+        /// </summary>
         public int IncomeProduction { get; set; }
+
+        /// <summary>
+        /// The amount of food the city earns per turn
+        /// </summary>
         public int IncomeFood { get; set; }
+
+        /// <summary>
+        /// The amount of excess food the city has, used for population growth
+        /// </summary>
         public int ExcessFood { get; set; }
+
+        /// <summary>
+        /// The amount of culture the city earns per turn
+        /// </summary>
         public int IncomeCulture { get; set; }
+
+        /// <summary>
+        /// The amount of culture the city has earned
+        /// </summary>
         public int Culture { get; set; }
+
+        /// <summary>
+        /// The amount of horses the city has access to
+        /// </summary>
         public int Horses { get; set; }
+
+        /// <summary>
+        /// The amount of iron the city has access to
+        /// </summary>
         public int Iron { get; set; }
+
+        /// <summary>
+        /// The amount of coal the city has access to
+        /// </summary>
         public int Coal { get; set; }
+
+        /// <summary>
+        /// The amount of oil the city has access to
+        /// </summary>
         public int Oil { get; set; }
+
+        /// <summary>
+        /// The amount of uranium the city has access to
+        /// </summary>
         public int Uranium { get; set; }
+
+        /// <summary>
+        /// The amount of production that has overflown from the last production
+        /// </summary>
         public int ProductionOverflow { get; set; }
+
+        /// <summary>
+        /// The estimated number of turns until the city's borders grow
+        /// </summary>
         public int TurnsUntilBorderGrowth { get; set; }
+
+        /// <summary>
+        /// The estimated number of turns until the city's population grows
+        /// </summary>
         public int TurnsUntilPopulationGrowth { get; set; }
+
+        /// <summary>
+        /// The city's production queue
+        /// </summary>
         public LinkedList<Production> ProductionQueue { get; set; }
+
+        /// <summary>
+        /// The buildings that have been constructed in the city
+        /// </summary>
         public List<int> Buildings { get; set; }
+
+        /// <summary>
+        /// A list of the locations of the city's citizens
+        /// </summary>
         public List<Point> CitizenLocations
         {
             get
@@ -80,6 +201,10 @@ namespace Dominion.Common.Entities
         [NonSerialized]
         private List<Point> _citizenLocations;
         private List<int[]> _citizenLocationInts;
+
+        /// <summary>
+        /// The city's citizen focus
+        /// </summary>
         public CityCitizenFocus CitizenFocus { get; set; }
 
         public City(Player player, string name, Point location)
@@ -113,6 +238,13 @@ namespace Dominion.Common.Entities
                 _citizenLocations.Add(new Point(workerLocation[0], workerLocation[1]));
         }
 
+        /// <summary>
+        /// Returns a list of the cities possible productions
+        /// </summary>
+        /// <param name="factory"></param>
+        /// <param name="player"></param>
+        /// <param name="techTree"></param>
+        /// <returns></returns>
         public List<Production> GetProductionList(ProductionFactory factory, Player player, TechTree techTree)
         {
             List<Production> productions = new List<Production>();

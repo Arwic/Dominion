@@ -51,8 +51,8 @@ namespace Dominion.Server.Controllers
             {
                 Move(unit);
                 BuildUnitCommands(unit);
-                unit.Movement = unit.Constants.Movement;
-                unit.Actions = unit.Constants.Actions;
+                unit.Movement = unit.Template.Movement;
+                unit.Actions = unit.Template.Actions;
                 unit.Skipping = false;
             }
         }
@@ -95,9 +95,9 @@ namespace Dominion.Server.Controllers
         public void BuildUnitCommands(Unit unit)
         {
             unit.Commands = new List<int>();
-            for (int i = 0; i < unit.Constants.Commands.Count; i++)
+            for (int i = 0; i < unit.Template.Commands.Count; i++)
             {
-                int cmdID = unit.Constants.Commands[i];
+                int cmdID = unit.Template.Commands[i];
                 UnitCommandID cmd = (UnitCommandID)cmdID;
                 switch (cmd)
                 {
@@ -382,12 +382,12 @@ namespace Dominion.Server.Controllers
 
             attacker.Movement = 0;
             attacker.Actions = 0;
-            int attackerTakes = Unit.GetDamageAttackerSuffered(attacker.Constants.CombatStrength * attackerModifier,
-                defender.Constants.CombatStrength * defenderModifier,
-                attacker.HP, attacker.Constants.MaxHP);
-            int defenderTakes = Unit.GetDamageDefenderSuffered(attacker.Constants.CombatStrength * attackerModifier,
-                defender.Constants.CombatStrength * defenderModifier,
-                attacker.HP, attacker.Constants.MaxHP);
+            int attackerTakes = Unit.GetDamageAttackerSuffered(attacker.Template.CombatStrength * attackerModifier,
+                defender.Template.CombatStrength * defenderModifier,
+                attacker.HP, attacker.Template.MaxHP);
+            int defenderTakes = Unit.GetDamageDefenderSuffered(attacker.Template.CombatStrength * attackerModifier,
+                defender.Template.CombatStrength * defenderModifier,
+                attacker.HP, attacker.Template.MaxHP);
 
             attacker.HP -= attackerTakes;
             defender.HP -= defenderTakes;
@@ -406,8 +406,8 @@ namespace Dominion.Server.Controllers
             if (attacker.HP <= 0)
                 RemoveUnit(attacker);
             ConsoleManager.Instance.WriteLine($"{Controllers.Player.GetPlayer(attacker.PlayerID).Name}'s {attacker.Name} is melee attacking {Controllers.Player.GetPlayer(defender.PlayerID).Name}'s {defender.Name}", MsgType.ServerInfo);
-            ConsoleManager.Instance.WriteLine($"attacker had combat strength {attacker.Constants.CombatStrength} (+{(attackerModifier - 1) * 100}%) and suffered {attackerTakes}", MsgType.ServerInfo);
-            ConsoleManager.Instance.WriteLine($"defender had modifier of {defender.Constants.CombatStrength} (+{(defenderModifier - 1) * 100}%) and suffered {defenderTakes}", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"attacker had combat strength {attacker.Template.CombatStrength} (+{(attackerModifier - 1) * 100}%) and suffered {attackerTakes}", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"defender had modifier of {defender.Template.CombatStrength} (+{(defenderModifier - 1) * 100}%) and suffered {defenderTakes}", MsgType.ServerInfo);
         }
 
         public void MeleeAttack(Unit attacker, City defender)
@@ -423,8 +423,8 @@ namespace Dominion.Server.Controllers
 
             attacker.Movement = 0;
             attacker.Actions = 0;
-            attacker.HP -= Unit.GetDamageAttackerSuffered(attacker.Constants.CombatStrength, defender.CombatStrength, attacker.HP, attacker.Constants.MaxHP);
-            Controllers.City.DamageCity(defender, Unit.GetDamageDefenderSuffered(attacker.Constants.CombatStrength, defender.CombatStrength, attacker.HP, attacker.Constants.MaxHP));
+            attacker.HP -= Unit.GetDamageAttackerSuffered(attacker.Template.CombatStrength, defender.CombatStrength, attacker.HP, attacker.Template.MaxHP);
+            Controllers.City.DamageCity(defender, Unit.GetDamageDefenderSuffered(attacker.Template.CombatStrength, defender.CombatStrength, attacker.HP, attacker.Template.MaxHP));
 
             attacker.Actions = 0;
 
@@ -444,12 +444,12 @@ namespace Dominion.Server.Controllers
             if (attacker.PlayerID == defender.PlayerID)
                 return;
 
-            if (Board.HexDistance(attacker.Location, defender.Location) > attacker.Constants.Range)
+            if (Board.HexDistance(attacker.Location, defender.Location) > attacker.Template.Range)
                 return;
 
             attacker.Movement = 0;
             attacker.Actions = 0;
-            defender.HP -= Unit.GetDamageDefenderSuffered(attacker.Constants.CombatStrength, defender.Constants.CombatStrength, attacker.HP, attacker.Constants.MaxHP);
+            defender.HP -= Unit.GetDamageDefenderSuffered(attacker.Template.CombatStrength, defender.Template.CombatStrength, attacker.HP, attacker.Template.MaxHP);
 
             if (defender.HP <= 0)
                 RemoveUnit(defender);
@@ -460,12 +460,12 @@ namespace Dominion.Server.Controllers
             if (attacker.PlayerID == defender.PlayerID)
                 return;
 
-            if (Board.HexDistance(attacker.Location, defender.Location) > attacker.Constants.Range)
+            if (Board.HexDistance(attacker.Location, defender.Location) > attacker.Template.Range)
                 return;
 
             attacker.Movement = 0;
             attacker.Actions = 0;
-            Controllers.City.DamageCity(defender, Unit.GetDamageDefenderSuffered(attacker.Constants.CombatStrength, defender.CombatStrength, attacker.HP, attacker.Constants.MaxHP));
+            Controllers.City.DamageCity(defender, Unit.GetDamageDefenderSuffered(attacker.Template.CombatStrength, defender.CombatStrength, attacker.HP, attacker.Template.MaxHP));
         }
     }
 }

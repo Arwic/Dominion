@@ -1,4 +1,8 @@
-﻿namespace Dominion.Common
+﻿// Dominion - Copyright (C) Timothy Ings
+// PacketHeader.cs
+// This file defines packet headers
+
+namespace Dominion.Common
 {
     public enum PacketHeader
     {

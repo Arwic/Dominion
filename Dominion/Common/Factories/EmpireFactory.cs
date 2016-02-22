@@ -1,5 +1,8 @@
-﻿using ArwicEngine.TypeConverters;
-using Dominion.Common.Entities;
+﻿// Dominion - Copyright (C) Timothy Ings
+// EmpireFactory.cs
+// This file defines classes that define the empire factory and its products
+
+using ArwicEngine.TypeConverters;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -68,16 +71,25 @@ namespace Dominion.Common.Factories
     [Serializable()]
     public class Empire
     {
+        /// <summary>
+        /// The name of the empire
+        /// </summary>
         [Description("The name of the empire")]
         [DisplayName("Name"), Browsable(true), Category("General")]
         [XmlElement("Name")]
         public string Name { get; set; }
 
+        /// <summary>
+        /// Adjective used to describe items owned by this empire
+        /// </summary>
         [Description("Adjective used to describe items owned by this empire")]
         [DisplayName("Adjective"), Browsable(true), Category("General")]
         [XmlElement("Adjective")]
         public string Adjective { get; set; }
 
+        /// <summary>
+        /// A list of names to use for this empire's cities
+        /// </summary>
         [Description("A list of names to use for this empire's cities")]
         [DisplayName("Default City Names"), Browsable(true), Category("General")]
         [Editor("System.Windows.Forms.Design.StringCollectionEditor, System.Design, Version = 2.0.0.0, Culture = neutral, PublicKeyToken = b03f5f7f11d50a3a", typeof(System.Drawing.Design.UITypeEditor))]
@@ -85,6 +97,9 @@ namespace Dominion.Common.Factories
         [XmlArray("DefaultCityNames"), XmlArrayItem(typeof(string), ElementName = "Name")]
         public List<string> DefaultCityNames { get; set; }
 
+        /// <summary>
+        /// A list of names to use for this empire's spies
+        /// </summary>
         [Description("A list of names to use for this empire's spies")]
         [DisplayName("Spy Names"), Browsable(true), Category("General")]
         [Editor("System.Windows.Forms.Design.StringCollectionEditor, System.Design, Version = 2.0.0.0, Culture = neutral, PublicKeyToken = b03f5f7f11d50a3a", typeof(System.Drawing.Design.UITypeEditor))]
@@ -92,30 +107,45 @@ namespace Dominion.Common.Factories
         [XmlArray("SpyNames"), XmlArrayItem(typeof(string), ElementName = "Name")]
         public List<string> SpyNames { get; set; }
 
+        /// <summary>
+        /// The style of architecture used to render this empire's cities and units
+        /// </summary>
         [Description("The style of architecture used to render this empire's cities and units")]
         [DisplayName("Architecture"), Browsable(true), Category("Graphics")]
         [TypeConverter(typeof(EnumConverter))]
         [XmlElement("Architecture")]
         public EmpireArchitecture Architecture { get; set; }
 
+        /// <summary>
+        /// The set of art that the great artists this emprie generates will be from
+        /// </summary>
         [Description("The set of art that the great artists this emprie generates will be from")]
         [DisplayName("Art Set"), Browsable(true), Category("Graphics")]
         [TypeConverter(typeof(EnumConverter))]
         [XmlElement("ArtSet")]
         public EmpireArtSet ArtSet { get; set; }
 
+        /// <summary>
+        /// The empire's preferred religion
+        /// </summary>
         [Description("The empire's preferred religion")]
         [DisplayName("Preferred Religion"), Browsable(true), Category("Game")]
         [TypeConverter(typeof(EnumConverter))]
         [XmlElement("PreferredReligion")]
         public EmpirePreferredReligion PreferredReligion { get; set; }
 
+        /// <summary>
+        /// The terrain that this empire is biased to start near
+        /// </summary>
         [Description("The terrain that this empire is biased to start near")]
         [DisplayName("Start Bias"), Browsable(true), Category("Game")]
         [TypeConverter(typeof(EnumConverter))]
         [XmlElement("Start Bias")]
         public EmpireStartBiasFlags StartBias { get; set; }
 
+        /// <summary>
+        /// The empire's primary color
+        /// </summary>
         [Description("The empire's primary color")]
         [DisplayName("Primary"), Browsable(true), Category("Color")]
         [Editor(typeof(ColorEditor), typeof(System.Drawing.Design.UITypeEditor))]
@@ -143,6 +173,9 @@ namespace Dominion.Common.Factories
         [XmlIgnore]
         private int _primaryColor_B;
 
+        /// <summary>
+        /// The empire's secondary color
+        /// </summary>
         [Description("The empire's secondary color")]
         [DisplayName("Secondary"), Browsable(true), Category("Color")]
         [Editor(typeof(ColorEditor), typeof(System.Drawing.Design.UITypeEditor))]
@@ -170,6 +203,9 @@ namespace Dominion.Common.Factories
         [XmlIgnore]
         private int _secondaryColor_B;
 
+        /// <summary>
+        /// The empire's text color
+        /// </summary>
         [Description("The empire's text color")]
         [DisplayName("Text"), Browsable(true), Category("Color")]
         [Editor(typeof(ColorEditor), typeof(System.Drawing.Design.UITypeEditor))]
@@ -197,6 +233,9 @@ namespace Dominion.Common.Factories
         [XmlIgnore]
         private int _textColor_B;
 
+        /// <summary>
+        /// Keeps track of the las used default city name
+        /// </summary>
         [Browsable(false)]
         [XmlIgnore()]
         public int DefaultCityNameIndex { get; set; }
@@ -217,6 +256,9 @@ namespace Dominion.Common.Factories
     [Serializable()]
     public class EmpireFactory
     {
+        /// <summary>
+        /// A list of all empires
+        /// </summary>
         [TypeConverter(typeof(ListConverter))]
         [XmlElement("Empire")]
         public List<Empire> Empires { get; set; }
@@ -226,6 +268,11 @@ namespace Dominion.Common.Factories
             Empires = new List<Empire>();
         }
 
+        /// <summary>
+        /// Loads an empire facotry from file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static EmpireFactory FromFile(string path)
         {
             XmlSerializer xmls = new XmlSerializer(typeof(EmpireFactory));
@@ -235,6 +282,11 @@ namespace Dominion.Common.Factories
             }
         }
 
+        /// <summary>
+        /// Returns the empire with the given id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Empire GetEmpire(int id)
         {
             if (id < 0 || id >= Empires.Count)
@@ -247,6 +299,11 @@ namespace Dominion.Common.Factories
             return "Empires";
         }
 
+        /// <summary>
+        /// Returns the the next default city name for the empire with the given id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public string GetNextDefaultName(int id)
         {
             Empire empire = GetEmpire(id);

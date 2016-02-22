@@ -110,7 +110,7 @@ namespace Dominion.Client.GUI
                 label.Draw(sb, new Vector2(dest.X + (int)labelMeasure.X / 2 - labelMeasure.X / 2 + unitLabelPadding, dest.Y + labelMeasure.Y / 4));
 
                 // draw the hp bar above the nameplate
-                double hpPercent = unit.HP / (double)unit.Constants.MaxHP;
+                double hpPercent = unit.HP / (double)unit.Template.MaxHP;
                 if (hpPercent < 1)
                 {
                     // colour the bar based on current hp

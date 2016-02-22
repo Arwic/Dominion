@@ -952,7 +952,7 @@ namespace Dominion.Client
                     UpdateUnitCache(unit);
                     foreach (Tile tile in Board.GetAllTiles())
                     {
-                        if (Board.HexDistance(unit.Location, tile.Location) <= unit.Constants.Sight)
+                        if (Board.HexDistance(unit.Location, tile.Location) <= unit.Template.Sight)
                             UpdateTileCache(tile.Location);
                     }
 
@@ -960,7 +960,7 @@ namespace Dominion.Client
                     {
                         if (otherUnit.PlayerID == Player.InstanceID)
                             continue;
-                        if (Board.HexDistance(unit.Location, otherUnit.Location) <= unit.Constants.Sight)
+                        if (Board.HexDistance(unit.Location, otherUnit.Location) <= unit.Template.Sight)
                             UpdateUnitCache(otherUnit);
                     }
                 }

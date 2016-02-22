@@ -143,7 +143,7 @@ namespace Dominion.Client.Renderers
                         boardRenderer.TileSize,
                         boardRenderer.TileSize);
             // draw the correct sprite at the unit's position
-            unitSprites[unit.Constants.GraphicID].Draw(sb, dest);
+            unitSprites[unit.Template.GraphicID].Draw(sb, dest);
         }
 
         // draws the given unit's movement path

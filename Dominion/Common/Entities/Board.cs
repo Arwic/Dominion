@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// Board.cs
+// This file defines classes that define the game board and its procedural generation
+
+using ArwicEngine.Core;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -30,12 +34,29 @@ namespace Dominion.Common.Entities
     [Serializable()]
     public class Board
     {
+        /// <summary>
+        /// Gets the tiles that make up the board
+        /// </summary>
         public Tile[][] Tiles { get; private set; }
+
+        /// <summary>
+        /// Gets the width of the board
+        /// </summary>
         public int DimX { get; private set; }
+
+        /// <summary>
+        /// Gets the height of the board
+        /// </summary>
         public int DimY { get; private set; }
 
+        /// <summary>
+        /// Generates a new board with the given parameters
+        /// </summary>
+        /// <param name="worldType"></param>
+        /// <param name="worldSize"></param>
         public Board(WorldType worldType, WorldSize worldSize)
         {
+            // TODO move these presets to a configuration file
             switch (worldSize)
             {
                 case WorldSize.Tiny:
@@ -86,11 +107,6 @@ namespace Dominion.Common.Entities
             }
         }
 
-        public Board()
-        {
-
-        }
-
         // "Memset" all tiles to given settings
         private void InstantiateTiles(int dimx, int dimy, TileResource tres, TileTerrainBase tbase, TileTerrainFeature tfeature, TileImprovment timp)
         {
@@ -105,6 +121,13 @@ namespace Dominion.Common.Entities
             }
         }
 
+        /// <summary>
+        /// Finds the shortest path between two tiles using A*
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="dest"></param>
+        /// <param name="board"></param>
+        /// <returns></returns>
         public static LinkedList<Point> FindPath(Point start, Point dest, Board board)
         {
             if (start == dest)
@@ -158,12 +181,16 @@ namespace Dominion.Common.Entities
             LinkedList<Point> movementQueue = new LinkedList<Point>();
             for (int i = 1; i < inverseMoveQueue.Count; i++)
                 movementQueue.Enqueue(inverseMoveQueue[i]);
-            //foreach (Point point in inverseMoveQueue)
-            //    movementQueue.Enqueue(point);
 
             return movementQueue;
         }
 
+        /// <summary>
+        /// Calculates the shortest direct distance between two hexagons in a grid
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <returns></returns>
         public static int HexDistance(Point p1, Point p2)
         {
             int y1 = p1.X;
@@ -181,7 +208,7 @@ namespace Dominion.Common.Entities
             return adu + adv;
         }
 
-        // Generates map features, to be used after generating the rough map of sea & plains. Setting a param to -1 disables the process
+        // Generates map features, to be used after generating the rough map of sea & plains. Setting a param to -1 disables the respective process
         private void GenerateFeatures(double lakeSeedChance, double lakeSpreadChance, int minimunWaterSize, int minimunLandSize, double hillSeedChance, double hillDirChangeChance, double hillSpreadChance, double mountainSeedChance, double mountainDirChangeChance, double mountainSpreadChance, double forestSeedChance, double forestSpreadChance, double desertSeedChance, double desertSpreadChance, int minimumDesertSize, double resourceSeedChance, int snowLevel, int tundraLevel, bool defineCoast)
         {
             Stopwatch sw = new Stopwatch();

@@ -59,7 +59,7 @@ namespace Dominion.Client.Scenes
                 else
                     EmpireName = "FACTORY=NULL";
 
-                if (player.PlayerID == 0)
+                if (player.InstanceID == 0)
                     Text = $"$(capital) {Player.Name} - <[{empireColor.R},{empireColor.G},{empireColor.B}]{EmpireName}>".ToRichText();
                 else
                     Text = new RichText(new RichTextSection($"{Player.Name} - ", Color.White), new RichTextSection(EmpireName, empireColor));
@@ -412,15 +412,15 @@ namespace Dominion.Client.Scenes
         {
             // ban the selected player from the server
             BasicPlayer selectedPlayer = ((PlayerListItem)lobby_sbPlayers.Selected).Player;
-            if (selectedPlayer.PlayerID != 0)
-                manager.Server.BanPlayer(selectedPlayer.PlayerID);
+            if (selectedPlayer.InstanceID != 0)
+                manager.Server.BanPlayer(selectedPlayer.InstanceID);
         }
         private void Lobby_BtnKick_MouseClick(object sender, MouseEventArgs e)
         {
             // kick the selected player from the server
             BasicPlayer selectedPlayer = ((PlayerListItem)lobby_sbPlayers.Selected).Player;
-            if (selectedPlayer.PlayerID != 0)
-                manager.Server.KickPlayer(selectedPlayer.PlayerID);
+            if (selectedPlayer.InstanceID != 0)
+                manager.Server.KickPlayer(selectedPlayer.InstanceID);
         }
         private void Client_LobbyStateChanged(object sender, LobbyStateEventArgs e)
         {
@@ -430,8 +430,8 @@ namespace Dominion.Client.Scenes
             if (frm_lobby == null)
                 SetUpLobbyForm();
             lobby_sbPlayers.Items = GetPlayers();
-            BasicPlayer myPlayer = e.LobbyState.Players.Find(p => p.PlayerID == manager.Client.Player.InstanceID);
-            BasicPlayer hostPlayer = e.LobbyState.Players.Find(p => p.PlayerID == 0);
+            BasicPlayer myPlayer = e.LobbyState.Players.Find(p => p.InstanceID == manager.Client.Player.InstanceID);
+            BasicPlayer hostPlayer = e.LobbyState.Players.Find(p => p.InstanceID == 0);
             frm_lobby.Text = $"{hostPlayer.Name}'s Lobby".ToRichText();
             lobby_btnEmpireSelect.Text = $"Empire: {manager.Client.EmpireFactory.GetEmpire(myPlayer.EmpireID).Name}".ToRichText();
             lobby_btnWorldSize.Text = $"World Size: {e.LobbyState.WorldSize}".ToRichText();
@@ -590,7 +590,7 @@ namespace Dominion.Client.Scenes
             frm_lobby_configWindow.Text = "Select an empire".ToRichText();
             int yOffset = 35;
             ScrollBox sb = new ScrollBox(new Rectangle(5, yOffset + 5, frm_lobby_configWindow.Bounds.Width - 10, frm_lobby_configWindow.Bounds.Height - yOffset - 10), GetEmpires(), frm_lobby_configWindow);
-            sb.SelectedIndex = manager.Client.LobbyState.Players.Find(p => p.PlayerID == manager.Client.Player.InstanceID).EmpireID;
+            sb.SelectedIndex = manager.Client.LobbyState.Players.Find(p => p.InstanceID == manager.Client.Player.InstanceID).EmpireID;
             sb.SelectedChanged += (s, a) =>
             {
                 manager.Client.Lobby_SelectNewEmpire(sb.SelectedIndex);

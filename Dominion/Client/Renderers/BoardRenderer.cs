@@ -363,9 +363,9 @@ namespace Dominion.Client.Renderers
                     bool visible = false;
                     foreach (Unit unit in client.GetMyUnits())
                     {
-                        if (unit == null || unit.Constants == null || cachedTile == null)
+                        if (unit == null || unit.Template == null || cachedTile == null)
                             continue;
-                        if (Board.HexDistance(unit.Location, cachedTile.Location) <= unit.Constants.Sight)
+                        if (Board.HexDistance(unit.Location, cachedTile.Location) <= unit.Template.Sight)
                         {
                             visible = true;
                             break;
