@@ -1,18 +1,34 @@
-﻿using Dominion.Common.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Dominion - Copyright (C) Timothy Ings
+// ControllerManager.cs
+// This file defines classes that defines the manager for all the game controllers
 
 namespace Dominion.Server.Controllers
 {
     public class ControllerManager
     {
+        /// <summary>
+        /// Gets the controller that manages factories
+        /// </summary>
         public FactoryController Factory { get; }
+
+        /// <summary>
+        /// Gets the controller that manages the board
+        /// </summary>
         public BoardController Board { get; }
+
+        /// <summary>
+        /// Gets the controller that manages the players
+        /// </summary>
         public PlayerController Player { get; }
+
+        /// <summary>
+        /// Gets the controller that manages the cities
+        /// </summary>
         public CityController City { get; }
+
+        /// <summary>
+        /// Gets the controller that manages the units
+        /// </summary>
         public UnitController Unit { get; }
 
         public ControllerManager()
@@ -23,7 +39,10 @@ namespace Dominion.Server.Controllers
             City = new CityController(this);
             Unit = new UnitController(this);
         }
-
+        
+        /// <summary>
+        /// Prepares every controller managed by the controller manager for the next turn
+        /// </summary>
         public void ProcessTurn()
         {
             Factory.ProcessTurn();

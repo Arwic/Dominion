@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Dominion - Copyright (C) Timothy Ings
+// Controller.cs
+// This file defines classes that defines base classes for game controllers
 
 namespace Dominion.Server.Controllers
 {

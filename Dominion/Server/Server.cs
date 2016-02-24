@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// Server.cs
+// This file defines classes that defines the server
+
+using ArwicEngine.Core;
 using ArwicEngine.Net;
 using Dominion.Common;
 using Dominion.Common.Entities;
@@ -20,35 +24,86 @@ namespace Dominion.Server
 
     public class Server
     {
+        /// <summary>
+        /// Indicates whether the server is currently running
+        /// </summary>
         public bool Running => server == null ? false : server.Running;
+
+        /// <summary>
+        /// Gets or sets the server's lobby state
+        /// </summary>
         public LobbyState LobbyState { get; private set; }
-        private NetServer server;
+        
+        /// <summary>
+        /// Gets an object that tracks net server statistics
+        /// </summary>
         public NetServerStats ServerStatistics => server.Statistics;
+
+        /// <summary>
+        /// Gets or sets the server's password
+        /// </summary>
         public string ServerPassword { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a has set of all the address's the server has banned
+        /// </summary>
         public HashSet<string> BannedAddresses { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the state of the server
+        /// </summary>
         public ServerState ServerState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a list of the enabled victory types
+        /// </summary>
         public List<VictoryType> VictoryTypes { get; private set; }
-        private ControllerManager controllers;
+
+        /// <summary>
+        /// Gets or sets the turn timer
+        /// </summary>
         public Stopwatch TurnTimer { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the turn time limit
+        /// </summary>
         public int TurnTimeLimit { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the turn number
+        /// </summary>
         public int TurnNumber { get; private set; }
+
+        private ControllerManager controllers;
+        private NetServer server;
 
         public Server()
         {
         }
 
-        // Initialisation & Finalisation
+        /// <summary>
+        /// Starts the server and begins listening on the given port
+        /// Will reject any connections with the incorrect password
+        /// </summary>
+        /// <param name="port"></param>
+        /// <param name="password"></param>
         public void StartServer(int port, string password)
         {
+            // init properties
             BannedAddresses = new HashSet<string>();
             ServerPassword = password;
             ServerState = ServerState.Lobby;
             LobbyState = new LobbyState();
             server = new NetServer();
+
+            // register events
             server.PacketRecieved += Server_PacketRecieved;
             server.ConnectionLost += Server_ConnectionLost;
+
+            // setart the net server
             server.Start(port);
 
+            // init game controllers and register events
             controllers = new ControllerManager();
             controllers.Board.TilesUpdated += Board_TilesUpdated;
             controllers.City.CityCaptured += City_CityCaptured;
@@ -58,12 +113,15 @@ namespace Dominion.Server
             controllers.Player.PlayerAdded += Player_PlayerAdded;
             controllers.Player.PlayerRemoved += Player_PlayerRemoved;
             controllers.Player.PlayerUpdated += Player_PlayerUpdated;
-            controllers.Player.TurnStateChanged += Player_TurnStateChanged;
+            controllers.Player.PlayerTurnStateChanged += Player_TurnStateChanged;
             controllers.Unit.UnitAdded += Unit_UnitAdded;
             controllers.Unit.UnitRemoved += Unit_UnitRemoved;
             controllers.Unit.UnitUpdated += Unit_UnitUpdated;
         }
 
+        /// <summary>
+        /// Stops the server
+        /// </summary>
         public void StopServer()
         {
             if (server == null)
@@ -72,10 +130,12 @@ namespace Dominion.Server
             server.SendDataToAll(pOut);
             server.Stop(1000);
         }
+
         private void Server_PacketRecieved(object sender, PacketRecievedEventArgs e)
         {
-            ParsePacket(e.Packet);
+            RoutePacket(e.Packet);
         }
+
         private void Server_ConnectionLost(object sender, ConnectionEventArgs e)
         {
             if (controllers.Player.GetAllPlayers().Count == 0)
@@ -86,6 +146,10 @@ namespace Dominion.Server
             if (ServerState == ServerState.Lobby)
                 SendLobbyStateToAll();
         }
+
+        /// <summary>
+        /// Signals to all clients the game has begun and prevents new connections
+        /// </summary>
         public void StartGame()
         {
             VictoryTypes = new List<VictoryType>();
@@ -108,7 +172,7 @@ namespace Dominion.Server
             foreach (Player player in controllers.Player.GetAllPlayers().ToArray())
             {
                 Packet pStartGame = new Packet((int)PacketHeader.LobbyStartGame,
-                    controllers.Board.GetBoard(),
+                    controllers.Board.Board,
                     player,
                     controllers.City.GetAllCities(),
                     controllers.Unit.GetAllUnits());
@@ -120,6 +184,8 @@ namespace Dominion.Server
             Thread loopThread = new Thread(UpdateLoop);
             loopThread.Start();
         }
+
+        // picks a start tile for the given player, respecting their start bias if required
         private Tile GetStartTile(Player player)
         {
             Tile startTile = controllers.Board.GetTile(RandomHelper.Next(0, controllers.Board.DimX), RandomHelper.Next(0, controllers.Board.DimY));
@@ -405,11 +471,14 @@ namespace Dominion.Server
 
             return startTile;
         }
+
+        // gets a random tile on the board
         private Tile GetRandomTile()
         {
             return controllers.Board.GetTile(RandomHelper.Next(0, controllers.Board.DimX), RandomHelper.Next(0, controllers.Board.DimY));
         }
 
+        // loop thread: runs processes that can't be event driven
         private void UpdateLoop()
         {
             TurnTimer.Start();
@@ -424,6 +493,11 @@ namespace Dominion.Server
                 }
             }
         }
+
+        /// <summary>
+        /// Bans the player with the given id
+        /// </summary>
+        /// <param name="playerID"></param>
         public void BanPlayer(int playerID)
         {
             Player player = controllers.Player.GetPlayer(playerID);
@@ -437,6 +511,11 @@ namespace Dominion.Server
             player.Connection.Close(1000);
             ConsoleManager.Instance.WriteLine($"Banned {bannedAddress}", MsgType.ServerInfo);
         }
+
+        /// <summary>
+        /// Kicks the player with the given id
+        /// </summary>
+        /// <param name="playerID"></param>
         public void KickPlayer(int playerID)
         {
             Player player = controllers.Player.GetPlayer(playerID);
@@ -449,36 +528,41 @@ namespace Dominion.Server
             ConsoleManager.Instance.WriteLine($"Kicked {player.Connection.Address.Split(':')}", MsgType.ServerInfo);
         }
 
-        // React to changes
         private void Unit_UnitUpdated(object sender, UnitEventArgs e)
         {
             Packet pOut = new Packet((int)PacketHeader.UnitUpdate, e.Unit);
             server.SendDataToAll(pOut);
         }
+
         private void Unit_UnitRemoved(object sender, UnitEventArgs e)
         {
             Packet pOut = new Packet((int)PacketHeader.UnitRemoved, e.Unit.InstanceID);
             server.SendDataToAll(pOut);
         }
+
         private void Unit_UnitAdded(object sender, UnitEventArgs e)
         {
             Packet pOut = new Packet((int)PacketHeader.UnitAdded, e.Unit);
             server.SendDataToAll(pOut);
         }
-        private void Player_TurnStateChanged(object sender, EventArgs e)
+
+        private void Player_TurnStateChanged(object sender, PlayerEventArgs e)
         {
             if (IsTurnOver())
                 EndTurn(TurnEndReason.PlayersEnded);
         }
+
         private void Player_PlayerUpdated(object sender, PlayerEventArgs e)
         {
             Packet pOut = new Packet((int)PacketHeader.PlayerUpdate, e.Player);
             server.SendData(pOut, e.Player.Connection);
         }
+
         private void Player_PlayerRemoved(object sender, PlayerEventArgs e)
         {
             SendLobbyStateToAll();
         }
+
         private void Player_PlayerAdded(object sender, PlayerEventArgs e)
         {
             Packet pOutLobbyInit = new Packet((int)PacketHeader.LobbyInit,
@@ -491,34 +575,39 @@ namespace Dominion.Server
 
             SendLobbyStateToAll();
         }
+
         private void City_CityBorderExpanded(object sender, TileEventArgs e)
         {
             Packet pOut = new Packet((int)PacketHeader.TileUpdate, e.Tiles);
             server.SendDataToAll(pOut);
         }
+
         private void City_CityUpdated(object sender, CityEventArgs e)
         {
             Packet pOut = new Packet((int)PacketHeader.CityUpdate, e.City);
             server.SendDataToAll(pOut);
         }
+
         private void City_CitySettled(object sender, CityEventArgs e)
         {
             Packet pOut = new Packet((int)PacketHeader.CityAdded, e.City);
             server.SendDataToAll(pOut);
         }
+
         private void City_CityCaptured(object sender, CityEventArgs e)
         {
             Packet pOut = new Packet((int)PacketHeader.CityUpdate, e.City);
             server.SendDataToAll(pOut);
         }
+
         private void Board_TilesUpdated(object sender, TileEventArgs e)
         {
             Packet pOut = new Packet((int)PacketHeader.TileUpdate, e.Tiles);
             server.SendDataToAll(pOut);
         }
 
-        // Packet parser
-        private void ParsePacket(Packet p)
+        // routes an incoming packet
+        private void RoutePacket(Packet p)
         {
             PacketHeader header = (PacketHeader)p.Header;
             ConsoleManager.Instance.WriteLine($"Parsing a packet with header {header}", MsgType.ServerInfo);
@@ -551,6 +640,8 @@ namespace Dominion.Server
                 ConsoleManager.Instance.WriteLine($"Error parsing {(PacketHeader)p.Header}, {e.Message}", MsgType.ServerFailed);
             }
         }
+
+        // parses a LobbyInit packet
         private void ParseLobbyInit(Packet p)
         {
             if (ServerState == ServerState.Game)
@@ -581,6 +672,8 @@ namespace Dominion.Server
             // Sync lobby state
             SendLobbyStateToAll();
         }
+
+        // parses a LobbyEmpire packet
         private void ParseLobbyEmpire(Packet p)
         {
             // Find the player
@@ -595,6 +688,8 @@ namespace Dominion.Server
             // Sync lobby state
             SendLobbyStateToAll();
         }
+
+        // parses a TurnState packet
         private void ParseTurnState(Packet p)
         {
             Player player = controllers.Player.GetPlayer(p.Sender);
@@ -603,17 +698,23 @@ namespace Dominion.Server
                 return;
             controllers.Player.UpdateTurnState(player, turnState);
         }
+
+        // parses a UnitCommand packet
         private void ParseUnitCommand(Packet p)
         {
             UnitCommand cmd = (UnitCommand)p.Item;
             controllers.Unit.CommandUnit(cmd);
         }
+
+        // parses a CityCommand packet
         private void ParseCityCommand(Packet p)
         {
             CityCommand cmd = (CityCommand)p.Item;
             cmd.PlayerID = controllers.Player.GetPlayer(p.Sender).InstanceID;
             controllers.City.CommandCity(cmd);
         }
+
+        // parses a PlayerCommand packet
         private void ParsePlayerCommand(Packet p)
         {
             PlayerCommand cmd = (PlayerCommand)p.Item;
@@ -621,7 +722,7 @@ namespace Dominion.Server
             controllers.Player.CommandPlayer(cmd);
         }
 
-        // Game state checkers
+        // checks if the game is over, respecting the selected victory types
         private Tuple<bool, Player, VictoryType> IsGameOver()
         {
             if (VictoryTypes.Contains(VictoryType.Culture))
@@ -654,6 +755,8 @@ namespace Dominion.Server
             }
             return new Tuple<bool, Player, VictoryType>(false, null, 0);
         }
+
+        // checks whether the current turn is over
         private bool IsTurnOver()
         {
             int playersEndedTurnCount = 0;
@@ -666,6 +769,8 @@ namespace Dominion.Server
                 return true;
             return false;
         }
+
+        // ends the current turn
         private void EndTurn(TurnEndReason reason)
         {
             ConsoleManager.Instance.WriteLine($"Turn {TurnNumber} has ended, reason {reason}", MsgType.ServerInfo);
@@ -695,7 +800,7 @@ namespace Dominion.Server
             //    SendGameOver(res.Item2, res.Item3);
         }
 
-        // Send data to clients
+        // sends the lobby state to all connected clients
         public void SendLobbyStateToAll()
         {
             LobbyState.Players.Clear();
@@ -704,6 +809,8 @@ namespace Dominion.Server
             Packet pOutLobbySync = new Packet((int)PacketHeader.LobbyStateSync, LobbyState);
             server.SendDataToAll(pOutLobbySync);
         }
+
+        // tells every client that the game is over
         private void SendGameOver(Player winner, VictoryType vtype)
         {
             ConsoleManager.Instance.WriteLine($"Game over! {winner.Name}, {controllers.Factory.Empire.GetEmpire(winner.EmpireID).Name}, has won with a {vtype} victory", MsgType.ServerInfo);

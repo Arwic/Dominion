@@ -1,4 +1,8 @@
-﻿using ArwicEngine.Core;
+﻿// Dominion - Copyright (C) Timothy Ings
+// UnitController.cs
+// This file defines classes that defines the unit controller
+
+using ArwicEngine.Core;
 using Dominion.Common.Entities;
 using Microsoft.Xna.Framework;
 using System;
@@ -18,21 +22,35 @@ namespace Dominion.Server.Controllers
 
     public class UnitController : Controller
     {
-        private List<Unit> units;
+        private List<Unit> units = new List<Unit>();
 
+        /// <summary>
+        /// Occurs when a unit is added to the unit controller
+        /// </summary>
         public event EventHandler<UnitEventArgs> UnitAdded;
+
+        /// <summary>
+        /// Occurs when a unit is removed from the unit controller
+        /// </summary>
         public event EventHandler<UnitEventArgs> UnitRemoved;
+
+        /// <summary>
+        /// Occurs when a unit is updated by the unit controller
+        /// </summary>
         public event EventHandler<UnitEventArgs> UnitUpdated;
+
         protected virtual void OnUnitAdded(UnitEventArgs e)
         {
             if (UnitAdded != null)
                 UnitAdded(this, e);
         }
+
         protected virtual void OnUnitRemoved(UnitEventArgs e)
         {
             if (UnitRemoved != null)
                 UnitRemoved(this, e);
         }
+
         protected virtual void OnUnitUpdated(UnitEventArgs e)
         {
             if (UnitUpdated != null)
@@ -42,41 +60,68 @@ namespace Dominion.Server.Controllers
         public UnitController(ControllerManager manager)
             : base(manager)
         {
-            units = new List<Unit>();
         }
 
+        /// <summary>
+        /// Prepares the units managed by the unit controller for the next turn
+        /// </summary>
         public override void ProcessTurn()
         {
             foreach (Unit unit in units)
             {
-                Move(unit);
-                BuildUnitCommands(unit);
-                unit.Movement = unit.Template.Movement;
-                unit.Actions = unit.Template.Actions;
-                unit.Skipping = false;
+                ProcessMovment(unit); // update the units movement
+                BuildUnitCommands(unit); // build a list of commands based on the unit's context
+                unit.Movement = unit.Template.Movement; // reset the units movment points
+                unit.Actions = unit.Template.Actions; // reset the units action points
+                unit.Skipping = false; // remove the skipping flag
             }
         }
 
+        /// <summary>
+        /// Gets a list of all units managed by the unit manager
+        /// </summary>
+        /// <returns></returns>
         public List<Unit> GetAllUnits()
         {
             return units;
         }
 
+        /// <summary>
+        /// Gets a list of all the units owned by the player with the given id
+        /// </summary>
+        /// <param name="playerID"></param>
+        /// <returns></returns>
         public List<Unit> GetPlayerUnits(int playerID)
         {
             return units.FindAll(u => u.PlayerID == playerID);
         }
 
+        /// <summary>
+        /// Gets the unit at the given location
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
         public Unit GetUnit(Point location)
         {
             return units.Find(u => u.Location == location);
         }
 
+        /// <summary>
+        /// Gets the unit with the given id
+        /// </summary>
+        /// <param name="instanceID"></param>
+        /// <returns></returns>
         public Unit GetUnit(int instanceID)
         {
             return units.Find(u => u.InstanceID == instanceID);
         }
 
+        /// <summary>
+        /// Creates a new unit of the given id at the given location and puts it in control of the player of the given id
+        /// </summary>
+        /// <param name="unitID"></param>
+        /// <param name="playerID"></param>
+        /// <param name="location"></param>
         public void AddUnit(int unitID, int playerID, Point location)
         {
             Unit unit = new Unit(Controllers.Factory.Unit, unitID, playerID, location);
@@ -85,6 +130,10 @@ namespace Dominion.Server.Controllers
             OnUnitAdded(new UnitEventArgs(unit));
         }
 
+        /// <summary>
+        /// Removes the given unit from the game
+        /// </summary>
+        /// <param name="unit"></param>
         public void RemoveUnit(Unit unit)
         {
             units.Remove(unit);
@@ -92,7 +141,8 @@ namespace Dominion.Server.Controllers
             OnUnitRemoved(new UnitEventArgs(unit));
         }
 
-        public void BuildUnitCommands(Unit unit)
+        // assigns a unit a list of commands that are valid based on its context
+        private void BuildUnitCommands(Unit unit)
         {
             unit.Commands = new List<int>();
             for (int i = 0; i < unit.Template.Commands.Count; i++)
@@ -197,6 +247,10 @@ namespace Dominion.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Issues a command to a unit
+        /// </summary>
+        /// <param name="cmd"></param>
         public void CommandUnit(UnitCommand cmd)
         {
             Tile tile = null;
@@ -219,7 +273,7 @@ namespace Dominion.Server.Controllers
             {
                 case UnitCommandID.Move:
                     unit.MovementQueue = Board.FindPath(unit.Location, tile.Location, Controllers.Board.Board);
-                    Move(unit);
+                    ProcessMovment(unit);
                     break;
                 case UnitCommandID.Disband:
                     RemoveUnit(unit);
@@ -319,7 +373,11 @@ namespace Dominion.Server.Controllers
             }
         }
         
-        public void Move(Unit unit)
+        /// <summary>
+        /// Moves the unit along its movment queue for as long as its movement points allow
+        /// </summary>
+        /// <param name="unit"></param>
+        private void ProcessMovment(Unit unit)
         {
             if (unit.MovementQueue == null)
                 return;
@@ -334,17 +392,26 @@ namespace Dominion.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Puts a unit to sleep
+        /// </summary>
+        /// <param name="unit"></param>
         public void SleepUnit(Unit unit)
         {
             unit.Sleeping = true;
         }
 
+        /// <summary>
+        /// Flags a unit as not requiring input this turn
+        /// </summary>
+        /// <param name="unit"></param>
         public void SkipUnit(Unit unit)
         {
             unit.Skipping = true;
         }
 
-        public void MeleeAttack(Unit attacker, Unit defender)
+        // makes a unit melee attack another
+        private void MeleeAttack(Unit attacker, Unit defender)
         {
             if (attacker.Actions <= 0)
             {
@@ -410,7 +477,8 @@ namespace Dominion.Server.Controllers
             ConsoleManager.Instance.WriteLine($"defender had modifier of {defender.Template.CombatStrength} (+{(defenderModifier - 1) * 100}%) and suffered {defenderTakes}", MsgType.ServerInfo);
         }
 
-        public void MeleeAttack(Unit attacker, City defender)
+        // makes a unit melee attack a city
+        private void MeleeAttack(Unit attacker, City defender)
         {
             if (attacker.Actions <= 0)
                 return;
@@ -439,7 +507,8 @@ namespace Dominion.Server.Controllers
             }
         }
 
-        public void RangedAttack(Unit attacker, Unit defender)
+        // makes a unit ranged attack another
+        private void RangedAttack(Unit attacker, Unit defender)
         {
             if (attacker.PlayerID == defender.PlayerID)
                 return;
@@ -455,7 +524,8 @@ namespace Dominion.Server.Controllers
                 RemoveUnit(defender);
         }
 
-        public void RangedAttack(Unit attacker, City defender)
+        // makes a unit ranged attack a city
+        private void RangedAttack(Unit attacker, City defender)
         {
             if (attacker.PlayerID == defender.PlayerID)
                 return;

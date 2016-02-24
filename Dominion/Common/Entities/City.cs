@@ -207,6 +207,12 @@ namespace Dominion.Common.Entities
         /// </summary>
         public CityCitizenFocus CitizenFocus { get; set; }
 
+        /// <summary>
+        /// Indicates whether the city is being raised by its owner
+        /// A city being raised will stop growing and lose 1 population per turn until it is destroyed
+        /// </summary>
+        public bool IsBeingRaised { get; set; }
+
         public City(Player player, string name, Point location)
         {
             Name = name;
