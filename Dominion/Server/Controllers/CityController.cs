@@ -221,30 +221,85 @@ namespace Dominion.Server.Controllers
         // calculates the income the given city is to earn this turn
         private void CalculateIncome(City city)
         {
-            // reset all totals to zero
+            // reset city income
             city.IncomeGold = 0;
             city.IncomeScience = 0;
-            city.IncomeHappiness = 0;
             city.IncomeProduction = 0;
             city.IncomeFood = 0;
             city.IncomeCulture = 0;
+            city.IncomeFaith = 0;
+            city.IncomeTourism = 0;
 
-            city.Horses = 0;
-            city.Iron = 0;
-            city.Coal = 0;
-            city.Uranium = 0;
-            city.Oil = 0;
+            // building incomes
+            int buildingIncomeGold = 0;
+            int buildingIncomeScience = 0;
+            int buildingIncomeProduction = 0;
+            int buildingIncomeFood = 0;
+            int buildingIncomeCulture = 0;
+            int buildingIncomeFaith = 0;
+            int buildingIncomeTourism = 0;
+
+            // income modifiers
+            float incomeGoldModifier = 0f;
+            float incomeScienceModifier = 0f;
+            float incomeProductionModifier = 0f;
+            float incomeFoodModifier = 0f;
+            float incomeCultureModifier = 0f;
+            float incomeFaithModifier = 0f;
+            float incomeTourismModifier = 0f;
+
+            // yield income
+            int yieldGold = 0;
+            int yieldScience = 0;
+            int yieldProduction = 0;
+            int yieldFood = 0;
+            int yieldCulture = 0;
+            int yieldFaith = 0;
+            int yieldTourism = 0;
+
+            // yield modifiers
+            float yieldGoldModifier = 0f;
+            float yieldScienceModifier = 0f;
+            float yieldProductionModifier = 0f;
+            float yieldFoodModifier = 0f;
+            float yieldCultureModifier = 0f;
+            float yieldFaithModifier = 0f;
+            float yieldTourismModifier = 0f;
 
             // add building income
             foreach (int buildingID in city.Buildings)
             {
+                // get building
                 Building b = Controllers.Factory.Building.GetBuilding(buildingID);
-                city.IncomeGold += b.IncomeGold;
-                city.IncomeScience += b.IncomeScience;
-                city.IncomeHappiness += b.IncomeHappiness;
-                city.IncomeProduction += b.IncomeProduction;
-                city.IncomeFood += b.IncomeFood;
-                city.IncomeCulture += b.IncomeCulture;
+                if (b == null)
+                    continue;
+
+                // track building income
+                buildingIncomeGold += b.IncomeGold;
+                buildingIncomeScience += b.IncomeScience;
+                buildingIncomeProduction += b.IncomeProduction;
+                buildingIncomeFood += b.IncomeFood;
+                buildingIncomeCulture += b.IncomeCulture;
+                buildingIncomeFaith += b.IncomeFaith;
+                buildingIncomeTourism += b.IncomeTourism;
+
+                // track income modifiers
+                incomeGoldModifier *= b.IncomeGoldModifier;
+                incomeScienceModifier *= b.IncomeScienceModifier;
+                incomeProductionModifier *= b.IncomeProductionModifier;
+                incomeFoodModifier *= b.IncomeFoodModifier;
+                incomeCultureModifier *= b.IncomeCultureModifier;
+                incomeFaithModifier *= b.IncomeFaithModifier;
+                incomeTourismModifier *= b.IncomeTourismModifier;
+
+                // track yield modifiers
+                yieldGoldModifier *= b.YieldGoldModifier;
+                yieldScienceModifier *= b.YieldScienceModifier;
+                yieldProductionModifier *= b.YieldProductionModifier;
+                yieldFoodModifier *= b.YieldFoodModifier;
+                yieldCultureModifier *= b.YieldCultureModifier;
+                yieldFaithModifier *= b.YieldFaithModifier;
+                yieldTourismModifier *= b.YieldTourismModifier;
             }
 
             // add tile income
@@ -253,18 +308,39 @@ namespace Dominion.Server.Controllers
                 if (!city.CitizenLocations.Contains(tile.Location))
                     continue;
                 int[] income = tile.GetIncome();
-                city.IncomeGold += income[(int)TileIncomeFormat.Gold];
-                city.IncomeScience += income[(int)TileIncomeFormat.Science];
-                city.IncomeHappiness += income[(int)TileIncomeFormat.Happiness];
-                city.IncomeProduction += income[(int)TileIncomeFormat.Production];
-                city.IncomeFood += income[(int)TileIncomeFormat.Food];
-                city.IncomeCulture += income[(int)TileIncomeFormat.Culture];
-                city.Horses += income[(int)TileIncomeFormat.Horses];
-                city.Iron += income[(int)TileIncomeFormat.Iron];
-                city.Coal += income[(int)TileIncomeFormat.Coal];
-                city.Uranium += income[(int)TileIncomeFormat.Uranium];
-                city.Oil += income[(int)TileIncomeFormat.Oil];
+                yieldGold += income[(int)TileIncomeFormat.Gold];
+                yieldScience += income[(int)TileIncomeFormat.Science];
+                //city.IncomeHappiness += income[(int)TileIncomeFormat.Happiness];
+                yieldProduction += income[(int)TileIncomeFormat.Production];
+                yieldFood += income[(int)TileIncomeFormat.Food];
+                yieldCulture += income[(int)TileIncomeFormat.Culture];
+                yieldFaith += income[(int)TileIncomeFormat.Faith];
+                yieldTourism += income[(int)TileIncomeFormat.Tourism];
+
+                //city.Horses += income[(int)TileIncomeFormat.Horses];
+                //city.Iron += income[(int)TileIncomeFormat.Iron];
+                //city.Coal += income[(int)TileIncomeFormat.Coal];
+                //city.Uranium += income[(int)TileIncomeFormat.Uranium];
+                //city.Oil += income[(int)TileIncomeFormat.Oil];
             }
+
+            // calculate final city income
+            // add building income
+            city.IncomeGold += (int)Math.Round(buildingIncomeGold * incomeGoldModifier);
+            city.IncomeScience += (int)Math.Round(buildingIncomeScience * incomeScienceModifier);
+            city.IncomeProduction += (int)Math.Round(buildingIncomeProduction * incomeProductionModifier);
+            city.IncomeFood += (int)Math.Round(buildingIncomeFood * incomeFoodModifier);
+            city.IncomeCulture += (int)Math.Round(buildingIncomeCulture * incomeCultureModifier);
+            city.IncomeFaith += (int)Math.Round(buildingIncomeFaith * incomeFaithModifier);
+            city.IncomeTourism += (int)Math.Round(buildingIncomeTourism * incomeTourismModifier);
+            // add tile yield
+            city.IncomeGold += (int)Math.Round(yieldGold * yieldGoldModifier);
+            city.IncomeScience += (int)Math.Round(yieldScience * yieldScienceModifier);
+            city.IncomeProduction += (int)Math.Round(yieldProduction * yieldProductionModifier);
+            city.IncomeFood += (int)Math.Round(yieldFood * yieldFoodModifier);
+            city.IncomeCulture += (int)Math.Round(yieldCulture * yieldCultureModifier);
+            city.IncomeFaith += (int)Math.Round(yieldFaith * yieldFaithModifier);
+            city.IncomeTourism += (int)Math.Round(yieldTourism * yieldTourismModifier);
 
             // track each city's culture production indiviually for border growth
             city.Culture += city.IncomeCulture;
@@ -390,7 +466,7 @@ namespace Dominion.Server.Controllers
                     int score = 0;
                     switch (n.Resource)
                     {
-                        case TileResource.None:
+                        case TileResource.Null:
                             break;
                         case TileResource.Horses:
                             score += 5;

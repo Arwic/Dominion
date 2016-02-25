@@ -135,6 +135,16 @@ namespace Dominion.Common.Entities
         public int Culture { get; set; }
 
         /// <summary>
+        /// The amount of faith the city earns per turn
+        /// </summary>
+        public int IncomeFaith { get; set; }
+
+        /// <summary>
+        /// The amount of faith the city earns per turn
+        /// </summary>
+        public int IncomeTourism { get; set; }
+
+        /// <summary>
         /// The amount of horses the city has access to
         /// </summary>
         public int Horses { get; set; }

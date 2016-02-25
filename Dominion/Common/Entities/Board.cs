@@ -360,7 +360,7 @@ namespace Dominion.Common.Entities
 
             ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
-            InstantiateTiles(DimX, DimY, TileResource.None, TileTerrainBase.Sea, TileTerrainFeature.Open, TileImprovment.None);
+            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.Sea, TileTerrainFeature.Open, TileImprovment.Null);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -413,7 +413,7 @@ namespace Dominion.Common.Entities
 
             ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
-            InstantiateTiles(DimX, DimY, TileResource.None, TileTerrainBase.Sea, TileTerrainFeature.Open, TileImprovment.None);
+            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.Sea, TileTerrainFeature.Open, TileImprovment.Null);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -463,7 +463,7 @@ namespace Dominion.Common.Entities
 
             ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
-            InstantiateTiles(DimX, DimY, TileResource.None, TileTerrainBase.Sea, TileTerrainFeature.Open, TileImprovment.None);
+            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.Sea, TileTerrainFeature.Open, TileImprovment.Null);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -512,7 +512,7 @@ namespace Dominion.Common.Entities
 
             ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
-            InstantiateTiles(DimX, DimY, TileResource.None, TileTerrainBase.Sea, TileTerrainFeature.Open, TileImprovment.None);
+            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.Sea, TileTerrainFeature.Open, TileImprovment.Null);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -591,7 +591,7 @@ namespace Dominion.Common.Entities
 
             ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
-            InstantiateTiles(DimX, DimY, TileResource.None, TileTerrainBase.Grassland, TileTerrainFeature.Open, TileImprovment.None);
+            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.Grassland, TileTerrainFeature.Open, TileImprovment.Null);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -637,7 +637,7 @@ namespace Dominion.Common.Entities
 
             ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
-            InstantiateTiles(DimX, DimY, TileResource.None, TileTerrainBase.Grassland, TileTerrainFeature.Open, TileImprovment.None);
+            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.Grassland, TileTerrainFeature.Open, TileImprovment.Null);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -676,7 +676,7 @@ namespace Dominion.Common.Entities
 
             ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
-            InstantiateTiles(DimX, DimY, TileResource.None, TileTerrainBase.Grassland, TileTerrainFeature.Open, TileImprovment.None);
+            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.Grassland, TileTerrainFeature.Open, TileImprovment.Null);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -725,7 +725,7 @@ namespace Dominion.Common.Entities
 
             ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
-            InstantiateTiles(DimX, DimY, TileResource.None, TileTerrainBase.Grassland, TileTerrainFeature.Open, TileImprovment.None);
+            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.Grassland, TileTerrainFeature.Open, TileImprovment.Null);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -738,19 +738,19 @@ namespace Dominion.Common.Entities
             foreach (Tile tile in GetAllTiles())
             {
                 if (!tile.Land)
-                    tile.Improvement = TileImprovment.None;
+                    tile.Improvement = TileImprovment.Null;
 
                 if (tile.TerrainBase == TileTerrainBase.Desert)
-                    tile.Improvement = TileImprovment.None;
+                    tile.Improvement = TileImprovment.Null;
 
                 if (tile.TerrainBase == TileTerrainBase.Snow)
-                    tile.Improvement = TileImprovment.None;
+                    tile.Improvement = TileImprovment.Null;
 
                 if (tile.TerrainBase == TileTerrainBase.Tundra && tile.Improvement == TileImprovment.Jungle)
-                    tile.Improvement = TileImprovment.None;
+                    tile.Improvement = TileImprovment.Null;
 
                 if (tile.TerrainFeature == TileTerrainFeature.Mountain)
-                    tile.Improvement = TileImprovment.None;
+                    tile.Improvement = TileImprovment.Null;
             }
         }
 

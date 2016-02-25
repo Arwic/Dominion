@@ -10,7 +10,7 @@ namespace Dominion.Common.Entities
 {
     public enum TileResource
     {
-        None,
+        Null,
         Horses,
         Iron,
         Coal,
@@ -20,6 +20,7 @@ namespace Dominion.Common.Entities
 
     public enum TileTerrainBase
     {
+        Null,
         Tundra,
         Grassland,
         Desert,
@@ -31,6 +32,7 @@ namespace Dominion.Common.Entities
 
     public enum TileTerrainFeature
     {
+        Null,
         Open,
         River,
         Hill,
@@ -39,14 +41,14 @@ namespace Dominion.Common.Entities
 
     public enum RoadType
     {
-        None,
+        Null,
         Road,
         RailRoad,
     }
 
     public enum TileImprovment
     {
-        None,
+        Null,
         Forest,
         Jungle,
         Mine,
@@ -87,6 +89,8 @@ namespace Dominion.Common.Entities
         Production,
         Food,
         Culture,
+        Faith,
+        Tourism,
         Horses,
         Iron,
         Coal,
@@ -326,7 +330,7 @@ namespace Dominion.Common.Entities
             }
             switch (Improvement)
             {
-                case TileImprovment.None:
+                case TileImprovment.Null:
                     break;
                 case TileImprovment.Forest:
                 case TileImprovment.Jungle:
@@ -377,7 +381,7 @@ namespace Dominion.Common.Entities
             }
             switch (Improvement)
             {
-                case TileImprovment.None:
+                case TileImprovment.Null:
                     break;
                 case TileImprovment.Forest:
                     income[(int)TileIncomeFormat.Food] = 1;

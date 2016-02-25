@@ -9,6 +9,7 @@ namespace Dominion.Common.Entities
 {
     public enum GameEra
     {
+        Null,
         Ancient,
         Classical,
         Medieval,

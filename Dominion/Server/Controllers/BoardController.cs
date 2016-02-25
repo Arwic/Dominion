@@ -179,7 +179,7 @@ namespace Dominion.Server.Controllers
         {
             foreach (Tile tile in GetAllTiles())
             {
-                if (tile.CurrentConstruction != TileImprovment.None)
+                if (tile.CurrentConstruction != TileImprovment.Null)
                 {
                     tile.ConstructionProgress++;
                     if (tile.ConstructionProgress >= tileImprovmentTurnCost) // TODO account for game speed

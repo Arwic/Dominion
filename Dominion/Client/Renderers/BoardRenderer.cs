@@ -400,7 +400,7 @@ namespace Dominion.Client.Renderers
                         tileFeature.Draw(sb, rect, null, color);
                     }
                     // draw the improvment if the tile has one
-                    if (cachedTile.Improvement != TileImprovment.None)
+                    if (cachedTile.Improvement != TileImprovment.Null)
                     {
                         Sprite tileImprovment = improvmentSprites[(int)cachedTile.Improvement];
                         //if (tile.TerrainFeature == TileTerrainFeature.Hill)
@@ -408,7 +408,7 @@ namespace Dominion.Client.Renderers
                         tileImprovment.Draw(sb, rect, null, color);
                     }
                     // draw a resource icon if the tile has a resource
-                    if (cachedTile.Resource != TileResource.None)
+                    if (cachedTile.Resource != TileResource.Null)
                     {
                         Sprite tileResource = resourceSprites[(int)cachedTile.Resource];
                         tileResource.Draw(sb, rect);

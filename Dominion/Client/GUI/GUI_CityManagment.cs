@@ -142,6 +142,10 @@ namespace Dominion.Client.GUI
                 lblGoldValue.Text = $"+{client.SelectedCity.IncomeGold}".ToRichText();
                 Label lblScienceValue = (Label)frmStats.GetChildByName("lblScienceValue");
                 lblScienceValue.Text = $"+{client.SelectedCity.IncomeScience}".ToRichText();
+                Label lblFaithValue = (Label)frmStats.GetChildByName("lblFaithValue");
+                lblFaithValue.Text = $"+{client.SelectedCity.IncomeFaith}".ToRichText();
+                Label lblTourismValue = (Label)frmStats.GetChildByName("lblTourismValue");
+                lblTourismValue.Text = $"+{client.SelectedCity.IncomeTourism}".ToRichText();
                 Label lblCultureValue = (Label)frmStats.GetChildByName("lblCultureValue");
                 lblCultureValue.Text = $"+{client.SelectedCity.IncomeCulture}".ToRichText();
                 Label lblBorderGrowthValue = (Label)frmStats.GetChildByName("lblBorderGrowthValue");
@@ -318,10 +322,13 @@ namespace Dominion.Client.GUI
             int prodRequired = prod.ProductionCost;
             prodRequired -= prod.Progress;
             int requiredTurns = 0;
+            int maxLoops = 300;
             while (prodRequired >= 0)
             {
                 prodRequired -= prodIncome;
                 requiredTurns++;
+                if (requiredTurns > maxLoops)
+                    return -2;
             }
             return requiredTurns;
         }

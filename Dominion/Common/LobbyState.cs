@@ -25,6 +25,7 @@ namespace Dominion.Common
 
     public enum VictoryType
     {
+        Null,
         Domination,
         Science,
         Culture,
