@@ -203,22 +203,22 @@ namespace Dominion.Client.GUI
                     {
                         switch (tile.TerrainBase)
                         {
-                            case TileTerrainBase.Tundra:
+                            case TileTerrainBase.TUNDRA:
                                 DrawTile(sb, tile, Color.DarkGray, Color.Black);
                                 break;
-                            case TileTerrainBase.Grassland:
+                            case TileTerrainBase.GRASSLAND:
                                 DrawTile(sb, tile, Color.ForestGreen, Color.Black);
                                 break;
-                            case TileTerrainBase.Desert:
+                            case TileTerrainBase.DESERT:
                                 DrawTile(sb, tile, Color.NavajoWhite, Color.Black);
                                 break;
-                            case TileTerrainBase.Sea:
+                            case TileTerrainBase.SEA:
                                 DrawTile(sb, tile, Color.RoyalBlue, Color.Black);
                                 break;
-                            case TileTerrainBase.Coast:
+                            case TileTerrainBase.COAST:
                                 DrawTile(sb, tile, Color.LightSeaGreen, Color.Black);
                                 break;
-                            case TileTerrainBase.Snow:
+                            case TileTerrainBase.SNOW:
                                 DrawTile(sb, tile, Color.Snow, Color.Black);
                                 break;
                         }

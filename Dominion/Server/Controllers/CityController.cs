@@ -468,19 +468,19 @@ namespace Dominion.Server.Controllers
                     {
                         case TileResource.Null:
                             break;
-                        case TileResource.Horses:
+                        case TileResource.HORSES:
                             score += 5;
                             break;
-                        case TileResource.Iron:
+                        case TileResource.IRON:
                             score += 6;
                             break;
-                        case TileResource.Coal:
+                        case TileResource.COAL:
                             score += 7;
                             break;
-                        case TileResource.Uranium:
+                        case TileResource.URANIUM:
                             score += 9;
                             break;
-                        case TileResource.Oil:
+                        case TileResource.OIL:
                             score += 8;
                             break;
                         default:
@@ -488,21 +488,21 @@ namespace Dominion.Server.Controllers
                     }
                     switch (n.TerrainBase)
                     {
-                        case TileTerrainBase.Tundra:
+                        case TileTerrainBase.TUNDRA:
                             score -= 3;
                             break;
-                        case TileTerrainBase.Grassland:
+                        case TileTerrainBase.GRASSLAND:
                             score += 1;
                             break;
-                        case TileTerrainBase.Desert:
+                        case TileTerrainBase.DESERT:
                             break;
-                        case TileTerrainBase.Sea:
+                        case TileTerrainBase.SEA:
                             score -= 1;
                             break;
-                        case TileTerrainBase.Coast:
+                        case TileTerrainBase.COAST:
                             score -= 1;
                             break;
-                        case TileTerrainBase.Snow:
+                        case TileTerrainBase.SNOW:
                             score -= 4;
                             break;
                         default:
@@ -510,13 +510,13 @@ namespace Dominion.Server.Controllers
                     }
                     switch (n.Improvement)
                     {
-                        case TileImprovment.Forest:
-                        case TileImprovment.Jungle:
+                        case TileImprovment.FOREST:
+                        case TileImprovment.JUNGLE:
                             score += 1;
                             break;
-                        case TileImprovment.Mine:
-                        case TileImprovment.Plantation:
-                        case TileImprovment.Farm:
+                        case TileImprovment.MINE:
+                        case TileImprovment.PLANTATION:
+                        case TileImprovment.FARM:
                             score += 2;
                             break;
                     }

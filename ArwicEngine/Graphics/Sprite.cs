@@ -11,24 +11,12 @@ using System.Collections.Generic;
 
 namespace ArwicEngine.Graphics
 {
-    public struct SpriteLayer
-    {
-        public Texture2D Texture;
-        public Vector2 Translation;
-        public Rectangle Size;
-        public Vector2 Scale;
-        public Vector2 Origin;
-        public float Rotation;
-        public Color Color;
-    }
-
     public class Sprite
     {
         private enum SpriteType
         {
             Atlas,
             Texture,
-            LayeredTexture
         }
 
         public const string DEFAULT_TEXTURE_PATH = "Graphics/Util/Default";
@@ -37,7 +25,7 @@ namespace ArwicEngine.Graphics
         /// Gets the texture used to render the sprite, will return the first texture of a layered texture sprites
         /// Valid only for texture and layered texture sprites
         /// </summary>
-        public Texture2D Texture => Layers[0].Texture;
+        public Texture2D Texture { get; set; }
 
         /// <summary>
         /// Gets the path of the texture's file on disk
@@ -45,12 +33,6 @@ namespace ArwicEngine.Graphics
         /// </summary>
         public string Path { get; }
         
-        /// <summary>
-        /// Gets the layers used to render the sprite, order matters
-        /// Valid only for txture amd layered texture sprites
-        /// </summary>
-        public List<SpriteLayer> Layers { get; }
-
         /// <summary>
         /// Gets the atlas used to render the sprite
         /// Valid only for atlas sprites
@@ -61,7 +43,7 @@ namespace ArwicEngine.Graphics
         /// Gets or sets the index that will be used to get the texture
         /// Valid only for atlas sprites
         /// </summary>
-        public int AtlasIndex { get; private set; }
+        public string AtlasKey { get; private set; }
 
         /// <summary>
         /// Gets the width of the sprite
@@ -72,7 +54,7 @@ namespace ArwicEngine.Graphics
             get
             {
                 if (spriteType == SpriteType.Atlas)
-                    return Atlas.Width;
+                    return Atlas.SpriteDefinitions[AtlasKey].Width;
                 return Texture.Width;
             }
         }
@@ -86,45 +68,12 @@ namespace ArwicEngine.Graphics
             get
             {
                 if (spriteType == SpriteType.Atlas)
-                    return Atlas.Height;
+                    return Atlas.SpriteDefinitions[AtlasKey].Height;
                 return Texture.Height;
             }
         }
 
         private SpriteType spriteType;
-
-        /// <summary>
-        /// Creates a new sprite in layered texture mode
-        /// </summary>
-        /// <param name="cm">content manager</param>
-        /// <param name="paths">ordered paths to files</param>
-        /// <param name="translations">ordered layer transforms</param>
-        /// <param name="translations">ordered layer sizes</param>
-        /// <param name="scales">ordered layer scales</param>
-        /// <param name="origins">ordered layer rotation origins</param>
-        /// <param name="rotations">ordered layer rotations</param>
-        public Sprite(ContentManager cm, string[] paths, Vector2[] translations, Rectangle[] sizes, Vector2[] scales, Vector2[] origins, float[] rotations)
-        {
-            Layers = new List<SpriteLayer>();
-            for (int i = 0; i < paths.Length; i++)
-            {
-                SpriteLayer layer = new SpriteLayer();
-                try { layer.Texture = cm.Load<Texture2D>(paths[i]); }
-                catch (Exception)
-                {
-                    try { layer.Texture = cm.Load<Texture2D>(DEFAULT_TEXTURE_PATH); }
-                    catch (Exception e) { throw new Exception($"Error loading default texture, {e.Message}"); }
-                }
-                layer.Color = Color.White;
-                layer.Translation = translations[i];
-                layer.Size = sizes[i];
-                layer.Scale = scales[i];
-                layer.Origin = origins[i];
-                layer.Rotation = rotations[i];
-                Layers.Add(layer);
-            }
-            spriteType = SpriteType.LayeredTexture;
-        }
 
         /// <summary>
         /// Creates a new sprite in texture mode
@@ -134,16 +83,12 @@ namespace ArwicEngine.Graphics
         public Sprite(string path)
         {
             Path = path;
-            Layers = new List<SpriteLayer>();
-            SpriteLayer layer = new SpriteLayer();
-            try { layer.Texture = Engine.Instance.Content.Load<Texture2D>(path); }
+            try { Texture = Engine.Instance.Content.Load<Texture2D>(path); }
             catch (Exception)
             {
-                try { layer.Texture = Engine.Instance.Content.Load<Texture2D>(DEFAULT_TEXTURE_PATH); }
+                try { Texture = Engine.Instance.Content.Load<Texture2D>(DEFAULT_TEXTURE_PATH); }
                 catch (Exception e) { throw new Exception($"Error loading default texture, {e.Message}"); }
             }
-            layer.Color = Color.White;
-            Layers.Add(layer);
             spriteType = SpriteType.Texture;
         }
 
@@ -152,10 +97,10 @@ namespace ArwicEngine.Graphics
         /// </summary>
         /// <param name="atlas">atlas to index</param>
         /// <param name="index">index of the desired icon</param>
-        public Sprite(SpriteAtlas atlas, int index)
+        public Sprite(SpriteAtlas atlas, string key)
         {
             Atlas = atlas;
-            AtlasIndex = index;
+            AtlasKey = key;
             spriteType = SpriteType.Atlas;
         }
 
@@ -177,27 +122,11 @@ namespace ArwicEngine.Graphics
             switch (spriteType)
             {
                 case SpriteType.Atlas:
-                    Atlas.Draw(sb, AtlasIndex, dest, source, color);
+                    Atlas.Draw(sb, AtlasKey, dest, source, color, scale, origin, rotation);
                     break;
                 case SpriteType.Texture:
                     if (source == null) source = Texture.Bounds;
                     sb.Draw(Texture, null, dest, source, origin, rotation, scale, color);
-                    break;
-                case SpriteType.LayeredTexture:
-                    if (source == null) source = Texture.Bounds;
-                    foreach (SpriteLayer layer in Layers)
-                    {
-                        Rectangle finalDest = new Rectangle(
-                            dest.X + (int)layer.Translation.X,
-                            dest.Y + (int)layer.Translation.Y,
-                            layer.Size.Width * (int)(0.01 * dest.Width),
-                            layer.Size.Height * (int)(0.01 * dest.Height));
-                        origin += layer.Origin;
-                        rotation += layer.Rotation;
-                        scale += layer.Scale;
-                        if (color == Color.White) color = layer.Color;
-                        sb.Draw(layer.Texture, null, finalDest, source, origin, rotation, scale, color);
-                    }
                     break;
             }
         }
@@ -226,33 +155,14 @@ namespace ArwicEngine.Graphics
             {
                 case SpriteType.Atlas:
                     if (destEdge == null) destEdge = dest.Width / 3;
-                    if (sourceEdge == null) sourceEdge = Atlas.ItemDim / 3;
-                    if (source == null) source = new Rectangle(0, 0, Atlas.ItemDim, Atlas.ItemDim);
-                    Atlas.DrawNineCut(sb, AtlasIndex, dest, source, color, destEdge, sourceEdge);
+                    if (sourceEdge == null) sourceEdge = Width / 3;
+                    Atlas.DrawNineCut(sb, AtlasKey, dest, source, color, destEdge, sourceEdge);
                     break;
                 case SpriteType.Texture:
                     if (destEdge == null) destEdge = 15;
                     if (sourceEdge == null) sourceEdge = Texture.Width / 3;
                     if (source == null) source = Texture.Bounds;
                     DrawTextureNineCut(sb, Texture, color.Value, destEdge.Value, sourceEdge.Value, dest, source.Value);
-                    break;
-                case SpriteType.LayeredTexture:
-                    if (destEdge == null) destEdge = 15;
-                    foreach (SpriteLayer layer in Layers)
-                    {
-                        if (sourceEdge == null) sourceEdge = Texture.Width / 3;
-                        if (source == null) source = Texture.Bounds;
-                        Rectangle finalDest = new Rectangle(
-                            dest.X + (int)layer.Translation.X,
-                            dest.Y + (int)layer.Translation.Y,
-                            layer.Size.Width * (int)(0.01 * dest.Width),
-                            layer.Size.Height * (int)(0.01 * dest.Height));
-                        origin += layer.Origin;
-                        rotation += layer.Rotation;
-                        scale += layer.Scale;
-                        if (color == Color.White) color = layer.Color;
-                        DrawTextureNineCut(sb, layer.Texture, color.Value, destEdge.Value, sourceEdge.Value, finalDest, source.Value);
-                    }
                     break;
             }
         }

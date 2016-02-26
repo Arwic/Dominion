@@ -262,7 +262,7 @@ namespace Dominion.Common.Entities
             {
                 ConsoleManager.Instance.WriteLine("Seeding forests", MsgType.ServerInfo);
                 sw.Start();
-                SeedImprovment(forestSeedChance, forestSpreadChance, TileImprovment.Forest, true);
+                SeedImprovment(forestSeedChance, forestSpreadChance, TileImprovment.FOREST, true);
                 sw.Stop();
                 ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
             }
@@ -280,7 +280,7 @@ namespace Dominion.Common.Entities
             {
                 ConsoleManager.Instance.WriteLine("Removing small deserts", MsgType.ServerInfo);
                 sw.Start();
-                ReplaceSmallTerrain(minimumDesertSize, TileTerrainBase.Desert, TileTerrainBase.Grassland, true);
+                ReplaceSmallTerrain(minimumDesertSize, TileTerrainBase.DESERT, TileTerrainBase.GRASSLAND, true);
                 sw.Stop();
                 ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
             }
@@ -360,7 +360,7 @@ namespace Dominion.Common.Entities
 
             ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
-            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.Sea, TileTerrainFeature.Open, TileImprovment.Null);
+            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.SEA, TileTerrainFeature.OPEN, TileImprovment.Null);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -368,13 +368,13 @@ namespace Dominion.Common.Entities
             sw.Start();
             Tile centre = GetTile(DimX / 2, DimY / 2);
             for (int i = 0; i < landSpreadItterations; i++)
-                SpreadTerrainRecursive(centre, landSpreadChance, TileTerrainBase.Grassland);
+                SpreadTerrainRecursive(centre, landSpreadChance, TileTerrainBase.GRASSLAND);
             Tile centreLeft = GetTile(DimX / 2 - landSeedOffset, DimY / 2);
             for (int i = 0; i < landSpreadItterations; i++)
-                SpreadTerrainRecursive(centreLeft, landSpreadChance, TileTerrainBase.Grassland);
+                SpreadTerrainRecursive(centreLeft, landSpreadChance, TileTerrainBase.GRASSLAND);
             Tile centreRight = GetTile(DimX / 2 + landSeedOffset, DimY / 2);
             for (int i = 0; i < landSpreadItterations; i++)
-                SpreadTerrainRecursive(centreRight, landSpreadChance, TileTerrainBase.Grassland);
+                SpreadTerrainRecursive(centreRight, landSpreadChance, TileTerrainBase.GRASSLAND);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -413,7 +413,7 @@ namespace Dominion.Common.Entities
 
             ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
-            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.Sea, TileTerrainFeature.Open, TileImprovment.Null);
+            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.SEA, TileTerrainFeature.OPEN, TileImprovment.Null);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -423,7 +423,7 @@ namespace Dominion.Common.Entities
             {
                 if (RandomHelper.Roll(landSeedChance))
                     continue;
-                SpreadTerrainRecursive(tile, landSpreadChance, TileTerrainBase.Grassland);
+                SpreadTerrainRecursive(tile, landSpreadChance, TileTerrainBase.GRASSLAND);
             }
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
@@ -463,7 +463,7 @@ namespace Dominion.Common.Entities
 
             ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
-            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.Sea, TileTerrainFeature.Open, TileImprovment.Null);
+            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.SEA, TileTerrainFeature.OPEN, TileImprovment.Null);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -471,10 +471,10 @@ namespace Dominion.Common.Entities
             sw.Start();
             Tile centreLeft = GetTile(DimX / 2 - landSeedOffset, DimY / 2);// - (int)(DimY * 0.2));
             for (int i = 0; i < landSpreadItterations; i++)
-                SpreadTerrainRecursive(centreLeft, landSpreadChance, TileTerrainBase.Grassland);
+                SpreadTerrainRecursive(centreLeft, landSpreadChance, TileTerrainBase.GRASSLAND);
             Tile centreRight = GetTile(DimX / 2 + landSeedOffset, DimY / 2);// - (int)(DimY * 0.2));
             for (int i = 0; i < landSpreadItterations; i++)
-                SpreadTerrainRecursive(centreRight, landSpreadChance, TileTerrainBase.Grassland);
+                SpreadTerrainRecursive(centreRight, landSpreadChance, TileTerrainBase.GRASSLAND);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -512,7 +512,7 @@ namespace Dominion.Common.Entities
 
             ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
-            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.Sea, TileTerrainFeature.Open, TileImprovment.Null);
+            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.SEA, TileTerrainFeature.OPEN, TileImprovment.Null);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -522,7 +522,7 @@ namespace Dominion.Common.Entities
             for (int y = 0; y < perlinNoise.Length; y++)
                 for (int x = 0; x < perlinNoise[y].Length; x++)
                     if (RandomHelper.Roll(perlinNoise[y][x] * landChanceModifier))
-                        GetTile(x, y).TerrainBase = TileTerrainBase.Grassland;
+                        GetTile(x, y).TerrainBase = TileTerrainBase.GRASSLAND;
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
             
@@ -533,7 +533,7 @@ namespace Dominion.Common.Entities
             HashSet<Tile> checkedTiles = new HashSet<Tile>();
             foreach (Tile tile in GetAllTiles())
             {
-                if (tile.TerrainBase == TileTerrainBase.Grassland && !checkedTiles.Contains(tile))
+                if (tile.TerrainBase == TileTerrainBase.GRASSLAND && !checkedTiles.Contains(tile))
                 {
                     checkedTiles.Add(tile);
                     foreach (Point loc in tile.GetNeighbourTileLocations())
@@ -543,7 +543,7 @@ namespace Dominion.Common.Entities
                             continue;
                         if (!checkedTiles.Contains(n))
                         {
-                            n.TerrainBase = TileTerrainBase.Grassland;
+                            n.TerrainBase = TileTerrainBase.GRASSLAND;
                             checkedTiles.Add(n);
                         }
                     }
@@ -591,7 +591,7 @@ namespace Dominion.Common.Entities
 
             ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
-            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.Grassland, TileTerrainFeature.Open, TileImprovment.Null);
+            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.GRASSLAND, TileTerrainFeature.OPEN, TileImprovment.Null);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -599,10 +599,10 @@ namespace Dominion.Common.Entities
             sw.Start();
             Tile bottomRight = GetTile(DimX - 3, DimY - 3);
             for (int i = 0; i < DimY / seaSpreadIntterations; i++)
-                SpreadTerrainRecursive(bottomRight, seaSpreadChance, TileTerrainBase.Sea);
+                SpreadTerrainRecursive(bottomRight, seaSpreadChance, TileTerrainBase.SEA);
             Tile bottomLessRight = GetTile(DimX - seaSeedOffsets, DimY - 3);
             for (int i = 0; i < DimY / seaSpreadIntterations; i++)
-                SpreadTerrainRecursive(bottomLessRight, seaSpreadChance, TileTerrainBase.Sea);
+                SpreadTerrainRecursive(bottomLessRight, seaSpreadChance, TileTerrainBase.SEA);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -637,7 +637,7 @@ namespace Dominion.Common.Entities
 
             ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
-            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.Grassland, TileTerrainFeature.Open, TileImprovment.Null);
+            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.GRASSLAND, TileTerrainFeature.OPEN, TileImprovment.Null);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -676,7 +676,7 @@ namespace Dominion.Common.Entities
 
             ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
-            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.Grassland, TileTerrainFeature.Open, TileImprovment.Null);
+            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.GRASSLAND, TileTerrainFeature.OPEN, TileImprovment.Null);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -684,13 +684,13 @@ namespace Dominion.Common.Entities
             sw.Start();
             Tile centre = GetTile(DimX / 2, DimY / 2);
             for (int i = 0; i < seaSpreadIntterations; i++)
-                SpreadTerrainRecursive(centre, terrainSpreadChance, TileTerrainBase.Sea);
+                SpreadTerrainRecursive(centre, terrainSpreadChance, TileTerrainBase.SEA);
             Tile centreRight = GetTile(DimX / 2 + seaSeedOffsets, DimY / 2);
             for (int i = 0; i < seaSpreadIntterations; i++)
-                SpreadTerrainRecursive(centreRight, terrainSpreadChance, TileTerrainBase.Sea);
+                SpreadTerrainRecursive(centreRight, terrainSpreadChance, TileTerrainBase.SEA);
             Tile centreLeft = GetTile(DimX / 2 - seaSeedOffsets, DimY / 2);
             for (int i = 0; i < seaSpreadIntterations; i++)
-                SpreadTerrainRecursive(centreLeft, terrainSpreadChance, TileTerrainBase.Sea);
+                SpreadTerrainRecursive(centreLeft, terrainSpreadChance, TileTerrainBase.SEA);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -725,7 +725,7 @@ namespace Dominion.Common.Entities
 
             ConsoleManager.Instance.WriteLine("Initializing board", MsgType.ServerInfo);
             sw.Start();
-            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.Grassland, TileTerrainFeature.Open, TileImprovment.Null);
+            InstantiateTiles(DimX, DimY, TileResource.Null, TileTerrainBase.GRASSLAND, TileTerrainFeature.OPEN, TileImprovment.Null);
             sw.Stop();
             ConsoleManager.Instance.WriteLine($"Time taken, {sw.ElapsedMilliseconds}ms", MsgType.ServerInfo);
 
@@ -740,16 +740,16 @@ namespace Dominion.Common.Entities
                 if (!tile.Land)
                     tile.Improvement = TileImprovment.Null;
 
-                if (tile.TerrainBase == TileTerrainBase.Desert)
+                if (tile.TerrainBase == TileTerrainBase.DESERT)
                     tile.Improvement = TileImprovment.Null;
 
-                if (tile.TerrainBase == TileTerrainBase.Snow)
+                if (tile.TerrainBase == TileTerrainBase.SNOW)
                     tile.Improvement = TileImprovment.Null;
 
-                if (tile.TerrainBase == TileTerrainBase.Tundra && tile.Improvement == TileImprovment.Jungle)
+                if (tile.TerrainBase == TileTerrainBase.TUNDRA && tile.Improvement == TileImprovment.JUNGLE)
                     tile.Improvement = TileImprovment.Null;
 
-                if (tile.TerrainFeature == TileTerrainFeature.Mountain)
+                if (tile.TerrainFeature == TileTerrainFeature.MOUNTAIN)
                     tile.Improvement = TileImprovment.Null;
             }
         }
@@ -777,7 +777,7 @@ namespace Dominion.Common.Entities
                 {
                     while (RandomHelper.Roll(lakeSeedChance))
                     {
-                        SpreadTerrainRecursive(tile, lakeSpreadChance, TileTerrainBase.Coast, true);
+                        SpreadTerrainRecursive(tile, lakeSpreadChance, TileTerrainBase.COAST, true);
                     }
                 }
             }
@@ -820,7 +820,7 @@ namespace Dominion.Common.Entities
                     foreach (Point loc in tile.GetNeighbourTileLocations())
                     {
                         Tile n = GetTile(loc);
-                        n.TerrainBase = TileTerrainBase.Grassland;
+                        n.TerrainBase = TileTerrainBase.GRASSLAND;
                         tilesChecked.Add(n);
                     }
                     tilesChecked.Add(tile);
@@ -853,7 +853,7 @@ namespace Dominion.Common.Entities
             if (tile == null || !tile.Land)
                 return;
 
-            tile.TerrainFeature = TileTerrainFeature.Mountain;
+            tile.TerrainFeature = TileTerrainFeature.MOUNTAIN;
 
             if (RandomHelper.Roll(spreadChance))
             {
@@ -914,7 +914,7 @@ namespace Dominion.Common.Entities
                 if (tile.Land)
                 {
                     if (RandomHelper.Roll(seedChance))
-                        SpreadTerrainRecursive(tile, spreadChance, TileTerrainBase.Desert, true);
+                        SpreadTerrainRecursive(tile, spreadChance, TileTerrainBase.DESERT, true);
                 }
             }
         }
@@ -931,7 +931,7 @@ namespace Dominion.Common.Entities
             if (tile == null || !tile.Land)
                 return;
 
-            tile.TerrainFeature = TileTerrainFeature.Hill;
+            tile.TerrainFeature = TileTerrainFeature.HILL;
 
             if (RandomHelper.Roll(spreadChance))
             {
@@ -985,7 +985,7 @@ namespace Dominion.Common.Entities
                     //ConsoleManager.Instance.WriteLine($"Removing water body of size {water.Count}", MsgType.ServerInfo);
                     foreach (Tile waterTile in water)
                     {
-                        waterTile.TerrainBase = TileTerrainBase.Grassland;
+                        waterTile.TerrainBase = TileTerrainBase.GRASSLAND;
                     }
                 }
                 else
@@ -1012,7 +1012,7 @@ namespace Dominion.Common.Entities
                     //ConsoleManager.Instance.WriteLine($"Removing island of size {land.Count}", MsgType.ServerInfo);
                     foreach (Tile landTile in land)
                     {
-                        landTile.TerrainBase = TileTerrainBase.Sea;
+                        landTile.TerrainBase = TileTerrainBase.SEA;
                     }
                 }
                 else
@@ -1367,7 +1367,7 @@ namespace Dominion.Common.Entities
                     {
                         Tile n = GetTile(loc);
                         if (n != null && n.Land)
-                            tile.TerrainBase = TileTerrainBase.Coast;
+                            tile.TerrainBase = TileTerrainBase.COAST;
                     }
                 }
             }
@@ -1383,7 +1383,7 @@ namespace Dominion.Common.Entities
                 {
                     Tile tile = GetTile(x, y);
                     if (tile.Land)
-                        SpreadTerrainRecursive(tile, 0.05, TileTerrainBase.Snow, true);
+                        SpreadTerrainRecursive(tile, 0.05, TileTerrainBase.SNOW, true);
                 }
             }
             // Snow bottom
@@ -1393,7 +1393,7 @@ namespace Dominion.Common.Entities
                 {
                     Tile tile = GetTile(x, y);
                     if (tile.Land)
-                        SpreadTerrainRecursive(tile, 0.05, TileTerrainBase.Snow, true);
+                        SpreadTerrainRecursive(tile, 0.05, TileTerrainBase.SNOW, true);
                 }
             }
         }
@@ -1408,7 +1408,7 @@ namespace Dominion.Common.Entities
                 {
                     Tile tile = GetTile(x, y);
                     if (tile.Land)
-                        SpreadTerrainRecursive(tile, 0.5, TileTerrainBase.Tundra, true);
+                        SpreadTerrainRecursive(tile, 0.5, TileTerrainBase.TUNDRA, true);
                 }
             }
             // Tundra bottom
@@ -1418,7 +1418,7 @@ namespace Dominion.Common.Entities
                 {
                     Tile tile = GetTile(x, y);
                     if (tile.Land)
-                        SpreadTerrainRecursive(tile, 0.5, TileTerrainBase.Tundra, true);
+                        SpreadTerrainRecursive(tile, 0.5, TileTerrainBase.TUNDRA, true);
                 }
             }
         }

@@ -11,50 +11,50 @@ namespace Dominion.Common.Entities
     public enum TileResource
     {
         Null,
-        Horses,
-        Iron,
-        Coal,
-        Uranium,
-        Oil
+        HORSES,
+        IRON,
+        COAL,
+        URANIUM,
+        OIL
     }
 
     public enum TileTerrainBase
     {
         Null,
-        Tundra,
-        Grassland,
-        Desert,
-        Sea,
-        Coast,
-        Snow,
-        Plains
+        TUNDRA,
+        GRASSLAND,
+        DESERT,
+        SEA,
+        COAST,
+        SNOW,
+        PLAINS
     }
 
     public enum TileTerrainFeature
     {
         Null,
-        Open,
-        River,
-        Hill,
-        Mountain,
+        OPEN,
+        RIVER,
+        HILL,
+        MOUNTAIN,
     }
 
     public enum RoadType
     {
         Null,
-        Road,
-        RailRoad,
+        ROAD,
+        RAILROAD,
     }
 
     public enum TileImprovment
     {
         Null,
-        Forest,
-        Jungle,
-        Mine,
-        Plantation,
-        Farm,
-        TradingPost,
+        FOREST,
+        JUNGLE,
+        MINE,
+        PLANTATION,
+        FARM,
+        TRADINGPOST,
         Quarry,
         Pasture,
         OffshorePlatform,
@@ -169,8 +169,8 @@ namespace Dominion.Common.Entities
             {
                 switch (TerrainBase)
                 {
-                    case TileTerrainBase.Sea:
-                    case TileTerrainBase.Coast:
+                    case TileTerrainBase.SEA:
+                    case TileTerrainBase.COAST:
                         return false;
                 }
                 return true;
@@ -305,42 +305,42 @@ namespace Dominion.Common.Entities
             int cost = 0;
             switch (TerrainBase)
             {
-                case TileTerrainBase.Tundra:
-                case TileTerrainBase.Grassland:
-                case TileTerrainBase.Desert:
-                case TileTerrainBase.Snow:
+                case TileTerrainBase.TUNDRA:
+                case TileTerrainBase.GRASSLAND:
+                case TileTerrainBase.DESERT:
+                case TileTerrainBase.SNOW:
                     cost += 1;
                     break;
-                case TileTerrainBase.Sea:
-                case TileTerrainBase.Coast:
+                case TileTerrainBase.SEA:
+                case TileTerrainBase.COAST:
                     return -1;
             }
             switch (TerrainFeature)
             {
-                case TileTerrainFeature.Open:
+                case TileTerrainFeature.OPEN:
                     break;
-                case TileTerrainFeature.River:
+                case TileTerrainFeature.RIVER:
                     cost += 1;
                     break;
-                case TileTerrainFeature.Hill:
+                case TileTerrainFeature.HILL:
                     cost += 2;
                     break;
-                case TileTerrainFeature.Mountain:
+                case TileTerrainFeature.MOUNTAIN:
                     return -1;
             }
             switch (Improvement)
             {
                 case TileImprovment.Null:
                     break;
-                case TileImprovment.Forest:
-                case TileImprovment.Jungle:
+                case TileImprovment.FOREST:
+                case TileImprovment.JUNGLE:
                     cost += 1;
                     break;
-                case TileImprovment.Mine:
+                case TileImprovment.MINE:
                     break;
-                case TileImprovment.Plantation:
+                case TileImprovment.PLANTATION:
                     break;
-                case TileImprovment.Farm:
+                case TileImprovment.FARM:
                     break;
             }
             return cost;
@@ -355,65 +355,65 @@ namespace Dominion.Common.Entities
             int[] income = new int[Enum.GetValues(typeof(TileIncomeFormat)).Length];
             switch (TerrainBase)
             {
-                case TileTerrainBase.Grassland:
+                case TileTerrainBase.GRASSLAND:
                     income[(int)TileIncomeFormat.Food] = 2;
                     break;
-                case TileTerrainBase.Tundra:
-                case TileTerrainBase.Sea:
-                case TileTerrainBase.Coast:
+                case TileTerrainBase.TUNDRA:
+                case TileTerrainBase.SEA:
+                case TileTerrainBase.COAST:
                     income[(int)TileIncomeFormat.Food] = 1;
                     break;
-                case TileTerrainBase.Desert:
-                case TileTerrainBase.Snow:
+                case TileTerrainBase.DESERT:
+                case TileTerrainBase.SNOW:
                     break;
             }
             switch (TerrainFeature)
             {
-                case TileTerrainFeature.Open:
+                case TileTerrainFeature.OPEN:
                     break;
-                case TileTerrainFeature.River:
+                case TileTerrainFeature.RIVER:
                     break;
-                case TileTerrainFeature.Hill:
+                case TileTerrainFeature.HILL:
                     income[(int)TileIncomeFormat.Production] += 2;
                     break;
-                case TileTerrainFeature.Mountain:
+                case TileTerrainFeature.MOUNTAIN:
                     return new int[Enum.GetValues(typeof(TileIncomeFormat)).Length];
             }
             switch (Improvement)
             {
                 case TileImprovment.Null:
                     break;
-                case TileImprovment.Forest:
+                case TileImprovment.FOREST:
                     income[(int)TileIncomeFormat.Food] = 1;
                     income[(int)TileIncomeFormat.Production] = 1;
                     break;
-                case TileImprovment.Jungle:
+                case TileImprovment.JUNGLE:
                     income[(int)TileIncomeFormat.Food] = 1;
                     income[(int)TileIncomeFormat.Production] = -1;
                     break;
-                case TileImprovment.Mine:
+                case TileImprovment.MINE:
                     break;
-                case TileImprovment.Plantation:
+                case TileImprovment.PLANTATION:
                     break;
-                case TileImprovment.Farm:
+                case TileImprovment.FARM:
                     income[(int)TileIncomeFormat.Food] += 1;
                     break;
             }
             switch (Resource)
             {
-                case TileResource.Horses:
+                case TileResource.HORSES:
                     income[(int)TileIncomeFormat.Horses] += ResourceQuantity;
                     break;
-                case TileResource.Iron:
+                case TileResource.IRON:
                     income[(int)TileIncomeFormat.Iron] += ResourceQuantity;
                     break;
-                case TileResource.Coal:
+                case TileResource.COAL:
                     income[(int)TileIncomeFormat.Coal] += ResourceQuantity;
                     break;
-                case TileResource.Uranium:
+                case TileResource.URANIUM:
                     income[(int)TileIncomeFormat.Uranium] += ResourceQuantity;
                     break;
-                case TileResource.Oil:
+                case TileResource.OIL:
                     income[(int)TileIncomeFormat.Oil] += ResourceQuantity;
                     break;
             }

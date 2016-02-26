@@ -301,7 +301,7 @@ namespace Dominion.Server.Controllers
                         RangedAttack(unit, cityTarget);
                     break;
                 case UnitCommandID.BuildImprovment_Farm:
-                    Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.Farm);
+                    Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.FARM);
                     break;
                 case UnitCommandID.BuildImprovment_Fort:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.Fort);
@@ -310,10 +310,10 @@ namespace Dominion.Server.Controllers
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.LumberMill);
                     break;
                 case UnitCommandID.BuildImprovment_Mine:
-                    Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.Mine);
+                    Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.MINE);
                     break;
                 case UnitCommandID.BuildImprovment_TradingPost:
-                    Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.TradingPost);
+                    Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.TRADINGPOST);
                     break;
                 case UnitCommandID.BuildImprovment_Roads:
                     //Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.Roads);
@@ -334,7 +334,7 @@ namespace Dominion.Server.Controllers
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.Pasture);
                     break;
                 case UnitCommandID.BuildImprovment_Plantation:
-                    Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.Plantation);
+                    Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.PLANTATION);
                     break;
                 case UnitCommandID.BuildImprovment_Quarry:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.Quarry);
@@ -427,24 +427,24 @@ namespace Dominion.Server.Controllers
 
             float attackerModifier = 1f;
             // +25% for hills
-            if (Controllers.Board.GetTile(attacker.Location).TerrainFeature == TileTerrainFeature.Hill)
+            if (Controllers.Board.GetTile(attacker.Location).TerrainFeature == TileTerrainFeature.HILL)
                 attackerModifier += 0.25f;
             // +25% for forests
-            if (Controllers.Board.GetTile(attacker.Location).Improvement == TileImprovment.Forest)
+            if (Controllers.Board.GetTile(attacker.Location).Improvement == TileImprovment.FOREST)
                 attackerModifier += 0.25f;
             // +25% for jungles
-            if (Controllers.Board.GetTile(attacker.Location).Improvement == TileImprovment.Jungle)
+            if (Controllers.Board.GetTile(attacker.Location).Improvement == TileImprovment.JUNGLE)
                 attackerModifier += 0.25f;
 
             float defenderModifier = 1f;
             // +25% for hills
-            if (Controllers.Board.GetTile(defender.Location).TerrainFeature == TileTerrainFeature.Hill)
+            if (Controllers.Board.GetTile(defender.Location).TerrainFeature == TileTerrainFeature.HILL)
                 defenderModifier += 0.25f;
             // +25% for forests
-            if (Controllers.Board.GetTile(defender.Location).Improvement == TileImprovment.Forest)
+            if (Controllers.Board.GetTile(defender.Location).Improvement == TileImprovment.FOREST)
                 defenderModifier += 0.25f;
             // +25% for jungles
-            if (Controllers.Board.GetTile(defender.Location).Improvement == TileImprovment.Jungle)
+            if (Controllers.Board.GetTile(defender.Location).Improvement == TileImprovment.JUNGLE)
                 defenderModifier += 0.25f;
 
             attacker.Movement = 0;

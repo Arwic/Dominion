@@ -2,33 +2,76 @@
 // SpriteAtlas.cs
 // This file contains classes that define a 2d sprite atlas
 
+using ArwicEngine.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace ArwicEngine.Graphics
 {
+    public class XmlRectangle
+    {
+        [XmlElement("X")]
+        public int X { get; set; }
+
+        [XmlElement("Y")]
+        public int Y { get; set; }
+
+        [XmlElement("Width")]
+        public int Width { get; set; }
+
+        [XmlElement("Height")]
+        public int Height { get; set; }
+
+        public XmlRectangle(Rectangle xnaRect)
+        {
+            X = xnaRect.X;
+            Y = xnaRect.Y;
+            Width = xnaRect.Width;
+            Height = xnaRect.Height;
+        }
+
+        public XmlRectangle() { }
+    }
+
+    public class SpriteDefinition
+    {
+        [XmlElement("Key")]
+        public string Key { get; set; }
+
+        [XmlElement("Source")]
+        public XmlRectangle XmlSource { get; set; }
+
+        [XmlIgnore]
+        public Rectangle Source => new Rectangle(XmlSource.X, XmlSource.Y, XmlSource.Width, XmlSource.Height);
+
+        public SpriteDefinition(string key, Rectangle source)
+        {
+            Key = key;
+            XmlSource = new XmlRectangle(source);
+        }
+
+        public SpriteDefinition() { }
+    }
+
     public class SpriteAtlas
     {
         /// <summary>
         /// Gets or sets the sprite used as a source
         /// </summary>
-        public Sprite Source { get; private set; }
+        [XmlIgnore]
+        public Sprite BaseTexture { get; private set; }
 
-        /// <summary>
-        /// Gets or sets the width of each sub sprite on the atlas
-        /// </summary>
-        public int Width { get; private set; }
+        [XmlElement("TexturePath")]
+        public string BaseTexturePath { get; set; }
 
-        /// <summary>
-        /// Gets or sets the height of each sub sprite on the atlas
-        /// </summary>
-        public int Height { get; private set; }
+        [XmlIgnore]
+        public Dictionary<string, Rectangle> SpriteDefinitions { get; private set; }
 
-        /// <summary>
-        /// Gets or sets the dimension of each sub sprite on the atlas
-        /// </summary>
-        public int ItemDim { get; private set; }
+        [XmlArray("SpriteDefinitions"), XmlArrayItem(typeof(SpriteDefinition), ElementName = "SpriteDefinition")]
+        public List<SpriteDefinition> RawDefinitions { get; set; }
 
         /// <summary>
         /// Creates a new sprite atlas
@@ -36,12 +79,50 @@ namespace ArwicEngine.Graphics
         /// <param name="cm"></param>
         /// <param name="sourcePath"></param>
         /// <param name="iconDim"></param>
-        public SpriteAtlas(string sourcePath, int iconDim)
+        public SpriteAtlas(string baseTexturePath, Dictionary<string, Rectangle> spriteDefinitions)
         {
-            Source = new Sprite(sourcePath);
-            ItemDim = iconDim;
-            Width = Source.Width / ItemDim;
-            Height = Source.Height / ItemDim;
+            BaseTexturePath = baseTexturePath;
+            SpriteDefinitions = spriteDefinitions;
+            BaseTexture = new Sprite(BaseTexturePath);
+        }
+
+        public SpriteAtlas() { }
+
+        private SpriteAtlas(SpriteAtlas loadedAtlas)
+        {
+            BaseTexturePath = loadedAtlas.BaseTexturePath;
+            SpriteDefinitions = new Dictionary<string, Rectangle>();
+            foreach (SpriteDefinition sdef in loadedAtlas.RawDefinitions)
+                SpriteDefinitions.Add(sdef.Key, sdef.Source);
+            BaseTexture = new Sprite(BaseTexturePath);
+        }
+
+        /// <summary>
+        /// Loads a sprite atlas from a sprite atlas definition xml file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static SpriteAtlas FromFile(string path)
+        {
+            // load the atlas from file
+            SpriteAtlas atlas = SerializationHelper.XmlDeserialize<SpriteAtlas>(path);
+            // return a new atlas based on it
+            return new SpriteAtlas(atlas);
+        }
+
+        /// <summary>
+        /// Saves a sprite atlas to file so it can be loaded later
+        /// </summary>
+        /// <param name="path"></param>
+        public void WriteToFile(string path)
+        {
+            // prepare
+            RawDefinitions = new List<SpriteDefinition>();
+            foreach (KeyValuePair<string, Rectangle> kvp in SpriteDefinitions)
+                RawDefinitions.Add(new SpriteDefinition(kvp.Key, kvp.Value));
+
+            // serialise
+            SerializationHelper.XmlSerialize<SpriteAtlas>(path, this);
         }
 
         /// <summary>
@@ -52,32 +133,22 @@ namespace ArwicEngine.Graphics
         /// <param name="dest"></param>
         /// <param name="source"></param>
         /// <param name="color"></param>
-        public void Draw(SpriteBatch sb, int index, Rectangle dest, Rectangle? source = null, Color? color = null)
+        public void Draw(SpriteBatch sb, string spriteDef, Rectangle dest, Rectangle? source = null, Color? color = null, Vector2? scale = null, Vector2? origin = null, float rotation = 0)
         {
-            if (source == null) source = new Rectangle(0, 0, ItemDim, ItemDim);
+            Rectangle def;
+            bool res = SpriteDefinitions.TryGetValue(spriteDef, out def);
+            if (!res)
+            {
+                ConsoleManager.Instance.WriteLine($"Could not find sprite '{spriteDef}' in '{BaseTexturePath}'");
+                return;
+            }
 
+            if (source == null) source = new Rectangle(0, 0, def.Width, def.Height);
             if (color == null) color = Color.White;
-            int x = 0;
-            int y = 0;
-            int i = index;
-            // calculate the x and y coords on the source sprite
-            if (i < Width)
-            {
-                x = i;
-            }
-            else
-            {
-                int di = i;
-                y = -1;
-                while (di >= 0)
-                {
-                    di -= Width;
-                    y++;
-                }
-                x = i - Width * y;
-            }
-            Rectangle src = new Rectangle(source.Value.X + x * ItemDim, source.Value.Y + y * ItemDim, source.Value.Width, source.Value.Height);
-            Source.Draw(sb, dest, src, color);
+
+            Rectangle finalSource = new Rectangle(def.X + source.Value.X, def.Y + source.Value.Y, source.Value.Width, source.Value.Height);
+
+            BaseTexture.Draw(sb, dest, finalSource, color, scale, origin, rotation);
         }
 
         /// <summary>
@@ -91,34 +162,21 @@ namespace ArwicEngine.Graphics
         /// <param name="color"></param>
         /// <param name="destEdge"></param>
         /// <param name="sourceEdge"></param>
-        public void DrawNineCut(SpriteBatch sb, int index, Rectangle dest, Rectangle? source = null, Color? color = null, int? destEdge = null, int? sourceEdge = null)
+        public void DrawNineCut(SpriteBatch sb, string spriteDef, Rectangle dest, Rectangle? source = null, Color? color = null, int? destEdge = null, int? sourceEdge = null, Vector2? scale = null, Vector2? origin = null, float rotation = 0)
         {
-            if (source == null) source = new Rectangle(0, 0, ItemDim, ItemDim);
-            if (destEdge == null) destEdge = ItemDim;
-            if (sourceEdge == null) sourceEdge = ItemDim / 3;
+            Rectangle def;
+            bool res = SpriteDefinitions.TryGetValue(spriteDef, out def);
+            if (!res)
+            {
+                ConsoleManager.Instance.WriteLine($"Could not find sprite '{spriteDef}' in '{BaseTexturePath}'");
+                return;
+            }
 
-            if (color == null) color = Color.White;
-            int x = 0;
-            int y = 0;
-            int i = index;
-            // calculate the x and y coords on the source sprite
-            if (i < Width)
-            {
-                x = i;
-            }
-            else
-            {
-                int di = i;
-                y = -1;
-                while (di >= 0)
-                {
-                    di -= Width;
-                    y++;
-                }
-                x = i - Width * y;
-            }
-            Rectangle src = new Rectangle(source.Value.X + x * ItemDim, source.Value.Y + y * ItemDim, source.Value.Width, source.Value.Height);
-            Source.DrawNineCut(sb, dest, src, color, destEdge, sourceEdge);
+            if (source == null) source = def;
+
+            Rectangle finalSource = new Rectangle(def.X + source.Value.X, def.Y + source.Value.Y, source.Value.Width, source.Value.Height);
+
+            BaseTexture.DrawNineCut(sb, dest, finalSource, color, destEdge, sourceEdge, scale, origin, rotation);
         }
     }
 }

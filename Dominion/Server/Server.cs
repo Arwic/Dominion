@@ -218,7 +218,7 @@ namespace Dominion.Server
                                 Tile n = controllers.Board.GetTile(nLoc);
                                 if (n == null)
                                     continue;
-                                if (n.TerrainBase == TileTerrainBase.Coast)
+                                if (n.TerrainBase == TileTerrainBase.COAST)
                                 {
                                     biasMet = true;
                                     break;
@@ -236,7 +236,7 @@ namespace Dominion.Server
                             startTile = GetRandomTile();
                             if (!startTile.Land)
                                 continue;
-                            if (startTile.TerrainBase == TileTerrainBase.Desert)
+                            if (startTile.TerrainBase == TileTerrainBase.DESERT)
                                 biasMet = true;
 
                             biasFindAttempts++;
@@ -250,7 +250,7 @@ namespace Dominion.Server
                             startTile = GetRandomTile();
                             if (!startTile.Land)
                                 continue;
-                            if (startTile.Improvement == TileImprovment.Jungle)
+                            if (startTile.Improvement == TileImprovment.JUNGLE)
                                 biasMet = true;
 
                             biasFindAttempts++;
@@ -264,7 +264,7 @@ namespace Dominion.Server
                             startTile = GetRandomTile();
                             if (!startTile.Land)
                                 continue;
-                            if (startTile.Improvement == TileImprovment.Forest)
+                            if (startTile.Improvement == TileImprovment.FOREST)
                                 biasMet = true;
 
                             biasFindAttempts++;
@@ -278,7 +278,7 @@ namespace Dominion.Server
                             startTile = GetRandomTile();
                             if (!startTile.Land)
                                 continue;
-                            if (startTile.TerrainBase == TileTerrainBase.Grassland)
+                            if (startTile.TerrainBase == TileTerrainBase.GRASSLAND)
                                 biasMet = true;
 
                             biasFindAttempts++;
@@ -292,7 +292,7 @@ namespace Dominion.Server
                             startTile = GetRandomTile();
                             if (!startTile.Land)
                                 continue;
-                            if (startTile.TerrainBase == TileTerrainBase.Tundra)
+                            if (startTile.TerrainBase == TileTerrainBase.TUNDRA)
                                 biasMet = true;
 
                             biasFindAttempts++;
@@ -306,7 +306,7 @@ namespace Dominion.Server
                             startTile = GetRandomTile();
                             if (!startTile.Land)
                                 continue;
-                            if (startTile.TerrainBase == TileTerrainBase.Plains)
+                            if (startTile.TerrainBase == TileTerrainBase.PLAINS)
                                 biasMet = true;
 
                             biasFindAttempts++;
@@ -320,7 +320,7 @@ namespace Dominion.Server
                             startTile = GetRandomTile();
                             if (!startTile.Land)
                                 continue;
-                            if (startTile.TerrainFeature == TileTerrainFeature.Hill)
+                            if (startTile.TerrainFeature == TileTerrainFeature.HILL)
                                 biasMet = true;
 
                             biasFindAttempts++;
@@ -341,7 +341,7 @@ namespace Dominion.Server
                                 Tile n = controllers.Board.GetTile(nLoc);
                                 if (n == null)
                                     continue;
-                                if (n.Improvement == TileImprovment.Forest)
+                                if (n.Improvement == TileImprovment.FOREST)
                                 {
                                     forest = true;
                                     break;
@@ -368,7 +368,7 @@ namespace Dominion.Server
                                 Tile n = controllers.Board.GetTile(nLoc);
                                 if (n == null)
                                     continue;
-                                if (n.Improvement == TileImprovment.Jungle)
+                                if (n.Improvement == TileImprovment.JUNGLE)
                                 {
                                     jungle = true;
                                     break;
@@ -395,7 +395,7 @@ namespace Dominion.Server
                                 Tile n = controllers.Board.GetTile(nLoc);
                                 if (n == null)
                                     continue;
-                                if (n.Improvement == TileImprovment.Jungle)
+                                if (n.Improvement == TileImprovment.JUNGLE)
                                 {
                                     forestOrJungle = true;
                                     break;
@@ -422,7 +422,7 @@ namespace Dominion.Server
                                 Tile n = controllers.Board.GetTile(nLoc);
                                 if (n == null)
                                     continue;
-                                if (n.TerrainFeature == TileTerrainFeature.Hill)
+                                if (n.TerrainFeature == TileTerrainFeature.HILL)
                                 {
                                     hill = true;
                                     break;
@@ -449,7 +449,7 @@ namespace Dominion.Server
                                 Tile n = controllers.Board.GetTile(nLoc);
                                 if (n == null)
                                     continue;
-                                if (n.TerrainBase == TileTerrainBase.Tundra)
+                                if (n.TerrainBase == TileTerrainBase.TUNDRA)
                                 {
                                     tundra = true;
                                     break;
