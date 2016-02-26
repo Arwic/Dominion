@@ -17,9 +17,9 @@ namespace Dominion.Client.GUI
         {
             public Button Button { get; set; }
             public RichText Text { get; set; }
-            public Unit Unit { get; }
+            public UnitInstance Unit { get; }
 
-            public UnitListitem(Unit unit)
+            public UnitListitem(UnitInstance unit)
             {
                 Unit = unit;
                 Text = $"{unit.Name}".ToRichText();
@@ -53,10 +53,10 @@ namespace Dominion.Client.GUI
         }
 
         // rebuilds the unit list
-        private void RebuildUnitList(List<Unit> u)
+        private void RebuildUnitList(List<UnitInstance> u)
         {
             unitListItems = new List<IListItem>();
-            foreach (Unit unit in u)
+            foreach (UnitInstance unit in u)
                 unitListItems.Add(new UnitListitem(unit));
         }
 

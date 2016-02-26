@@ -12,9 +12,9 @@ namespace Dominion.Server.Controllers
 {
     public class UnitEventArgs : EventArgs
     {
-        public Unit Unit { get; }
+        public UnitInstance Unit { get; }
 
-        public UnitEventArgs(Unit unit)
+        public UnitEventArgs(UnitInstance unit)
         {
             Unit = unit;
         }
@@ -22,7 +22,7 @@ namespace Dominion.Server.Controllers
 
     public class UnitController : Controller
     {
-        private List<Unit> units = new List<Unit>();
+        private List<UnitInstance> units = new List<UnitInstance>();
 
         /// <summary>
         /// Occurs when a unit is added to the unit controller
@@ -67,12 +67,12 @@ namespace Dominion.Server.Controllers
         /// </summary>
         public override void ProcessTurn()
         {
-            foreach (Unit unit in units)
+            foreach (UnitInstance unit in units)
             {
                 ProcessMovment(unit); // update the units movement
                 BuildUnitCommands(unit); // build a list of commands based on the unit's context
-                unit.Movement = unit.Template.Movement; // reset the units movment points
-                unit.Actions = unit.Template.Actions; // reset the units action points
+                unit.Movement = unit.BaseUnit.Movement; // reset the units movment points
+                unit.Actions = unit.BaseUnit.Actions; // reset the units action points
                 unit.Skipping = false; // remove the skipping flag
             }
         }
@@ -81,7 +81,7 @@ namespace Dominion.Server.Controllers
         /// Gets a list of all units managed by the unit manager
         /// </summary>
         /// <returns></returns>
-        public List<Unit> GetAllUnits()
+        public List<UnitInstance> GetAllUnits()
         {
             return units;
         }
@@ -91,7 +91,7 @@ namespace Dominion.Server.Controllers
         /// </summary>
         /// <param name="playerID"></param>
         /// <returns></returns>
-        public List<Unit> GetPlayerUnits(int playerID)
+        public List<UnitInstance> GetPlayerUnits(int playerID)
         {
             return units.FindAll(u => u.PlayerID == playerID);
         }
@@ -101,7 +101,7 @@ namespace Dominion.Server.Controllers
         /// </summary>
         /// <param name="location"></param>
         /// <returns></returns>
-        public Unit GetUnit(Point location)
+        public UnitInstance GetUnit(Point location)
         {
             return units.Find(u => u.Location == location);
         }
@@ -111,7 +111,7 @@ namespace Dominion.Server.Controllers
         /// </summary>
         /// <param name="instanceID"></param>
         /// <returns></returns>
-        public Unit GetUnit(int instanceID)
+        public UnitInstance GetUnit(int instanceID)
         {
             return units.Find(u => u.InstanceID == instanceID);
         }
@@ -122,9 +122,10 @@ namespace Dominion.Server.Controllers
         /// <param name="unitID"></param>
         /// <param name="playerID"></param>
         /// <param name="location"></param>
-        public void AddUnit(int unitID, int playerID, Point location)
+        public void AddUnit(string unitID, int playerID, Point location)
         {
-            Unit unit = new Unit(Controllers.Factory.Unit, unitID, playerID, location);
+            // TODO unit error!
+            UnitInstance unit = new UnitInstance(Controllers.Data.Unit, unitID, playerID, location);
             units.Add(unit);
 
             OnUnitAdded(new UnitEventArgs(unit));
@@ -134,7 +135,7 @@ namespace Dominion.Server.Controllers
         /// Removes the given unit from the game
         /// </summary>
         /// <param name="unit"></param>
-        public void RemoveUnit(Unit unit)
+        public void RemoveUnit(UnitInstance unit)
         {
             units.Remove(unit);
 
@@ -142,12 +143,12 @@ namespace Dominion.Server.Controllers
         }
 
         // assigns a unit a list of commands that are valid based on its context
-        private void BuildUnitCommands(Unit unit)
+        private void BuildUnitCommands(UnitInstance unit)
         {
             unit.Commands = new List<int>();
-            for (int i = 0; i < unit.Template.Commands.Count; i++)
+            for (int i = 0; i < unit.BaseUnit.Commands.Count; i++)
             {
-                int cmdID = unit.Template.Commands[i];
+                int cmdID = unit.BaseUnit.Commands[i];
                 UnitCommandID cmd = (UnitCommandID)cmdID;
                 switch (cmd)
                 {
@@ -158,6 +159,12 @@ namespace Dominion.Server.Controllers
                     case UnitCommandID.Settle:
                     case UnitCommandID.MeleeAttack:
                     case UnitCommandID.RangedAttack:
+                    case UnitCommandID.BuildImprovment_Academy:
+                    case UnitCommandID.BuildImprovment_Citidel:
+                    case UnitCommandID.BuildImprovment_CustomsHouse:
+                    case UnitCommandID.BuildImprovment_HolySite:
+                    case UnitCommandID.BuildImprovment_Landmark:
+                    case UnitCommandID.BuildImprovment_Manufactory:
                         unit.Commands.Add(cmdID);
                         break;
                     case UnitCommandID.BuildImprovment_Farm:
@@ -211,36 +218,12 @@ namespace Dominion.Server.Controllers
                         if (Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetNode((int)TechNodes.Masonry).Unlocked)
                             unit.Commands.Add(cmdID);
                         break;
-                    case UnitCommandID.BuildImprovment_Academy:
-                        if ((UnitID)unit.UnitID == UnitID.Great_Scientist)
-                            unit.Commands.Add(cmdID);
-                        break;
-                    case UnitCommandID.BuildImprovment_Citidel:
-                        if ((UnitID)unit.UnitID == UnitID.Great_General)
-                            unit.Commands.Add(cmdID);
-                        break;
-                    case UnitCommandID.BuildImprovment_CustomsHouse:
-                        if ((UnitID)unit.UnitID == UnitID.Great_Merchant)
-                            unit.Commands.Add(cmdID);
-                        break;
-                    case UnitCommandID.BuildImprovment_HolySite:
-                        if ((UnitID)unit.UnitID == UnitID.Great_Prophet)
-                            unit.Commands.Add(cmdID);
-                        break;
-                    case UnitCommandID.BuildImprovment_Landmark:
-                        if ((UnitID)unit.UnitID == UnitID.Great_Artist)
-                            unit.Commands.Add(cmdID);
-                        break;
-                    case UnitCommandID.BuildImprovment_Manufactory:
-                        if ((UnitID)unit.UnitID == UnitID.Great_Engineer)
-                            unit.Commands.Add(cmdID);
-                        break;
                     case UnitCommandID.RepairImprovement:
-                        if ((UnitID)unit.UnitID == UnitID.Worker && Controllers.Board.GetTile(unit.Location).Pillaged)
+                        if (Controllers.Board.GetTile(unit.Location).Pillaged)
                             unit.Commands.Add(cmdID);
                         break;
                     case UnitCommandID.CleanFallout:
-                        if ((UnitID)unit.UnitID == UnitID.Worker && Controllers.Board.GetTile(unit.Location).Fallout)
+                        if (Controllers.Board.GetTile(unit.Location).Fallout)
                             unit.Commands.Add(cmdID);
                         break;
                 }
@@ -257,11 +240,11 @@ namespace Dominion.Server.Controllers
             if (cmd.TileLocation != new Point(-1, -1))
                 tile = Controllers.Board.GetTile(cmd.TileLocation);
 
-            Unit unit = GetUnit(cmd.UnitInstanceID);
+            UnitInstance unit = GetUnit(cmd.UnitInstanceID);
             if (unit == null)
                 return;
 
-            Unit unitTarget = null;
+            UnitInstance unitTarget = null;
             if (tile != null)
                 unitTarget = GetUnit(tile.Location);
 
@@ -377,7 +360,7 @@ namespace Dominion.Server.Controllers
         /// Moves the unit along its movment queue for as long as its movement points allow
         /// </summary>
         /// <param name="unit"></param>
-        private void ProcessMovment(Unit unit)
+        private void ProcessMovment(UnitInstance unit)
         {
             if (unit.MovementQueue == null)
                 return;
@@ -396,7 +379,7 @@ namespace Dominion.Server.Controllers
         /// Puts a unit to sleep
         /// </summary>
         /// <param name="unit"></param>
-        public void SleepUnit(Unit unit)
+        public void SleepUnit(UnitInstance unit)
         {
             unit.Sleeping = true;
         }
@@ -405,13 +388,13 @@ namespace Dominion.Server.Controllers
         /// Flags a unit as not requiring input this turn
         /// </summary>
         /// <param name="unit"></param>
-        public void SkipUnit(Unit unit)
+        public void SkipUnit(UnitInstance unit)
         {
             unit.Skipping = true;
         }
 
         // makes a unit melee attack another
-        private void MeleeAttack(Unit attacker, Unit defender)
+        private void MeleeAttack(UnitInstance attacker, UnitInstance defender)
         {
             if (attacker.Actions <= 0)
             {
@@ -449,12 +432,12 @@ namespace Dominion.Server.Controllers
 
             attacker.Movement = 0;
             attacker.Actions = 0;
-            int attackerTakes = Unit.GetDamageAttackerSuffered(attacker.Template.CombatStrength * attackerModifier,
-                defender.Template.CombatStrength * defenderModifier,
-                attacker.HP, attacker.Template.MaxHP);
-            int defenderTakes = Unit.GetDamageDefenderSuffered(attacker.Template.CombatStrength * attackerModifier,
-                defender.Template.CombatStrength * defenderModifier,
-                attacker.HP, attacker.Template.MaxHP);
+            int attackerTakes = UnitInstance.GetDamageAttackerSuffered(attacker.BaseUnit.CombatStrength * attackerModifier,
+                defender.BaseUnit.CombatStrength * defenderModifier,
+                attacker.HP, attacker.BaseUnit.MaxHP);
+            int defenderTakes = UnitInstance.GetDamageDefenderSuffered(attacker.BaseUnit.CombatStrength * attackerModifier,
+                defender.BaseUnit.CombatStrength * defenderModifier,
+                attacker.HP, attacker.BaseUnit.MaxHP);
 
             attacker.HP -= attackerTakes;
             defender.HP -= defenderTakes;
@@ -473,12 +456,12 @@ namespace Dominion.Server.Controllers
             if (attacker.HP <= 0)
                 RemoveUnit(attacker);
             ConsoleManager.Instance.WriteLine($"{Controllers.Player.GetPlayer(attacker.PlayerID).Name}'s {attacker.Name} is melee attacking {Controllers.Player.GetPlayer(defender.PlayerID).Name}'s {defender.Name}", MsgType.ServerInfo);
-            ConsoleManager.Instance.WriteLine($"attacker had combat strength {attacker.Template.CombatStrength} (+{(attackerModifier - 1) * 100}%) and suffered {attackerTakes}", MsgType.ServerInfo);
-            ConsoleManager.Instance.WriteLine($"defender had modifier of {defender.Template.CombatStrength} (+{(defenderModifier - 1) * 100}%) and suffered {defenderTakes}", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"attacker had combat strength {attacker.BaseUnit.CombatStrength} (+{(attackerModifier - 1) * 100}%) and suffered {attackerTakes}", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"defender had modifier of {defender.BaseUnit.CombatStrength} (+{(defenderModifier - 1) * 100}%) and suffered {defenderTakes}", MsgType.ServerInfo);
         }
 
         // makes a unit melee attack a city
-        private void MeleeAttack(Unit attacker, City defender)
+        private void MeleeAttack(UnitInstance attacker, City defender)
         {
             if (attacker.Actions <= 0)
                 return;
@@ -491,8 +474,8 @@ namespace Dominion.Server.Controllers
 
             attacker.Movement = 0;
             attacker.Actions = 0;
-            attacker.HP -= Unit.GetDamageAttackerSuffered(attacker.Template.CombatStrength, defender.CombatStrength, attacker.HP, attacker.Template.MaxHP);
-            Controllers.City.DamageCity(defender, Unit.GetDamageDefenderSuffered(attacker.Template.CombatStrength, defender.CombatStrength, attacker.HP, attacker.Template.MaxHP));
+            attacker.HP -= UnitInstance.GetDamageAttackerSuffered(attacker.BaseUnit.CombatStrength, defender.Defense, attacker.HP, attacker.BaseUnit.MaxHP);
+            Controllers.City.DamageCity(defender, UnitInstance.GetDamageDefenderSuffered(attacker.BaseUnit.CombatStrength, defender.Defense, attacker.HP, attacker.BaseUnit.MaxHP));
 
             attacker.Actions = 0;
 
@@ -508,34 +491,34 @@ namespace Dominion.Server.Controllers
         }
 
         // makes a unit ranged attack another
-        private void RangedAttack(Unit attacker, Unit defender)
+        private void RangedAttack(UnitInstance attacker, UnitInstance defender)
         {
             if (attacker.PlayerID == defender.PlayerID)
                 return;
 
-            if (Board.HexDistance(attacker.Location, defender.Location) > attacker.Template.Range)
+            if (Board.HexDistance(attacker.Location, defender.Location) > attacker.BaseUnit.Range)
                 return;
 
             attacker.Movement = 0;
             attacker.Actions = 0;
-            defender.HP -= Unit.GetDamageDefenderSuffered(attacker.Template.CombatStrength, defender.Template.CombatStrength, attacker.HP, attacker.Template.MaxHP);
+            defender.HP -= UnitInstance.GetDamageDefenderSuffered(attacker.BaseUnit.CombatStrength, defender.BaseUnit.CombatStrength, attacker.HP, attacker.BaseUnit.MaxHP);
 
             if (defender.HP <= 0)
                 RemoveUnit(defender);
         }
 
         // makes a unit ranged attack a city
-        private void RangedAttack(Unit attacker, City defender)
+        private void RangedAttack(UnitInstance attacker, City defender)
         {
             if (attacker.PlayerID == defender.PlayerID)
                 return;
 
-            if (Board.HexDistance(attacker.Location, defender.Location) > attacker.Template.Range)
+            if (Board.HexDistance(attacker.Location, defender.Location) > attacker.BaseUnit.Range)
                 return;
 
             attacker.Movement = 0;
             attacker.Actions = 0;
-            Controllers.City.DamageCity(defender, Unit.GetDamageDefenderSuffered(attacker.Template.CombatStrength, defender.CombatStrength, attacker.HP, attacker.Template.MaxHP));
+            Controllers.City.DamageCity(defender, UnitInstance.GetDamageDefenderSuffered(attacker.BaseUnit.CombatStrength, defender.Defense, attacker.HP, attacker.BaseUnit.MaxHP));
         }
     }
 }

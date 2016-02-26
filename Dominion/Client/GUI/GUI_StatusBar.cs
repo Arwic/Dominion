@@ -137,35 +137,35 @@ namespace Dominion.Client.GUI
 
             // these resources only appear if the player has some or is in need on some
             // this might cause issues when the player is using all of one resource
-            if (client.Player.Iron > 0)
-                sb.Append($"$(res_iron) <[{Color.Green.ToRichFormat()}]{client.Player.Iron}>");
-            else if (client.Player.Iron < 0)
-                sb.Append($"$(res_iron) <[{Color.Red.ToRichFormat()}]{client.Player.Iron}>");
+            //if (client.Player.Iron > 0)
+            //    sb.Append($"$(res_iron) <[{Color.Green.ToRichFormat()}]{client.Player.Iron}>");
+            //else if (client.Player.Iron < 0)
+            //    sb.Append($"$(res_iron) <[{Color.Red.ToRichFormat()}]{client.Player.Iron}>");
 
-            if (client.Player.Horses > 0)
-                sb.Append($"$(res_horses) <[{Color.Green.ToRichFormat()}]{client.Player.Horses}>");
-            else if (client.Player.Horses < 0)
-                sb.Append($"$(res_horses) <[{Color.Red.ToRichFormat()}]{client.Player.Horses}>");
+            //if (client.Player.Horses > 0)
+            //    sb.Append($"$(res_horses) <[{Color.Green.ToRichFormat()}]{client.Player.Horses}>");
+            //else if (client.Player.Horses < 0)
+            //    sb.Append($"$(res_horses) <[{Color.Red.ToRichFormat()}]{client.Player.Horses}>");
 
-            if (client.Player.Coal > 0)
-                sb.Append($"$(res_coal) <[{Color.Green.ToRichFormat()}]{client.Player.Coal}>");
-            else if (client.Player.Coal < 0)
-                sb.Append($"$(res_coal) <[{Color.Red.ToRichFormat()}]{client.Player.Coal}>");
+            //if (client.Player.Coal > 0)
+            //    sb.Append($"$(res_coal) <[{Color.Green.ToRichFormat()}]{client.Player.Coal}>");
+            //else if (client.Player.Coal < 0)
+            //    sb.Append($"$(res_coal) <[{Color.Red.ToRichFormat()}]{client.Player.Coal}>");
 
-            if (client.Player.Oil > 0)
-                sb.Append($"$(res_oil) <[{Color.Green.ToRichFormat()}]{client.Player.Oil}>");
-            else if (client.Player.Oil < 0)
-                sb.Append($"$(res_oil) <[{Color.Red.ToRichFormat()}]{client.Player.Oil}>");
+            //if (client.Player.Oil > 0)
+            //    sb.Append($"$(res_oil) <[{Color.Green.ToRichFormat()}]{client.Player.Oil}>");
+            //else if (client.Player.Oil < 0)
+            //    sb.Append($"$(res_oil) <[{Color.Red.ToRichFormat()}]{client.Player.Oil}>");
 
-            if (client.Player.Aluminium > 0)
-                sb.Append($"$(res_aluminium) <[{Color.Green.ToRichFormat()}]{client.Player.Aluminium}>");
-            else if (client.Player.Aluminium < 0)
-                sb.Append($"$(res_aluminium) <[{Color.Red.ToRichFormat()}]{client.Player.Aluminium}>");
+            //if (client.Player.Aluminium > 0)
+            //    sb.Append($"$(res_aluminium) <[{Color.Green.ToRichFormat()}]{client.Player.Aluminium}>");
+            //else if (client.Player.Aluminium < 0)
+            //    sb.Append($"$(res_aluminium) <[{Color.Red.ToRichFormat()}]{client.Player.Aluminium}>");
 
-            if (client.Player.Uranium > 0)
-                sb.Append($"$(res_uranium) <[{Color.Green.ToRichFormat()}]{client.Player.Uranium}>");
-            else if (client.Player.Uranium < 0)
-                sb.Append($"$(res_uranium) <[{Color.Red.ToRichFormat()}]{client.Player.Uranium}>");
+            //if (client.Player.Uranium > 0)
+            //    sb.Append($"$(res_uranium) <[{Color.Green.ToRichFormat()}]{client.Player.Uranium}>");
+            //else if (client.Player.Uranium < 0)
+            //    sb.Append($"$(res_uranium) <[{Color.Red.ToRichFormat()}]{client.Player.Uranium}>");
 
             // format the string
             lblResources.Text = sb.ToString().ToRichText();

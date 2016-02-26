@@ -327,11 +327,11 @@ namespace Dominion.Client.Renderers
 
                     // check if a unit or a city can see the tile
                     bool visible = false;
-                    foreach (Unit unit in client.GetMyUnits())
+                    foreach (UnitInstance unit in client.GetMyUnits())
                     {
-                        if (unit == null || unit.Template == null || cachedTile == null)
+                        if (unit == null || unit.BaseUnit == null || cachedTile == null)
                             continue;
-                        if (Board.HexDistance(unit.Location, cachedTile.Location) <= unit.Template.Sight)
+                        if (Board.HexDistance(unit.Location, cachedTile.Location) <= unit.BaseUnit.Sight)
                         {
                             visible = true;
                             break;
@@ -369,18 +369,18 @@ namespace Dominion.Client.Renderers
                         tileAtlas.Draw(sb, $"TILEIMPROVMENT_{cachedTile.Improvement}", rect, null, color);
                     }
                     // draw a resource icon if the tile has a resource
-                    if (cachedTile.Resource != TileResource.Null)
-                    {
-                        tileAtlas.Draw(sb, $"TILERESOURCE_{cachedTile.Resource}", rect, null, color);
-                    }
+                    //if (cachedTile.Resource != TileResource.Null)
+                    //{
+                    //    tileAtlas.Draw(sb, $"TILERESOURCE_{cachedTile.Resource}", rect, null, color);
+                    //}
                     // draw the city border is the tile belongs to a city
                     if (cachedTile.CityID != -1)
                     {
                         City city = client.Cities.Find(c => c.InstanceID == cachedTile.CityID);
                         if (city != null)
                         {
-                            Color empColorPri = client.EmpireFactory.GetEmpire(city.EmpireID).PrimaryColor;
-                            Color empColorSec = client.EmpireFactory.GetEmpire(city.EmpireID).SecondaryColor;
+                            Color empColorPri = client.EmpireManager.GetEmpire(city.EmpireID).PrimaryColor;
+                            Color empColorSec = client.EmpireManager.GetEmpire(city.EmpireID).SecondaryColor;
                             if (city.PlayerID == client.Player.InstanceID && tileUnderMouse != null && tileUnderMouse.Location == city.Location)
                                 empColorPri = Color.Lerp(empColorPri, Color.White, 0.1f);
                             empColorPri.A = 255;

@@ -1,16 +1,18 @@
 ﻿// Dominion - Copyright (C) Timothy Ings
-// BuildingFactory.cs
-// This file defines classes that define the building factory and its products
+// Building.cs
+// This file defines classes that define a building
 
 using ArwicEngine.TypeConverters;
 using Dominion.Common.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Dominion.Common.Factories
+namespace Dominion.Common.Data
 {
     [TypeConverter(typeof(ExpandableObjectConverter))]
     [Serializable()]
@@ -98,21 +100,21 @@ namespace Dominion.Common.Factories
         [XmlElement("Flat")]
         public bool Flat { get; set; } = false;
 
-        /// <summary>
-        /// If the building is religious
-        /// </summary>
-        [Description("If the building is religious")]
-        [DisplayName("IsReligious"), Browsable(true), Category("General")]
-        [XmlElement("IsReligious")]
-        public bool IsReligious { get; set; } = false;
+        ///// <summary>
+        ///// If the building is religious
+        ///// </summary>
+        //[Description("If the building is religious")]
+        //[DisplayName("IsReligious"), Browsable(true), Category("General")]
+        //[XmlElement("IsReligious")]
+        //public bool IsReligious { get; set; } = false;
 
-        /// <summary>
-        /// If the city is a wonder
-        /// </summary>
-        [Description("If the building is a wonder")]
-        [DisplayName("IsWonder"), Browsable(true), Category("General")]
-        [XmlElement("IsWonder")]
-        public bool IsWonder { get; set; } = false;
+        ///// <summary>
+        ///// If the city is a wonder
+        ///// </summary>
+        //[Description("If the building is a wonder")]
+        //[DisplayName("IsWonder"), Browsable(true), Category("General")]
+        //[XmlElement("IsWonder")]
+        //public bool IsWonder { get; set; } = false;
 
         /// <summary>
         /// If the building hinders enemy unit movment in the city's borders
@@ -655,57 +657,5 @@ namespace Dominion.Common.Factories
         public float YieldTourismModifier { get; set; } = 1f;
 
         public Building() { }
-    }
-
-    [Serializable()]
-    public class BuildingFactory
-    {
-        /// <summary>
-        /// A list of all the buildings
-        /// </summary>
-        [TypeConverter(typeof(ListConverter))]
-        [XmlElement("Building")]
-        public List<Building> Buildings { get; set; }
-
-        public BuildingFactory()
-        {
-            Buildings = new List<Building>();
-        }
-
-        /// <summary>
-        /// Loads a building factory from file
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static BuildingFactory FromFile(string path)
-        {
-            XmlSerializer xmls = new XmlSerializer(typeof(BuildingFactory));
-            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                return (BuildingFactory)xmls.Deserialize(fs);
-            }
-        }
-
-        /// <summary>
-        /// Returns a building with the given id
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public Building GetBuilding(int index)
-        {
-            if (index < 0 || index >= Buildings.Count)
-                throw new Exception("The building factory is out of sync with the server");
-            return Buildings[index];
-        }
-
-        public Building GetBuilding(string name)
-        {
-            return Buildings.Find(b => b.Name == name);
-        }
-
-        public override string ToString()
-        {
-            return "Buildings";
-        }
     }
 }

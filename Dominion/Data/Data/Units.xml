@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--Generated with ArwicXmlEditor (26 Feb 2016 21:24) by Tim Ings-->
+<UnitDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Arwic's Default Unit Data Pack">
+  <Units>
+    <Unit>
+      <GraphicID>-1</GraphicID>
+      <Name>UNIT_SETTLER</Name>
+      <MaxHP>10</MaxHP>
+      <Range>1</Range>
+      <RangedStrength>0</RangedStrength>
+      <CombatStrength>0</CombatStrength>
+      <Movement>2</Movement>
+      <Actions>1</Actions>
+      <Sight>2</Sight>
+      <Commands>
+        <Command>0</Command>
+      </Commands>
+    </Unit>
+  </Units>
+</UnitDataPack>

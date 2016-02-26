@@ -80,7 +80,7 @@ namespace Dominion.Common.Entities
         private int _locationX;
         private int _locationY;
 
-        public UnitCommand(UnitCommandID cmd, Unit unit, Tile tile)
+        public UnitCommand(UnitCommandID cmd, UnitInstance unit, Tile tile)
         {
             CommandID = cmd;
             UnitInstanceID = unit.InstanceID;

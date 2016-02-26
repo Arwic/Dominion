@@ -85,7 +85,7 @@ namespace Dominion.Client.GUI
         private void DrawUnitNamePlates(SpriteBatch sb)
         {
             // draw a name plate for every unit the client can see
-            foreach (Unit unit in client.CachedUnits.ToArray())
+            foreach (UnitInstance unit in client.CachedUnits.ToArray())
             {
                 
                 // darken the nameplate of the player's units if they have no moves/actions left
@@ -110,7 +110,7 @@ namespace Dominion.Client.GUI
                 label.Draw(sb, new Vector2(dest.X + (int)labelMeasure.X / 2 - labelMeasure.X / 2 + unitLabelPadding, dest.Y + labelMeasure.Y / 4));
 
                 // draw the hp bar above the nameplate
-                double hpPercent = unit.HP / (double)unit.Template.MaxHP;
+                double hpPercent = unit.HP / (double)unit.BaseUnit.MaxHP;
                 if (hpPercent < 1)
                 {
                     // colour the bar based on current hp

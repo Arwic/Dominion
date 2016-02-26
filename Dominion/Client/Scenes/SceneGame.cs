@@ -91,7 +91,7 @@ namespace Dominion.Client.Scenes
                         manager.Client.UpdateTileCache(tile.Location);
                     break;
                 case "unit":
-                    foreach (Unit unit in manager.Client.AllUnits)
+                    foreach (UnitInstance unit in manager.Client.AllUnits)
                         manager.Client.UpdateUnitCache(unit);
                     break;
                 case "city":
@@ -260,7 +260,7 @@ namespace Dominion.Client.Scenes
                     if (tile == null)
                         return;
                     // Check if we cicked a unit
-                    Unit unit = manager.Client.GetMyUnits().Find(u => u.Location == tile.Location);
+                    UnitInstance unit = manager.Client.GetMyUnits().Find(u => u.Location == tile.Location);
                     if (unit != null)
                     {
                         manager.Client.SelectedUnit = unit;

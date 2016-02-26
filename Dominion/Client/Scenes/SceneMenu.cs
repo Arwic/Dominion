@@ -9,8 +9,9 @@ using ArwicEngine.Graphics;
 using ArwicEngine.Net;
 using ArwicEngine.Scenes;
 using Dominion.Common;
+using Dominion.Common.Data;
 using Dominion.Common.Entities;
-using Dominion.Common.Factories;
+using Dominion.Common.Managers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -46,15 +47,15 @@ namespace Dominion.Client.Scenes
             public BasicPlayer Player { get; set; }
             public string EmpireName { get; }
 
-            public PlayerListItem(BasicPlayer player, EmpireFactory empireFactory)
+            public PlayerListItem(BasicPlayer player, EmpireManager empireManager)
             {
                 // format the text with the players name, selected empire and an icon indicating the game host
                 Player = player;
                 Color empireColor = Color.White;
-                if (empireFactory != null)
+                if (empireManager != null)
                 {
-                    EmpireName = empireFactory.GetEmpire(Player.EmpireID).Name;
-                    empireColor = empireFactory.GetEmpire(Player.EmpireID).PrimaryColor;
+                    EmpireName = Player.EmpireID;
+                    empireColor = empireManager.GetEmpire(Player.EmpireID).PrimaryColor;
                 }
                 else
                     EmpireName = "FACTORY=NULL";
@@ -105,14 +106,13 @@ namespace Dominion.Client.Scenes
         private TextBox tbPassword;
         private bool host;
         private CancellationTokenSource getWANcancellationToken;
-        private int lastEmpireID;
+        private string lastEmpireID = "NULL";
 
         public SceneMenu(GameManager manager)
             : base ()
         {
             this.manager = manager;
             manager.Client.LobbyStateChanged += Client_LobbyStateChanged;
-            lastEmpireID = -1;
         }
         
         /// <summary>
@@ -433,7 +433,7 @@ namespace Dominion.Client.Scenes
             BasicPlayer myPlayer = e.LobbyState.Players.Find(p => p.InstanceID == manager.Client.Player.InstanceID);
             BasicPlayer hostPlayer = e.LobbyState.Players.Find(p => p.InstanceID == 0);
             frm_lobby.Text = $"{hostPlayer.Name}'s Lobby".ToRichText();
-            lobby_btnEmpireSelect.Text = $"Empire: {manager.Client.EmpireFactory.GetEmpire(myPlayer.EmpireID).Name}".ToRichText();
+            lobby_btnEmpireSelect.Text = $"Empire: {manager.Client.EmpireManager.GetEmpire(myPlayer.EmpireID).Name}".ToRichText();
             lobby_btnWorldSize.Text = $"World Size: {e.LobbyState.WorldSize}".ToRichText();
             lobby_btnWorldType.Text = $"World Type: {e.LobbyState.WorldType}".ToRichText();
             lobby_btnGameSpeed.Text = $"Game Speed: {e.LobbyState.GameSpeed}".ToRichText();
@@ -446,7 +446,7 @@ namespace Dominion.Client.Scenes
                     lobby_cbOtherOptions[i].Value = manager.Client.LobbyState.OtherOptions[i];
 
             if (myPlayer.EmpireID != lastEmpireID)
-                PlayAnthem(manager.Client.EmpireFactory.GetEmpire(myPlayer.EmpireID).Name);
+                PlayAnthem(manager.Client.EmpireManager.GetEmpire(myPlayer.EmpireID).Name);
             lastEmpireID = myPlayer.EmpireID;
         }
         private void Client_LostConnection(object sender, EventArgs e)
@@ -590,10 +590,11 @@ namespace Dominion.Client.Scenes
             frm_lobby_configWindow.Text = "Select an empire".ToRichText();
             int yOffset = 35;
             ScrollBox sb = new ScrollBox(new Rectangle(5, yOffset + 5, frm_lobby_configWindow.Bounds.Width - 10, frm_lobby_configWindow.Bounds.Height - yOffset - 10), GetEmpires(), frm_lobby_configWindow);
-            sb.SelectedIndex = manager.Client.LobbyState.Players.Find(p => p.InstanceID == manager.Client.Player.InstanceID).EmpireID;
+            sb.SelectedIndex = manager.Client.EmpireManager.IndexOf(manager.Client.LobbyState.Players.Find(p => p.InstanceID == manager.Client.Player.InstanceID).EmpireID);
             sb.SelectedChanged += (s, a) =>
             {
-                manager.Client.Lobby_SelectNewEmpire(sb.SelectedIndex);
+                EmpireListItem eli = (EmpireListItem)sb.Selected;
+                manager.Client.Lobby_SelectNewEmpire(eli.Empire.Name);
             };
         }
         private void Lobby_BtnStart_MouseClick(object sender, MouseEventArgs e)
@@ -624,7 +625,7 @@ namespace Dominion.Client.Scenes
             {
                 List<IListItem> items = new List<IListItem>();
                 foreach (BasicPlayer player in manager.Client.LobbyState.Players)
-                    items.Add(new PlayerListItem(player, manager.Client.EmpireFactory));
+                    items.Add(new PlayerListItem(player, manager.Client.EmpireManager));
                 return items;
             }
             catch (Exception)
@@ -636,10 +637,10 @@ namespace Dominion.Client.Scenes
         // returns all the available empires as list items
         private List<IListItem> GetEmpires()
         {
-            if (manager.Client.EmpireFactory.Empires == null)
+            if (manager.Client.EmpireManager == null)
                 return new List<IListItem>();
             List<IListItem> items = new List<IListItem>();
-            foreach (Empire empire in manager.Client.EmpireFactory.Empires)
+            foreach (Empire empire in manager.Client.EmpireManager.GetAllEmpires())
                 items.Add(new EmpireListItem(empire));
             return items;
         }

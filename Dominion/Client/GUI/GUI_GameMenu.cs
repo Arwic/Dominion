@@ -62,22 +62,22 @@ namespace Dominion.Client.GUI
                 };
 
                 Label lblEmpire = (Label)form.GetChildByName("lblEmpireValue");
-                lblEmpire.Text = $"{client.EmpireFactory.GetEmpire(client.Player.EmpireID).Name}".ToRichText();
+                lblEmpire.Text = client.Player.EmpireID.ToRichText();
 
                 Label lblWorldType = (Label)form.GetChildByName("lblWorldTypeValue");
-                lblWorldType.Text = $"{client.LobbyState.WorldType.GetName()}".ToRichText();
+                lblWorldType.Text = client.LobbyState.WorldType.GetName().ToRichText();
 
                 Label lblWorldSize = (Label)form.GetChildByName("lblWorldSizeValue");
-                lblWorldSize.Text = $"{client.LobbyState.WorldSize.GetName()}".ToRichText();
+                lblWorldSize.Text = client.LobbyState.WorldSize.GetName().ToRichText();
 
                 Label lblDifficulty = (Label)form.GetChildByName("lblDifficultyValue");
-                lblDifficulty.Text = $"NYI".ToRichText();
+                lblDifficulty.Text = "NYI".ToRichText();
 
                 Label lblGameSpeed = (Label)form.GetChildByName("lblGameSpeedValue");
-                lblGameSpeed.Text = $"{client.LobbyState.GameSpeed.ToString()}".ToRichText();
+                lblGameSpeed.Text = client.LobbyState.GameSpeed.ToString().ToRichText();
 
                 Label lblPlayerCount = (Label)form.GetChildByName("lblPlayerCountValue");
-                lblPlayerCount.Text = $"NYI".ToRichText();
+                lblPlayerCount.Text = "NYI".ToRichText();
 
             }
         }

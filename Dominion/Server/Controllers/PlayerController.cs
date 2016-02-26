@@ -7,6 +7,7 @@ using ArwicEngine.Net;
 using Dominion.Common.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Dominion.Server.Controllers
 {
@@ -130,7 +131,7 @@ namespace Dominion.Server.Controllers
             {
                 player.IncomeCulture += city.IncomeCulture;
                 player.IncomeGold += city.IncomeGold;
-                player.Happiness += city.IncomeHappiness;
+                //player.Happiness += city.IncomeHappiness;
                 player.IncomeScience += city.IncomeScience;
             }
         }
@@ -162,8 +163,8 @@ namespace Dominion.Server.Controllers
         /// <param name="userName"></param>
         public void AddPlayer(Connection connection, string userName)
         {
-            Player player = new Player(connection, players.Count, 0, userName, TechTree.FromFile("Content/Data/TechnologyList.xml"));
-            player.EmpireID = RandomHelper.Next(0, Controllers.Factory.Empire.Empires.Count);
+            Player player = new Player(connection, players.Count, "NULL", userName, TechTree.FromFile("Content/Data/TechnologyList.xml"));
+            player.EmpireID =  Controllers.Data.Empire.GetAllEmpires().ElementAt(RandomHelper.Next(0, Controllers.Data.Empire.EmpireCount)).Name;
             player.TechTree.GetNode(0).Unlocked = true;
             players.Add(player);
             OnPlayerAdded(new PlayerEventArgs(player));

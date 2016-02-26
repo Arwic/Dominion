@@ -119,7 +119,7 @@ namespace Dominion.Client.Renderers
         {
             lock (Client._lock_cacheUpdate)
             {
-                foreach (Unit unit in client.CachedUnits.ToArray())
+                foreach (UnitInstance unit in client.CachedUnits.ToArray())
                 {
                     if (unit.PlayerID == playerID)
                         DrawMovementPath(sb, unit);
@@ -131,7 +131,7 @@ namespace Dominion.Client.Renderers
         }
 
         // draw the given unit's graphic
-        private void DrawGraphic(SpriteBatch sb, Unit unit)
+        private void DrawGraphic(SpriteBatch sb, UnitInstance unit)
         {
             if (unit == null)
                 return; // don't render anything if the unit is null
@@ -143,11 +143,12 @@ namespace Dominion.Client.Renderers
                         boardRenderer.TileSize,
                         boardRenderer.TileSize);
             // draw the correct sprite at the unit's position
-            unitSprites[unit.Template.GraphicID].Draw(sb, dest);
+            unitSprites[0].Draw(sb, dest); // TODO DEBUG this is temp unit rendering
+            //unitSprites[unit.BaseUnit.GraphicID].Draw(sb, dest);
         }
 
         // draws the given unit's movement path
-        private void DrawMovementPath(SpriteBatch sb, Unit unit)
+        private void DrawMovementPath(SpriteBatch sb, UnitInstance unit)
         {
             if (unit.MovementQueue == null || unit.MovementQueue.Count <= 0)
                 return;

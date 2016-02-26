@@ -3,7 +3,8 @@
 // This file defines classes that define a unit
 
 using ArwicEngine.Core;
-using Dominion.Common.Factories;
+using Dominion.Common.Data;
+using Dominion.Common.Managers;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -11,28 +12,6 @@ using System.Runtime.Serialization;
 
 namespace Dominion.Common.Entities
 {
-    public enum UnitID
-    {
-        Settler,
-        Worker,
-        Scout,
-        Warrior,
-        Archer,
-        Spearman,
-        ChariotArcher,
-        Trireme,
-
-        Great_Artist,
-        Great_Musician,
-        Great_Writer,
-        Great_Engineer,
-        Great_General,
-        Great_Merchant,
-        Great_Scientist,
-        Great_Admiral,
-        Great_Prophet
-    }
-
     public enum UnitGraphicID
     {
         Settler,
@@ -56,29 +35,29 @@ namespace Dominion.Common.Entities
     }
 
     [Serializable()]
-    public class Unit
+    public class UnitInstance
     {
         /// <summary>
         /// The template the unit is based on
         /// </summary>
-        public UnitTemplate Template
+        public Unit BaseUnit
         {
             get
             {
-                return _unitTemplate;
+                return _baseUnit;
             }
             set
             {
-                _unitTemplate = value;
+                _baseUnit = value;
             }
         }
         [NonSerialized()]
-        private UnitTemplate _unitTemplate;
+        private Unit _baseUnit;
 
         /// <summary>
         /// The unit's id
         /// </summary>
-        public int UnitID { get; set; }
+        public string UnitID { get; set; }
 
         /// <summary>
         /// The id of the player that owns the unit
@@ -195,13 +174,13 @@ namespace Dominion.Common.Entities
             }
         }
 
-        public Unit(UnitFactory factory, int unitID, int playerID, Point location)
+        public UnitInstance(UnitManager manager, string unitID, int playerID, Point location)
         {
             UnitID = unitID;
             PlayerID = playerID;
             Location = location;
             MovementQueue = new LinkedList<Point>();
-            factory.Construct(this);
+            manager.Construct(this);
         }
 
         [OnSerializing()]

@@ -8,12 +8,11 @@ using ArwicEngine.Net;
 using ArwicEngine.Scenes;
 using Dominion.Common;
 using Dominion.Common.Entities;
-using Dominion.Common.Factories;
+using Dominion.Common.Managers;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace Dominion.Client
 {
@@ -39,9 +38,9 @@ namespace Dominion.Client
 
     public class UnitListEventArgs : EventArgs
     {
-        public List<Unit> Units { get; }
+        public List<UnitInstance> Units { get; }
 
-        public UnitListEventArgs(List<Unit> units)
+        public UnitListEventArgs(List<UnitInstance> units)
         {
             Units = units;
         }
@@ -49,9 +48,9 @@ namespace Dominion.Client
 
     public class UnitEventArgs : EventArgs
     {
-        public Unit Unit { get; }
+        public UnitInstance Unit { get; }
 
-        public UnitEventArgs(Unit unit)
+        public UnitEventArgs(UnitInstance unit)
         {
             Unit = unit;
         }
@@ -140,24 +139,19 @@ namespace Dominion.Client
         public NetClientStats ClientStatistics => client.Statistics;
 
         /// <summary>
-        /// Facotry used to construct buildings
+        /// Gets or sets the building data manager
         /// </summary>
-        public BuildingFactory BuildingFactory { get; private set; }
+        public BuildingManager BuildingManager { get; private set; }
 
         /// <summary>
-        /// Factory usedto construct empires
+        /// Gets or sets the empire data manager
         /// </summary>
-        public EmpireFactory EmpireFactory { get; private set; }
+        public EmpireManager EmpireManager { get; private set; }
 
         /// <summary>
-        /// factory used to construct productions
+        /// Gets or sets the unit data manager
         /// </summary>
-        public ProductionFactory ProductionFactory { get; private set; }
-
-        /// <summary>
-        /// Factory used to construct units
-        /// </summary>
-        public UnitFactory UnitFactory { get; private set; }
+        public UnitManager UnitManager { get; private set; }
 
         /// <summary>
         /// Game options that are set in the lobby and other lobby information
@@ -232,12 +226,12 @@ namespace Dominion.Client
         /// <summary>
         /// Cached units
         /// </summary>
-        public List<Unit> CachedUnits { get; set; }
+        public List<UnitInstance> CachedUnits { get; set; }
         
         /// <summary>
         /// Full list of units
         /// </summary>
-        public List<Unit> AllUnits
+        public List<UnitInstance> AllUnits
         {
             get
             {
@@ -247,17 +241,17 @@ namespace Dominion.Client
             {
                 _allUnits = value;
                 if (_allUnits != null)
-                    foreach (Unit unit in _allUnits)
-                        UnitFactory.Reconstruct(unit);
+                    foreach (UnitInstance unit in _allUnits)
+                        UnitManager.Reconstruct(unit);
                 OnUnitsUpdated(new UnitListEventArgs(_allUnits));
             }
         }
-        private List<Unit> _allUnits;
+        private List<UnitInstance> _allUnits;
 
         /// <summary>
         /// The user's selected unit
         /// </summary>
-        public Unit SelectedUnit
+        public UnitInstance SelectedUnit
         {
             get
             {
@@ -475,9 +469,9 @@ namespace Dominion.Client
 
         public Client()
         {
-            AllUnits = new List<Unit>();
+            AllUnits = new List<UnitInstance>();
             Cities = new List<City>();
-            CachedUnits = new List<Unit>();
+            CachedUnits = new List<UnitInstance>();
             CachedCities = new List<City>();
             NetOperationTimeOut = Convert.ToInt32(ConfigManager.Instance.GetVar(Constants.CONFIG_NET_CLIENT_TIMEOUT));
         }
@@ -610,10 +604,9 @@ namespace Dominion.Client
         {
             int i = 0;
             Player = (Player)p.Items[i++];
-            BuildingFactory = (BuildingFactory)p.Items[i++];
-            EmpireFactory = (EmpireFactory)p.Items[i++];
-            ProductionFactory = (ProductionFactory)p.Items[i++];
-            UnitFactory = (UnitFactory)p.Items[i++];
+            BuildingManager = (BuildingManager)p.Items[i++];
+            EmpireManager = (EmpireManager)p.Items[i++];
+            UnitManager = (UnitManager)p.Items[i++];
             ConsoleManager.Instance.WriteLine("Initialised factories");
         }
         
@@ -654,7 +647,7 @@ namespace Dominion.Client
 
             Player = (Player)p.Items[i++];
             Cities = (List<City>)p.Items[i++];
-            AllUnits = (List<Unit>)p.Items[i++];
+            AllUnits = (List<UnitInstance>)p.Items[i++];
             _selectedCityID = -1;
             _selectedUnitID = AllUnits.Find(u => u.PlayerID == Player.InstanceID).InstanceID;
             _lastSelectedUnitID = _selectedUnitID;
@@ -672,7 +665,7 @@ namespace Dominion.Client
             TurnEndReason reason = (TurnEndReason)p.Items[i++];
             Player = (Player)p.Items[i++];
             Cities = (List<City>)p.Items[i++];
-            AllUnits = (List<Unit>)p.Items[i++];
+            AllUnits = (List<UnitInstance>)p.Items[i++];
             UpdateCache();
             ConsoleManager.Instance.WriteLine($"Recieved data for turn {TurnNumber}");
             TurnState = TurnState.Begin;
@@ -690,11 +683,11 @@ namespace Dominion.Client
         // parses a packet with the header UnitUpdate
         private void ParseUnitUpdate(Packet p)
         {
-            Unit unit = (Unit)p.Item;
-            Unit oldUnit = AllUnits.Find(u => u.InstanceID == unit.InstanceID);
+            UnitInstance unit = (UnitInstance)p.Item;
+            UnitInstance oldUnit = AllUnits.Find(u => u.InstanceID == unit.InstanceID);
             if (!AllUnits.Remove(oldUnit))
                 return;
-            UnitFactory.Reconstruct(unit);
+            UnitManager.Reconstruct(unit);
             AllUnits.Add(unit);
             UpdateCache();
             ConsoleManager.Instance.WriteLine($"Updated unit {unit.InstanceID}:{unit.UnitID}:{unit.Name}");
@@ -704,8 +697,8 @@ namespace Dominion.Client
         // parses a packet with the header UnitAdded
         private void ParseUnitAdded(Packet p)
         {
-            Unit unit = (Unit)p.Item;
-            UnitFactory.Reconstruct(unit);
+            UnitInstance unit = (UnitInstance)p.Item;
+            UnitManager.Reconstruct(unit);
             AllUnits.Add(unit);
             UpdateCache();
             ConsoleManager.Instance.WriteLine($"Added a unit {unit.InstanceID}:{unit.UnitID}:{unit.Name}");
@@ -716,7 +709,7 @@ namespace Dominion.Client
         private void ParseUnitRemoved(Packet p)
         {
             int unitInstanceID = (int)p.Item;
-            Unit unit = AllUnits.Find(u => u.InstanceID == unitInstanceID);
+            UnitInstance unit = AllUnits.Find(u => u.InstanceID == unitInstanceID);
             AllUnits.Remove(unit);
             UpdateCache();
             ConsoleManager.Instance.WriteLine($"Removed unit {unit.InstanceID}:{unit.UnitID}:{unit.Name}");
@@ -771,7 +764,7 @@ namespace Dominion.Client
             int i = 0;
             Player winner = (Player)p.Items[i++];
             VictoryType vtype = (VictoryType)p.Items[i++];
-            ConsoleManager.Instance.WriteLine($"Game over! {winner.Name} of {EmpireFactory.GetEmpire(winner.EmpireID).Name} has won a {vtype} victory");
+            ConsoleManager.Instance.WriteLine($"Game over! {winner.Name} of {winner.EmpireID} has won a {vtype} victory");
             Dissconnect();
             SceneManager.Instance.ChangeScene((int)Scene.Menu);
         }
@@ -856,7 +849,7 @@ namespace Dominion.Client
         // checks if the user is required to order a unit
         private bool RequireUnitOrders()
         {
-            foreach (Unit unit in GetMyUnits())
+            foreach (UnitInstance unit in GetMyUnits())
             {
                 if (unit.RequiresOrders)
                     return true;
@@ -887,7 +880,7 @@ namespace Dominion.Client
         /// Returns a list of all the units this client controls
         /// </summary>
         /// <returns></returns>
-        public List<Unit> GetMyUnits()
+        public List<UnitInstance> GetMyUnits()
         {
             return AllUnits.FindAll(u => u.PlayerID == Player.InstanceID);
         }
@@ -947,20 +940,20 @@ namespace Dominion.Client
             {
                 CachedUnits.Clear();
 
-                foreach (Unit unit in GetMyUnits())
+                foreach (UnitInstance unit in GetMyUnits())
                 {
                     UpdateUnitCache(unit);
                     foreach (Tile tile in Board.GetAllTiles())
                     {
-                        if (Board.HexDistance(unit.Location, tile.Location) <= unit.Template.Sight)
+                        if (Board.HexDistance(unit.Location, tile.Location) <= unit.BaseUnit.Sight)
                             UpdateTileCache(tile.Location);
                     }
 
-                    foreach (Unit otherUnit in AllUnits)
+                    foreach (UnitInstance otherUnit in AllUnits)
                     {
                         if (otherUnit.PlayerID == Player.InstanceID)
                             continue;
-                        if (Board.HexDistance(unit.Location, otherUnit.Location) <= unit.Template.Sight)
+                        if (Board.HexDistance(unit.Location, otherUnit.Location) <= unit.BaseUnit.Sight)
                             UpdateUnitCache(otherUnit);
                     }
                 }
@@ -977,7 +970,7 @@ namespace Dominion.Client
                         foreach (Point nLoc in tile.GetNeighbourTileLocations())
                         {
                             UpdateTileCache(nLoc);
-                            foreach (Unit unit in AllUnits)
+                            foreach (UnitInstance unit in AllUnits)
                             {
                                 if (unit.PlayerID == Player.InstanceID)
                                     continue;
@@ -1005,7 +998,7 @@ namespace Dominion.Client
         /// Updates the given unit int the unit cache
         /// </summary>
         /// <param name="unit"></param>
-        public void UpdateUnitCache(Unit unit)
+        public void UpdateUnitCache(UnitInstance unit)
         {
             CachedUnits.RemoveAll(u => u.InstanceID == unit.InstanceID);
             CachedUnits.Add(unit);
@@ -1049,7 +1042,7 @@ namespace Dominion.Client
         /// Asks the server to select the given empire for this client
         /// </summary>
         /// <param name="id"></param>
-        public void Lobby_SelectNewEmpire(int id)
+        public void Lobby_SelectNewEmpire(string id)
         {
             Packet p = new Packet((int)PacketHeader.LobbyEmpire, id);
             client.SendData(p);

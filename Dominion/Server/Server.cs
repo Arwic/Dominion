@@ -5,8 +5,8 @@
 using ArwicEngine.Core;
 using ArwicEngine.Net;
 using Dominion.Common;
+using Dominion.Common.Data;
 using Dominion.Common.Entities;
-using Dominion.Common.Factories;
 using Dominion.Server.Controllers;
 using Microsoft.Xna.Framework;
 using System;
@@ -166,7 +166,7 @@ namespace Dominion.Server
 
             foreach (Player player in controllers.Player.GetAllPlayers())
             {
-                controllers.Unit.AddUnit(0, player.InstanceID, GetStartTile(player).Location);
+                controllers.Unit.AddUnit("UNIT_SETTLER", player.InstanceID, GetStartTile(player).Location);
             }
 
             foreach (Player player in controllers.Player.GetAllPlayers().ToArray())
@@ -198,7 +198,7 @@ namespace Dominion.Server
             {
                 int biasFindAttempts = 0;
                 int maxBiasFindAttempts = 500;
-                Empire empire = controllers.Factory.Empire.GetEmpire(player.EmpireID);
+                Empire empire = controllers.Data.Empire.GetEmpire(player.EmpireID);
                 bool biasMet = false;
                 switch (empire.StartBias)
                 {
@@ -567,10 +567,9 @@ namespace Dominion.Server
         {
             Packet pOutLobbyInit = new Packet((int)PacketHeader.LobbyInit,
                 e.Player,
-                controllers.Factory.Building,
-                controllers.Factory.Empire,
-                controllers.Factory.Production,
-                controllers.Factory.Unit);
+                controllers.Data.Building,
+                controllers.Data.Empire,
+                controllers.Data.Unit);
             server.SendData(pOutLobbyInit, e.Player.Connection);
 
             SendLobbyStateToAll();
@@ -682,7 +681,7 @@ namespace Dominion.Server
                 return;
             
             // Update their desired empire
-            int emprieID = (int)p.Item;
+            string emprieID = (string)p.Item;
             player.EmpireID = emprieID;
 
             // Sync lobby state
@@ -813,7 +812,7 @@ namespace Dominion.Server
         // tells every client that the game is over
         private void SendGameOver(Player winner, VictoryType vtype)
         {
-            ConsoleManager.Instance.WriteLine($"Game over! {winner.Name}, {controllers.Factory.Empire.GetEmpire(winner.EmpireID).Name}, has won with a {vtype} victory", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"Game over! {winner.Name}, {controllers.Data.Empire.GetEmpire(winner.EmpireID).Name}, has won with a {vtype} victory", MsgType.ServerInfo);
             Packet pOut = new Packet((int)PacketHeader.GameOver, winner, vtype);
             server.SendDataToAll(pOut);
             StopServer();

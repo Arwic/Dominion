@@ -4,8 +4,8 @@
 
 using ArwicEngine.Forms;
 using Dominion.Client.Scenes;
+using Dominion.Common.Data;
 using Dominion.Common.Entities;
-using Dominion.Common.Factories;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ namespace Dominion.Client.GUI
             public RichText Text { get; set; }
             public Production Production { get; set; }
 
-            public ProductionListItem(Production prod, UnitFactory unitFactory, BuildingFactory buildingFactory, int turnsLeft)
+            public ProductionListItem(Production prod, int turnsLeft)
             {
                 Production = prod;
 
@@ -29,17 +29,7 @@ namespace Dominion.Client.GUI
                 string suffix = "";
                 if (turnsLeft != -1)
                     suffix = $" - {turnsLeft} turns";
-                switch (Production.ResultType)
-                {
-                    case ProductionResultType.Building:
-                        Building building = buildingFactory.GetBuilding(Production.ResultID);
-                        Text = $"{building.Name}{suffix}".ToRichText();
-                        break;
-                    case ProductionResultType.Unit:
-                        UnitTemplate unit = unitFactory.GetUnit(Production.ResultID);
-                        Text = $"{unit.Name}{suffix}".ToRichText();
-                        break;
-                }
+                Text = $"{Production.Name}{suffix}".ToRichText();
             }
         }
 
@@ -54,6 +44,20 @@ namespace Dominion.Client.GUI
             {
                 Text = text;
                 Int = i;
+            }
+        }
+
+        // defines a list item that holds a string, used mainly for building list
+        private class StringListItem : IListItem
+        {
+            public Button Button { get; set; }
+            public RichText Text { get; set; }
+            public string String { get; set; }
+
+            public StringListItem(RichText text, string s)
+            {
+                Text = text;
+                String = s;
             }
         }
 
@@ -220,7 +224,7 @@ namespace Dominion.Client.GUI
             if (sbProductionList.Selected == null) // don't contact the server if no production is selected
                 return;
             // tell the server to change this city's production
-            client.CommandCity(new CityCommand(CityCommandID.QueueProduction, client.SelectedCity, ((ProductionListItem)sbProductionList.Selected).Production.ID));
+            client.CommandCity(new CityCommand(CityCommandID.QueueProduction, client.SelectedCity, ((ProductionListItem)sbProductionList.Selected).Production.Name));
         }
 
         private void BtnChangeProduction_MouseClick(object sender, MouseEventArgs e)
@@ -228,7 +232,7 @@ namespace Dominion.Client.GUI
             if (sbProductionList.Selected == null)// don't contact the server if no current production is selected
                 return;
             // tell the server to cancel the selected production
-            client.CommandCity(new CityCommand(CityCommandID.ChangeProduction, client.SelectedCity, ((ProductionListItem)sbProductionList.Selected).Production.ID));
+            client.CommandCity(new CityCommand(CityCommandID.ChangeProduction, client.SelectedCity, ((ProductionListItem)sbProductionList.Selected).Production.Name));
         }
 
         private void BtnMoveDown_MouseClick(object sender, MouseEventArgs e)
@@ -275,8 +279,8 @@ namespace Dominion.Client.GUI
         private List<IListItem> GetProductionListListItems()
         {
             List<IListItem> items = new List<IListItem>();
-            foreach (Production prod in client.SelectedCity.GetProductionList(client.ProductionFactory, client.Player, client.Player.TechTree))
-                items.Add(new ProductionListItem(prod, client.UnitFactory, client.BuildingFactory, GetTurnsToProduce(client.SelectedCity, prod)));
+            foreach (Production prod in client.SelectedCity.PossibleProductions)
+                items.Add(new ProductionListItem(prod, GetTurnsToProduce(client.SelectedCity, prod)));
             return items;
         }
 
@@ -285,7 +289,7 @@ namespace Dominion.Client.GUI
         {
             List<IListItem> items = new List<IListItem>();
             foreach (Production prod in client.SelectedCity.ProductionQueue)
-                items.Add(new ProductionListItem(prod, client.UnitFactory, client.BuildingFactory, GetTurnsToProduce(client.SelectedCity, prod)));
+                items.Add(new ProductionListItem(prod, GetTurnsToProduce(client.SelectedCity, prod)));
             return items;
         }
 
@@ -307,10 +311,10 @@ namespace Dominion.Client.GUI
         private List<IListItem> GetBuildingList()
         {
             List<IListItem> items = new List<IListItem>();
-            foreach (int buildingID in client.SelectedCity.Buildings)
+            foreach (string buildingID in client.SelectedCity.Buildings)
             {
-                Building building = client.BuildingFactory.GetBuilding(buildingID);
-                items.Add(new IntListItem($"{building.Name}".ToRichText(), buildingID));
+                Building building = client.BuildingManager.GetBuilding(buildingID);
+                items.Add(new StringListItem($"{building.Name}".ToRichText(), buildingID));
             }
             return items;
         }
@@ -318,8 +322,11 @@ namespace Dominion.Client.GUI
         // returns the number of turns required to produce the given production at the given city
         private int GetTurnsToProduce(City city, Production prod)
         {
+            Building b = client.BuildingManager.GetBuilding(prod.Name);
+
             int prodIncome = city.IncomeProduction;
-            int prodRequired = prod.ProductionCost;
+            int prodRequired = b.Cost;
+
             prodRequired -= prod.Progress;
             int requiredTurns = 0;
             int maxLoops = 300;

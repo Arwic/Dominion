@@ -1,6 +1,6 @@
 ﻿// Dominion - Copyright (C) Timothy Ings
-// EmpireFactory.cs
-// This file defines classes that define the empire factory and its products
+// Empire.cs
+// This file defines classes that define an empire
 
 using ArwicEngine.TypeConverters;
 using Microsoft.Xna.Framework;
@@ -10,7 +10,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace Dominion.Common.Factories
+namespace Dominion.Common.Data
 {
     [Flags]
     public enum EmpireStartBiasFlags
@@ -234,7 +234,7 @@ namespace Dominion.Common.Factories
         private int _textColor_B;
 
         /// <summary>
-        /// Keeps track of the las used default city name
+        /// Keeps track of the last used default city name
         /// </summary>
         [Browsable(false)]
         [XmlIgnore()]
@@ -247,70 +247,11 @@ namespace Dominion.Common.Factories
             DefaultCityNames = new List<string>();
         }
 
-        public override string ToString()
+        public string GetNextDefaultCityName()
         {
-            return Name;
+            if (DefaultCityNameIndex >= DefaultCityNames.Count)
+                return "New City";
+            return DefaultCityNames[DefaultCityNameIndex++];
         }
     }
-
-    [Serializable()]
-    public class EmpireFactory
-    {
-        /// <summary>
-        /// A list of all empires
-        /// </summary>
-        [TypeConverter(typeof(ListConverter))]
-        [XmlElement("Empire")]
-        public List<Empire> Empires { get; set; }
-        
-        public EmpireFactory()
-        {
-            Empires = new List<Empire>();
-        }
-
-        /// <summary>
-        /// Loads an empire facotry from file
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static EmpireFactory FromFile(string path)
-        {
-            XmlSerializer xmls = new XmlSerializer(typeof(EmpireFactory));
-            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                return (EmpireFactory)xmls.Deserialize(fs);
-            }
-        }
-
-        /// <summary>
-        /// Returns the empire with the given id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public Empire GetEmpire(int id)
-        {
-            if (id < 0 || id >= Empires.Count)
-                throw new Exception("The empire factory is out of sync with the server");
-            return Empires[id];
-        }
-
-        public override string ToString()
-        {
-            return "Empires";
-        }
-
-        /// <summary>
-        /// Returns the the next default city name for the empire with the given id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public string GetNextDefaultName(int id)
-        {
-            Empire empire = GetEmpire(id);
-            if (empire.DefaultCityNameIndex >= empire.DefaultCityNames.Count)
-                empire.DefaultCityNameIndex = 0;
-            return empire.DefaultCityNames[empire.DefaultCityNameIndex++];
-        }
-    }
-
 }

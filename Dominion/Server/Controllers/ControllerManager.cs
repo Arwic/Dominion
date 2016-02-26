@@ -7,9 +7,9 @@ namespace Dominion.Server.Controllers
     public class ControllerManager
     {
         /// <summary>
-        /// Gets the controller that manages factories
+        /// Gets the controller that manages game data
         /// </summary>
-        public FactoryController Factory { get; }
+        public DataPackController Data { get; }
 
         /// <summary>
         /// Gets the controller that manages the board
@@ -33,7 +33,7 @@ namespace Dominion.Server.Controllers
 
         public ControllerManager()
         {
-            Factory = new FactoryController(this);
+            Data = new DataPackController(this);
             Board = new BoardController(this);
             Player = new PlayerController(this);
             City = new CityController(this);
@@ -45,7 +45,7 @@ namespace Dominion.Server.Controllers
         /// </summary>
         public void ProcessTurn()
         {
-            Factory.ProcessTurn();
+            Data.ProcessTurn();
             Board.ProcessTurn();
             Player.ProcessTurn();
             City.ProcessTurn();

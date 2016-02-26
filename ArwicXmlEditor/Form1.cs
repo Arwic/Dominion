@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ArwicEngine.Core;
-using Dominion.Common.Factories;
-using System.Xml.Serialization;
-using System.IO;
-using System.Xml;
+﻿using ArwicEngine.Core;
 using Dominion.Common.Entities;
+using Dominion.Common.Managers;
+using System;
+using System.ComponentModel;
+using System.IO;
+using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace ArwicXmlEditor
 {
@@ -30,10 +24,9 @@ namespace ArwicXmlEditor
         {
             Text = $"Arwic Xml Editor ({version})";
 
-            cb_xmlType.Items.Add(typeof(EmpireFactory));
-            cb_xmlType.Items.Add(typeof(UnitFactory));
-            cb_xmlType.Items.Add(typeof(BuildingFactory));
-            cb_xmlType.Items.Add(typeof(ProductionFactory));
+            cb_xmlType.Items.Add(typeof(EmpireDataPack));
+            cb_xmlType.Items.Add(typeof(UnitDataPack));
+            cb_xmlType.Items.Add(typeof(BuildingDataPack));
             cb_xmlType.Items.Add(typeof(TechTree));
             cb_xmlType.SelectedIndex = 0;
         }

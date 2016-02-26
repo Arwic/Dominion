@@ -3,8 +3,8 @@
 // This file defines classes that control cities
 
 using ArwicEngine.Core;
+using Dominion.Common.Data;
 using Dominion.Common.Entities;
-using Dominion.Common.Factories;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -98,7 +98,7 @@ namespace Dominion.Server.Controllers
             {
                 RegenHP(city);
                 CalculateIncome(city);
-                CalculateHappiness(city);
+                //CalculateHappiness(city);
                 CalculatePopulation(city);
                 CalculateProduction(city);
                 TryExpandBorders(city);
@@ -125,10 +125,10 @@ namespace Dominion.Server.Controllers
                         city.Name = (string)cmd.Arguments[0];
                         break;
                     case CityCommandID.ChangeProduction:
-                        city.ProductionQueue.AddFirst(Controllers.Factory.Production.GetProduction((int)cmd.Arguments[0]));
+                        city.ProductionQueue.AddFirst(new Production((string)cmd.Arguments[0]));
                         break;
                     case CityCommandID.QueueProduction:
-                        city.ProductionQueue.Enqueue(Controllers.Factory.Production.GetProduction((int)cmd.Arguments[0]));
+                        city.ProductionQueue.Enqueue(new Production((string)cmd.Arguments[0]));
                         break;
                     case CityCommandID.CancelProduction:
                         city.ProductionQueue.Remove((int)cmd.Arguments[0]);
@@ -267,10 +267,10 @@ namespace Dominion.Server.Controllers
             float yieldTourismModifier = 0f;
 
             // add building income
-            foreach (int buildingID in city.Buildings)
+            foreach (string building in city.Buildings)
             {
                 // get building
-                Building b = Controllers.Factory.Building.GetBuilding(buildingID);
+                Building b = Controllers.Data.Building.GetBuilding(building);
                 if (b == null)
                     continue;
 
@@ -530,19 +530,159 @@ namespace Dominion.Server.Controllers
             return possibleExpansions;
         }
 
-        // calculate the happiness of the given city
-        private void CalculateHappiness(City city)
+        // calculates a list of all the possible productions the given city can produce and assigns it to the city
+        private void CalculatePossibleProductions(City city)
         {
-            if (city.IsBeingRaised) // dont't produce any happiness if the city is being raised
+            // results
+            List<Building> validBuildings = new List<Building>();
+
+            // get city info
+            Tile cityTile = Controllers.Board.GetTile(city.Location);
+            List<Point> cityNeighbourLocations = cityTile.GetNeighbourTileLocations();
+            List<Tile> cityNeighbourTiles = new List<Tile>();
+            foreach (Point p in cityNeighbourLocations)
+                cityNeighbourTiles.Add(Controllers.Board.GetTile(p));
+            List<Tile> cityTiles = Controllers.Board.GetCityTiles(city.InstanceID);
+            Player cityOwner = Controllers.Player.GetPlayer(city.PlayerID);
+
+            // get all valid buildings
+            foreach (Building building in Controllers.Data.Building.GetAllBuildings())
             {
-                city.IncomeHappiness = 0;
-                return;
+                // check if the building has already been constructed
+                if (city.Buildings.Contains(building.Name))
+                    continue;
+
+                // control flag
+                bool valid = true;
+                
+                // check if building prereqs are constructed
+                foreach (string prereq in building.BuildingPrereq)
+                {
+                    if (!city.Buildings.Contains(prereq))
+                    {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (!valid)
+                    continue;
+
+                // check if tech prereqs are unlocked
+                //foreach (string prereq in building.TechPrereq)
+                //{
+                //    if (!cityOwner.TechTree.GetNode(prereq).Unlocked)
+                //    {
+                //        valid = false;
+                //        break;
+                //    }
+                //}
+                //if (!valid)
+                //    continue;
+
+                // check other properties
+                if (building.Water)
+                {
+                    bool isOnCoast = false;
+                    foreach (Tile tile in cityNeighbourTiles)
+                    {
+                        if (tile.TerrainBase == TileTerrainBase.COAST)
+                        {
+                            isOnCoast = true;
+                            break;
+                        }
+                    }
+                    if (!isOnCoast)
+                        continue;
+                }
+
+                if (building.River)
+                {
+                    // NYI
+                }
+
+                if (building.FreshWater)
+                {
+                    // NYI
+                }
+
+                if (building.Mountain)
+                {
+                    bool hasMountainAccess = false;
+                    foreach (Tile tile in cityTiles)
+                    {
+                        if (tile.TerrainFeature == TileTerrainFeature.MOUNTAIN)
+                        {
+                            hasMountainAccess = true;
+                            break;
+                        }
+                    }
+                    if (!hasMountainAccess)
+                        continue;
+                }
+
+                if (building.Hill)
+                {
+                    if (cityTile.TerrainFeature != TileTerrainFeature.HILL)
+                        continue;
+                }
+
+                if (building.Flat)
+                {
+                    if (cityTile.TerrainFeature == TileTerrainFeature.HILL)
+                        continue;
+                }
+
+                if (building.Capital)
+                {
+                    if (!city.IsCapital)
+                        continue;
+                }
+
+                if (building.NearbyTerrainRequired != TileTerrainBase.Null)
+                {
+                    bool hasCorrectNearbyTerrain = false;
+                    foreach (Tile tile in cityNeighbourTiles)
+                    {
+                        if (tile.TerrainBase == building.NearbyTerrainRequired)
+                        {
+                            hasCorrectNearbyTerrain = true;
+                            break;
+                        }
+                    }
+                    if (!hasCorrectNearbyTerrain)
+                        continue;
+                }
+
+                if (building.ProhibitedCityTerrain != TileTerrainBase.Null)
+                {
+                    if (cityTile.TerrainBase == building.ProhibitedCityTerrain)
+                        continue;
+                }
+
+                // if the building is still valid, add it to the valid buildings list
+                validBuildings.Add(building);
             }
 
-            int unhappiness = 3;
-            unhappiness += city.Population;
-            city.IncomeHappiness -= unhappiness;
+            // get all valid units
+            foreach (Unit unit in Controllers.Data.Unit.GetAllUnits())
+            {
+
+            }
         }
+
+        //// calculate the happiness of the given city
+        //private void CalculateHappiness(City city)
+        //{
+        //    if (city.IsBeingRaised) // dont't produce any happiness if the city is being raised
+        //    {
+        //        city.IncomeHappiness = 0;
+        //        return;
+        //    }
+
+        //    int unhappiness = 3;
+        //    unhappiness += city.Population;
+        //    city.IncomeHappiness -= unhappiness;
+        //}
 
         // calculate the population if the given city
         private void CalculatePopulation(City city)
@@ -577,26 +717,45 @@ namespace Dominion.Server.Controllers
             // don't try and process a production that doesn't exist
             if (city.ProductionQueue.First == null)
                 return;
+            
+            Production currentProduction = city.ProductionQueue.First.Value; // get the current production
+            currentProduction.Progress += city.ProductionOverflow; // add overflow
 
-            // get the current production and add the city's production income & production overflow to it
-            Production currentProduction = city.ProductionQueue.First.Value;
-            currentProduction.Progress += city.ProductionOverflow;
-            currentProduction.Progress += city.IncomeProduction;
+            float prodIncome = 0;
+            float prodCost = float.MaxValue;
+
+            // calculate production this turn
+            switch (currentProduction.ProductionType)
+            {
+                case ProductionType.UNIT:
+                    break;
+                case ProductionType.BUILDING:
+                    Building b = Controllers.Data.Building.GetBuilding(currentProduction.Name);
+                    prodCost = b.Cost;
+                    prodIncome = city.IncomeProduction;
+                    prodIncome *= city.BuildingProductionModifier;
+                    if (b.Tags.Contains("BUILDING_WONDER"))
+                        prodIncome *= city.WonderProductionModifier;
+                    break;
+            }
+
+            currentProduction.Progress += (int)Math.Round(prodIncome);
             // check if the production is done
-            if (currentProduction.Progress >= currentProduction.ProductionCost)
+
+            if (currentProduction.Progress >= prodCost)
             {
                 // keep track of excess production
-                city.ProductionOverflow = currentProduction.Progress - currentProduction.ProductionCost;
+                city.ProductionOverflow = currentProduction.Progress - (int)Math.Round(prodCost);
                 city.ProductionQueue.Dequeue(); // remove the production from the city's production queue
-                switch (currentProduction.ResultType)
+                switch (currentProduction.ProductionType)
                 {
-                    case ProductionResultType.Building:
+                    case ProductionType.BUILDING:
                         // add the produced building to the city's building list
-                        city.Buildings.Add(currentProduction.ResultID);
+                        city.Buildings.Add(currentProduction.Name);
                         break;
-                    case ProductionResultType.Unit:
+                    case ProductionType.UNIT:
                         // add the produced unit to the unit controller
-                        Controllers.Unit.AddUnit(currentProduction.ResultID, city.PlayerID, city.Location);
+                        //Controllers.Unit.AddUnit(currentProduction.ResultID, city.PlayerID, city.Location);
                         break;
                 }
             }
@@ -711,7 +870,7 @@ namespace Dominion.Server.Controllers
         /// </summary>
         /// <param name="settler"></param>
         /// <returns>whether a city was successfully settled</returns>
-        public bool SettleCity(Unit settler)
+        public bool SettleCity(UnitInstance settler)
         {
             // check if the settler is too close to another city
             foreach (City c in cities)
@@ -726,13 +885,13 @@ namespace Dominion.Server.Controllers
             // get the player that is trying to settle the city
             Player player = Controllers.Player.GetPlayer(settler.PlayerID);
             // create a new city and give it a unique id
-            City city = new City(player, Controllers.Factory.Empire.GetNextDefaultName(player.EmpireID), settler.Location);
+            City city = new City(player, Controllers.Data.Empire.GetEmpire(player.EmpireID).GetNextDefaultCityName(), settler.Location);
             city.InstanceID = lastCityID++;
             // check if this is the players first city
             if (GetPlayerCities(player.InstanceID).Count == 0)
             {
                 city.IsCapital = true; // the player's first city is its capital
-                city.Buildings.Add(0); // capital city's have the palace
+                city.Buildings.Add("BUILDING_PALACE"); // capital city's have the palace
             }
             cities.Add(city); // add the city to the city list
             TryExpandBorders(city); // expand the city's borders

@@ -6,8 +6,8 @@ using ArwicEngine.Forms;
 using ArwicEngine.Graphics;
 using ArwicEngine.Input;
 using Dominion.Client.Renderers;
+using Dominion.Common.Data;
 using Dominion.Common.Entities;
-using Dominion.Common.Factories;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -194,7 +194,7 @@ namespace Dominion.Client.GUI
                         if (city != null)
                         {
                             // draw the tile with the empire's colours
-                            Empire empire = client.EmpireFactory.GetEmpire(city.EmpireID);
+                            Empire empire = client.EmpireManager.GetEmpire(city.EmpireID);
                             DrawTile(sb, tile, empire.PrimaryColor, empire.SecondaryColor);
                         }
                     }
@@ -230,7 +230,7 @@ namespace Dominion.Client.GUI
                     DrawTile(sb, client.Board.GetTile(city.Location), Color.White, Color.Black);
                 }
                 // draw the client's units
-                foreach (Unit unit in client.GetMyUnits())
+                foreach (UnitInstance unit in client.GetMyUnits())
                 {
                     DrawTile(sb, client.Board.GetTile(unit.Location), Color.White, Color.Black);
                 }
