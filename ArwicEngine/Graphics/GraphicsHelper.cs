@@ -19,6 +19,8 @@ namespace ArwicEngine.Graphics
         private static Texture2D pixel;
         private static Viewport viewport;
 
+        public static Texture2D PixelTexture { get { return pixel; } }
+
         public static void Init(GraphicsDevice gd)
         {
             viewport = gd.Viewport;

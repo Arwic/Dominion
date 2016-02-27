@@ -24,9 +24,9 @@ namespace ArwicEngine.Graphics
         /// <param name="cm"></param>
         /// <param name="path"></param>
         /// <param name="defaultChar"></param>
-        public Font(string path, char defaultChar = DEFAULT_CHAR)
+        public Font(SpriteFont spriteFont, char defaultChar = DEFAULT_CHAR)
         {
-            spriteFont = Engine.Instance.Content.Load<SpriteFont>(path);
+            this.spriteFont = spriteFont;
             spriteFont.DefaultCharacter = defaultChar;
         }
 

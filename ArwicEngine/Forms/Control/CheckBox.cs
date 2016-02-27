@@ -23,9 +23,9 @@ namespace ArwicEngine.Forms
 
         public static new void InitDefaults()
         {
-            DefaultSpriteTrue = new Sprite(CONTROL_CHECKBOX_TRUE);
-            DefaultSpriteFalse = new Sprite(CONTROL_CHECKBOX_FALSE);
-            DefaultCursor = new Cursor(CURSOR_LINK_PATH);
+            DefaultSpriteTrue = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_CHECKBOX_TRUE);
+            DefaultSpriteFalse = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_CHECKBOX_FALSE);
+            DefaultCursor = Engine.Instance.Content.GetAsset<Cursor>(CURSOR_LINK_PATH);
         }
         #endregion
 
@@ -104,8 +104,8 @@ namespace ArwicEngine.Forms
             : base(config, parent)
         {
             Initialize();
-            SpriteTrue = new Sprite(config.SpriteTruePath);
-            SpriteFalse = new Sprite(config.SpriteFalsePath);
+            SpriteTrue = DefaultSpriteTrue;
+            SpriteFalse = DefaultSpriteFalse;
             DisabledColorPercent = config.DisabledColorPercent;
             Value = config.Value;
         }

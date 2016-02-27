@@ -33,7 +33,7 @@ namespace ArwicEngine.Forms
             if (parent != null && parent as Canvas != null)
                 (parent as Canvas).AlwayOnTop = this;
 
-            Font = new Font(FONT_CONSOLAS_PATH);
+            Font = Engine.Instance.Content.GetAsset<Font>(FONT_CONSOLAS_PATH);
 
             int commandBoxHeight = 30;
             commandBox = new TextBox(new Rectangle(0, Bounds.Height - commandBoxHeight, Bounds.Width, commandBoxHeight), this);

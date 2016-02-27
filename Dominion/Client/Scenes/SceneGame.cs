@@ -2,6 +2,7 @@
 // SceneGame.cs
 // This file defines classes that define the game scene
 
+using ArwicEngine;
 using ArwicEngine.Audio;
 using ArwicEngine.Core;
 using ArwicEngine.Forms;
@@ -123,7 +124,7 @@ namespace Dominion.Client.Scenes
             sbGUI = new SpriteBatch(GraphicsManager.Instance.Device);
             sbFore = new SpriteBatch(GraphicsManager.Instance.Device);
             sbBack = new SpriteBatch(GraphicsManager.Instance.Device);
-            font = new Font("fonts/consolas");
+            font = Engine.Instance.Content.GetAsset<Font>(Constants.FONT_CONSOLAS_PATH);
             
             camera = new Camera2();
             boardRenderer = new BoardRenderer(manager.Client, camera);
@@ -267,7 +268,7 @@ namespace Dominion.Client.Scenes
                         manager.Client.SelectedCommand = UnitCommandID.Null;
                         ConsoleManager.Instance.WriteLine($"Selected a unit, id:{manager.Client.SelectedUnit.UnitID}, name:{manager.Client.SelectedUnit.Name}");
                     }
-                    // Check if we should execute a unti command
+                    // Check if we should execute a unit command
                     else if (manager.Client.SelectedCommand != UnitCommandID.Null)
                     {
                         if (manager.Client.SelectedUnit != null)

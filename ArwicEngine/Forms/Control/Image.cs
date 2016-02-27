@@ -2,6 +2,7 @@
 // Image.cs
 // This file contains classes that define an image container
 
+using ArwicEngine.Core;
 using ArwicEngine.Graphics;
 using ArwicEngine.TypeConverters;
 using Microsoft.Xna.Framework;
@@ -156,7 +157,7 @@ namespace ArwicEngine.Forms
         public Image(ImageConfig config, Control parent = null)
             : base(config, parent)
         {
-            Sprite = new Sprite(config.SpritePath);
+            Sprite = new Sprite(Engine.Instance.Content.Load<Texture2D>(config.SpritePath));
             Source = config.Source;
             Rotation = config.Rotation;
             Origin = config.Origin;

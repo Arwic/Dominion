@@ -1,20 +1,18 @@
 REM arg1 = $(OutDir)
+rem GOTO :EOF
+echo %1
 SET "outdir=%1Content"
 SET "pipelinedir=Content\bin\Windows"
-SET "otherdir=Data"
-ECHO "Copying other data"
-ROBOCOPY %otherdir% "%outdir%" /S /R:0
-SET "%ERRORLEVEL%=0"
+SET "otherdir=Content_NonPipeline"
+SET "contentzipname=Core"
+SET "contentzippath=%outdir%\%contentzipname%"
 
-GOTO:eof
-ECHO "Removing output directory"
+ECHO Removing output directory
 RMDIR %outdir% /s /q
-ECHO "Creating output directory"
+ECHO Creating output directory
 MKDIR %outdir%
-ECHO "Copying pipeline assets"
-ROBOCOPY %pipelinedir% %outdir% /S /R:0
-ECHO "Copying other data"
-ROBOCOPY %otherdir% "%outdir%" /S /R:0
+ECHO Compressing files
+"c:\Program Files\7-Zip\7z.exe" a %contentzippath%.zip ".\Content\bin\Windows\*"
+"c:\Program Files\7-Zip\7z.exe" a %contentzippath%.zip ".\%otherdir%\*"
+REN "%contentzippath%.zip" "%contentzipname%.acp"
 SET "%ERRORLEVEL%=0"
-
-

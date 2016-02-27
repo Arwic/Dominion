@@ -2,6 +2,7 @@
 // GUI_Map.cs
 // This file defines classes that manage the map gui elements
 
+using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using ArwicEngine.Graphics;
 using ArwicEngine.Input;
@@ -37,6 +38,7 @@ namespace Dominion.Client.GUI
             this.client = client;
             this.canvas = canvas;
             // load resources
+            blankTileSprite = new Sprite(Engine.Instance.Content.GetAsset<Sprite>("Core:Sprite/Game/TileAtlas"), "");
             blankTileSprite = new Sprite("Graphics/Game/Tiles/BlankTile");
             tileOutlineSprite = new Sprite("Graphics/Game/Tiles/TileOutline");
             Show();

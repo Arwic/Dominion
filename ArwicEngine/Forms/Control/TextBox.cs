@@ -24,9 +24,9 @@ namespace ArwicEngine.Forms
 
         public static new void InitDefaults()
         {
-            DefaultSprite = new Sprite(CONTROL_TEXTBOX);
-            DefaultCursor = new Cursor(CURSOR_TEXT_PATH);
-            DefaultFont = new Font(FONT_CONSOLAS_PATH);
+            DefaultSprite = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_TEXTBOX);
+            DefaultCursor = Engine.Instance.Content.GetAsset<Cursor>(CURSOR_TEXT_PATH);
+            DefaultFont = Engine.Instance.Content.GetAsset<Font>(FONT_CONSOLAS_PATH);
         }
         #endregion
 
@@ -190,7 +190,7 @@ namespace ArwicEngine.Forms
             Masked = config.Masked;
             MaskedCharacter = config.MaskedCharacter;
             MaxCharacters = config.MaxCharacters;
-            Sprite = new Sprite(config.SpritePath);
+            Sprite = DefaultSprite;
             TextOffset = config.TextOffset;
             CaretBlinkTimer = new Timer(config.CaretBlinkTimer);
         }

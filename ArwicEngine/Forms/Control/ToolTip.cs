@@ -19,7 +19,7 @@ namespace ArwicEngine.Forms
 
         public static new void InitDefaults()
         {
-            DefaultSprite = new Sprite(CONTROL_FORM_BACK);
+            DefaultSprite = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_FORM_BACK);
         }
         #endregion
 

@@ -79,11 +79,11 @@ namespace ArwicEngine.Graphics
         /// <param name="cm"></param>
         /// <param name="sourcePath"></param>
         /// <param name="iconDim"></param>
-        public SpriteAtlas(string baseTexturePath, Dictionary<string, Rectangle> spriteDefinitions)
+        public SpriteAtlas(Sprite baseSprite, Dictionary<string, Rectangle> spriteDefinitions)
         {
-            BaseTexturePath = baseTexturePath;
+            BaseTexturePath = baseSprite.Texture.Name;
             SpriteDefinitions = spriteDefinitions;
-            BaseTexture = new Sprite(BaseTexturePath);
+            BaseTexture = baseSprite;
         }
 
         public SpriteAtlas() { }
@@ -94,7 +94,7 @@ namespace ArwicEngine.Graphics
             SpriteDefinitions = new Dictionary<string, Rectangle>();
             foreach (SpriteDefinition sdef in loadedAtlas.RawDefinitions)
                 SpriteDefinitions.Add(sdef.Key, sdef.Source);
-            BaseTexture = new Sprite(BaseTexturePath);
+            BaseTexture = new Sprite(Engine.Instance.Content.Load<Texture2D>(BaseTexturePath));
         }
 
         /// <summary>

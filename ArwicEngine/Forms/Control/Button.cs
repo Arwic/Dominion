@@ -22,8 +22,8 @@ namespace ArwicEngine.Forms
 
         public static new void InitDefaults()
         {
-            DefaultSprite = new Sprite(CONTROL_BUTTON);
-            DefaultCursor = new Cursor(CURSOR_LINK_PATH);
+            DefaultSprite = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_BUTTON);
+            DefaultCursor = Engine.Instance.Content.GetAsset<Cursor>(CURSOR_LINK_PATH);
         }
         #endregion
 
@@ -76,7 +76,7 @@ namespace ArwicEngine.Forms
             : base(config, parent)
         {
             Initialize();
-            Sprite = new Sprite(config.SpritePath);
+            Sprite = DefaultSprite;
             OverColorPercent = config.OverColorPercent;
             DownColorPercent = config.DownColorPercent;
             DisabledColorPercent = config.DisabledColorPercent;

@@ -25,10 +25,10 @@ namespace ArwicEngine.Forms
 
         public static new void InitDefaults()
         {
-            DefaultBackgroundSprite = new Sprite(CONTROL_SCROLLBOX_BACK);
-            DefaultSelectedItemSprite = new Sprite(CONTROL_SCROLLBOX_SELECTED);
-            DefaultScrubberSprite = new Sprite(CONTROL_SCROLLBOX_SCRUBBER);
-            DefaultListItemSprite = new Sprite(CONTROL_SCROLLBOX_BUTTON);
+            DefaultBackgroundSprite = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_SCROLLBOX_BACK);
+            DefaultSelectedItemSprite = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_SCROLLBOX_SELECTED);
+            DefaultScrubberSprite = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_SCROLLBOX_SCRUBBER);
+            DefaultListItemSprite = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_SCROLLBOX_BUTTON);
         }
         #endregion
 
@@ -350,10 +350,11 @@ namespace ArwicEngine.Forms
             : base(config, parent)
         {
             Initialize(null);
-            BackgroundSprite = new Sprite(config.BackgroundSpritePath);
-            SelectedItemSprite = new Sprite(config.SelectedItemSpritePath);
-            ListItemSprite = new Sprite(config.ListItemSpritePath);
-            ScrubberSprite = new Sprite(config.ScrubberSpritePath);
+
+            BackgroundSprite = DefaultBackgroundSprite;
+            SelectedItemSprite = DefaultSelectedItemSprite;
+            ListItemSprite = DefaultListItemSprite;
+            ScrubberSprite = DefaultScrubberSprite;
             ScrollBarWidth = config.ScrollBarWidth;
             ItemHeight = config.ItemHeight;
         }

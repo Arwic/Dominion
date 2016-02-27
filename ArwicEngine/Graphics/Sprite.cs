@@ -75,20 +75,23 @@ namespace ArwicEngine.Graphics
 
         private SpriteType spriteType;
 
-        /// <summary>
-        /// Creates a new sprite in texture mode
-        /// </summary>
-        /// <param name="cm">content manager</param>
-        /// <param name="path">path to files</param>
-        public Sprite(string path)
+        ///// <summary>
+        ///// Creates a new sprite in texture mode
+        ///// </summary>
+        ///// <param name="cm">content manager</param>
+        ///// <param name="path">path to files</param>
+        //public Sprite(string path)
+        //{
+        //    Path = path;
+        //    try { Texture = Engine.Instance.Content.Load<Texture2D>(path); }
+        //    catch (Exception) { Texture = GraphicsHelper.PixelTexture; }
+        //    spriteType = SpriteType.Texture;
+        //}
+
+        public Sprite(Texture2D texture)
         {
-            Path = path;
-            try { Texture = Engine.Instance.Content.Load<Texture2D>(path); }
-            catch (Exception)
-            {
-                try { Texture = Engine.Instance.Content.Load<Texture2D>(DEFAULT_TEXTURE_PATH); }
-                catch (Exception e) { throw new Exception($"Error loading default texture, {e.Message}"); }
-            }
+            Path = texture.Name;
+            Texture = texture;
             spriteType = SpriteType.Texture;
         }
 

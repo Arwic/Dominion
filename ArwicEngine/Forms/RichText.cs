@@ -2,6 +2,7 @@
 // RichText.cs
 // This file contains classes that define the rich text system
 
+using ArwicEngine.Core;
 using ArwicEngine.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -201,9 +202,9 @@ namespace ArwicEngine.Forms
         public static Font SymbolFont { get; private set; }
         public static List<RichTextParseRule> RichTextRules { get; set; }
 
-        public static void Init(ContentManager cm)
+        public static void Init()
         {
-            SymbolFont = new Font("Fonts/ArwicSymbol", (char)FontSymbol.ExclamationCircle);
+            SymbolFont = Engine.Instance.Content.GetAsset<Font>(Constants.FONT_SYMBOL_PATH);
         }
 
         [TypeConverter(typeof(CollectionConverter))]

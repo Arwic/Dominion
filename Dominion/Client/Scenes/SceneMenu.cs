@@ -3,6 +3,7 @@
 // This file defines classes that define the main menu scene
 
 using ArwicEngine.Audio;
+using ArwicEngine.Content;
 using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using ArwicEngine.Graphics;
@@ -133,10 +134,10 @@ namespace Dominion.Client.Scenes
             SetUpMainForm();
 
             // Play all anthems on shuffle
-            AudioManager.Instance.MusicQueue.Clear();
-            foreach (KeyValuePair<string, SoundEffect> pair in empireAnthems)
-                AudioManager.Instance.MusicQueue.Enqueue(pair.Value);
-            AudioManager.Instance.PlayerState = MusicPlayerState.Shuffle;
+            //AudioManager.Instance.MusicQueue.Clear();
+            //foreach (KeyValuePair<string, SoundEffect> pair in empireAnthems)
+            //    AudioManager.Instance.MusicQueue.Enqueue(pair.Value);
+            //AudioManager.Instance.PlayerState = MusicPlayerState.Shuffle;
         }
 
         /// <summary>
@@ -351,7 +352,7 @@ namespace Dominion.Client.Scenes
             lock (_lock_guiSetUp)
             {
                 // set the audio manager to play the selected empire's anthem over and over
-                AudioManager.Instance.PlayerState = MusicPlayerState.RepeatOne;
+                //AudioManager.Instance.PlayerState = MusicPlayerState.RepeatOne;
 
                 // register events
                 manager.Client.LostConnection += Client_LostConnection;
@@ -657,16 +658,16 @@ namespace Dominion.Client.Scenes
         // plays the anthem of the given empire
         private void PlayAnthem(string empireName)
         {
-            try
-            {
-                SoundEffect anthem = empireAnthems[empireName];
-                AudioManager.Instance.PlayMusic(anthem);
-                AudioManager.Instance.PlayerState = MusicPlayerState.RepeatOne;
-            }
-            catch (Exception)
-            {
-                ConsoleManager.Instance.WriteLine($"Could not find an anthem for {empireName}", MsgType.Warning);
-            }
+            //try
+            //{
+            //    SoundEffect anthem = empireAnthems[empireName];
+            //    AudioManager.Instance.PlayMusic(anthem);
+            //    AudioManager.Instance.PlayerState = MusicPlayerState.RepeatOne;
+            //}
+            //catch (Exception)
+            //{
+            //    ConsoleManager.Instance.WriteLine($"Could not find an anthem for {empireName}", MsgType.Warning);
+            //}
         }
         
         // removes and resets all the forms used in this scene

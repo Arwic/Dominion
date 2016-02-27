@@ -33,8 +33,7 @@ namespace ArwicEngine.Core
         /// <returns></returns>
         public static T XmlDeserialize<T>(string file)
         {
-            XmlSerializer serializer = null;
-            serializer = new XmlSerializer(typeof(T));
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
             return (T)serializer.Deserialize(new StreamReader(file));
         }
 

@@ -24,8 +24,8 @@ namespace ArwicEngine.Forms
 
         public static new void InitDefaults()
         {
-            DefaultBackgroundSprite = new Sprite(CONTROL_FORM_BACK);
-            DefaultCloseButtonSprite = new Sprite(CONTROL_FORM_CLOSE);
+            DefaultBackgroundSprite = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_FORM_BACK);
+            DefaultCloseButtonSprite = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_FORM_CLOSE);
         }
         #endregion
 

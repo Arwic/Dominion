@@ -5,6 +5,7 @@
 using ArwicEngine.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -32,7 +33,7 @@ namespace ArwicEngine.TypeConverters
                 throw new InvalidOperationException("SpriteConverter.Content must be assigned to use this function");
             if (value is string)
             {
-                return new Sprite((string)value);
+                return new Sprite(Content.Load<Texture2D>((string)value));
             }
             return base.ConvertFrom(context, culture, value);
         }

@@ -4,6 +4,7 @@
 // There should be only one engine, so changing this to be a static class might be a good idea
 
 using ArwicEngine.Audio;
+using ArwicEngine.Content;
 using ArwicEngine.Forms;
 using ArwicEngine.Graphics;
 using ArwicEngine.Input;
@@ -52,7 +53,8 @@ namespace ArwicEngine.Core
         /// <summary>
         /// Gets the content manager
         /// </summary>
-        public ContentManager Content { get; private set; }
+        public ContentPackManager Content { get; private set; }
+        //public ContentManager Content { get; private set; }
 
         /// <summary>
         /// Gets the a value indicating whether or not the game window is active
@@ -109,8 +111,7 @@ namespace ArwicEngine.Core
             Instance.game = game;
             game.IsFixedTimeStep = false;
             game.IsMouseVisible = true;
-            Instance.Content = game.Content;
-
+            
             // Make sure to stop audio and save the config before exiting
             game.Exiting += (s, a) =>
             {
@@ -141,14 +142,18 @@ namespace ArwicEngine.Core
             EventInput.Init(game.Window.Handle);
 
             // set up managers
-            Instance.Content.RootDirectory = "Content";
             AppDomain.CurrentDomain.UnhandledException += (s, a) => Console.WriteLine($"UNHANDLED EXCEPTION: {a.ExceptionObject.ToString()}", MsgType.Failed);
             // run the config file as a script
             ConsoleManager.Instance.RunScript(CONFIG_PATH);
             GraphicsManager.Init(game, drawSurface);
+
+            // set up content manager and load core content
+            Instance.Content = new ContentPackManager(game.Content.ServiceProvider, "Content");
+            Instance.Content.LoadPack("Core.acp");
+
             InitGUIDefaults();
             GraphicsHelper.Init(GraphicsManager.Instance.Device);
-            RichText.Init(Instance.Content);
+            RichText.Init();
 #if DEBUG
             Console.WriteLine("ASSEMBLY IN DEBUG MODE", MsgType.Warning);
 #endif

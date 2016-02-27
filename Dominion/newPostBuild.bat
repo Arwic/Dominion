@@ -1,0 +1,1 @@
+for /d %%X in (%pipelinedir%) do "c:\Program Files\7-Zip\7z.exe" a "%%X.zip" "%outdir%\"
