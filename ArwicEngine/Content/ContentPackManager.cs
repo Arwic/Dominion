@@ -17,14 +17,15 @@ namespace ArwicEngine.Content
 {
     public class ContentPackManager : ContentManager
     {
-        private Dictionary<string, ZipArchive> loadedArchives = new Dictionary<string, ZipArchive>();
+        private const string tempDir = "Content/_temp";
 
-        private Dictionary<string, ContentPack> 
+        private Dictionary<string, ZipArchive> loadedArchives = new Dictionary<string, ZipArchive>();
 
         public ContentPackManager(IServiceProvider serviceProvider, string rootDirectory)
             : base(serviceProvider, rootDirectory)
         {
-
+            if (Directory.Exists(tempDir))
+                Directory.Delete(tempDir, true);
         }
 
         /// <summary>
@@ -33,9 +34,6 @@ namespace ArwicEngine.Content
         /// <param name="path"></param>
         public void LoadPack(string path)
         {
-            if (string.IsNullOrEmpty(path))
-                throw new ArgumentNullException("path");
-
             string fullPath = Path.Combine(RootDirectory, path);
 
             fullPath = fullPath.Replace('\\', '/');
@@ -52,41 +50,35 @@ namespace ArwicEngine.Content
             {
                 try
                 {
-                    if (entry.FullName == "TOC.xml")
-                    {
-                        XmlSerializer serializer = new XmlSerializer(typeof(ContentToc));
-                        return ()serializer.Deserialize(new StreamReader(file));
-                    }
-
                     if (entry.FullName.Last() == '/')
-                        continue; // don't try and load directories as files
-                    string entryPath = name + ':' + entry.FullName;
+                        continue; // don't try and parse directories
+                    string entryPath = $"{name}:{entry.FullName}";
 
-                    string root = entry.FullName.Split('/').First();
+                    string typeDir = entry.FullName.Split('/').First();
                     // Model, Effect, SpriteFont, Texture, Texture2D, and TextureCube
                     ConsoleManager.Instance.WriteLine($"Loading '{entryPath}'");
-                    switch (root)
+                    switch (typeDir)
                     {
-                        case "Sprite": // Represents a 2D grid of texels.
+                        case "Textures":
                             LoadSprite(entryPath);
                             break;
-                        case "Cursor":
+                        case "Cursors":
                             LoadCursor(entryPath);
                             break;
-                        case "Font": // Represents a font texture.
+                        case "Fonts":
                             LoadFont(entryPath);
                             break;
                         case "Audio":
                             LoadAudio(entryPath);
                             break;
-                        case "Shader": // Used to set and query effects, and to choose techniques.
+                        case "Shaders":
                             Load<Effect>(entryPath);
                             break;
                         case "XML":
                             LoadXml(entryPath);
                             break;
                         default:
-                            ConsoleManager.Instance.WriteLine($"Error in content pack '{name}', unknown root directory '{root}'", MsgType.Failed);
+                            ConsoleManager.Instance.WriteLine($"Error in content pack '{name}', unknown root directory '{typeDir}'", MsgType.Failed);
                             break;
                     }
                 }
@@ -112,7 +104,6 @@ namespace ArwicEngine.Content
             // check if the cursor is part of an asset pack
             if (assetName.Contains(':'))
             {
-                string tempDir = "Content/_temp";
                 if (!Directory.Exists(tempDir))
                     Directory.CreateDirectory(tempDir);
 
@@ -140,7 +131,7 @@ namespace ArwicEngine.Content
                         // load the temp file as a cursor
                         Cursor cursor = new Cursor(finalPath);
                         // add the cursor to the loaded assets
-                        LoadedAssets.Add(assetName, cursor);
+                        AddLoadedAsset(assetName, cursor);
                     }
                 }
             }
@@ -148,6 +139,7 @@ namespace ArwicEngine.Content
             {
                 // load the cursor that isn't in a pack
                 Cursor cursor = new Cursor(Path.Combine(RootDirectory, assetName));
+                AddLoadedAsset(assetName, cursor);
             }
         }
 
@@ -166,63 +158,63 @@ namespace ArwicEngine.Content
 
         private void LoadXml(string assetName)
         {
-            // Core:XML/Graphics/*.xml
+            // standardise
+            assetName = assetName.Replace('\\', '/');
+            
+            // Core:XML/AtlasDefinitions/TileAtlasDefinition.xml
+            // package:root/type/file.xml
+
+            // get xml type
+            string xmlType = assetName.Split('/')[1];
+
+            // get the asset pack and its relative path
+            string[] assetNameParts = assetName.Split(':');
+            string assetPack = assetNameParts[0];
+            string assetPath = assetNameParts[1];
+
+            // try getting the archive
+            ZipArchive archive;
+            if (!loadedArchives.TryGetValue(assetPack, out archive))
+                throw new Exception($"Asset pack '{assetPack}' does not exist or has not been loaded");
+
+            // find the file in the archive
             Stream stream = null;
-            try
+            foreach (ZipArchiveEntry entry in archive.Entries)
             {
-                // standarise path seperators
-                assetName = assetName.Replace('\\', '/');
-
-                // check if the asset is part of an asset pack
-                if (assetName.Contains(':'))
+                if (entry.FullName == assetPath)
                 {
-                    // get the asset pack and its relative path
-                    string[] assetNameParts = assetName.Split(':');
-                    string assetPack = assetNameParts[0];
-                    string assetPath = assetNameParts[1];
-
-                    // try getting the archive
-                    ZipArchive archive;
-                    if (!loadedArchives.TryGetValue(assetPack, out archive))
-                        throw new Exception($"Asset pack '{assetPack}' does not exist or has not been loaded");
-
-                    // find the file in the archive
-                    foreach (ZipArchiveEntry entry in archive.Entries)
-                    {
-                        if (entry.FullName == assetPath)
-                        {
-                            stream = entry.Open();
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    // load an asset that isn't in a pack
-                    var path = Path.Combine(RootDirectory, assetName) + ".xnb";
-                    stream = File.Open(path, FileMode.Open);
+                    stream = entry.Open();
+                    break;
                 }
             }
-            catch (FileNotFoundException fileNotFound)
-            {
-                throw new ContentLoadException("The content file was not found.", fileNotFound);
-            }
-            catch (DirectoryNotFoundException directoryNotFound)
-            {
-                throw new ContentLoadException("The directory was not found.", directoryNotFound);
-            }
-            catch (Exception exception)
-            {
-                throw new ContentLoadException("Opening stream error.", exception);
-            }
 
-            if (stream != null)
-                AddLoadedAsset(assetName, stream);
+            // parse xml file
+            switch (xmlType)
+            {
+                case "AtlasDefinitions":
+                    // load the atlas definition
+                    SpriteAtlasDefinition atlasDef = SerializationHelper.XmlDeserialize<SpriteAtlasDefinition>(stream);
+                    // ensure the sprite is loaded
+                    //Sprite sprite = new Sprite(Load<Texture2D>(atlasDef.BaseTexturePath));
+                    // instantiate and define a new atlas
+                    SpriteAtlas atlas = new SpriteAtlas();
+                    atlas.Define(atlasDef);
+                    // add the atlas to the loaded assets dictionary
+                    AddLoadedAsset(assetName, atlas);
+                    break;
+                default:
+                    // memory stream is a better long term storage solution
+                    MemoryStream ms = new MemoryStream();
+                    stream.CopyTo(ms);
+                    AddLoadedAsset(assetName, ms);
+                    break;
+            }
         }
 
         private void AddLoadedAsset(string assetName, object asset)
         {
-            string key = assetName.Remove(assetName.Length - 4);
+            string ext = Path.GetExtension(assetName);
+            string key = assetName.Remove(assetName.Length - ext.Length);
             LoadedAssets.Add(key, asset);
         }
 
@@ -277,7 +269,11 @@ namespace ArwicEngine.Content
         {
             object asset;
             if (LoadedAssets.TryGetValue(name, out asset))
+            {
+                if (typeof(T) == typeof(Stream))
+                    ((Stream)asset).Position = 0;
                 return (T)asset;
+            }
             ConsoleManager.Instance.WriteLine($"Attempting to access an asset that does not exist '{name}'");
             return default(T);
         }

@@ -29,44 +29,16 @@ namespace Dominion.Server.Controllers
         public DataPackController(ControllerManager manager)
             : base(manager)
         {
-            LoadStandardData();
-            LoadModData();
+            LoadContentPackData("Core");
         }
 
         // loads the sandard game data
-        private void LoadStandardData()
+        private void LoadContentPackData(string contentPackName)
         {
             // load standard data packs
-            Empire.AddDataPack("Content/Data/Empires.xml");
-            Building.AddDataPack("Content/Data/Buildings.xml");
-            Unit.AddDataPack("Content/Data/Units.xml");
-        }
-
-        // loads the game data in the mod directory
-        private void LoadModData()
-        {
-            Directory.CreateDirectory("Content/Mods");
-            foreach (string modDir in Directory.EnumerateDirectories("Content/Mods"))
-            {
-                // check if a table of contents exists
-                string tocPath = $"Content/Mods/{modDir}/TOC.xml";
-                if (!File.Exists(tocPath))
-                {
-                    ConsoleManager.Instance.WriteLine($"Failed to load mod '{modDir}', no TOC found", MsgType.ServerFailed);
-                    continue;
-                }
-
-                // load toc
-                ModToc toc = SerializationHelper.XmlDeserialize<ModToc>(tocPath);
-
-                // add data packs
-                foreach (string path in toc.BuildingPacks)
-                    Building.AddDataPack(path);
-                foreach (string path in toc.EmpirePacks)
-                    Empire.AddDataPack(path);
-                foreach (string path in toc.UnitPacks)
-                    Unit.AddDataPack(path);
-            }
+            Empire.AddDataPack(Engine.Instance.Content.GetAsset<Stream>($"{contentPackName}:XML/GameData/Empires"));
+            Building.AddDataPack(Engine.Instance.Content.GetAsset<Stream>($"{contentPackName}:XML/GameData/Buildings"));
+            Unit.AddDataPack(Engine.Instance.Content.GetAsset<Stream>($"{contentPackName}:XML/GameData/Units"));
         }
     }
 }

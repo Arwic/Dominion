@@ -18,6 +18,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using static ArwicEngine.Constants;
 
@@ -87,7 +88,7 @@ namespace Dominion.Client.Scenes
         private Canvas canvas;
         private Image background;
         private Form frm_main;
-        private Dictionary<string, SoundEffect> empireAnthems;
+        //private Dictionary<string, SoundEffect> empireAnthems;
         private Form frm_lobby;
         private Form frm_lobby_configWindow;
         private ScrollBox lobby_sbPlayers;
@@ -129,8 +130,8 @@ namespace Dominion.Client.Scenes
             sbGUI = new SpriteBatch(GraphicsManager.Instance.Device);
             canvas = new Canvas(GraphicsManager.Instance.Viewport.Bounds);
             ConsoleForm consoleForm = new ConsoleForm(canvas);
-            background = new Image(new Rectangle(0, 0, 1920, 1080), new Sprite($"Graphics/Backgrounds/Menu_{RandomHelper.Next(0, 6)}"), null, null);
-            empireAnthems = Engine.Instance.Content.LoadListContent<SoundEffect>("Audio/Music/Anthems");
+            background = new Image(new Rectangle(0, 0, 1920, 1080), Engine.Instance.Content.GetAsset<Sprite>($"Core:Textures/Backgrounds/Menu_{RandomHelper.Next(0, 6)}"), null, null);
+            //empireAnthems = Engine.Instance.Content.LoadListContent<SoundEffect>("Audio/Music/Anthems");
             SetUpMainForm();
 
             // Play all anthems on shuffle
@@ -153,8 +154,8 @@ namespace Dominion.Client.Scenes
         {
             lock (_lock_guiSetUp)
             {
-                // load the form config from file
-                FormConfig formConfig = FormConfig.FromFile("Content/Interface/Menu/Main.xml");
+                // load the form config
+                FormConfig formConfig = FormConfig.FromStream(Engine.Instance.Content.GetAsset<Stream>("Core:XML/Interface/Menu/Main"));
                 // setup the form
                 canvas.RemoveChild(frm_main);
                 frm_main = new Form(formConfig, canvas);
@@ -205,8 +206,8 @@ namespace Dominion.Client.Scenes
         {
             lock (_lock_guiSetUp)
             {
-                // load the form config from file
-                FormConfig formConfig = FormConfig.FromFile("Content/Interface/Menu/Host.xml");
+                // load the form config
+                FormConfig formConfig = FormConfig.FromStream(Engine.Instance.Content.GetAsset<Stream>("Core:XML/Interface/Menu/Host"));
                 // setup the form
                 canvas.RemoveChild(frm_hostGame);
                 frm_hostGame = new Form(formConfig, canvas);
@@ -298,7 +299,7 @@ namespace Dominion.Client.Scenes
             lock (_lock_guiSetUp)
             {
                 if (getWANcancellationToken != null) getWANcancellationToken.Cancel();
-                FormConfig formConfig = FormConfig.FromFile("Content/Interface/Menu/Join.xml");
+                FormConfig formConfig = FormConfig.FromStream(Engine.Instance.Content.GetAsset<Stream>("Core:XML/Interface/Menu/Join"));
                 canvas.RemoveChild(frm_joinGame);
                 frm_joinGame = new Form(formConfig, canvas);
                 frm_joinGame.Location = new Point(GraphicsManager.Instance.Viewport.Width / 2 - frm_joinGame.Size.Width / 2, GraphicsManager.Instance.Viewport.Height / 2 - frm_joinGame.Size.Height / 2);
@@ -357,8 +358,8 @@ namespace Dominion.Client.Scenes
                 // register events
                 manager.Client.LostConnection += Client_LostConnection;
 
-                // load the form config from file
-                FormConfig formConfig = FormConfig.FromFile("Content/Interface/Menu/Lobby.xml");
+                // load the form config
+                FormConfig formConfig = FormConfig.FromStream(Engine.Instance.Content.GetAsset<Stream>("Core:XML/Interface/Menu/Lobby"));
 
                 // setup the form
                 canvas.RemoveChild(frm_lobby);

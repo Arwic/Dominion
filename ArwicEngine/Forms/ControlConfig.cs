@@ -6,6 +6,7 @@ using ArwicEngine.Core;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Xml.Serialization;
 
@@ -100,6 +101,11 @@ namespace ArwicEngine.Forms
             CloseButtonEnabled = form.CloseButtonEnabled;
             HotKey = form.HotKey;
             DrawTitlebar = form.DrawTitlebar;
+        }
+
+        public static FormConfig FromStream(Stream stream)
+        {
+            return SerializationHelper.XmlDeserialize<FormConfig>(stream);
         }
 
         public static FormConfig FromFile(string path)

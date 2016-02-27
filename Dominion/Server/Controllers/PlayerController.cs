@@ -7,6 +7,7 @@ using ArwicEngine.Net;
 using Dominion.Common.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Dominion.Server.Controllers
@@ -163,7 +164,7 @@ namespace Dominion.Server.Controllers
         /// <param name="userName"></param>
         public void AddPlayer(Connection connection, string userName)
         {
-            Player player = new Player(connection, players.Count, "NULL", userName, TechTree.FromFile("Content/Data/TechnologyList.xml"));
+            Player player = new Player(connection, players.Count, "NULL", userName, TechTree.FromStream(Engine.Instance.Content.GetAsset<Stream>("Core:XML/GameData/Technologies")));
             player.EmpireID =  Controllers.Data.Empire.GetAllEmpires().ElementAt(RandomHelper.Next(0, Controllers.Data.Empire.EmpireCount)).Name;
             player.TechTree.GetNode(0).Unlocked = true;
             players.Add(player);

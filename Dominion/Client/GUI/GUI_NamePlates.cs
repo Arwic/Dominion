@@ -2,6 +2,7 @@
 // GUI_NamePlates.cs
 // This file defines classes that manage the name plates gui elements
 
+using ArwicEngine;
 using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using ArwicEngine.Graphics;
@@ -41,8 +42,8 @@ namespace Dominion.Client.GUI
         private void LoadResources()
         {
             // load sprites
-            cityLabelSprite = new Sprite("Graphics/Interface/Controls/Button");
-            unitLabelSprite = new Sprite("Graphics/Interface/Controls/ScrollBox_Back");
+            cityLabelSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.CONTROL_BUTTON);
+            unitLabelSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.CONTROL_SCROLLBOX_BACK);
         }
 
         /// <summary>

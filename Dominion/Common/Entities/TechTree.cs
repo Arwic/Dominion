@@ -2,6 +2,7 @@
 // TechTree.cs
 // This file defines classes that define a tech tree
 
+using ArwicEngine.Core;
 using ArwicEngine.TypeConverters;
 using System;
 using System.Collections.Generic;
@@ -150,16 +151,21 @@ namespace Dominion.Common.Entities
         /// <summary>
         /// Loads the tech tree from file
         /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        public static TechTree FromStream(Stream stream)
+        {
+            return SerializationHelper.XmlDeserialize<TechTree>(stream);
+        }
+
+        /// <summary>
+        /// Loads the tech tree from file
+        /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
         public static TechTree FromFile(string path)
         {
-            XmlSerializer xmls = new XmlSerializer(typeof(TechTree));
-            using (XmlReader reader = XmlReader.Create(File.OpenRead(path), new XmlReaderSettings() { CloseInput = true }))
-            {
-                TechTree t = (TechTree)xmls.Deserialize(reader);
-                return t;
-            }
+            return SerializationHelper.XmlDeserialize<TechTree>(path);
         }
 
         /// <summary>

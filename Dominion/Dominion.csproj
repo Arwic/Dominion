@@ -82,7 +82,6 @@
     <Compile Include="Client\GUI\GUI_StatusBar.cs" />
     <Compile Include="Common\Data\Building.cs" />
     <Compile Include="Common\Data\Empire.cs" />
-    <Compile Include="Common\Data\ModToc.cs" />
     <Compile Include="Common\Data\Technology.cs" />
     <Compile Include="Common\Data\Unit.cs" />
     <Compile Include="Common\Entities\PlayerCommand.cs" />

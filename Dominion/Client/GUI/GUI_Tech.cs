@@ -2,6 +2,8 @@
 // GUI_Tech.cs
 // This file defines classes that manage the tech tree gui elements
 
+using ArwicEngine;
+using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using ArwicEngine.Graphics;
 using Dominion.Client.Scenes;
@@ -84,10 +86,10 @@ namespace Dominion.Client.GUI
                     maxScrollIndex = node.GridX;
 
             // load sprites
-            techLockedSprite = new Sprite("Graphics/Interface/Controls/ScrollBox_Back");
-            techUnlockedSprite = new Sprite("Graphics/Interface/Controls/ScrollBox_Button");
-            techSelectedSprite = new Sprite("Graphics/Interface/Controls/Form_Back");
-            techSelectable = new Sprite("Graphics/Interface/Controls/ScrollBox_Back");
+            techLockedSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.CONTROL_SCROLLBOX_BACK);
+            techUnlockedSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.CONTROL_SCROLLBOX_BUTTON);
+            techSelectedSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.CONTROL_FORM_BACK);
+            techSelectable = Engine.Instance.Content.GetAsset<Sprite>(Constants.CONTROL_SCROLLBOX_BACK);
         }
 
         /// <summary>

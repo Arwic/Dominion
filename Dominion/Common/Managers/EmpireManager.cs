@@ -8,6 +8,7 @@ using Dominion.Common.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 
@@ -42,11 +43,16 @@ namespace Dominion.Common.Managers
         /// <summary>
         /// Adds a data pack to the manager
         /// </summary>
-        /// <param name="file"></param>
-        public void AddDataPack(string file)
+        /// <param name="stream"></param>
+        public void AddDataPack(Stream stream)
         {
+            if (stream == null)
+            {
+                ConsoleManager.Instance.WriteLine("Missing empire data", MsgType.ServerWarning);
+                return;
+            }
             // load data pack
-            EmpireDataPack pack = SerializationHelper.XmlDeserialize<EmpireDataPack>(file);
+            EmpireDataPack pack = SerializationHelper.XmlDeserialize<EmpireDataPack>(stream);
             dataPacks.Add(pack);
 
             foreach (Empire e in pack.Empires)

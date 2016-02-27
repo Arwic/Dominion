@@ -2,6 +2,8 @@
 // BoardRenderer.cs
 // This file defines classes that render the game board
 
+using ArwicEngine;
+using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using ArwicEngine.Graphics;
 using ArwicEngine.Input;
@@ -108,7 +110,7 @@ namespace Dominion.Client.Renderers
         private TileIcon[][] tileIcons;
 
         // Resources
-        private SpriteAtlas tileAtlas;
+        public SpriteAtlas TileAtlas { get; private set; }
 
         private Vector2[] corners;
         public int TileSize
@@ -151,8 +153,9 @@ namespace Dominion.Client.Renderers
             client.BoardChanged += Client_BoardChanged;
             client.TilesUpdated += Client_TilesUpdated;
 
-            tileAtlas = SpriteAtlas.FromFile("Content/Data/Graphics/TileAtlasDefinition.xml");
-            
+            // get content
+            TileAtlas = Engine.Instance.Content.GetAsset<SpriteAtlas>("Core:XML/AtlasDefinitions/TileAtlasDefinition");
+
             // build yield icons
             BuildTileIcons();
         }
@@ -321,7 +324,7 @@ namespace Dominion.Client.Renderers
                     // check if explored
                     if (cachedTile == null)
                     {
-                        tileAtlas.Draw(sb, "TILEUTIL_CLOUD", rect); // draw a cloud over the unexplored tile
+                        TileAtlas.Draw(sb, "TILEUTIL_CLOUD", rect); // draw a cloud over the unexplored tile
                         continue; // dont draw the underlying tile
                     }
 
@@ -358,15 +361,15 @@ namespace Dominion.Client.Renderers
                         color = Color.Gray;
 
                     // draw the tile
-                    tileAtlas.Draw(sb, $"TILEBASE_{cachedTile.TerrainBase}", rect, null, color);
+                    TileAtlas.Draw(sb, $"TILEBASE_{cachedTile.TerrainBase}", rect, null, color);
                     if (cachedTile.TerrainFeature != TileTerrainFeature.OPEN)
                     {
-                        tileAtlas.Draw(sb, $"TILEFEATURE_{cachedTile.TerrainFeature}", rect, null, color);
+                        TileAtlas.Draw(sb, $"TILEFEATURE_{cachedTile.TerrainFeature}", rect, null, color);
                     }
                     // draw the improvment if the tile has one
                     if (cachedTile.Improvement != TileImprovment.Null)
                     {
-                        tileAtlas.Draw(sb, $"TILEIMPROVMENT_{cachedTile.Improvement}", rect, null, color);
+                        TileAtlas.Draw(sb, $"TILEIMPROVMENT_{cachedTile.Improvement}", rect, null, color);
                     }
                     // draw a resource icon if the tile has a resource
                     //if (cachedTile.Resource != TileResource.Null)
@@ -384,8 +387,8 @@ namespace Dominion.Client.Renderers
                             if (city.PlayerID == client.Player.InstanceID && tileUnderMouse != null && tileUnderMouse.Location == city.Location)
                                 empColorPri = Color.Lerp(empColorPri, Color.White, 0.1f);
                             empColorPri.A = 255;
-                            tileAtlas.Draw(sb, $"TILEUTIL_HIGHLIGHT", rect, null, empColorPri);
-                            tileAtlas.Draw(sb, $"TILEUTIL_OUTLINE", rect, null, empColorSec);
+                            TileAtlas.Draw(sb, $"TILEUTIL_HIGHLIGHT", rect, null, empColorPri);
+                            TileAtlas.Draw(sb, $"TILEUTIL_OUTLINE", rect, null, empColorSec);
                         }
                     }
                     // draw yield icons if enabled
@@ -409,14 +412,14 @@ namespace Dominion.Client.Renderers
                 if (tile == null)
                     continue;
                 Rectangle cityDest = GetTileRenderRect(tile);
-                tileAtlas.Draw(sb, "TILEIMPROVMENT_CITY", cityDest);
+                TileAtlas.Draw(sb, "TILEIMPROVMENT_CITY", cityDest);
 
                 if (client.SelectedCity != null && client.SelectedCity.InstanceID == city.InstanceID && city.PlayerID == client.Player.InstanceID)
                 {
                     foreach (Point loc in city.CitizenLocations)
                     {
                         Rectangle dest = GetTileRenderRect(loc);
-                        tileAtlas.Draw(sb, "TILEUTIL_OVERLAY", dest);
+                        TileAtlas.Draw(sb, "TILEUTIL_OVERLAY", dest);
                     }
                 }
             }
@@ -431,7 +434,7 @@ namespace Dominion.Client.Renderers
                 {
                     Color color = Color.White;
                     Rectangle rect = GetTileRenderRect(x, y);
-                    tileAtlas.Draw(sb, "TILEUTIL_OUTLINE", rect, null, color);
+                    TileAtlas.Draw(sb, "TILEUTIL_OUTLINE", rect, null, color);
                 }
             }
         }
@@ -448,7 +451,7 @@ namespace Dominion.Client.Renderers
                     {
                         // the the tile border
                         Rectangle rect = GetTileRenderRect(x, y);
-                        tileAtlas.Draw(sb, "TILEUTIL_OUTLINE", rect, null, Color.CornflowerBlue);
+                        TileAtlas.Draw(sb, "TILEUTIL_OUTLINE", rect, null, Color.CornflowerBlue);
                     }
                 }
             }

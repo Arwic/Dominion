@@ -6,6 +6,7 @@ using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using ArwicEngine.Scenes;
 using Dominion.Client.Scenes;
+using System.IO;
 
 namespace Dominion.Client.GUI
 {
@@ -20,8 +21,8 @@ namespace Dominion.Client.GUI
 
         public GUI_GameMenu(Client client, SceneGame sceneGame, Canvas canvas)
         {
-            // load the form from file
-            formConfig = FormConfig.FromFile("Content/Interface/Game/GameMenu.xml");
+            // get the form config
+            formConfig = FormConfig.FromStream(Engine.Instance.Content.GetAsset<Stream>("Core:XML/Interface/Game/GameMenu"));
             this.client = client;
             this.sceneGame = sceneGame;
             this.canvas = canvas;

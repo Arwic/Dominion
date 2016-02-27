@@ -53,7 +53,7 @@ namespace ArwicInterfaceDesigner
                     comboBox.Text = "New ComboBox".ToRichText();
                     break;
                 case "image":
-                    Image image = new Image(new Rectangle(START_POS_X, START_POS_Y, 200, 200), new Sprite("Graphics/Util/Default"), null, Form);
+                    Image image = new Image(new Rectangle(START_POS_X, START_POS_Y, 200, 200), new Sprite(GraphicsHelper.PixelTexture), null, Form);
                     break;
                 case "label":
                     Label label = new Label(new Rectangle(START_POS_X, START_POS_Y, 0, 0), "New Label".ToRichText(), Form);

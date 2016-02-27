@@ -6,6 +6,7 @@ using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using Dominion.Client.Scenes;
 using Microsoft.Xna.Framework;
+using System.IO;
 using System.Text;
 
 namespace Dominion.Client.GUI
@@ -25,8 +26,8 @@ namespace Dominion.Client.GUI
             this.sceneGame = sceneGame;
             this.canvas = canvas;
 
-            // load form config from file
-            formConfig = FormConfig.FromFile("Content/Interface/Game/StatusBar.xml");
+            // get form config
+            formConfig = FormConfig.FromStream(Engine.Instance.Content.GetAsset<Stream>("Core:XML/Interface/Game/StatusBar"));
 
             // register events
             client.PlayerUpdated += (s, a) => UpdateResourceLabel();

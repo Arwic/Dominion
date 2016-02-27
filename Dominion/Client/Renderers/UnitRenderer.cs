@@ -2,6 +2,7 @@
 // UnitRenderer.cs
 // This file defines classes that render units
 
+using ArwicEngine.Core;
 using ArwicEngine.Graphics;
 using ArwicEngine.Input;
 using Dominion.Common.Entities;
@@ -23,7 +24,7 @@ namespace Dominion.Client.Renderers
         private Color pathColor;
 
         // Resources
-        private Sprite[] unitSprites;
+        private SpriteAtlas unitAtlas;
         private Sprite tileHighlightSprite;
 
         // Cache
@@ -106,12 +107,8 @@ namespace Dominion.Client.Renderers
         // load unit resources
         private void LoadResources()
         {
-            tileHighlightSprite = new Sprite("Graphics/Game/Tiles/TileOverlay");
-
-            int count = Enum.GetNames(typeof(UnitGraphicID)).Length;
-            unitSprites = new Sprite[count];
-            for (int i = 0; i < count; i++)
-                unitSprites[i] = new Sprite($"Graphics/Game/Units/{i}");
+            tileHighlightSprite = new Sprite(Engine.Instance.Content.GetAsset<SpriteAtlas>("Core:XML/AtlasDefinitions/TileAtlasDefinition"), "TILEUTIL_HIGHLIGHT");
+            unitAtlas = Engine.Instance.Content.GetAsset<SpriteAtlas>("Core:XML/AtlasDefinitions/UnitAtlasDefinition");
         }
 
         // draw all units to client can see
@@ -143,7 +140,7 @@ namespace Dominion.Client.Renderers
                         boardRenderer.TileSize,
                         boardRenderer.TileSize);
             // draw the correct sprite at the unit's position
-            unitSprites[0].Draw(sb, dest); // TODO DEBUG this is temp unit rendering
+            unitAtlas.Draw(sb, unit.UnitID, dest); // TODO DEBUG this is temp unit rendering
             //unitSprites[unit.BaseUnit.GraphicID].Draw(sb, dest);
         }
 

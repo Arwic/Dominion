@@ -21,37 +21,37 @@
 
 #begin Audio/Music/Anthems/China.mp3
 /importer:Mp3Importer
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Music/Anthems/China.mp3
 
 #begin Audio/Music/Anthems/England.mp3
 /importer:Mp3Importer
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Music/Anthems/England.mp3
 
 #begin Audio/Music/Anthems/France.mp3
 /importer:Mp3Importer
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Music/Anthems/France.mp3
 
 #begin Audio/Music/Anthems/Italy.mp3
 /importer:Mp3Importer
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Music/Anthems/Italy.mp3
 
 #begin Audio/Music/Anthems/Japan.mp3
 /importer:Mp3Importer
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Music/Anthems/Japan.mp3
 
 #begin Audio/Music/Anthems/Russia.mp3
 /importer:Mp3Importer
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Music/Anthems/Russia.mp3
 
@@ -61,25 +61,25 @@
 /processorParam:Quality=Best
 /build:Audio/Music/Rule_Britannia_Phonograph.wav
 
-#begin Font/Arial.spritefont
+#begin Fonts/Arial.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:TextureFormat=Compressed
-/build:Font/Arial.spritefont
+/build:Fonts/Arial.spritefont
 
-#begin Font/ArwicSymbol.spritefont
+#begin Fonts/ArwicSymbol.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:TextureFormat=Compressed
-/build:Font/ArwicSymbol.spritefont
+/build:Fonts/ArwicSymbol.spritefont
 
-#begin Font/Consolas.spritefont
+#begin Fonts/Consolas.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:TextureFormat=Compressed
-/build:Font/Consolas.spritefont
+/build:Fonts/Consolas.spritefont
 
-#begin Sprite/Backgrounds/Menu_0.png
+#begin Textures/Backgrounds/Menu_0.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -88,9 +88,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Backgrounds/Menu_0.png
+/build:Textures/Backgrounds/Menu_0.png
 
-#begin Sprite/Backgrounds/Menu_1.png
+#begin Textures/Backgrounds/Menu_1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -99,9 +99,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Backgrounds/Menu_1.png
+/build:Textures/Backgrounds/Menu_1.png
 
-#begin Sprite/Backgrounds/Menu_2.png
+#begin Textures/Backgrounds/Menu_2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -110,9 +110,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Backgrounds/Menu_2.png
+/build:Textures/Backgrounds/Menu_2.png
 
-#begin Sprite/Backgrounds/Menu_3.png
+#begin Textures/Backgrounds/Menu_3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -121,9 +121,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Backgrounds/Menu_3.png
+/build:Textures/Backgrounds/Menu_3.png
 
-#begin Sprite/Backgrounds/Menu_4.png
+#begin Textures/Backgrounds/Menu_4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -132,9 +132,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Backgrounds/Menu_4.png
+/build:Textures/Backgrounds/Menu_4.png
 
-#begin Sprite/Backgrounds/Menu_5.png
+#begin Textures/Backgrounds/Menu_5.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -143,9 +143,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Backgrounds/Menu_5.png
+/build:Textures/Backgrounds/Menu_5.png
 
-#begin Sprite/Game/Units/0.png
+#begin Textures/Game/Units/0.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -154,9 +154,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Game/Units/0.png
+/build:Textures/Game/Units/0.png
 
-#begin Sprite/Game/Units/1.png
+#begin Textures/Game/Units/1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -165,9 +165,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Game/Units/1.png
+/build:Textures/Game/Units/1.png
 
-#begin Sprite/Game/TileAtlas.png
+#begin Textures/Game/TileAtlas.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -176,9 +176,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Game/TileAtlas.png
+/build:Textures/Game/TileAtlas.png
 
-#begin Sprite/Game/UnitAtlas.png
+#begin Textures/Game/UnitAtlas.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -187,9 +187,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Game/UnitAtlas.png
+/build:Textures/Game/UnitAtlas.png
 
-#begin Sprite/Interface/Controls/Button.png
+#begin Textures/Interface/Controls/Button.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -198,9 +198,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Interface/Controls/Button.png
+/build:Textures/Interface/Controls/Button.png
 
-#begin Sprite/Interface/Controls/CheckBox_False.png
+#begin Textures/Interface/Controls/CheckBox_False.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -209,9 +209,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Interface/Controls/CheckBox_False.png
+/build:Textures/Interface/Controls/CheckBox_False.png
 
-#begin Sprite/Interface/Controls/CheckBox_True.png
+#begin Textures/Interface/Controls/CheckBox_True.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -220,9 +220,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Interface/Controls/CheckBox_True.png
+/build:Textures/Interface/Controls/CheckBox_True.png
 
-#begin Sprite/Interface/Controls/ComboBox_Button.png
+#begin Textures/Interface/Controls/ComboBox_Button.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -231,9 +231,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Interface/Controls/ComboBox_Button.png
+/build:Textures/Interface/Controls/ComboBox_Button.png
 
-#begin Sprite/Interface/Controls/Form_Back.png
+#begin Textures/Interface/Controls/Form_Back.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -242,9 +242,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Interface/Controls/Form_Back.png
+/build:Textures/Interface/Controls/Form_Back.png
 
-#begin Sprite/Interface/Controls/Form_Close.png
+#begin Textures/Interface/Controls/Form_Close.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -253,9 +253,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Interface/Controls/Form_Close.png
+/build:Textures/Interface/Controls/Form_Close.png
 
-#begin Sprite/Interface/Controls/ProgressBar_Back.png
+#begin Textures/Interface/Controls/ProgressBar_Back.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -264,9 +264,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Interface/Controls/ProgressBar_Back.png
+/build:Textures/Interface/Controls/ProgressBar_Back.png
 
-#begin Sprite/Interface/Controls/ProgressBar_Fill.png
+#begin Textures/Interface/Controls/ProgressBar_Fill.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -275,9 +275,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Interface/Controls/ProgressBar_Fill.png
+/build:Textures/Interface/Controls/ProgressBar_Fill.png
 
-#begin Sprite/Interface/Controls/ScrollBox_Back.png
+#begin Textures/Interface/Controls/ScrollBox_Back.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -286,9 +286,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Interface/Controls/ScrollBox_Back.png
+/build:Textures/Interface/Controls/ScrollBox_Back.png
 
-#begin Sprite/Interface/Controls/ScrollBox_Button.png
+#begin Textures/Interface/Controls/ScrollBox_Button.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -297,9 +297,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Interface/Controls/ScrollBox_Button.png
+/build:Textures/Interface/Controls/ScrollBox_Button.png
 
-#begin Sprite/Interface/Controls/ScrollBox_Scrubber.png
+#begin Textures/Interface/Controls/ScrollBox_Scrubber.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -308,9 +308,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Interface/Controls/ScrollBox_Scrubber.png
+/build:Textures/Interface/Controls/ScrollBox_Scrubber.png
 
-#begin Sprite/Interface/Controls/ScrollBox_Selected.png
+#begin Textures/Interface/Controls/ScrollBox_Selected.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -319,9 +319,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Interface/Controls/ScrollBox_Selected.png
+/build:Textures/Interface/Controls/ScrollBox_Selected.png
 
-#begin Sprite/Interface/Controls/TextBox.png
+#begin Textures/Interface/Controls/TextBox.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -330,9 +330,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Interface/Controls/TextBox.png
+/build:Textures/Interface/Controls/TextBox.png
 
-#begin Sprite/Logo.png
+#begin Textures/Logo.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -341,5 +341,5 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Sprite/Logo.png
+/build:Textures/Logo.png
 

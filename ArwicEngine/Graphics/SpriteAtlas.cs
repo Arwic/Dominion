@@ -56,22 +56,23 @@ namespace ArwicEngine.Graphics
         public SpriteDefinition() { }
     }
 
+    public class SpriteAtlasDefinition
+    {
+        [XmlElement("TexturePath")]
+        public string BaseTexturePath { get; set; }
+
+        [XmlArray("SpriteDefinitions"), XmlArrayItem(typeof(SpriteDefinition), ElementName = "SpriteDefinition")]
+        public List<SpriteDefinition> RawDefinitions { get; set; }
+    }
+
     public class SpriteAtlas
     {
         /// <summary>
         /// Gets or sets the sprite used as a source
         /// </summary>
-        [XmlIgnore]
         public Sprite BaseTexture { get; private set; }
 
-        [XmlElement("TexturePath")]
-        public string BaseTexturePath { get; set; }
-
-        [XmlIgnore]
         public Dictionary<string, Rectangle> SpriteDefinitions { get; private set; }
-
-        [XmlArray("SpriteDefinitions"), XmlArrayItem(typeof(SpriteDefinition), ElementName = "SpriteDefinition")]
-        public List<SpriteDefinition> RawDefinitions { get; set; }
 
         /// <summary>
         /// Creates a new sprite atlas
@@ -81,48 +82,18 @@ namespace ArwicEngine.Graphics
         /// <param name="iconDim"></param>
         public SpriteAtlas(Sprite baseSprite, Dictionary<string, Rectangle> spriteDefinitions)
         {
-            BaseTexturePath = baseSprite.Texture.Name;
             SpriteDefinitions = spriteDefinitions;
             BaseTexture = baseSprite;
         }
 
         public SpriteAtlas() { }
 
-        private SpriteAtlas(SpriteAtlas loadedAtlas)
+        public void Define(SpriteAtlasDefinition definition)
         {
-            BaseTexturePath = loadedAtlas.BaseTexturePath;
             SpriteDefinitions = new Dictionary<string, Rectangle>();
-            foreach (SpriteDefinition sdef in loadedAtlas.RawDefinitions)
+            foreach (SpriteDefinition sdef in definition.RawDefinitions)
                 SpriteDefinitions.Add(sdef.Key, sdef.Source);
-            BaseTexture = new Sprite(Engine.Instance.Content.Load<Texture2D>(BaseTexturePath));
-        }
-
-        /// <summary>
-        /// Loads a sprite atlas from a sprite atlas definition xml file
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static SpriteAtlas FromFile(string path)
-        {
-            // load the atlas from file
-            SpriteAtlas atlas = SerializationHelper.XmlDeserialize<SpriteAtlas>(path);
-            // return a new atlas based on it
-            return new SpriteAtlas(atlas);
-        }
-
-        /// <summary>
-        /// Saves a sprite atlas to file so it can be loaded later
-        /// </summary>
-        /// <param name="path"></param>
-        public void WriteToFile(string path)
-        {
-            // prepare
-            RawDefinitions = new List<SpriteDefinition>();
-            foreach (KeyValuePair<string, Rectangle> kvp in SpriteDefinitions)
-                RawDefinitions.Add(new SpriteDefinition(kvp.Key, kvp.Value));
-
-            // serialise
-            SerializationHelper.XmlSerialize<SpriteAtlas>(path, this);
+            BaseTexture = Engine.Instance.Content.GetAsset<Sprite>(definition.BaseTexturePath);
         }
 
         /// <summary>
@@ -139,7 +110,7 @@ namespace ArwicEngine.Graphics
             bool res = SpriteDefinitions.TryGetValue(spriteDef, out def);
             if (!res)
             {
-                ConsoleManager.Instance.WriteLine($"Could not find sprite '{spriteDef}' in '{BaseTexturePath}'");
+                ConsoleManager.Instance.WriteLine($"Could not find sprite '{spriteDef}' in '{BaseTexture.Path}'");
                 return;
             }
 
@@ -168,7 +139,7 @@ namespace ArwicEngine.Graphics
             bool res = SpriteDefinitions.TryGetValue(spriteDef, out def);
             if (!res)
             {
-                ConsoleManager.Instance.WriteLine($"Could not find sprite '{spriteDef}' in '{BaseTexturePath}'");
+                ConsoleManager.Instance.WriteLine($"Could not find sprite '{spriteDef}' in '{BaseTexture.Path}'");
                 return;
             }
 

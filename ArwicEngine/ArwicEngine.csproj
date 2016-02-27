@@ -50,12 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Audio\AudioManager.cs" />
-    <Compile Include="Content\ContentPack.cs" />
     <Compile Include="Content\ContentPackManager.cs" />
-    <Compile Include="Content\ContentToc.cs" />
     <Compile Include="Core\AsyncExtensions.cs" />
     <Compile Include="Core\ColorExtensions.cs" />
-    <Compile Include="Core\ContentExtensions.cs" />
     <Compile Include="Core\EnumExtensions.cs" />
     <Compile Include="Core\LinkedListExtension.cs" />
     <Compile Include="Core\PriorityQueue.cs" />

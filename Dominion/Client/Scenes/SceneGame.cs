@@ -59,8 +59,8 @@ namespace Dominion.Client.Scenes
             : base()
         {
             // load resources
-            defaultCursor = new Cursor("Content/Cursors/normal.cur");
-            unitCommandTargetCursor = new Cursor("Content/Cursors/link.cur");
+            defaultCursor = Engine.Instance.Content.GetAsset<Cursor>(Constants.CURSOR_NORMAL_PATH);
+            unitCommandTargetCursor = Engine.Instance.Content.GetAsset<Cursor>(Constants.CURSOR_LINK_PATH);
             this.manager = manager;
             // register events
             manager.Client.SelectedCommandChanged += Client_SelectedCommandChanged;

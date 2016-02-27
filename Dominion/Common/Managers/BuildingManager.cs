@@ -8,6 +8,7 @@ using Dominion.Common.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Xml.Serialization;
 
 namespace Dominion.Common.Managers
@@ -41,11 +42,16 @@ namespace Dominion.Common.Managers
         /// <summary>
         /// Adds a data pack to the manager
         /// </summary>
-        /// <param name="file"></param>
-        public void AddDataPack(string file)
+        /// <param name="stream"></param>
+        public void AddDataPack(Stream stream)
         {
+            if (stream == null)
+            {
+                ConsoleManager.Instance.WriteLine("Missing building data", MsgType.ServerWarning);
+                return;
+            }
             // load data pack
-            BuildingDataPack pack = SerializationHelper.XmlDeserialize<BuildingDataPack>(file);
+            BuildingDataPack pack = SerializationHelper.XmlDeserialize<BuildingDataPack>(stream);
             dataPacks.Add(pack);
 
             foreach (Building b in pack.Buildings)

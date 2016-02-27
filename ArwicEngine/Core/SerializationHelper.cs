@@ -38,6 +38,18 @@ namespace ArwicEngine.Core
         }
 
         /// <summary>
+        /// Deserializes the given xml file stream into the given type
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        public static T XmlDeserialize<T>(Stream stream)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            return (T)serializer.Deserialize(stream);
+        }
+
+        /// <summary>
         /// Serializes the given object into binary
         /// </summary>
         /// <param name="obj"></param>

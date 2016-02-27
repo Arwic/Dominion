@@ -2,6 +2,7 @@
 // GUI_CityManagment.cs
 // This file defines classes that manage the city managment gui elements
 
+using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using Dominion.Client.Scenes;
 using Dominion.Common.Data;
@@ -9,6 +10,7 @@ using Dominion.Common.Entities;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Dominion.Client.GUI
 {
@@ -82,11 +84,11 @@ namespace Dominion.Client.GUI
 
         public GUI_CityManagment(Client client, SceneGame sceneGame, Canvas canvas)
         {
-            // load configs from file
-            frmFocusConfig = FormConfig.FromFile("Content/Interface/Game/City_FocusPane.xml");
-            frmProductionConfig = FormConfig.FromFile("Content/Interface/Game/City_ProductionPane.xml");
-            frmStatsConfig = FormConfig.FromFile("Content/Interface/Game/City_StatsPane.xml");
-            frmReturnBuyConfig = FormConfig.FromFile("Content/Interface/Game/City_ReturnBuyPane.xml");
+            // load form configs
+            frmFocusConfig = FormConfig.FromStream(Engine.Instance.Content.GetAsset<Stream>("Core:XML/Interface/Game/City_FocusPane"));
+            frmProductionConfig = FormConfig.FromStream(Engine.Instance.Content.GetAsset<Stream>("Core:XML/Interface/Game/City_ProductionPane"));
+            frmStatsConfig = FormConfig.FromStream(Engine.Instance.Content.GetAsset<Stream>("Core:XML/Interface/Game/City_StatsPane"));
+            frmReturnBuyConfig = FormConfig.FromStream(Engine.Instance.Content.GetAsset<Stream>("Core:XML/Interface/Game/City_ReturnBuyPane"));
             this.client = client;
             this.sceneGame = sceneGame;
             this.canvas = canvas;

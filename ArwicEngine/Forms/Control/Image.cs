@@ -157,7 +157,8 @@ namespace ArwicEngine.Forms
         public Image(ImageConfig config, Control parent = null)
             : base(config, parent)
         {
-            Sprite = new Sprite(Engine.Instance.Content.Load<Texture2D>(config.SpritePath));
+            Sprite = Engine.Instance.Content.GetAsset<Sprite>(config.SpritePath);
+            //Sprite = new Sprite(Engine.Instance.Content.Load<Texture2D>(config.SpritePath));
             Source = config.Source;
             Rotation = config.Rotation;
             Origin = config.Origin;

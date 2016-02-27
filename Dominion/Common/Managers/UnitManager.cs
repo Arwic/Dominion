@@ -9,6 +9,7 @@ using Dominion.Common.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Xml.Serialization;
 
 namespace Dominion.Common.Managers
@@ -44,11 +45,16 @@ namespace Dominion.Common.Managers
         /// <summary>
         /// Adds a data pack to the manager
         /// </summary>
-        /// <param name="file"></param>
-        public void AddDataPack(string file)
+        /// <param name="stream"></param>
+        public void AddDataPack(Stream stream)
         {
+            if (stream == null)
+            {
+                ConsoleManager.Instance.WriteLine("Missing unit data", MsgType.ServerWarning);
+                return;
+            }
             // load data pack
-            UnitDataPack pack = SerializationHelper.XmlDeserialize<UnitDataPack>(file);
+            UnitDataPack pack = SerializationHelper.XmlDeserialize<UnitDataPack>(stream);
             dataPacks.Add(pack);
 
             foreach (Unit u in pack.Units)

@@ -2,11 +2,13 @@
 // GUI_CityList.cs
 // This file defines classes that manage the city list gui element
 
+using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using Dominion.Client.Scenes;
 using Dominion.Common.Entities;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Dominion.Client.GUI
 {
@@ -39,8 +41,8 @@ namespace Dominion.Client.GUI
 
         public GUI_CityList(Client client, SceneGame sceneGame, Canvas canvas)
         {
-            // load the form config from file
-            formConfig = FormConfig.FromFile("Content/Interface/Game/CityList.xml");
+            // load the form configs
+            formConfig = FormConfig.FromStream(Engine.Instance.Content.GetAsset<Stream>("Core:XML/Interface/Game/CityList"));
             this.client = client;
             this.sceneGame = sceneGame;
             this.canvas = canvas;

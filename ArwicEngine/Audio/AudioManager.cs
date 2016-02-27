@@ -68,7 +68,7 @@ namespace ArwicEngine.Audio
         /// <summary>
         /// Gets the name of the currently playing music track
         /// </summary>
-        public string CurrentTrackName => currentMusicEffect.Name;
+        public string CurrentTrackName => currentMusicEffect == null ? "N/A" : currentMusicEffect.Name;
 
         /// <summary>
         /// Gets or sets the current music playback volume

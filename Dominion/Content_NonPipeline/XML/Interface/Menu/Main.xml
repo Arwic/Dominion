@@ -27,7 +27,7 @@
       <LocationY>0</LocationY>
       <LocationWidth>300</LocationWidth>
       <LocationHeight>100</LocationHeight>
-      <SpritePath>Graphics/Logo</SpritePath>
+      <SpritePath>Core:Textures/Logo</SpritePath>
       <Source>
         <X>0</X>
         <Y>0</Y>
