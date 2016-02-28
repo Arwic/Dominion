@@ -329,12 +329,10 @@ namespace Dominion.Client.GUI
             return items;
         }
 
-        // TODO make this work with the new modifiers
-        // maybe have the server calculate it and store it directly in the prod object?
         // returns the number of turns required to produce the given production at the given city
         private int GetTurnsToProduce(City city, Production prod)
         {
-            int prodIncome = city.IncomeProduction;
+            int prodIncome = city.GetProductionIncome(prod, client.BuildingManager, client.UnitManager);
             int prodRequired = -1;
             switch (prod.ProductionType)
             {
@@ -358,6 +356,7 @@ namespace Dominion.Client.GUI
                 if (requiredTurns > maxLoops)
                     return -2;
             }
+            //ConsoleManager.Instance.WriteLine($"Production: {prod.Name} progress {prod.Progress}/{prodRequired + prodIncome * requiredTurns} (+{prodIncome}) done in {requiredTurns} turns");
             return requiredTurns;
         }
 

@@ -2,6 +2,8 @@
 // Board.cs
 // This file defines classes that define a city
 
+using Dominion.Common.Data;
+using Dominion.Common.Managers;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -384,6 +386,39 @@ namespace Dominion.Common.Entities
             CitizenLocations = new List<Point>();
             foreach (int[] workerLocation in _citizenLocationInts)
                 _citizenLocations.Add(new Point(workerLocation[0], workerLocation[1]));
+        }
+
+        /// <summary>
+        /// Calculates the amount of production that will be generated for the given production at this city
+        /// This takes modifiers into account
+        /// </summary>
+        /// <param name="production"></param>
+        /// <param name="buildingManager"></param>
+        /// <param name="unitManager"></param>
+        /// <returns></returns>
+        public int GetProductionIncome(Production production, BuildingManager buildingManager, UnitManager unitManager)
+        {
+            float prodIncome = 0f;
+            // calculate production this turn
+            switch (production.ProductionType)
+            {
+                case ProductionType.UNIT:
+                    Unit u = unitManager.GetUnit(production.Name);
+                    prodIncome = IncomeProduction;
+                    if (u.Tags.Contains("MILITARY"))
+                        prodIncome *= MilitaryProductionModifier;
+                    if (u.Tags.Contains("SPACESHIP"))
+                        prodIncome *= SpaceProductionModifier;
+                    break;
+                case ProductionType.BUILDING:
+                    Building b = buildingManager.GetBuilding(production.Name);
+                    prodIncome = IncomeProduction;
+                    prodIncome *= BuildingProductionModifier;
+                    if (b.Tags.Contains("WONDER"))
+                        prodIncome *= WonderProductionModifier;
+                    break;
+            }
+            return (int)prodIncome;
         }
     }
 }

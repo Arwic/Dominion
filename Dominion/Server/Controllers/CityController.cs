@@ -101,6 +101,7 @@ namespace Dominion.Server.Controllers
                 //CalculateHappiness(city);
                 CalculatePopulation(city);
                 CalculateProduction(city);
+                CalculateValidProductions(city);
                 TryExpandBorders(city);
                 CalculateTurnsUntilPopulationGrowth(city);
                 CalculateTurnsUntilBorderGrowth(city);
@@ -125,10 +126,10 @@ namespace Dominion.Server.Controllers
                         city.Name = (string)cmd.Arguments[0];
                         break;
                     case CityCommandID.ChangeProduction:
-                        city.ProductionQueue.AddFirst(new Production((string)cmd.Arguments[0]));
+                        ChangeProduction(city, (string)cmd.Arguments[0]);
                         break;
                     case CityCommandID.QueueProduction:
-                        city.ProductionQueue.Enqueue(new Production((string)cmd.Arguments[0]));
+                        QueueProduction(city, (string)cmd.Arguments[0]);
                         break;
                     case CityCommandID.CancelProduction:
                         city.ProductionQueue.Remove((int)cmd.Arguments[0]);
@@ -157,6 +158,52 @@ namespace Dominion.Server.Controllers
             }
 
             OnCityUpdated(new CityEventArgs(city));
+        }
+
+        // changes a production at the given city, if it is valid
+        private void ChangeProduction(City city, string name)
+        {
+            Production proposedProd = new Production(name);
+
+            // don't queue more than one of the same building
+            switch (proposedProd.ProductionType)
+            {
+                case ProductionType.BUILDING:
+                    foreach (Production prod in city.ProductionQueue)
+                    {
+                        if (prod.Name == name)
+                        {
+                            return;
+                        }
+                    }
+                    break;
+            }
+
+            city.ProductionQueue.AddFirst(proposedProd);
+            CalculateValidProductions(city);
+        }
+
+        // queues a production at the given city if, it is valid
+        private void QueueProduction(City city, string name)
+        {
+            Production proposedProd = new Production(name);
+
+            // don't queue more than one of the same building
+            switch (proposedProd.ProductionType)
+            {
+                case ProductionType.BUILDING:
+                    foreach (Production prod in city.ProductionQueue)
+                    {
+                        if (prod.Name == name)
+                        {
+                            return;
+                        }
+                    }
+                    break;
+            }
+
+            city.ProductionQueue.Enqueue(proposedProd);
+            CalculateValidProductions(city);
         }
 
         // calculates the turns until a city's population will grow and assigns the value to city.TurnsUntilPopulationGrowth
@@ -240,13 +287,13 @@ namespace Dominion.Server.Controllers
             int buildingIncomeTourism = 0;
 
             // income modifiers
-            float incomeGoldModifier = 0f;
-            float incomeScienceModifier = 0f;
-            float incomeProductionModifier = 0f;
-            float incomeFoodModifier = 0f;
-            float incomeCultureModifier = 0f;
-            float incomeFaithModifier = 0f;
-            float incomeTourismModifier = 0f;
+            float incomeGoldModifier = 1f;
+            float incomeScienceModifier = 1f;
+            float incomeProductionModifier = 1f;
+            float incomeFoodModifier = 1f;
+            float incomeCultureModifier = 1f;
+            float incomeFaithModifier = 1f;
+            float incomeTourismModifier = 1f;
 
             // yield income
             int yieldGold = 0;
@@ -258,13 +305,13 @@ namespace Dominion.Server.Controllers
             int yieldTourism = 0;
 
             // yield modifiers
-            float yieldGoldModifier = 0f;
-            float yieldScienceModifier = 0f;
-            float yieldProductionModifier = 0f;
-            float yieldFoodModifier = 0f;
-            float yieldCultureModifier = 0f;
-            float yieldFaithModifier = 0f;
-            float yieldTourismModifier = 0f;
+            float yieldGoldModifier = 1f;
+            float yieldScienceModifier = 1f;
+            float yieldProductionModifier = 1f;
+            float yieldFoodModifier = 1f;
+            float yieldCultureModifier = 1f;
+            float yieldFaithModifier = 1f;
+            float yieldTourismModifier = 1f;
 
             // add building income
             foreach (string building in city.Buildings)
@@ -531,7 +578,7 @@ namespace Dominion.Server.Controllers
         }
 
         // calculates a list of all the possible productions the given city can produce and assigns it to the city
-        private void CalculatePossibleProductions(City city)
+        private void CalculateValidProductions(City city)
         {
             // results
             city.ValidProductions = new LinkedList<Production>();
@@ -554,7 +601,19 @@ namespace Dominion.Server.Controllers
 
                 // control flag
                 bool valid = true;
-                
+
+                // check if building is already in the production queue
+                foreach (Production prod in city.ProductionQueue)
+                {
+                    if (prod.Name == building.Name)
+                    {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (!valid)
+                    continue;
+
                 // check if building prereqs are constructed
                 foreach (string prereq in building.BuildingPrereq)
                 {
@@ -741,7 +800,7 @@ namespace Dominion.Server.Controllers
                 return;
 
             // DEBUG
-            city.ProductionOverflow = 999;
+            //city.ProductionOverflow = 999;
             // END DEBUG
 
             // don't try and process a production that doesn't exist
@@ -751,27 +810,25 @@ namespace Dominion.Server.Controllers
             Production currentProduction = city.ProductionQueue.First.Value; // get the current production
             currentProduction.Progress += city.ProductionOverflow; // add overflow
 
-            float prodIncome = 0;
             float prodCost = float.MaxValue;
+            float prodIncome = city.GetProductionIncome(currentProduction, Controllers.Data.Building, Controllers.Data.Unit);
 
-            // calculate production this turn
+            // get production cost
             switch (currentProduction.ProductionType)
             {
                 case ProductionType.UNIT:
+                    Unit u = Controllers.Data.Unit.GetUnit(currentProduction.Name);
+                    prodCost = u.Cost;
                     break;
                 case ProductionType.BUILDING:
                     Building b = Controllers.Data.Building.GetBuilding(currentProduction.Name);
                     prodCost = b.Cost;
-                    prodIncome = city.IncomeProduction;
-                    prodIncome *= city.BuildingProductionModifier;
-                    if (b.Tags.Contains("BUILDING_WONDER"))
-                        prodIncome *= city.WonderProductionModifier;
                     break;
             }
 
             currentProduction.Progress += (int)Math.Round(prodIncome);
-            // check if the production is done
 
+            // check if the production is done
             if (currentProduction.Progress >= prodCost)
             {
                 // keep track of excess production
@@ -782,10 +839,11 @@ namespace Dominion.Server.Controllers
                     case ProductionType.BUILDING:
                         // add the produced building to the city's building list
                         city.Buildings.Add(currentProduction.Name);
+                        CalculateIncome(city);
                         break;
                     case ProductionType.UNIT:
                         // add the produced unit to the unit controller
-                        //Controllers.Unit.AddUnit(currentProduction.ResultID, city.PlayerID, city.Location);
+                        Controllers.Unit.AddUnit(currentProduction.Name, city.PlayerID, city.Location);
                         break;
                 }
             }
@@ -926,7 +984,7 @@ namespace Dominion.Server.Controllers
             cities.Add(city); // add the city to the city list
             TryExpandBorders(city); // expand the city's borders
             CalculateIncome(city); // calculate the city's income
-            CalculatePossibleProductions(city); // calculate the city's possible productions
+            CalculateValidProductions(city); // calculate the city's possible productions
             OnCitySettled(new CityEventArgs(city)); // trigger the CitySettled event
             return true; // the city was settled
         }

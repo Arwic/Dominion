@@ -125,7 +125,6 @@ namespace Dominion.Server.Controllers
         /// <param name="location"></param>
         public void AddUnit(string unitID, int playerID, Point location)
         {
-            // TODO unit error!
             UnitInstance unit = new UnitInstance(Controllers.Data.Unit, unitID, playerID, location);
             units.Add(unit);
 

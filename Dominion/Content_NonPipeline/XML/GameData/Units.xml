@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!--Generated with ArwicXmlEditor (28 Feb 2016 18:22) by Tim Ings-->
+<!--Generated with ArwicXmlEditor (29 Feb 2016 00:33) by Tim Ings-->
 <UnitDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Dominion Core Unit Data">
   <Units>
     <Unit>
@@ -22,7 +22,7 @@
       </Commands>
       <BuildingPrereqs />
       <TechPrereqs />
-      <Cost>0</Cost>
+      <Cost>106</Cost>
       <Tags>
         <Tag>CIVILIAN</Tag>
       </Tags>
@@ -59,7 +59,7 @@
       </Commands>
       <BuildingPrereqs />
       <TechPrereqs />
-      <Cost>0</Cost>
+      <Cost>70</Cost>
       <Tags>
         <Tag>CIVILIAN</Tag>
       </Tags>
@@ -85,7 +85,7 @@
       </Commands>
       <BuildingPrereqs />
       <TechPrereqs />
-      <Cost>0</Cost>
+      <Cost>40</Cost>
       <Tags>
         <Tag>MILITARY</Tag>
         <Tag>MELEE</Tag>

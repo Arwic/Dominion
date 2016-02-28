@@ -3,6 +3,7 @@
 // This file defines classes that define a unit
 
 using ArwicEngine.TypeConverters;
+using Dominion.Common.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
