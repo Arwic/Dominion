@@ -77,6 +77,7 @@ namespace Dominion.Client.GUI
 
                 // get and setup the form elements
                 ScrollBox sbUnitList = (ScrollBox)form.GetChildByName("sbUnitList");
+                sbUnitList.SelectedIndex = -1;
                 sbUnitList.Items = unitListItems;
                 sbUnitList.SelectedChanged += SbUnitList_SelectedChanged;
             }
@@ -86,7 +87,8 @@ namespace Dominion.Client.GUI
         {
             // select the clicked unit
             UnitListitem item = (UnitListitem)e.ListItem;
-            client.SelectedUnit = item.Unit;
+            client.SelectedUnit = client.GetMyUnits().Find(u => u.InstanceID == item.Unit.InstanceID);
+            ConsoleManager.Instance.WriteLine($"Selecting unit with id={item.Unit.InstanceID} from the unit list");
         }
 
         /// <summary>
