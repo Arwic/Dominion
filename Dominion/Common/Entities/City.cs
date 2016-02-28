@@ -325,7 +325,7 @@ namespace Dominion.Common.Entities
         /// <summary>
         /// The city's possible productions
         /// </summary>
-        public LinkedList<Production> PossibleProductions { get; set; } = new LinkedList<Production>();
+        public LinkedList<Production> ValidProductions { get; set; } = new LinkedList<Production>();
 
         /// <summary>
         /// The buildings that have been constructed in the city

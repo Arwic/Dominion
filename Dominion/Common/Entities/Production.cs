@@ -12,6 +12,7 @@ namespace Dominion.Common.Entities
         BUILDING
     }
 
+    [Serializable]
     public class Production
     {
         public string Name { get; set; }

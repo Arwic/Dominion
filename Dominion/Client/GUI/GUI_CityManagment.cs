@@ -31,7 +31,15 @@ namespace Dominion.Client.GUI
                 string suffix = "";
                 if (turnsLeft != -1)
                     suffix = $" - {turnsLeft} turns";
-                Text = $"{Production.Name}{suffix}".ToRichText();
+                switch (prod.ProductionType)
+                {
+                    case ProductionType.UNIT:
+                        Text = $"{Unit.FormatName(Production.Name)}{suffix}".ToRichText();
+                        break;
+                    case ProductionType.BUILDING:
+                        Text = $"{Building.FormatName(Production.Name)}{suffix}".ToRichText();
+                        break;
+                }
             }
         }
 
@@ -281,7 +289,7 @@ namespace Dominion.Client.GUI
         private List<IListItem> GetProductionListListItems()
         {
             List<IListItem> items = new List<IListItem>();
-            foreach (Production prod in client.SelectedCity.PossibleProductions)
+            foreach (Production prod in client.SelectedCity.ValidProductions)
                 items.Add(new ProductionListItem(prod, GetTurnsToProduce(client.SelectedCity, prod)));
             return items;
         }
@@ -321,13 +329,24 @@ namespace Dominion.Client.GUI
             return items;
         }
 
+        // TODO make this work with the new modifiers
+        // maybe have the server calculate it and store it directly in the prod object?
         // returns the number of turns required to produce the given production at the given city
         private int GetTurnsToProduce(City city, Production prod)
         {
-            Building b = client.BuildingManager.GetBuilding(prod.Name);
-
             int prodIncome = city.IncomeProduction;
-            int prodRequired = b.Cost;
+            int prodRequired = -1;
+            switch (prod.ProductionType)
+            {
+                case ProductionType.BUILDING:
+                    Building b = client.BuildingManager.GetBuilding(prod.Name);
+                    prodRequired = b.Cost;
+                    break;
+                case ProductionType.UNIT:
+                    Unit u = client.UnitManager.GetUnit(prod.Name);
+                    prodRequired = u.Cost;
+                    break;
+            }
 
             prodRequired -= prod.Progress;
             int requiredTurns = 0;

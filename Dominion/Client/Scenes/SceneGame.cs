@@ -281,15 +281,9 @@ namespace Dominion.Client.Scenes
                         {
                             if (city.Location == tile.Location)
                             {
-                                ConsoleManager.Instance.WriteLine($"selecting city {city.Name}");
                                 manager.Client.SelectedCity = city;
-                                ConsoleManager.Instance.WriteLine($"done");
-                                ConsoleManager.Instance.WriteLine($"moving camera");
                                 camera.TranslationTarget = boardRenderer.GetTileCentre(city.Location);
-                                ConsoleManager.Instance.WriteLine($"done");
-                                ConsoleManager.Instance.WriteLine($"zooming camera");
                                 camera.ZoomTarget = new Vector2(2, 2);
-                                ConsoleManager.Instance.WriteLine($"done");
                                 break;
                             }
                         }

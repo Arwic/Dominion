@@ -5,6 +5,7 @@
 using ArwicEngine.Forms;
 using Microsoft.Xna.Framework;
 using System;
+using System.Globalization;
 
 namespace Dominion.Common.Entities
 {
@@ -212,6 +213,40 @@ namespace Dominion.Common.Entities
                     break;
             }
             return iconCode.ToRichText(null, RichText.SymbolFont);
+        }
+
+        /// <summary>
+        /// Converts a unit command name to a presentable form
+        /// I.e. converts "UNITCMD_MY_NAME" to "My Name"
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static string FormatName(string name)
+        {
+            string prefix = "UNITCMD_";
+
+            // check if the string is valid
+            if (!name.Contains(prefix))
+                return name;
+
+            // strip "UNITCMD_"
+            // "UNITCMD_MY_NAME" -> "MY_NAME"
+            name = name.Remove(0, prefix.Length);
+
+            // replace all "_"
+            // "MY_NAME" -> "MY NAME"
+            name = name.Replace('_', ' ');
+
+            // convert to lower case
+            // "MY NAME" -> "my name"
+            name = name.ToLowerInvariant();
+
+            // convert to title case
+            // "my name" -> "My Name"
+            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+            name = textInfo.ToTitleCase(name);
+
+            return name;
         }
     }
 }

@@ -534,7 +534,7 @@ namespace Dominion.Server.Controllers
         private void CalculatePossibleProductions(City city)
         {
             // results
-            List<Building> validBuildings = new List<Building>();
+            city.ValidProductions = new LinkedList<Production>();
 
             // get city info
             Tile cityTile = Controllers.Board.GetTile(city.Location);
@@ -568,16 +568,17 @@ namespace Dominion.Server.Controllers
                     continue;
 
                 // check if tech prereqs are unlocked
-                //foreach (string prereq in building.TechPrereq)
-                //{
-                //    if (!cityOwner.TechTree.GetNode(prereq).Unlocked)
-                //    {
-                //        valid = false;
-                //        break;
-                //    }
-                //}
-                //if (!valid)
-                //    continue;
+                foreach (string prereq in building.TechPrereq)
+                {
+                    Technology prereqTech = cityOwner.TechTree.GetTech(prereq);
+                    if (prereqTech != null && !prereqTech.Unlocked)
+                    {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (!valid)
+                    continue;
 
                 // check other properties
                 if (building.Water)
@@ -659,14 +660,43 @@ namespace Dominion.Server.Controllers
                         continue;
                 }
 
-                // if the building is still valid, add it to the valid buildings list
-                validBuildings.Add(building);
+                // if the building is still valid, add it to the valid productions list
+                city.ValidProductions.Enqueue(new Production(building.Name));
             }
 
             // get all valid units
             foreach (Unit unit in Controllers.Data.Unit.GetAllUnits())
             {
+                // control flag
+                bool valid = true;
 
+                // check if building prereqs are constructed
+                foreach (string prereq in unit.BuildingPrereq)
+                {
+                    if (!city.Buildings.Contains(prereq))
+                    {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (!valid)
+                    continue;
+
+                // check if tech prereqs are unlocked
+                foreach (string prereq in unit.TechPrereq)
+                {
+                    Technology prereqTech = cityOwner.TechTree.GetTech(prereq);
+                    if (prereqTech != null && !prereqTech.Unlocked)
+                    {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (!valid)
+                    continue;
+
+                // if the unit is still valid, add it to the valid productions list
+                city.ValidProductions.Enqueue(new Production(unit.Name));
             }
         }
 

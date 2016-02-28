@@ -92,7 +92,7 @@ namespace Dominion.Client.GUI
                     // build button
                     Button btnCmd = new Button(new Rectangle((xOffset + btnWidth) * index, yOffset, btnWidth, btnHeight), form);
                     btnCmd.Text = UnitCommand.GetCommandIcon(commandIds[i]);
-                    btnCmd.ToolTip = new ToolTip((commandIds[i]).ToString(), 200);
+                    btnCmd.ToolTip = new ToolTip(UnitCommand.FormatName((commandIds[i]).ToString()), 200);
                     int locali = i; // closure means we can't just use i
                     btnCmd.MouseClick += (s, a) =>
                     {
