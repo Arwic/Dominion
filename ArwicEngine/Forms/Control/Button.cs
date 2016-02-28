@@ -22,8 +22,8 @@ namespace ArwicEngine.Forms
 
         public static new void InitDefaults()
         {
-            DefaultSprite = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_BUTTON);
-            DefaultCursor = Engine.Instance.Content.GetAsset<Cursor>(CURSOR_LINK_PATH);
+            DefaultSprite = Engine.Instance.Content.GetAsset<Sprite>(ASSET_CONTROL_BUTTON);
+            DefaultCursor = Engine.Instance.Content.GetAsset<Cursor>(ASSET_CURSOR_LINK);
         }
         #endregion
 

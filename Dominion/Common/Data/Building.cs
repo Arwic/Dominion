@@ -453,12 +453,12 @@ namespace Dominion.Common.Data
         public TileTerrainBase ProhibitedCityTerrain { get; set; } = TileTerrainBase.Null;
 
         /// <summary>
-        /// The index pointing to the building's icon on the IconAtlas
+        /// The key to used to get the icon from the icon atlas
         /// </summary>
-        [Description("The index pointing to the building's icon on the IconAtlas")]
-        [DisplayName("Icon Index"), Browsable(true), Category("Graphics")]
-        [XmlElement("IconIndex")]
-        public int IconIndex { get; set; } = -1;
+        [Description("The key to used to get the icon from the icon atlas")]
+        [DisplayName("Icon Key"), Browsable(true), Category("Graphics")]
+        [XmlElement("IconKey")]
+        public string IconKey { get; set; } = "BUILDING_NULL";
 
         /// <summary>
         /// The icon atlas to source the building's icon from
@@ -466,7 +466,7 @@ namespace Dominion.Common.Data
         [Description("The icon atlas to source the building's icon from")]
         [DisplayName("Icon Atlas"), Browsable(true), Category("Graphics")]
         [XmlElement("IconAtlas")]
-        public string IconAtlas { get; set; } = "NULL";
+        public string IconAtlas { get; set; } = "Core:XML/AtlasDefinitions/BuildingAtlasDefinition";
 
         /// <summary>
         /// A list of buildings that need to be built in the same city before this building becomes available

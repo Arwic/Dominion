@@ -179,8 +179,8 @@ namespace ArwicEngine.Forms
         public static void InitDefaults()
         {
             DefaultColor = Color.White;
-            DefaultCursor = Engine.Instance.Content.GetAsset<Cursor>(CURSOR_LINK_PATH);
-            DefaultFont = Engine.Instance.Content.GetAsset<Font>(FONT_ARIAL_PATH);
+            DefaultCursor = Engine.Instance.Content.GetAsset<Cursor>(ASSET_CURSOR_NORMAL);
+            DefaultFont = Engine.Instance.Content.GetAsset<Font>(ASSET_FONT_STANDARD);
         }
         #endregion
 

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <SpriteAtlasDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <TexturePath>Core:Textures/Game/TileAtlas</TexturePath>
+  <TexturePath>Core:Textures/Game/UnitAtlas</TexturePath>
   <SpriteDefinitions>
     <SpriteDefinition>
-      <Key>TILEBASE_TUNDRA</Key>
+      <Key>UNIT_SETTLER</Key>
       <Source>
         <X>0</X>
         <Y>0</Y>
@@ -12,7 +12,7 @@
       </Source>
     </SpriteDefinition>
     <SpriteDefinition>
-      <Key>TILEBASE_GRASSLAND</Key>
+      <Key>UNIT_WORKER</Key>
       <Source>
         <X>100</X>
         <Y>0</Y>
@@ -21,7 +21,7 @@
       </Source>
     </SpriteDefinition>
     <SpriteDefinition>
-      <Key>TILEBASE_DESERT</Key>
+      <Key>UNIT_SCOUT</Key>
       <Source>
         <X>200</X>
         <Y>0</Y>
@@ -30,7 +30,7 @@
       </Source>
     </SpriteDefinition>
     <SpriteDefinition>
-      <Key>TILEBASE_SEA</Key>
+      <Key>UNIT_WARRIOR</Key>
       <Source>
         <X>300</X>
         <Y>0</Y>
@@ -39,127 +39,10 @@
       </Source>
     </SpriteDefinition>
     <SpriteDefinition>
-      <Key>TILEBASE_COAST</Key>
+      <Key>UNIT_ARCHER</Key>
       <Source>
         <X>400</X>
         <Y>0</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEBASE_SNOW</Key>
-      <Source>
-        <X>500</X>
-        <Y>0</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEBASE_PLAINS</Key>
-      <Source>
-        <X>600</X>
-        <Y>0</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEUTIL_CLOUD</Key>
-      <Source>
-        <X>0</X>
-        <Y>300</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEUTIL_BLANK</Key>
-      <Source>
-        <X>100</X>
-        <Y>300</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEUTIL_HIGHLIGHT</Key>
-      <Source>
-        <X>200</X>
-        <Y>300</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEUTIL_OUTLINE</Key>
-      <Source>
-        <X>300</X>
-        <Y>300</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEIMPROVMENT_FOREST</Key>
-      <Source>
-        <X>0</X>
-        <Y>400</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEIMPROVMENT_JUNGLE</Key>
-      <Source>
-        <X>100</X>
-        <Y>400</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEIMPROVMENT_FARM</Key>
-      <Source>
-        <X>200</X>
-        <Y>400</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEIMPROVMENT_PLANTATION</Key>
-      <Source>
-        <X>300</X>
-        <Y>400</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEIMPROVMENT_CITY</Key>
-      <Source>
-        <X>400</X>
-        <Y>400</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEFEATURE_HILL</Key>
-      <Source>
-        <X>0</X>
-        <Y>500</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEFEATURE_MOUNTAIN</Key>
-      <Source>
-        <X>100</X>
-        <Y>500</Y>
         <Width>100</Width>
         <Height>100</Height>
       </Source>

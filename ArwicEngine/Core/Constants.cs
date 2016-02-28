@@ -14,41 +14,41 @@ namespace ArwicEngine
         public const string ENGINE_NAME = "ArwicEngine";
 
         // graphics
-        public const int BUTTON_WIDTH = 230;
-        public const int BUTTON_HEIGHT = 30;
-        public const int ICON_DIM = 30;
-        public const int CHECKBOX_DIM = 30;
-        public const int FORM_CLOSEBUTTON_DIM = 30;
-        public const int FORM_CLOSEBUTTON_PADDING = 5;
+        public const int PROP_BUTTON_WIDTH = 230;
+        public const int PROP_BUTTON_HEIGHT = 30;
+        public const int PROP_ICON_DIM = 30;
+        public const int PROP_CHECKBOX_DIM = 30;
+        public const int PROP_FORM_CLOSE_BUTTON_DIM = 30;
+        public const int PROP_FORM_CLOSE_BUTTON_PADDING = 5;
 
         // cursors
-        public const string CURSOR_BUSY_PATH = "Core:Cursors/busy";
-        public const string CURSOR_HELP_PATH = "Core:Cursors/help";
-        public const string CURSOR_LINK_PATH = "Core:Cursors/link";
-        public const string CURSOR_NORMAL_PATH = "Core:Cursors/normal";
-        public const string CURSOR_TEXT_PATH = "Core:Cursors/text";
-        public const string CURSOR_UNAVAILABLE_PATH = "Core:Cursors/unavailable";
-        public const string CURSOR_WORKING_PATH = "Core:Cursors/working";
+        public const string ASSET_CURSOR_BUSY = "Core:Cursors/busy";
+        public const string ASSET_CURSOR_HELP = "Core:Cursors/help";
+        public const string ASSET_CURSOR_LINK = "Core:Cursors/link";
+        public const string ASSET_CURSOR_NORMAL = "Core:Cursors/normal";
+        public const string ASSET_CURSOR_TEXT = "Core:Cursors/text";
+        public const string ASSET_CURSOR_UNAVAILABLE = "Core:Cursors/unavailable";
+        public const string ASSET_CURSOR_WORKING = "Core:Cursors/working";
 
         // fonts
-        public const string FONT_CONSOLAS_PATH = "Core:Fonts/Consolas";
-        public const string FONT_ARIAL_PATH = "Core:Fonts/Arial";
-        public const string FONT_SYMBOL_PATH = "Core:Fonts/ArwicSymbol";
+        public const string ASSET_FONT_CONSOLE = "Core:Fonts/Consolas";
+        public const string ASSET_FONT_STANDARD = "Core:Fonts/Arial";
+        public const string ASSET_FONT_SYMBOL = "Core:Fonts/ArwicSymbol";
 
         // resources
-        public const string CONTROL_BUTTON = "Core:Textures/Interface/Controls/Button";
-        public const string CONTROL_FORM_CLOSE = "Core:Textures/Interface/Controls/Form_Close";
-        public const string CONTROL_CHECKBOX_TRUE = "Core:Textures/Interface/Controls/CheckBox_True";
-        public const string CONTROL_CHECKBOX_FALSE = "Core:Textures/Interface/Controls/CheckBox_False";
-        public const string CONTROL_COMBOBOX_BUTTON = "Core:Textures/Interface/Controls/ComboBox_Button";
-        public const string CONTROL_FORM_BACK = "Core:Textures/Interface/Controls/Form_Back";
-        public const string CONTROL_PROGRESSBAR_BACK = "Core:Textures/Interface/Controls/ProgressBar_back";
-        public const string CONTROL_PROGRESSBAR_FILL = "Core:Textures/Interface/Controls/Progressbar_Fill";
-        public const string CONTROL_SCROLLBOX_BACK = "Core:Textures/Interface/Controls/ScrollBox_Back";
-        public const string CONTROL_SCROLLBOX_BUTTON = "Core:Textures/Interface/Controls/ScrollBox_Button";
-        public const string CONTROL_SCROLLBOX_SELECTED = "Core:Textures/Interface/Controls/ScrollBox_Selected";
-        public const string CONTROL_SCROLLBOX_SCRUBBER = "Core:Textures/Interface/Controls/ScrollBox_Scrubber";
-        public const string CONTROL_TEXTBOX = "Core:Textures/Interface/Controls/TextBox";
+        public const string ASSET_CONTROL_BUTTON = "Core:Textures/Interface/Controls/Button";
+        public const string ASSET_CONTROL_FORM_CLOSE = "Core:Textures/Interface/Controls/Form_Close";
+        public const string ASSET_CONTROL_CHECKBOX_TRUE = "Core:Textures/Interface/Controls/CheckBox_True";
+        public const string ASSET_CONTROL_CHECKBOX_FALSE = "Core:Textures/Interface/Controls/CheckBox_False";
+        public const string ASSET_CONTROL_COMBOBOX_BUTTON = "Core:Textures/Interface/Controls/ComboBox_Button";
+        public const string ASSET_CONTROL_FORM_BACK = "Core:Textures/Interface/Controls/Form_Back";
+        public const string ASSET_CONTROL_PROGRESSBAR_BACK = "Core:Textures/Interface/Controls/ProgressBar_back";
+        public const string ASSET_CONTROL_PROGRESSBAR_FILL = "Core:Textures/Interface/Controls/Progressbar_Fill";
+        public const string ASSET_CONTROL_SCROLLBOX_BACK = "Core:Textures/Interface/Controls/ScrollBox_Back";
+        public const string ASSET_CONTROL_SCROLLBOX_BUTTON = "Core:Textures/Interface/Controls/ScrollBox_Button";
+        public const string ASSET_CONTROL_SCROLLBOX_SELECTED = "Core:Textures/Interface/Controls/ScrollBox_Selected";
+        public const string ASSET_CONTROL_SCROLLBOX_SCRUBBER = "Core:Textures/Interface/Controls/ScrollBox_Scrubber";
+        public const string ASSET_CONTROL_TEXTBOX = "Core:Textures/Interface/Controls/TextBox";
         
         // config vars
         public const string CONFIG_RESOLUTION = "gfx_resolution";

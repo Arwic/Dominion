@@ -204,7 +204,7 @@ namespace ArwicEngine.Forms
 
         public static void Init()
         {
-            SymbolFont = Engine.Instance.Content.GetAsset<Font>(Constants.FONT_SYMBOL_PATH);
+            SymbolFont = Engine.Instance.Content.GetAsset<Font>(Constants.ASSET_FONT_SYMBOL);
         }
 
         [TypeConverter(typeof(CollectionConverter))]

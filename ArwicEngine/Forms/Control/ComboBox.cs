@@ -20,7 +20,7 @@ namespace ArwicEngine.Forms
 
         public static new void InitDefaults()
         {
-            DefaultButtonSprite = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_COMBOBOX_BUTTON);
+            DefaultButtonSprite = Engine.Instance.Content.GetAsset<Sprite>(ASSET_CONTROL_COMBOBOX_BUTTON);
         }
         #endregion
 

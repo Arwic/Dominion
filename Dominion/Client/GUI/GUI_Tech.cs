@@ -7,6 +7,7 @@ using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using ArwicEngine.Graphics;
 using Dominion.Client.Scenes;
+using Dominion.Common.Data;
 using Dominion.Common.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -81,15 +82,15 @@ namespace Dominion.Client.GUI
             };
 
             // calculate the max scroll index
-            foreach (TechNode node in client.Player.TechTree.Nodes)
-                if (node.GridX > maxScrollIndex)
-                    maxScrollIndex = node.GridX;
+            foreach (Technology tech in client.Player.TechTree.GetAllTechnologies())
+                if (tech.GridX > maxScrollIndex)
+                    maxScrollIndex = tech.GridX;
 
             // load sprites
-            techLockedSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.CONTROL_SCROLLBOX_BACK);
-            techUnlockedSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.CONTROL_SCROLLBOX_BUTTON);
-            techSelectedSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.CONTROL_FORM_BACK);
-            techSelectable = Engine.Instance.Content.GetAsset<Sprite>(Constants.CONTROL_SCROLLBOX_BACK);
+            techLockedSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.ASSET_CONTROL_SCROLLBOX_BACK);
+            techUnlockedSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.ASSET_CONTROL_SCROLLBOX_BUTTON);
+            techSelectedSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.ASSET_CONTROL_FORM_BACK);
+            techSelectable = Engine.Instance.Content.GetAsset<Sprite>(Constants.ASSET_CONTROL_SCROLLBOX_BACK);
         }
 
         /// <summary>
@@ -118,61 +119,54 @@ namespace Dominion.Client.GUI
                 int sepY = 10;
 
                 // build a button for every node in the tech tree
-                for (int i = 0; i < client.Player.TechTree.Nodes.Count; i++)
+                foreach (Technology tech in client.Player.TechTree.GetAllTechnologies())
                 {
-                    TechNode tn = client.Player.TechTree.GetNode(i);
-                    if (tn == null)
-                        continue;
-
-                    Rectangle dest = new Rectangle(offsetX + tn.GridX * (itemWidth + sepX) + scrollIndex * (itemWidth + tn.GridX + sepX), offsetY + tn.GridY * (itemHeight + sepY), itemWidth, itemHeight);
-
+                    Rectangle dest = new Rectangle(offsetX + tech.GridX * (itemWidth + sepX) + scrollIndex * (itemWidth + tech.GridX + sepX), offsetY + tech.GridY * (itemHeight + sepY), itemWidth, itemHeight);
                     Button b = new Button(dest, form);
-                    int turnsLeft = GetTurnsUntilTech(tn);
-                    string text = tn.Name;
-                    if (!tn.Unlocked)
+                    int turnsLeft = GetTurnsUntilTech(tech);
+                    string text = tech.Name;
+                    if (!tech.Unlocked)
                     {
                         // -2 indicates the tech will take a very long time to research
                         if (turnsLeft == -2)
-                            text = $"{tn.Name} - ~ turns";
+                            text = $"{tech.Name} - ~ turns";
                         else if (turnsLeft != -1)
-                            text = $"{tn.Name} - {turnsLeft} turns";
+                            text = $"{tech.Name} - {turnsLeft} turns";
                     }
                     // format the button text
                     b.Text = text.ToRichText();
                     // pick an appropriate sprite
-                    if (tn.Unlocked)
+                    if (tech.Unlocked)
                         b.Sprite = techUnlockedSprite;
-                    else if (client.Player.SelectedTechNodeID == i)
+                    else if (client.Player.SelectedTechNodeID == tech.Name)
                         b.Sprite = techSelectedSprite;
                     else
                         b.Sprite = techLockedSprite;
 
-                    int locali = i; // cache i because of closure
+                    string techID = tech.Name; // cache id because of closure
                     b.MouseClick += (s, a) =>
                     {
                         // only tell the server to select a new tech if all the prereqs are unlocked
-                        TechNode clicked = client.Player.TechTree.GetNode(locali);
-                        foreach (int prereqID in clicked.Prerequisites)
+                        Technology clicked = client.Player.TechTree.GetTech(techID);
+                        foreach (string prereqID in clicked.Prerequisites)
                         {
-                            TechNode prereq = client.Player.TechTree.GetNode(prereqID);
+                            Technology prereq = client.Player.TechTree.GetTech(prereqID);
                             if (prereq != null && !prereq.Unlocked)
-                            {
                                 return;
-                            }
                         }
 
-                        client.CommandPlayer(new PlayerCommand(PlayerCommandID.SelectTech, locali));
+                        client.CommandPlayer(new PlayerCommand(PlayerCommandID.SelectTech, techID));
                     };
                     // register events
                     b.MouseWheel += Form_MouseWheel;
                     // add a tool tip with more info about the tech
-                    b.ToolTip = new ToolTip(tn.Description, 500);
+                    b.ToolTip = new ToolTip(tech.Description, 500);
                     b.ToolTip.FollowCurosr = true;
 
                     // add a line from the current tech to all its prereqs
-                    for (int j = 0; j < tn.Prerequisites.Count; j++)
+                    foreach (string prereqID in tech.Prerequisites)
                     {
-                        TechNode prereq = client.Player.TechTree.GetNode(tn.Prerequisites[j]);
+                        Technology prereq = client.Player.TechTree.GetTech(prereqID);
                         if (prereq == null)
                             continue;
                         Rectangle prereqRect = new Rectangle(offsetX + prereq.GridX * (itemWidth + sepX) + scrollIndex * (itemWidth + prereq.GridX), offsetY + prereq.GridY * (itemHeight + sepY), itemWidth, itemHeight);
@@ -183,7 +177,7 @@ namespace Dominion.Client.GUI
         }
 
         // returns the number of turns required to research the given node
-        private int GetTurnsUntilTech(TechNode node)
+        private int GetTurnsUntilTech(Technology node)
         {
             if (client.Player.IncomeScience == 0)
                 return -1;

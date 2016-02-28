@@ -320,17 +320,17 @@ namespace Dominion.Common.Entities
         /// <summary>
         /// The city's production queue
         /// </summary>
-        public LinkedList<Production> ProductionQueue { get; set; }
+        public LinkedList<Production> ProductionQueue { get; set; } = new LinkedList<Production>();
 
         /// <summary>
         /// The city's possible productions
         /// </summary>
-        public LinkedList<Production> PossibleProductions { get; set; }
+        public LinkedList<Production> PossibleProductions { get; set; } = new LinkedList<Production>();
 
         /// <summary>
         /// The buildings that have been constructed in the city
         /// </summary>
-        public List<string> Buildings { get; set; }
+        public List<string> Buildings { get; set; } = new List<string>();
 
         /// <summary>
         /// A list of the locations of the city's citizens

@@ -24,9 +24,9 @@ namespace ArwicEngine.Forms
 
         public static new void InitDefaults()
         {
-            DefaultSprite = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_TEXTBOX);
-            DefaultCursor = Engine.Instance.Content.GetAsset<Cursor>(CURSOR_TEXT_PATH);
-            DefaultFont = Engine.Instance.Content.GetAsset<Font>(FONT_CONSOLAS_PATH);
+            DefaultSprite = Engine.Instance.Content.GetAsset<Sprite>(ASSET_CONTROL_TEXTBOX);
+            DefaultCursor = Engine.Instance.Content.GetAsset<Cursor>(ASSET_CURSOR_TEXT);
+            DefaultFont = Engine.Instance.Content.GetAsset<Font>(ASSET_FONT_CONSOLE);
         }
         #endregion
 

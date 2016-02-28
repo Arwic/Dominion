@@ -27,7 +27,7 @@ namespace ArwicXmlEditor
             cb_xmlType.Items.Add(typeof(EmpireDataPack));
             cb_xmlType.Items.Add(typeof(UnitDataPack));
             cb_xmlType.Items.Add(typeof(BuildingDataPack));
-            cb_xmlType.Items.Add(typeof(TechTree));
+            cb_xmlType.Items.Add(typeof(TechnologyDataPack));
             cb_xmlType.SelectedIndex = 0;
         }
 

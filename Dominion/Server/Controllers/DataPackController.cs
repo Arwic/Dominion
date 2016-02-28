@@ -26,6 +26,11 @@ namespace Dominion.Server.Controllers
         /// </summary>
         public UnitManager Unit { get; } = new UnitManager();
 
+        /// <summary>
+        /// Gets the tech data manager
+        /// </summary>
+        public TechnologyManager Tech { get; } = new TechnologyManager();
+
         public DataPackController(ControllerManager manager)
             : base(manager)
         {
@@ -39,6 +44,7 @@ namespace Dominion.Server.Controllers
             Empire.AddDataPack(Engine.Instance.Content.GetAsset<Stream>($"{contentPackName}:XML/GameData/Empires"));
             Building.AddDataPack(Engine.Instance.Content.GetAsset<Stream>($"{contentPackName}:XML/GameData/Buildings"));
             Unit.AddDataPack(Engine.Instance.Content.GetAsset<Stream>($"{contentPackName}:XML/GameData/Units"));
+            Tech.AddDataPack(Engine.Instance.Content.GetAsset<Stream>($"{contentPackName}:XML/GameData/Technologies"));
         }
     }
 }

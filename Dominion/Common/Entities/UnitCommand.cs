@@ -10,35 +10,36 @@ namespace Dominion.Common.Entities
 {
     public enum UnitCommandID
     {
-        Null,
-        Move,
-        Disband,
-        Sleep,
-        Skip,
-        Settle,
-        MeleeAttack,
-        RangedAttack,
-        BuildImprovment_Farm,
-        BuildImprovment_Fort,
-        BuildImprovment_LumberMill,
-        BuildImprovment_Mine,
-        BuildImprovment_TradingPost,
-        BuildImprovment_Roads,
-        BuildImprovment_RailRoads,
-        BuildImprovment_Camp,
-        BuildImprovment_FishingBoats,
-        BuildImprovment_OffshorePlatform,
-        BuildImprovment_Pasture,
-        BuildImprovment_Plantation,
-        BuildImprovment_Quarry,
-        BuildImprovment_Academy,
-        BuildImprovment_Citidel,
-        BuildImprovment_CustomsHouse,
-        BuildImprovment_HolySite,
-        BuildImprovment_Landmark,
-        BuildImprovment_Manufactory,
-        RepairImprovement,
-        CleanFallout
+        UNITCMD_NULL,
+        UNITCMD_MOVE,
+        UNITCMD_DISBAND,
+        UNITCMD_SLEEP,
+        UNITCMD_SKIP,
+        UNITCMD_GUARD,
+        UNITCMD_SETTLE,
+        UNITCMD_MELEE,
+        UNITCMD_BOMBARD,
+        UNITCMD_BUILD_FARM,
+        UNITCMD_BUILD_FORT,
+        UNITCMD_BUILD_LUMBERMILL,
+        UNITCMD_BUILD_MINE,
+        UNITCMD_BUILD_TRADINGPOST,
+        UNITCMD_BUILD_ROADS,
+        UNITCMD_BUILD_RAILROADS,
+        UNITCMD_BUILD_CAMP,
+        UNITCMD_BUILD_FISHINGBOATS,
+        UNITCMD_BUILD_OFFSHOREPLATFORM,
+        UNITCMD_BUILD_PASTURE,
+        UNITCMD_BUILD_PLANTATION,
+        UNITCMD_BUILD_QUARRY,
+        UNITCMD_BUILD_ACADEMY,
+        UNITCMD_BUILD_CITIDEL,
+        UNITCMD_BUILD_CUSTOMSHOUSE,
+        UNITCMD_BUILD_HOLYSITE,
+        UNITCMD_BUILD_LANDMARK,
+        UNITCMD_BUILD_MANUFACTORY,
+        UNITCMD_REPAIR,
+        UNITCMD_CLEAN
     }
 
     public enum UnitCommandTargetType
@@ -99,13 +100,13 @@ namespace Dominion.Common.Entities
         {
             switch (id)
             {
-                case UnitCommandID.Move:
-                case UnitCommandID.MeleeAttack:
+                case UnitCommandID.UNITCMD_MOVE:
+                case UnitCommandID.UNITCMD_MELEE:
                     return UnitCommandTargetType.Tile;
-                case UnitCommandID.Disband:
-                case UnitCommandID.Sleep:
-                case UnitCommandID.Skip:
-                case UnitCommandID.Settle:
+                case UnitCommandID.UNITCMD_DISBAND:
+                case UnitCommandID.UNITCMD_SLEEP:
+                case UnitCommandID.UNITCMD_SKIP:
+                case UnitCommandID.UNITCMD_SETTLE:
                 default:
                     return UnitCommandTargetType.Instant;
             }
@@ -121,91 +122,91 @@ namespace Dominion.Common.Entities
             string iconCode = ((char)FontSymbol.CrossCircle).ToString();
             switch (cmdid)
             {
-                case UnitCommandID.Move:
+                case UnitCommandID.UNITCMD_MOVE:
                     iconCode = ((char)FontSymbol.Footsteps).ToString();
                     break;
-                case UnitCommandID.Disband:
+                case UnitCommandID.UNITCMD_DISBAND:
                     iconCode = ((char)FontSymbol.UserRemove).ToString();
                     break;
-                case UnitCommandID.Sleep:
+                case UnitCommandID.UNITCMD_SLEEP:
                     iconCode = ((char)FontSymbol.PowerIcon).ToString();
                     break;
-                case UnitCommandID.Skip:
+                case UnitCommandID.UNITCMD_SKIP:
                     iconCode = ((char)FontSymbol.Cog).ToString();
                     break;
-                case UnitCommandID.Settle:
+                case UnitCommandID.UNITCMD_SETTLE:
                     iconCode = ((char)FontSymbol.Flag).ToString();
                     break;
-                case UnitCommandID.MeleeAttack:
+                case UnitCommandID.UNITCMD_MELEE:
                     iconCode = ((char)FontSymbol.Crosshairs).ToString();
                     break;
-                case UnitCommandID.RangedAttack:
+                case UnitCommandID.UNITCMD_BOMBARD:
                     iconCode = ((char)FontSymbol.Crosshairs).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_Farm:
+                case UnitCommandID.UNITCMD_BUILD_FARM:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_Fort:
+                case UnitCommandID.UNITCMD_BUILD_FORT:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_LumberMill:
+                case UnitCommandID.UNITCMD_BUILD_LUMBERMILL:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_Mine:
+                case UnitCommandID.UNITCMD_BUILD_MINE:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_TradingPost:
+                case UnitCommandID.UNITCMD_BUILD_TRADINGPOST:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_Roads:
+                case UnitCommandID.UNITCMD_BUILD_ROADS:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_RailRoads:
+                case UnitCommandID.UNITCMD_BUILD_RAILROADS:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_Camp:
+                case UnitCommandID.UNITCMD_BUILD_CAMP:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_FishingBoats:
+                case UnitCommandID.UNITCMD_BUILD_FISHINGBOATS:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_OffshorePlatform:
+                case UnitCommandID.UNITCMD_BUILD_OFFSHOREPLATFORM:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_Pasture:
+                case UnitCommandID.UNITCMD_BUILD_PASTURE:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_Plantation:
+                case UnitCommandID.UNITCMD_BUILD_PLANTATION:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_Quarry:
+                case UnitCommandID.UNITCMD_BUILD_QUARRY:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_Academy:
+                case UnitCommandID.UNITCMD_BUILD_ACADEMY:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_Citidel:
+                case UnitCommandID.UNITCMD_BUILD_CITIDEL:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_CustomsHouse:
+                case UnitCommandID.UNITCMD_BUILD_CUSTOMSHOUSE:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_HolySite:
+                case UnitCommandID.UNITCMD_BUILD_HOLYSITE:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_Landmark:
+                case UnitCommandID.UNITCMD_BUILD_LANDMARK:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.BuildImprovment_Manufactory:
+                case UnitCommandID.UNITCMD_BUILD_MANUFACTORY:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.RepairImprovement:
+                case UnitCommandID.UNITCMD_REPAIR:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.CleanFallout:
+                case UnitCommandID.UNITCMD_CLEAN:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
                     break;
-                case UnitCommandID.Null:
+                case UnitCommandID.UNITCMD_NULL:
                 default:
                     iconCode = ((char)FontSymbol.CrossCircle).ToString();
                     break;

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!--Generated with ArwicXmlEditor (26 Feb 2016 20:43) by Tim Ings-->
-<EmpireDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Arwic's Default Empires">
+<!--Generated with ArwicXmlEditor (28 Feb 2016 18:22) by Tim Ings-->
+<EmpireDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Dominion Core Empire Data">
   <Empires>
     <Empire>
-      <Name>England</Name>
+      <Name>EMPIRE_ENGLAND</Name>
       <Adjective>English</Adjective>
       <DefaultCityNames>
         <Name>London</Name>
@@ -46,6 +46,19 @@
         <Name>Winchester</Name>
         <Name>Hull</Name>
       </DefaultCityNames>
+      <SpyNames>
+        <Name>Basil</Name>
+        <Name>Ian </Name>
+        <Name>Simon </Name>
+        <Name>Nigel</Name>
+        <Name>Colin </Name>
+        <Name>Trevor </Name>
+        <Name>Clive</Name>
+        <Name>Tom</Name>
+        <Name>Tim</Name>
+        <Name>James</Name>
+        <Name>Ian</Name>
+      </SpyNames>
       <Architecture>European</Architecture>
       <ArtSet>European</ArtSet>
       <PreferredReligion>Protestantism</PreferredReligion>
@@ -71,9 +84,11 @@
         <A>0</A>
         <PackedValue>0</PackedValue>
       </TextColor>
+      <IconKey>EMPIRE_ENGLAND</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/EmpireAtlasDefinition</IconAtlas>
     </Empire>
     <Empire>
-      <Name>France</Name>
+      <Name>EMPIRE_FRANCE</Name>
       <Adjective>French</Adjective>
       <DefaultCityNames>
         <Name>Paris</Name>
@@ -117,6 +132,20 @@
         <Name>Bourges</Name>
         <Name>Calais</Name>
       </DefaultCityNames>
+      <SpyNames>
+        <Name>Nathan</Name>
+        <Name>Lucas</Name>
+        <Name>Enzo</Name>
+        <Name>Leo</Name>
+        <Name>Louis</Name>
+        <Name>Hugo</Name>
+        <Name>Gabriel</Name>
+        <Name>Ethan</Name>
+        <Name>Mathis</Name>
+        <Name>Jules</Name>
+        <Name>Raphaël</Name>
+        <Name>Arthur</Name>
+      </SpyNames>
       <Architecture>European</Architecture>
       <ArtSet>European</ArtSet>
       <PreferredReligion>Catholicism</PreferredReligion>
@@ -142,6 +171,97 @@
         <A>0</A>
         <PackedValue>0</PackedValue>
       </TextColor>
+      <IconKey>EMPIRE_FRANCE</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/EmpireAtlasDefinition</IconAtlas>
+    </Empire>
+    <Empire>
+      <Name>EMPIRE_GERMANY</Name>
+      <Adjective>German</Adjective>
+      <DefaultCityNames />
+      <SpyNames>
+        <Name>Ernst</Name>
+        <Name>Friedrich</Name>
+        <Name>Hans</Name>
+        <Name>Heinrich</Name>
+        <Name>Hermann</Name>
+        <Name>Karl</Name>
+        <Name>Otto</Name>
+        <Name>Paul</Name>
+        <Name>Walter</Name>
+        <Name>Wilhelm</Name>
+      </SpyNames>
+      <Architecture>European</Architecture>
+      <ArtSet>European</ArtSet>
+      <PreferredReligion>Catholicism</PreferredReligion>
+      <Start_x0020_Bias>None</Start_x0020_Bias>
+      <PrimaryColor>
+        <B>0</B>
+        <G>0</G>
+        <R>0</R>
+        <A>0</A>
+        <PackedValue>0</PackedValue>
+      </PrimaryColor>
+      <SecondaryColor>
+        <B>0</B>
+        <G>0</G>
+        <R>0</R>
+        <A>0</A>
+        <PackedValue>0</PackedValue>
+      </SecondaryColor>
+      <TextColor>
+        <B>0</B>
+        <G>0</G>
+        <R>0</R>
+        <A>0</A>
+        <PackedValue>0</PackedValue>
+      </TextColor>
+      <IconKey>EMPIRE_GERMANY</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/EmpireAtlasDefinition</IconAtlas>
+    </Empire>
+    <Empire>
+      <Name>EMPIRE_CHINA</Name>
+      <Adjective>Chinese</Adjective>
+      <DefaultCityNames />
+      <SpyNames>
+        <Name>Jin Dou</Name>
+        <Name>Lei Shei</Name>
+        <Name>Lian Sun</Name>
+        <Name>Mei Zen</Name>
+        <Name>Shan Dou</Name>
+        <Name>Chai Yenn</Name>
+        <Name>Da Xia</Name>
+        <Name>Jiang Li</Name>
+        <Name>Quon Jin</Name>
+        <Name>Shen Li</Name>
+        <Name>Wen Zao</Name>
+      </SpyNames>
+      <Architecture>Asian</Architecture>
+      <ArtSet>Asian</ArtSet>
+      <PreferredReligion>Buddhism</PreferredReligion>
+      <Start_x0020_Bias>None</Start_x0020_Bias>
+      <PrimaryColor>
+        <B>0</B>
+        <G>0</G>
+        <R>0</R>
+        <A>0</A>
+        <PackedValue>0</PackedValue>
+      </PrimaryColor>
+      <SecondaryColor>
+        <B>0</B>
+        <G>0</G>
+        <R>0</R>
+        <A>0</A>
+        <PackedValue>0</PackedValue>
+      </SecondaryColor>
+      <TextColor>
+        <B>0</B>
+        <G>0</G>
+        <R>0</R>
+        <A>0</A>
+        <PackedValue>0</PackedValue>
+      </TextColor>
+      <IconKey>EMPIRE_CHINA</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/EmpireAtlasDefinition</IconAtlas>
     </Empire>
   </Empires>
 </EmpireDataPack>

@@ -24,8 +24,8 @@ namespace ArwicEngine.Forms
 
         public static new void InitDefaults()
         {
-            DefaultBackgroundSprite = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_FORM_BACK);
-            DefaultCloseButtonSprite = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_FORM_CLOSE);
+            DefaultBackgroundSprite = Engine.Instance.Content.GetAsset<Sprite>(ASSET_CONTROL_FORM_BACK);
+            DefaultCloseButtonSprite = Engine.Instance.Content.GetAsset<Sprite>(ASSET_CONTROL_FORM_CLOSE);
         }
         #endregion
 
@@ -98,7 +98,7 @@ namespace ArwicEngine.Forms
             BackgroundSprite = DefaultBackgroundSprite;
             HotKey = '\0';
             Draggable = true;
-            CloseButton = new Button(new Rectangle(Size.Width - FORM_CLOSEBUTTON_DIM - FORM_CLOSEBUTTON_PADDING, FORM_CLOSEBUTTON_PADDING, FORM_CLOSEBUTTON_DIM, FORM_CLOSEBUTTON_DIM), this);
+            CloseButton = new Button(new Rectangle(Size.Width - PROP_FORM_CLOSE_BUTTON_DIM - PROP_FORM_CLOSE_BUTTON_PADDING, PROP_FORM_CLOSE_BUTTON_PADDING, PROP_FORM_CLOSE_BUTTON_DIM, PROP_FORM_CLOSE_BUTTON_DIM), this);
             CloseButtonEnabled = true;
             CloseButton.Color = Color;
             CloseButton.NineCutDraw = false;
@@ -115,7 +115,7 @@ namespace ArwicEngine.Forms
         {
             if (CloseButton != null)
             {
-                CloseButton.Location = new Point(Size.Width - FORM_CLOSEBUTTON_DIM - FORM_CLOSEBUTTON_PADDING, FORM_CLOSEBUTTON_PADDING);
+                CloseButton.Location = new Point(Size.Width - PROP_FORM_CLOSE_BUTTON_DIM - PROP_FORM_CLOSE_BUTTON_PADDING, PROP_FORM_CLOSE_BUTTON_PADDING);
             }
         }
 
@@ -149,7 +149,7 @@ namespace ArwicEngine.Forms
 
                 if (DrawTitlebar)
                 {
-                    Rectangle titleBar = new Rectangle(AbsoluteLocation.X, AbsoluteLocation.Y, Size.Width, FORM_CLOSEBUTTON_DIM + FORM_CLOSEBUTTON_PADDING * 2);
+                    Rectangle titleBar = new Rectangle(AbsoluteLocation.X, AbsoluteLocation.Y, Size.Width, PROP_FORM_CLOSE_BUTTON_DIM + PROP_FORM_CLOSE_BUTTON_PADDING * 2);
                     BackgroundSprite.DrawNineCut(sb, titleBar, null, Color.Multiply(Color, 0.8f));
                 }
 

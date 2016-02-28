@@ -105,7 +105,7 @@ namespace ArwicEngine.Forms
 
                         if (form.Draggable && formDragging == null && InputManager.Instance.OnMouseDown(MouseButton.Left))
                         {
-                            Rectangle titleBar = new Rectangle(form.AbsoluteLocation.X, form.AbsoluteLocation.Y, form.Size.Width - (FORM_CLOSEBUTTON_DIM + FORM_CLOSEBUTTON_PADDING), FORM_CLOSEBUTTON_DIM + FORM_CLOSEBUTTON_PADDING);
+                            Rectangle titleBar = new Rectangle(form.AbsoluteLocation.X, form.AbsoluteLocation.Y, form.Size.Width - (PROP_FORM_CLOSE_BUTTON_DIM + PROP_FORM_CLOSE_BUTTON_PADDING), PROP_FORM_CLOSE_BUTTON_DIM + PROP_FORM_CLOSE_BUTTON_PADDING);
                             if (titleBar.Contains(InputManager.Instance.MouseScreenPos()))
                             {
                                 formDragOffset = InputManager.Instance.MouseScreenPos() - form.AbsoluteLocation;

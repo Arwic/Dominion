@@ -896,6 +896,7 @@ namespace Dominion.Server.Controllers
             cities.Add(city); // add the city to the city list
             TryExpandBorders(city); // expand the city's borders
             CalculateIncome(city); // calculate the city's income
+            CalculatePossibleProductions(city); // calculate the city's possible productions
             OnCitySettled(new CityEventArgs(city)); // trigger the CitySettled event
             return true; // the city was settled
         }

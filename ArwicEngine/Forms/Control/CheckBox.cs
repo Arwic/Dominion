@@ -23,9 +23,9 @@ namespace ArwicEngine.Forms
 
         public static new void InitDefaults()
         {
-            DefaultSpriteTrue = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_CHECKBOX_TRUE);
-            DefaultSpriteFalse = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_CHECKBOX_FALSE);
-            DefaultCursor = Engine.Instance.Content.GetAsset<Cursor>(CURSOR_LINK_PATH);
+            DefaultSpriteTrue = Engine.Instance.Content.GetAsset<Sprite>(ASSET_CONTROL_CHECKBOX_TRUE);
+            DefaultSpriteFalse = Engine.Instance.Content.GetAsset<Sprite>(ASSET_CONTROL_CHECKBOX_FALSE);
+            DefaultCursor = Engine.Instance.Content.GetAsset<Cursor>(ASSET_CURSOR_LINK);
         }
         #endregion
 

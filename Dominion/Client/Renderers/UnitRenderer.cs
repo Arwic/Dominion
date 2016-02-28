@@ -52,7 +52,7 @@ namespace Dominion.Client.Renderers
         // calculates the tiles to which the select unit can move to
         private void CalculateMoveTargets(UnitCommandID cmd)
         {
-            if (cmd != UnitCommandID.Move)
+            if (cmd != UnitCommandID.UNITCMD_MOVE)
                 return; // don't bother if the select command isn't move
 
             lock (_lock_updateMoveTargets)
@@ -185,7 +185,7 @@ namespace Dominion.Client.Renderers
 
             switch (client.SelectedCommand)
             {
-                case UnitCommandID.Move: // Draw possible move locations
+                case UnitCommandID.UNITCMD_MOVE: // Draw possible move locations
                     lock (_lock_updateMoveTargets)
                     {
                         if (moveTargets == null)
@@ -197,15 +197,15 @@ namespace Dominion.Client.Renderers
                             DrawPath(sb, client.SelectedUnit.Location, Board.FindPath(client.SelectedUnit.Location, tileUnderMouse.Location, client.Board), Color.Yellow);
                     }
                     break;
-                case UnitCommandID.Settle: // Draw recommended city locations
+                case UnitCommandID.UNITCMD_SETTLE: // Draw recommended city locations
                     break;
-                case UnitCommandID.MeleeAttack: // Draw adjacent tiles
+                case UnitCommandID.UNITCMD_MELEE: // Draw adjacent tiles
                     foreach (Point nLoc in client.GetCachedTile(client.SelectedUnit.Location).GetNeighbourTileLocations())
                     {
                         tileHighlightSprite.Draw(sb, boardRenderer.GetTileRenderRect(nLoc), null, Color.Red);
                     }
                     break;
-                case UnitCommandID.RangedAttack: // Draw all tiles in range
+                case UnitCommandID.UNITCMD_BOMBARD: // Draw all tiles in range
                     break;
             }
         }

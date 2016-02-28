@@ -19,7 +19,7 @@ namespace Dominion.Client.GUI
         private Canvas canvas;
         private SceneGame sceneGame;
         private Client client;
-        private List<int> commandIds;
+        private List<UnitCommandID> commandIds;
         private Camera2 camera;
         private BoardRenderer boardRenderer;
 
@@ -91,13 +91,13 @@ namespace Dominion.Client.GUI
                     }
                     // build button
                     Button btnCmd = new Button(new Rectangle((xOffset + btnWidth) * index, yOffset, btnWidth, btnHeight), form);
-                    btnCmd.Text = UnitCommand.GetCommandIcon((UnitCommandID)commandIds[i]);
-                    btnCmd.ToolTip = new ToolTip(((UnitCommandID)commandIds[i]).ToString(), 200);
+                    btnCmd.Text = UnitCommand.GetCommandIcon(commandIds[i]);
+                    btnCmd.ToolTip = new ToolTip((commandIds[i]).ToString(), 200);
                     int locali = i; // closure means we can't just use i
                     btnCmd.MouseClick += (s, a) =>
                     {
                         // execute the unit command
-                        UnitCommandID cmdID = (UnitCommandID)commandIds[locali];
+                        UnitCommandID cmdID = commandIds[locali];
                         ConsoleManager.Instance.WriteLine($"Select a new command, {cmdID}");
                         // if the command is instant, cast is instantly
                         if (UnitCommand.GetTargetType(cmdID) == UnitCommandTargetType.Instant)
@@ -105,7 +105,7 @@ namespace Dominion.Client.GUI
                             // command the unit
                             if (client.SelectedUnit != null)
                                 client.CommandUnit(new UnitCommand(cmdID, client.SelectedUnit, null));
-                            if (cmdID == UnitCommandID.Disband || cmdID == UnitCommandID.Settle)
+                            if (cmdID == UnitCommandID.UNITCMD_DISBAND || cmdID == UnitCommandID.UNITCMD_SETTLE)
                             {
                                 // disbanding and settling cause the unit to be removed, to close the form and deselect the unit
                                 client.SelectedUnit = null;

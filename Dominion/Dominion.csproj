@@ -88,11 +88,11 @@
     <Compile Include="Common\Entities\CityCommand.cs" />
     <Compile Include="Common\Entities\Production.cs" />
     <Compile Include="Common\Entities\UnitCommand.cs" />
+    <Compile Include="Common\Managers\TechnologyManager.cs" />
     <Compile Include="Common\Managers\BuildingManager.cs" />
     <Compile Include="Client\Scenes\SceneGame.cs" />
     <Compile Include="Common\Entities\Board.cs" />
     <Compile Include="Common\Entities\City.cs" />
-    <Compile Include="Common\Entities\TechTree.cs" />
     <Compile Include="Common\Entities\Tile.cs" />
     <Compile Include="Common\LobbyState.cs" />
     <Compile Include="Common\Managers\EmpireManager.cs" />

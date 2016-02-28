@@ -3,6 +3,7 @@
 // This file defines classes that define a player
 
 using ArwicEngine.Net;
+using Dominion.Common.Managers;
 using System;
 
 namespace Dominion.Common.Entities
@@ -109,12 +110,12 @@ namespace Dominion.Common.Entities
         /// <summary>
         /// The player's tech tree
         /// </summary>
-        public TechTree TechTree { get; set; }
+        public TechnologyTree TechTree { get; set; }
 
         /// <summary>
         /// The player's selected tech node's id
         /// </summary>
-        public int SelectedTechNodeID { get; set; }
+        public string SelectedTechNodeID { get; set; } = "TECH_NULL";
 
         /// <summary>
         /// The player's science overflow
@@ -306,14 +307,14 @@ namespace Dominion.Common.Entities
         public int FreeSocialPoliciesAvailable { get; set; } = 1;
         #endregion
 
-        public Player(Connection conn, int playerD, string empireID, string username, TechTree blankTechTree)
+        public Player(Connection conn, int playerD, string empireID, string username, TechnologyTree blankTechManager)
         {
             Connection = conn;
             CurrentEra = GameEra.Ancient;
             InstanceID = playerD;
             EmpireID = empireID;
             Name = username;
-            TechTree = blankTechTree;
+            TechTree = blankTechManager;
         }
 
     }

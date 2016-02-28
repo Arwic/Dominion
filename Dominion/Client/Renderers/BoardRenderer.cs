@@ -419,7 +419,7 @@ namespace Dominion.Client.Renderers
                     foreach (Point loc in city.CitizenLocations)
                     {
                         Rectangle dest = GetTileRenderRect(loc);
-                        TileAtlas.Draw(sb, "TILEUTIL_OVERLAY", dest);
+                        TileAtlas.Draw(sb, "TILEUTIL_HIGHLIGHT", dest);
                     }
                 }
             }

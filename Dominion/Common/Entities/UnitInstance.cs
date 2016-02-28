@@ -139,7 +139,7 @@ namespace Dominion.Common.Entities
         /// A list of command id's that the unit can use
         /// This list is aware of the units current context
         /// </summary>
-        public List<int> Commands { get; set; }
+        public List<UnitCommandID> Commands { get; set; }
 
         /// <summary>
         /// A list of moves the unit is to make

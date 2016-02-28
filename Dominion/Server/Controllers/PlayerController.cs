@@ -4,7 +4,9 @@
 
 using ArwicEngine.Core;
 using ArwicEngine.Net;
+using Dominion.Common.Data;
 using Dominion.Common.Entities;
+using Dominion.Common.Managers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -107,7 +109,7 @@ namespace Dominion.Server.Controllers
                 switch (cmd.CommandID)
                 {
                     case PlayerCommandID.SelectTech:
-                        player.SelectedTechNodeID = (int)cmd.Arguments[0];
+                        player.SelectedTechNodeID = (string)cmd.Arguments[0];
                         break;
                 }
             }
@@ -140,20 +142,20 @@ namespace Dominion.Server.Controllers
         // processes the given players research
         private void ProcessPlayerResearch(Player player)
         {
-            if (player.SelectedTechNodeID == -1) // don't process a research node if it doesn't exist
+            if (player.SelectedTechNodeID == "TECH_NULL") // don't process a research node if it doesn't exist
                 return;
 
             // get the selected node
-            TechNode currentNode = player.TechTree.GetNode(player.SelectedTechNodeID);
+            Technology currentTech = player.TechTree.GetTech(player.SelectedTechNodeID);
             // add the player's overflow and income to the nodes progress
-            currentNode.Progress += player.ScienceOverflow;
-            currentNode.Progress += player.IncomeScience;
+            currentTech.Progress += player.ScienceOverflow;
+            currentTech.Progress += player.IncomeScience;
             // check if the node has been completed
-            if (currentNode.Progress >= currentNode.ResearchCost)
+            if (currentTech.Progress >= currentTech.ResearchCost)
             {
-                currentNode.Unlocked = true; // mark the node as unlocked
-                player.SelectedTechNodeID = -1; // TODO make this work with multiple tech nodes selected
-                player.ScienceOverflow += currentNode.Progress - currentNode.ResearchCost; // add the left over science to the player's overflow
+                currentTech.Unlocked = true; // mark the node as unlocked
+                player.SelectedTechNodeID = "TECH_NULL"; // TODO make this work with multiple tech nodes selected
+                player.ScienceOverflow += currentTech.Progress - currentTech.ResearchCost; // add the left over science to the player's overflow
             }
         }
 
@@ -164,9 +166,9 @@ namespace Dominion.Server.Controllers
         /// <param name="userName"></param>
         public void AddPlayer(Connection connection, string userName)
         {
-            Player player = new Player(connection, players.Count, "NULL", userName, TechTree.FromStream(Engine.Instance.Content.GetAsset<Stream>("Core:XML/GameData/Technologies")));
+            Player player = new Player(connection, players.Count, "NULL", userName, Controllers.Data.Tech.GetNewTree());
             player.EmpireID =  Controllers.Data.Empire.GetAllEmpires().ElementAt(RandomHelper.Next(0, Controllers.Data.Empire.EmpireCount)).Name;
-            player.TechTree.GetNode(0).Unlocked = true;
+            player.TechTree.GetTech("TECH_AGRICULTURE").Unlocked = true;
             players.Add(player);
             OnPlayerAdded(new PlayerEventArgs(player));
         }

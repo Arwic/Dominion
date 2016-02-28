@@ -42,8 +42,8 @@ namespace Dominion.Client.GUI
         private void LoadResources()
         {
             // load sprites
-            cityLabelSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.CONTROL_BUTTON);
-            unitLabelSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.CONTROL_SCROLLBOX_BACK);
+            cityLabelSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.ASSET_CONTROL_BUTTON);
+            unitLabelSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.ASSET_CONTROL_SCROLLBOX_BACK);
         }
 
         /// <summary>

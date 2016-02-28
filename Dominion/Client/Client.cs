@@ -154,6 +154,11 @@ namespace Dominion.Client
         public UnitManager UnitManager { get; private set; }
 
         /// <summary>
+        /// Gets or sets the tech data manager
+        /// </summary>
+        public TechnologyManager TechManager { get; private set; }
+
+        /// <summary>
         /// Game options that are set in the lobby and other lobby information
         /// </summary>
         public LobbyState LobbyState
@@ -510,7 +515,7 @@ namespace Dominion.Client
 
         private void Client_PacketRecieved(object sender, PacketRecievedEventArgs e)
         {
-            ParsePacket(e.Packet);
+            RoutePacket(e.Packet);
         }
 
         private void Client_LostConnection(object sender, EventArgs e)
@@ -523,7 +528,7 @@ namespace Dominion.Client
 
         #region Packet Parsing
         // parses an incoming packet
-        private void ParsePacket(Packet p)
+        private void RoutePacket(Packet p)
         {
             PacketHeader header = (PacketHeader)p.Header;
             ConsoleManager.Instance.WriteLine($"Parsing a packet with header {header}");
@@ -546,7 +551,6 @@ namespace Dominion.Client
                     case PacketHeader.LobbyStartGame: // Message that signals the start of the game
                         ParseLobbyStartGame(p);
                         break;
-
                     case PacketHeader.TurnData: // Their player data
                         ParseTurnData(p);
                         break;
@@ -595,7 +599,7 @@ namespace Dominion.Client
                 if (consecutiveParsingErrors >= maxConsecutiveParsingErrors)
                     Dissconnect();
                 else
-                    ParsePacket(p);
+                    RoutePacket(p);
             }
         }
         
@@ -607,7 +611,8 @@ namespace Dominion.Client
             BuildingManager = (BuildingManager)p.Items[i++];
             EmpireManager = (EmpireManager)p.Items[i++];
             UnitManager = (UnitManager)p.Items[i++];
-            ConsoleManager.Instance.WriteLine("Initialised factories");
+            TechManager = (TechnologyManager)p.Items[i++];
+            ConsoleManager.Instance.WriteLine("Initialised data managers", MsgType.Info);
         }
         
         // parses a packet with the header LobbyStateSync
@@ -824,7 +829,7 @@ namespace Dominion.Client
         // checks if the user is required to select a new research node
         private bool RequireNewResearch()
         {
-            if (Player.SelectedTechNodeID == -1 || Player.TechTree.GetNode(Player.SelectedTechNodeID).Unlocked)
+            if (Player.SelectedTechNodeID == "TECH_NULL" || Player.TechTree.GetTech(Player.SelectedTechNodeID).Unlocked)
                 return true;
             return false;
         }
@@ -1012,7 +1017,7 @@ namespace Dominion.Client
         {
             ConsoleManager.Instance.WriteLine($"Commanded {AllUnits.Find(u => u.InstanceID == cmd.UnitInstanceID).Name} - {cmd.CommandID}");
             Packet p = new Packet((int)PacketHeader.UnitCommand, cmd);
-            SelectedCommand = UnitCommandID.Null;
+            SelectedCommand = UnitCommandID.UNITCMD_NULL;
             client.SendData(p);
         }
 

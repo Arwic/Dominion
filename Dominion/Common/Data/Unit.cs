@@ -15,12 +15,20 @@ namespace Dominion.Common.Data
     public class Unit
     {
         /// <summary>
-        /// ID of the graphic used to render the unit
+        /// The key to used to get the icon from the icon atlas
         /// </summary>
-        [Description("ID of the graphic used to render the unit")]
-        [DisplayName("GraphicID"), Browsable(true), Category("Graphics")]
-        [XmlElement("GraphicID")]
-        public int GraphicID { get; set; } = -1;
+        [Description("The key to used to get the icon from the icon atlas")]
+        [DisplayName("Icon Key"), Browsable(true), Category("Graphics")]
+        [XmlElement("IconKey")]
+        public string IconKey { get; set; } = "UNIT_NULL";
+
+        /// <summary>
+        /// The icon atlas to source the unit's icon from
+        /// </summary>
+        [Description("The icon atlas to source the unit's icon from")]
+        [DisplayName("Icon Atlas"), Browsable(true), Category("Graphics")]
+        [XmlElement("IconAtlas")]
+        public string IconAtlas { get; set; } = "Core:XML/AtlasDefinitions/UnitAtlasDefinition";
 
         /// <summary>
         /// The name of unit
@@ -91,9 +99,48 @@ namespace Dominion.Common.Data
         /// </summary>
         [Description("A list of commands the unit will have access to")]
         [DisplayName("Commands"), Browsable(true), Category("General")]
-        [XmlArray("Commands"), XmlArrayItem(typeof(int), ElementName = "Command")]
+        [Editor("System.Windows.Forms.Design.StringCollectionEditor, System.Design, Version = 2.0.0.0, Culture = neutral, PublicKeyToken = b03f5f7f11d50a3a", typeof(System.Drawing.Design.UITypeEditor))]
         [TypeConverter(typeof(ListConverter))]
-        public List<int> Commands { get; set; } = new List<int>();
+        [XmlArray("Commands"), XmlArrayItem(typeof(string), ElementName = "Command")]
+        public List<string> Commands { get; set; } = new List<string>();
+
+        /// <summary>
+        /// A list of buildings that need to be built in the same city before this unit becomes available
+        /// </summary>
+        [Description("A list of buildings that need to be built in the same city before this unit becomes available")]
+        [DisplayName("Building Prereq"), Browsable(true), Category("Prerequisites")]
+        [Editor("System.Windows.Forms.Design.StringCollectionEditor, System.Design, Version = 2.0.0.0, Culture = neutral, PublicKeyToken = b03f5f7f11d50a3a", typeof(System.Drawing.Design.UITypeEditor))]
+        [TypeConverter(typeof(ListConverter))]
+        [XmlArray("BuildingPrereqs"), XmlArrayItem(typeof(string), ElementName = "BuildingPrereq")]
+        public List<string> BuildingPrereq { get; set; } = new List<string>();
+
+        /// <summary>
+        /// A list of technologies that need to be unlocked before this unit becomes available
+        /// </summary>
+        [Description("A list of technologies that need to be unlocked before this unit becomes available")]
+        [DisplayName("Tech Prereq"), Browsable(true), Category("Prerequisites")]
+        [Editor("System.Windows.Forms.Design.StringCollectionEditor, System.Design, Version = 2.0.0.0, Culture = neutral, PublicKeyToken = b03f5f7f11d50a3a", typeof(System.Drawing.Design.UITypeEditor))]
+        [TypeConverter(typeof(ListConverter))]
+        [XmlArray("TechPrereqs"), XmlArrayItem(typeof(string), ElementName = "TechPrereq")]
+        public List<string> TechPrereq { get; set; } = new List<string>();
+
+        /// <summary>
+        /// Production cost of the building
+        /// </summary>
+        [Description("Production cost of the building")]
+        [DisplayName("Cost"), Browsable(true), Category("General")]
+        [XmlElement("Cost")]
+        public int Cost { get; set; } = 0;
+
+        /// <summary>
+        /// Tags the building has
+        /// </summary>
+        [Description("Tags the building has")]
+        [DisplayName("Tags"), Browsable(true), Category("General")]
+        [Editor("System.Windows.Forms.Design.StringCollectionEditor, System.Design, Version = 2.0.0.0, Culture = neutral, PublicKeyToken = b03f5f7f11d50a3a", typeof(System.Drawing.Design.UITypeEditor))]
+        [TypeConverter(typeof(ListConverter))]
+        [XmlArray("Tags"), XmlArrayItem(typeof(string), ElementName = "Tag")]
+        public List<string> Tags { get; set; } = new List<string>();
 
         public Unit() { }
     }

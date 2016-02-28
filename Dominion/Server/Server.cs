@@ -569,7 +569,8 @@ namespace Dominion.Server
                 e.Player,
                 controllers.Data.Building,
                 controllers.Data.Empire,
-                controllers.Data.Unit);
+                controllers.Data.Unit,
+                controllers.Data.Tech);
             server.SendData(pOutLobbyInit, e.Player.Connection);
 
             SendLobbyStateToAll();

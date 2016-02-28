@@ -77,7 +77,7 @@ namespace Dominion.Common.Data
         [Description("The name of the empire")]
         [DisplayName("Name"), Browsable(true), Category("General")]
         [XmlElement("Name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = "EMPIRE_NULL";
 
         /// <summary>
         /// Adjective used to describe items owned by this empire
@@ -85,7 +85,7 @@ namespace Dominion.Common.Data
         [Description("Adjective used to describe items owned by this empire")]
         [DisplayName("Adjective"), Browsable(true), Category("General")]
         [XmlElement("Adjective")]
-        public string Adjective { get; set; }
+        public string Adjective { get; set; } = "adj";
 
         /// <summary>
         /// A list of names to use for this empire's cities
@@ -95,7 +95,7 @@ namespace Dominion.Common.Data
         [Editor("System.Windows.Forms.Design.StringCollectionEditor, System.Design, Version = 2.0.0.0, Culture = neutral, PublicKeyToken = b03f5f7f11d50a3a", typeof(System.Drawing.Design.UITypeEditor))]
         [TypeConverter(typeof(ListConverter))]
         [XmlArray("DefaultCityNames"), XmlArrayItem(typeof(string), ElementName = "Name")]
-        public List<string> DefaultCityNames { get; set; }
+        public List<string> DefaultCityNames { get; set; } = new List<string>();
 
         /// <summary>
         /// A list of names to use for this empire's spies
@@ -105,7 +105,7 @@ namespace Dominion.Common.Data
         [Editor("System.Windows.Forms.Design.StringCollectionEditor, System.Design, Version = 2.0.0.0, Culture = neutral, PublicKeyToken = b03f5f7f11d50a3a", typeof(System.Drawing.Design.UITypeEditor))]
         [TypeConverter(typeof(ListConverter))]
         [XmlArray("SpyNames"), XmlArrayItem(typeof(string), ElementName = "Name")]
-        public List<string> SpyNames { get; set; }
+        public List<string> SpyNames { get; set; } = new List<string>();
 
         /// <summary>
         /// The style of architecture used to render this empire's cities and units
@@ -114,7 +114,7 @@ namespace Dominion.Common.Data
         [DisplayName("Architecture"), Browsable(true), Category("Graphics")]
         [TypeConverter(typeof(EnumConverter))]
         [XmlElement("Architecture")]
-        public EmpireArchitecture Architecture { get; set; }
+        public EmpireArchitecture Architecture { get; set; } = EmpireArchitecture.European;
 
         /// <summary>
         /// The set of art that the great artists this emprie generates will be from
@@ -123,7 +123,7 @@ namespace Dominion.Common.Data
         [DisplayName("Art Set"), Browsable(true), Category("Graphics")]
         [TypeConverter(typeof(EnumConverter))]
         [XmlElement("ArtSet")]
-        public EmpireArtSet ArtSet { get; set; }
+        public EmpireArtSet ArtSet { get; set; } = EmpireArtSet.European;
 
         /// <summary>
         /// The empire's preferred religion
@@ -132,7 +132,7 @@ namespace Dominion.Common.Data
         [DisplayName("Preferred Religion"), Browsable(true), Category("Game")]
         [TypeConverter(typeof(EnumConverter))]
         [XmlElement("PreferredReligion")]
-        public EmpirePreferredReligion PreferredReligion { get; set; }
+        public EmpirePreferredReligion PreferredReligion { get; set; } = EmpirePreferredReligion.Protestantism;
 
         /// <summary>
         /// The terrain that this empire is biased to start near
@@ -141,7 +141,7 @@ namespace Dominion.Common.Data
         [DisplayName("Start Bias"), Browsable(true), Category("Game")]
         [TypeConverter(typeof(EnumConverter))]
         [XmlElement("Start Bias")]
-        public EmpireStartBiasFlags StartBias { get; set; }
+        public EmpireStartBiasFlags StartBias { get; set; } = EmpireStartBiasFlags.None;
 
         /// <summary>
         /// The empire's primary color
@@ -238,14 +238,25 @@ namespace Dominion.Common.Data
         /// </summary>
         [Browsable(false)]
         [XmlIgnore()]
-        public int DefaultCityNameIndex { get; set; }
+        public int DefaultCityNameIndex { get; set; } = 0;
 
-        public Empire()
-        {
-            Name = "New Empire";
-            Adjective = "Adjective";
-            DefaultCityNames = new List<string>();
-        }
+        /// <summary>
+        /// The key to used to get the icon from the icon atlas
+        /// </summary>
+        [Description("The key to used to get the icon from the icon atlas")]
+        [DisplayName("Icon Key"), Browsable(true), Category("Graphics")]
+        [XmlElement("IconKey")]
+        public string IconKey { get; set; } = "EMPIRE_NULL";
+
+        /// <summary>
+        /// The icon atlas to source the empire's icon from
+        /// </summary>
+        [Description("The icon atlas to source the empire's icon from")]
+        [DisplayName("Icon Atlas"), Browsable(true), Category("Graphics")]
+        [XmlElement("IconAtlas")]
+        public string IconAtlas { get; set; } = "Core:XML/AtlasDefinitions/EmpireAtlasDefinition";
+
+        public Empire() { }
 
         public string GetNextDefaultCityName()
         {

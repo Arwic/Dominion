@@ -29,7 +29,6 @@ namespace Dominion.Client.Scenes
         private SpriteBatch sbGUI;
         private SpriteBatch sbFore;
         private SpriteBatch sbBack;
-        private FrameCounter fps;
         private Font font;
 
         private Canvas canvas;
@@ -59,8 +58,8 @@ namespace Dominion.Client.Scenes
             : base()
         {
             // load resources
-            defaultCursor = Engine.Instance.Content.GetAsset<Cursor>(Constants.CURSOR_NORMAL_PATH);
-            unitCommandTargetCursor = Engine.Instance.Content.GetAsset<Cursor>(Constants.CURSOR_LINK_PATH);
+            defaultCursor = Engine.Instance.Content.GetAsset<Cursor>(Constants.ASSET_CURSOR_NORMAL);
+            unitCommandTargetCursor = Engine.Instance.Content.GetAsset<Cursor>(Constants.ASSET_CURSOR_LINK);
             this.manager = manager;
             // register events
             manager.Client.SelectedCommandChanged += Client_SelectedCommandChanged;
@@ -124,7 +123,7 @@ namespace Dominion.Client.Scenes
             sbGUI = new SpriteBatch(GraphicsManager.Instance.Device);
             sbFore = new SpriteBatch(GraphicsManager.Instance.Device);
             sbBack = new SpriteBatch(GraphicsManager.Instance.Device);
-            font = Engine.Instance.Content.GetAsset<Font>(Constants.FONT_CONSOLAS_PATH);
+            font = Engine.Instance.Content.GetAsset<Font>(Constants.ASSET_FONT_CONSOLE);
             
             camera = new Camera2();
             boardRenderer = new BoardRenderer(manager.Client, camera);
@@ -265,15 +264,15 @@ namespace Dominion.Client.Scenes
                     if (unit != null)
                     {
                         manager.Client.SelectedUnit = unit;
-                        manager.Client.SelectedCommand = UnitCommandID.Null;
+                        manager.Client.SelectedCommand = UnitCommandID.UNITCMD_NULL;
                         ConsoleManager.Instance.WriteLine($"Selected a unit, id:{manager.Client.SelectedUnit.UnitID}, name:{manager.Client.SelectedUnit.Name}");
                     }
                     // Check if we should execute a unit command
-                    else if (manager.Client.SelectedCommand != UnitCommandID.Null)
+                    else if (manager.Client.SelectedCommand != UnitCommandID.UNITCMD_NULL)
                     {
                         if (manager.Client.SelectedUnit != null)
                             manager.Client.CommandUnit(new UnitCommand(manager.Client.SelectedCommand, manager.Client.SelectedUnit, tile));
-                        manager.Client.SelectedCommand = UnitCommandID.Null;
+                        manager.Client.SelectedCommand = UnitCommandID.UNITCMD_NULL;
                     }
                     // Check if we clicked a city
                     else
@@ -298,7 +297,7 @@ namespace Dominion.Client.Scenes
                 }
                 else if (InputManager.Instance.OnMouseDown(MouseButton.Right) && manager.Client.SelectedUnit != null)
                 {
-                    manager.Client.SelectedCommand = UnitCommandID.Move;
+                    manager.Client.SelectedCommand = UnitCommandID.UNITCMD_MOVE;
                 }
                 else if (InputManager.Instance.OnMouseUp(MouseButton.Right))
                 {
@@ -306,7 +305,7 @@ namespace Dominion.Client.Scenes
                     if (tile == null)
                         return;
                     if (manager.Client.SelectedUnit != null)
-                        manager.Client.CommandUnit(new UnitCommand(UnitCommandID.Move, manager.Client.SelectedUnit, tile));
+                        manager.Client.CommandUnit(new UnitCommand(UnitCommandID.UNITCMD_MOVE, manager.Client.SelectedUnit, tile));
                 }
             }
         }

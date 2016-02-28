@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!--Generated with ArwicXmlEditor (26 Feb 2016 20:43) by Tim Ings-->
-<BuildingDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Arwic's Default Building Data Pack">
+<!--Generated with ArwicXmlEditor (28 Feb 2016 18:22) by Tim Ings-->
+<BuildingDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Dominion Core Building Data">
   <Buildings>
     <Building>
       <Name>BUILDING_PALACE</Name>
@@ -55,8 +55,8 @@
       <VictoryPoints>100</VictoryPoints>
       <NearbyTerrainRequired>Null</NearbyTerrainRequired>
       <ProhibitedCityTerrain>Null</ProhibitedCityTerrain>
-      <IconIndex>-1</IconIndex>
-      <IconAtlas>NULL</IconAtlas>
+      <IconKey>BUILDING_PALACE</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/BuildingAtlasDefinition</IconAtlas>
       <BuildingPrereqs />
       <TechPrereqs />
       <IncomeFood>3</IncomeFood>
@@ -134,8 +134,8 @@
       <VictoryPoints>0</VictoryPoints>
       <NearbyTerrainRequired>Null</NearbyTerrainRequired>
       <ProhibitedCityTerrain>Null</ProhibitedCityTerrain>
-      <IconIndex>-1</IconIndex>
-      <IconAtlas>NULL</IconAtlas>
+      <IconKey>BUILDING_GRANARY</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/BuildingAtlasDefinition</IconAtlas>
       <BuildingPrereqs />
       <TechPrereqs>
         <TechPrereq>TECH_POTTERY</TechPrereq>

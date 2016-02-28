@@ -40,16 +40,16 @@ namespace ArwicInterfaceDesigner
             switch (control)
             {
                 case "button":
-                    Button button = new Button(new Rectangle(START_POS_X, START_POS_Y, BUTTON_WIDTH, BUTTON_HEIGHT), Form);
+                    Button button = new Button(new Rectangle(START_POS_X, START_POS_Y, PROP_BUTTON_WIDTH, PROP_BUTTON_HEIGHT), Form);
                     button.Text = "New Button".ToRichText();
                     break;
                 case "checkBox":
-                    CheckBox checkBox = new CheckBox(new Rectangle(START_POS_X, START_POS_Y, CHECKBOX_DIM, CHECKBOX_DIM), Form);
+                    CheckBox checkBox = new CheckBox(new Rectangle(START_POS_X, START_POS_Y, PROP_CHECKBOX_DIM, PROP_CHECKBOX_DIM), Form);
                     checkBox.Text = "New CheckBox".ToRichText();
                     checkBox.Value = true;
                     break;
                 case "comboBox":
-                    ComboBox comboBox = new ComboBox(new Rectangle(START_POS_X, START_POS_Y, BUTTON_WIDTH, BUTTON_HEIGHT), null, Form);
+                    ComboBox comboBox = new ComboBox(new Rectangle(START_POS_X, START_POS_Y, PROP_BUTTON_WIDTH, PROP_BUTTON_HEIGHT), null, Form);
                     comboBox.Text = "New ComboBox".ToRichText();
                     break;
                 case "image":
@@ -59,16 +59,16 @@ namespace ArwicInterfaceDesigner
                     Label label = new Label(new Rectangle(START_POS_X, START_POS_Y, 0, 0), "New Label".ToRichText(), Form);
                     break;
                 case "progressBar":
-                    ProgressBar progressBar = new ProgressBar(new Rectangle(START_POS_X, START_POS_Y, BUTTON_WIDTH, BUTTON_HEIGHT), 1f, 0.25f, Form);
+                    ProgressBar progressBar = new ProgressBar(new Rectangle(START_POS_X, START_POS_Y, PROP_BUTTON_WIDTH, PROP_BUTTON_HEIGHT), 1f, 0.25f, Form);
                     break;
                 case "scrollBox":
-                    ScrollBox scrollBox = new ScrollBox(new Rectangle(START_POS_X, START_POS_Y, BUTTON_WIDTH, 500), null, Form);
+                    ScrollBox scrollBox = new ScrollBox(new Rectangle(START_POS_X, START_POS_Y, PROP_BUTTON_WIDTH, 500), null, Form);
                     break;
                 case "spinButton":
                     SpinButton spinButton = new SpinButton(new Rectangle(START_POS_X, START_POS_Y, 100, 100), null, Form);
                     break;
                 case "textBox":
-                    TextBox textBox = new TextBox(new Rectangle(START_POS_X, START_POS_Y, BUTTON_WIDTH, BUTTON_HEIGHT), Form);
+                    TextBox textBox = new TextBox(new Rectangle(START_POS_X, START_POS_Y, PROP_BUTTON_WIDTH, PROP_BUTTON_HEIGHT), Form);
                     break;
                 case "textLog":
                     TextLog textLog = new TextLog(new Rectangle(START_POS_X, START_POS_Y, 500, 300), Form);

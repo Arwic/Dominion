@@ -3,6 +3,7 @@
 // This file defines classes that defines the unit controller
 
 using ArwicEngine.Core;
+using Dominion.Common.Data;
 using Dominion.Common.Entities;
 using Microsoft.Xna.Framework;
 using System;
@@ -145,86 +146,104 @@ namespace Dominion.Server.Controllers
         // assigns a unit a list of commands that are valid based on its context
         private void BuildUnitCommands(UnitInstance unit)
         {
-            unit.Commands = new List<int>();
+            unit.Commands = new List<UnitCommandID>();
             for (int i = 0; i < unit.BaseUnit.Commands.Count; i++)
             {
-                int cmdID = unit.BaseUnit.Commands[i];
-                UnitCommandID cmd = (UnitCommandID)cmdID;
+                string cmdID = unit.BaseUnit.Commands[i];
+                UnitCommandID cmd = UnitCommandID.UNITCMD_NULL;
+                if (!Enum.TryParse(cmdID, out cmd))
+                {
+                    ConsoleManager.Instance.WriteLine($"Unknown unit command '{cmdID}'", MsgType.ServerFailed);
+                    continue;
+                }
+                Technology tech;
                 switch (cmd)
                 {
-                    case UnitCommandID.Move:
-                    case UnitCommandID.Disband:
-                    case UnitCommandID.Sleep:
-                    case UnitCommandID.Skip:
-                    case UnitCommandID.Settle:
-                    case UnitCommandID.MeleeAttack:
-                    case UnitCommandID.RangedAttack:
-                    case UnitCommandID.BuildImprovment_Academy:
-                    case UnitCommandID.BuildImprovment_Citidel:
-                    case UnitCommandID.BuildImprovment_CustomsHouse:
-                    case UnitCommandID.BuildImprovment_HolySite:
-                    case UnitCommandID.BuildImprovment_Landmark:
-                    case UnitCommandID.BuildImprovment_Manufactory:
-                        unit.Commands.Add(cmdID);
+                    case UnitCommandID.UNITCMD_MOVE:
+                    case UnitCommandID.UNITCMD_DISBAND:
+                    case UnitCommandID.UNITCMD_SLEEP:
+                    case UnitCommandID.UNITCMD_SKIP:
+                    case UnitCommandID.UNITCMD_SETTLE:
+                    case UnitCommandID.UNITCMD_MELEE:
+                    case UnitCommandID.UNITCMD_BOMBARD:
+                    case UnitCommandID.UNITCMD_BUILD_ACADEMY:
+                    case UnitCommandID.UNITCMD_BUILD_CITIDEL:
+                    case UnitCommandID.UNITCMD_BUILD_CUSTOMSHOUSE:
+                    case UnitCommandID.UNITCMD_BUILD_HOLYSITE:
+                    case UnitCommandID.UNITCMD_BUILD_LANDMARK:
+                    case UnitCommandID.UNITCMD_BUILD_MANUFACTORY:
+                        unit.Commands.Add(cmd);
                         break;
-                    case UnitCommandID.BuildImprovment_Farm:
-                        unit.Commands.Add(cmdID);
+                    case UnitCommandID.UNITCMD_BUILD_FARM:
+                        unit.Commands.Add(cmd);
                         break;
-                    case UnitCommandID.BuildImprovment_Fort:
-                        if (Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetNode((int)TechNodes.Engineering).Unlocked)
-                            unit.Commands.Add(cmdID);
+                    case UnitCommandID.UNITCMD_BUILD_FORT:
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_ENGINEERING");
+                        if (tech != null && tech.Unlocked)
+                            unit.Commands.Add(cmd);
                         break;
-                    case UnitCommandID.BuildImprovment_LumberMill:
-                        if (Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetNode((int)TechNodes.Construction).Unlocked)
-                            unit.Commands.Add(cmdID);
+                    case UnitCommandID.UNITCMD_BUILD_LUMBERMILL:
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_CONSTRUCTION");
+                        if (tech != null && tech.Unlocked)
+                            unit.Commands.Add(cmd);
                         break;
-                    case UnitCommandID.BuildImprovment_Mine:
-                        if (Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetNode((int)TechNodes.Mining).Unlocked)
-                            unit.Commands.Add(cmdID);
+                    case UnitCommandID.UNITCMD_BUILD_MINE:
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_MINING");
+                        if (tech != null && tech.Unlocked)
+                            unit.Commands.Add(cmd);
                         break;
-                    case UnitCommandID.BuildImprovment_TradingPost:
-                        if (Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetNode((int)TechNodes.Guilds).Unlocked)
-                            unit.Commands.Add(cmdID);
+                    case UnitCommandID.UNITCMD_BUILD_TRADINGPOST:
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_GUILDS");
+                        if (tech != null && tech.Unlocked)
+                            unit.Commands.Add(cmd);
                         break;
-                    case UnitCommandID.BuildImprovment_Roads:
-                        if (Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetNode((int)TechNodes.TheWheel).Unlocked)
-                            unit.Commands.Add(cmdID);
+                    case UnitCommandID.UNITCMD_BUILD_ROADS:
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_THE_WHEEL");
+                        if (tech != null && tech.Unlocked)
+                            unit.Commands.Add(cmd);
                         break;
-                    case UnitCommandID.BuildImprovment_RailRoads:
-                        if (Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetNode((int)TechNodes.Railroad).Unlocked)
-                            unit.Commands.Add(cmdID);
+                    case UnitCommandID.UNITCMD_BUILD_RAILROADS:
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_RAILROAD");
+                        if (tech != null && tech.Unlocked)
+                            unit.Commands.Add(cmd);
                         break;
-                    case UnitCommandID.BuildImprovment_Camp:
-                        if (Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetNode((int)TechNodes.Trapping).Unlocked)
-                            unit.Commands.Add(cmdID);
+                    case UnitCommandID.UNITCMD_BUILD_CAMP:
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_TRAPPING");
+                        if (tech != null && tech.Unlocked)
+                            unit.Commands.Add(cmd);
                         break;
-                    case UnitCommandID.BuildImprovment_FishingBoats:
-                        if (Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetNode((int)TechNodes.Sailing).Unlocked)
-                            unit.Commands.Add(cmdID);
+                    case UnitCommandID.UNITCMD_BUILD_FISHINGBOATS:
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_SAILING");
+                        if (tech != null && tech.Unlocked)
+                            unit.Commands.Add(cmd);
                         break;
-                    case UnitCommandID.BuildImprovment_OffshorePlatform:
-                        if (Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetNode((int)TechNodes.Refrigeration).Unlocked)
-                            unit.Commands.Add(cmdID);
+                    case UnitCommandID.UNITCMD_BUILD_OFFSHOREPLATFORM:
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_REFRIGERATION");
+                        if (tech != null && tech.Unlocked)
+                            unit.Commands.Add(cmd);
                         break;
-                    case UnitCommandID.BuildImprovment_Pasture:
-                        if (Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetNode((int)TechNodes.AnimalHusbandry).Unlocked)
-                            unit.Commands.Add(cmdID);
+                    case UnitCommandID.UNITCMD_BUILD_PASTURE:
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_ANIMAL_HUSBANDRY");
+                        if (tech != null && tech.Unlocked)
+                            unit.Commands.Add(cmd);
                         break;
-                    case UnitCommandID.BuildImprovment_Plantation:
-                        if (Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetNode((int)TechNodes.Calendar).Unlocked)
-                            unit.Commands.Add(cmdID);
+                    case UnitCommandID.UNITCMD_BUILD_PLANTATION:
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_CALENDAR");
+                        if (tech != null && tech.Unlocked)
+                            unit.Commands.Add(cmd);
                         break;
-                    case UnitCommandID.BuildImprovment_Quarry:
-                        if (Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetNode((int)TechNodes.Masonry).Unlocked)
-                            unit.Commands.Add(cmdID);
+                    case UnitCommandID.UNITCMD_BUILD_QUARRY:
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_MASONRY");
+                        if (tech != null && tech.Unlocked)
+                            unit.Commands.Add(cmd);
                         break;
-                    case UnitCommandID.RepairImprovement:
+                    case UnitCommandID.UNITCMD_REPAIR:
                         if (Controllers.Board.GetTile(unit.Location).Pillaged)
-                            unit.Commands.Add(cmdID);
+                            unit.Commands.Add(cmd);
                         break;
-                    case UnitCommandID.CleanFallout:
+                    case UnitCommandID.UNITCMD_CLEAN:
                         if (Controllers.Board.GetTile(unit.Location).Fallout)
-                            unit.Commands.Add(cmdID);
+                            unit.Commands.Add(cmd);
                         break;
                 }
             }
@@ -254,101 +273,101 @@ namespace Dominion.Server.Controllers
 
             switch (cmd.CommandID)
             {
-                case UnitCommandID.Move:
+                case UnitCommandID.UNITCMD_MOVE:
                     unit.MovementQueue = Board.FindPath(unit.Location, tile.Location, Controllers.Board.Board);
                     ProcessMovment(unit);
                     break;
-                case UnitCommandID.Disband:
+                case UnitCommandID.UNITCMD_DISBAND:
                     RemoveUnit(unit);
                     break;
-                case UnitCommandID.Sleep:
+                case UnitCommandID.UNITCMD_SLEEP:
                     SleepUnit(unit);
                     break;
-                case UnitCommandID.Skip:
+                case UnitCommandID.UNITCMD_SKIP:
                     SkipUnit(unit);
                     break;
-                case UnitCommandID.Settle:
+                case UnitCommandID.UNITCMD_SETTLE:
                     if (Controllers.City.SettleCity(unit))
                         RemoveUnit(unit);
                     break;
-                case UnitCommandID.MeleeAttack:
+                case UnitCommandID.UNITCMD_MELEE:
                     if (unitTarget != null)
                         MeleeAttack(unit, unitTarget);
                     else if (cityTarget != null)
                         MeleeAttack(unit, cityTarget);
                     break;
-                case UnitCommandID.RangedAttack:
+                case UnitCommandID.UNITCMD_BOMBARD:
                     if (unitTarget != null)
                         RangedAttack(unit, unitTarget);
                     else if (cityTarget != null)
                         RangedAttack(unit, cityTarget);
                     break;
-                case UnitCommandID.BuildImprovment_Farm:
+                case UnitCommandID.UNITCMD_BUILD_FARM:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.FARM);
                     break;
-                case UnitCommandID.BuildImprovment_Fort:
+                case UnitCommandID.UNITCMD_BUILD_FORT:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.Fort);
                     break;
-                case UnitCommandID.BuildImprovment_LumberMill:
+                case UnitCommandID.UNITCMD_BUILD_LUMBERMILL:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.LumberMill);
                     break;
-                case UnitCommandID.BuildImprovment_Mine:
+                case UnitCommandID.UNITCMD_BUILD_MINE:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.MINE);
                     break;
-                case UnitCommandID.BuildImprovment_TradingPost:
+                case UnitCommandID.UNITCMD_BUILD_TRADINGPOST:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.TRADINGPOST);
                     break;
-                case UnitCommandID.BuildImprovment_Roads:
+                case UnitCommandID.UNITCMD_BUILD_ROADS:
                     //Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.Roads);
                     break;
-                case UnitCommandID.BuildImprovment_RailRoads:
+                case UnitCommandID.UNITCMD_BUILD_RAILROADS:
                     //Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.RailRoads);
                     break;
-                case UnitCommandID.BuildImprovment_Camp:
+                case UnitCommandID.UNITCMD_BUILD_CAMP:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.Camp);
                     break;
-                case UnitCommandID.BuildImprovment_FishingBoats:
+                case UnitCommandID.UNITCMD_BUILD_FISHINGBOATS:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.FishingBoats);
                     break;
-                case UnitCommandID.BuildImprovment_OffshorePlatform:
+                case UnitCommandID.UNITCMD_BUILD_OFFSHOREPLATFORM:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.OffshorePlatform);
                     break;
-                case UnitCommandID.BuildImprovment_Pasture:
+                case UnitCommandID.UNITCMD_BUILD_PASTURE:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.Pasture);
                     break;
-                case UnitCommandID.BuildImprovment_Plantation:
+                case UnitCommandID.UNITCMD_BUILD_PLANTATION:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.PLANTATION);
                     break;
-                case UnitCommandID.BuildImprovment_Quarry:
+                case UnitCommandID.UNITCMD_BUILD_QUARRY:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.Quarry);
                     break;
-                case UnitCommandID.BuildImprovment_Academy:
+                case UnitCommandID.UNITCMD_BUILD_ACADEMY:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.Academy);
                     break;
-                case UnitCommandID.BuildImprovment_Citidel:
+                case UnitCommandID.UNITCMD_BUILD_CITIDEL:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.Citidel);
                     break;
-                case UnitCommandID.BuildImprovment_CustomsHouse:
+                case UnitCommandID.UNITCMD_BUILD_CUSTOMSHOUSE:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.CustomsHouse);
                     break;
-                case UnitCommandID.BuildImprovment_HolySite:
+                case UnitCommandID.UNITCMD_BUILD_HOLYSITE:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.HolySite);
                     break;
-                case UnitCommandID.BuildImprovment_Landmark:
+                case UnitCommandID.UNITCMD_BUILD_LANDMARK:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.Landmark);
                     break;
-                case UnitCommandID.BuildImprovment_Manufactory:
+                case UnitCommandID.UNITCMD_BUILD_MANUFACTORY:
                     Controllers.Board.BuildImprovment(Controllers.Board.GetTile(unit.Location), unit.PlayerID, TileImprovment.Manufactory);
                     break;
-                case UnitCommandID.RepairImprovement:
+                case UnitCommandID.UNITCMD_REPAIR:
                     break;
-                case UnitCommandID.CleanFallout:
+                case UnitCommandID.UNITCMD_CLEAN:
                     break;
                 default:
                     break;
             }
 
-            if (cmd.CommandID != UnitCommandID.Disband && cmd.CommandID != UnitCommandID.Settle)
+            if (cmd.CommandID != UnitCommandID.UNITCMD_DISBAND && cmd.CommandID != UnitCommandID.UNITCMD_SETTLE)
             {
                 OnUnitUpdated(new UnitEventArgs(unit));
                 if (unitTarget != null)

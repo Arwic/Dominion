@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!--Generated with ArwicXmlEditor (26 Feb 2016 21:24) by Tim Ings-->
-<UnitDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Arwic's Default Unit Data Pack">
+<!--Generated with ArwicXmlEditor (28 Feb 2016 18:22) by Tim Ings-->
+<UnitDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Dominion Core Unit Data">
   <Units>
     <Unit>
-      <GraphicID>-1</GraphicID>
+      <IconKey>UNIT_SETTLER</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/UnitAtlasDefinition</IconAtlas>
       <Name>UNIT_SETTLER</Name>
       <MaxHP>10</MaxHP>
       <Range>1</Range>
@@ -13,8 +14,82 @@
       <Actions>1</Actions>
       <Sight>2</Sight>
       <Commands>
-        <Command>0</Command>
+        <Command>UNITCMD_MOVE</Command>
+        <Command>UNITCMD_SETTLE</Command>
+        <Command>UNITCMD_SKIP</Command>
+        <Command>UNITCMD_SLEEP</Command>
+        <Command>UNITCMD_DISBAND</Command>
       </Commands>
+      <BuildingPrereqs />
+      <TechPrereqs />
+      <Cost>0</Cost>
+      <Tags>
+        <Tag>CIVILIAN</Tag>
+      </Tags>
+    </Unit>
+    <Unit>
+      <IconKey>UNIT_WORKER</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/UnitAtlasDefinition</IconAtlas>
+      <Name>UNIT_WORKER</Name>
+      <MaxHP>10</MaxHP>
+      <Range>1</Range>
+      <RangedStrength>0</RangedStrength>
+      <CombatStrength>0</CombatStrength>
+      <Movement>2</Movement>
+      <Actions>1</Actions>
+      <Sight>2</Sight>
+      <Commands>
+        <Command>UNITCMD_MOVE</Command>
+        <Command>UNITCMD_BUILD_FARM</Command>
+        <Command>UNITCMD_BUILD_FORT</Command>
+        <Command>UNITCMD_BUILD_LUMBERMILL</Command>
+        <Command>UNITCMD_BUILD_MINE</Command>
+        <Command>UNITCMD_BUILD_TRADINGPOST</Command>
+        <Command>UNITCMD_BUILD_ROADS</Command>
+        <Command>UNITCMD_BUILD_RAILROADS</Command>
+        <Command>UNITCMD_BUILD_CAMP</Command>
+        <Command>UNITCMD_BUILD_PASTURE</Command>
+        <Command>UNITCMD_BUILD_PLANTATION</Command>
+        <Command>UNITCMD_BUILD_QUARRY</Command>
+        <Command>UNITCMD_REPAIR</Command>
+        <Command>UNITCMD_CLEAN</Command>
+        <Command>UNITCMD_SKIP</Command>
+        <Command>UNITCMD_SLEEP</Command>
+        <Command>UNITCMD_DISBAND</Command>
+      </Commands>
+      <BuildingPrereqs />
+      <TechPrereqs />
+      <Cost>0</Cost>
+      <Tags>
+        <Tag>CIVILIAN</Tag>
+      </Tags>
+    </Unit>
+    <Unit>
+      <IconKey>UNIT_WARRIOR</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/UnitAtlasDefinition</IconAtlas>
+      <Name>UNIT_WARRIOR</Name>
+      <MaxHP>10</MaxHP>
+      <Range>1</Range>
+      <RangedStrength>0</RangedStrength>
+      <CombatStrength>0</CombatStrength>
+      <Movement>2</Movement>
+      <Actions>1</Actions>
+      <Sight>2</Sight>
+      <Commands>
+        <Command>UNITCMD_MOVE</Command>
+        <Command>UNITCMD_MELEE</Command>
+        <Command>UNITCMD_SKIP</Command>
+        <Command>UNITCMD_GUARD</Command>
+        <Command>UNITCMD_SLEEP</Command>
+        <Command>UNITCMD_DISBAND</Command>
+      </Commands>
+      <BuildingPrereqs />
+      <TechPrereqs />
+      <Cost>0</Cost>
+      <Tags>
+        <Tag>MILITARY</Tag>
+        <Tag>MELEE</Tag>
+      </Tags>
     </Unit>
   </Units>
 </UnitDataPack>

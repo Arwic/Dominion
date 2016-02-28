@@ -22,8 +22,8 @@ namespace ArwicEngine.Forms
 
         public static new void InitDefaults()
         {
-            DefaultBarSprite = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_PROGRESSBAR_FILL);
-            DefaultBackSprite = Engine.Instance.Content.GetAsset<Sprite>(CONTROL_PROGRESSBAR_BACK);
+            DefaultBarSprite = Engine.Instance.Content.GetAsset<Sprite>(ASSET_CONTROL_PROGRESSBAR_FILL);
+            DefaultBackSprite = Engine.Instance.Content.GetAsset<Sprite>(ASSET_CONTROL_PROGRESSBAR_BACK);
         }
         #endregion
 
