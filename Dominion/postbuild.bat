@@ -12,7 +12,7 @@ RMDIR %outdir% /s /q
 ECHO Creating output directory
 MKDIR %outdir%
 ECHO Compressing files
-"c:\Program Files\7-Zip\7z.exe" a %contentzippath%.zip ".\Content\bin\Windows\*"
+"c:\Program Files\7-Zip\7z.exe" a %contentzippath%.zip -ir!.\Content\bin\Windows\*.xnb
 "c:\Program Files\7-Zip\7z.exe" a %contentzippath%.zip ".\%otherdir%\*"
 REN "%contentzippath%.zip" "%contentzipname%.acp"
 SET "%ERRORLEVEL%=0"

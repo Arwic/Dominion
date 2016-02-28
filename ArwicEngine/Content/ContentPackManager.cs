@@ -89,6 +89,7 @@ namespace ArwicEngine.Content
             }
         }
 
+        // loads a sprite
         private void LoadSprite(string assetName)
         {
             Texture2D texture = Load<Texture2D>(assetName);
@@ -96,6 +97,7 @@ namespace ArwicEngine.Content
             AddLoadedAsset(assetName, sprite);
         }
 
+        // loads a cursor
         private void LoadCursor(string assetName)
         {
             // standarise path seperators
@@ -143,6 +145,7 @@ namespace ArwicEngine.Content
             }
         }
 
+        // loads a font
         private void LoadFont(string assetName)
         {
             SpriteFont spriteFont = Load<SpriteFont>(assetName);
@@ -150,12 +153,14 @@ namespace ArwicEngine.Content
             AddLoadedAsset(assetName, font);
         }
 
+        // loads audio
         private void LoadAudio(string assetName)
         {
             SoundEffect soundEffect = Load<SoundEffect>(assetName);
             AddLoadedAsset(assetName, soundEffect);
         }
 
+        // loads xml files as streams
         private void LoadXml(string assetName)
         {
             // standardise
@@ -211,6 +216,7 @@ namespace ArwicEngine.Content
             }
         }
 
+        // adds an asset to the loaded assets dictionary with the correctally formatted key
         private void AddLoadedAsset(string assetName, object asset)
         {
             string ext = Path.GetExtension(assetName);
