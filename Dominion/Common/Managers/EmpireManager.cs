@@ -57,6 +57,7 @@ namespace Dominion.Common.Managers
 
             foreach (Empire e in pack.Empires)
             {
+                e.DisplayName = Empire.FormatName(e.Name);
                 data.Add(e.Name, e);
             }
         }

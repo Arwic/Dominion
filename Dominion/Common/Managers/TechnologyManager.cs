@@ -113,6 +113,7 @@ namespace Dominion.Common.Managers
 
             foreach (Technology t in pack.Technologies)
             {
+                t.DisplayName = Technology.FormatName(t.Name);
                 data.Add(t.Name, t);
             }
         }

@@ -129,9 +129,9 @@ namespace Dominion.Client.GUI
                     {
                         // -2 indicates the tech will take a very long time to research
                         if (turnsLeft == -2)
-                            text = $"{tech.Name} - ~ turns";
+                            text = $"{tech.DisplayName} - ~ turns";
                         else if (turnsLeft != -1)
-                            text = $"{tech.Name} - {turnsLeft} turns";
+                            text = $"{tech.DisplayName} - {turnsLeft} turns";
                     }
                     // format the button text
                     b.Text = text.ToRichText();

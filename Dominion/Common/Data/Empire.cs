@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -78,6 +79,12 @@ namespace Dominion.Common.Data
         [DisplayName("Name"), Browsable(true), Category("General")]
         [XmlElement("Name")]
         public string Name { get; set; } = "EMPIRE_NULL";
+
+        /// <summary>
+        /// The name of the empire in a display ready format
+        /// </summary>
+        [XmlIgnore]
+        public string DisplayName { get; set; } = "Null";
 
         /// <summary>
         /// Adjective used to describe items owned by this empire
@@ -263,6 +270,40 @@ namespace Dominion.Common.Data
             if (DefaultCityNameIndex >= DefaultCityNames.Count)
                 return "New City";
             return DefaultCityNames[DefaultCityNameIndex++];
+        }
+
+        /// <summary>
+        /// Converts a empire name to a presentable form
+        /// I.e. converts "EMPIRE_MY_NAME" to "My Name"
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static string FormatName(string name)
+        {
+            string prefix = "EMPIRE_";
+
+            // check if the string is valid
+            if (!name.Contains(prefix))
+                return name;
+
+            // strip "EMPIRE_"
+            // "EMPIRE_MY_NAME" -> "MY_NAME"
+            name = name.Remove(0, prefix.Length);
+
+            // replace all "_"
+            // "MY_NAME" -> "MY NAME"
+            name = name.Replace('_', ' ');
+
+            // convert to lower case
+            // "MY NAME" -> "my name"
+            name = name.ToLowerInvariant();
+
+            // convert to title case
+            // "my name" -> "My Name"
+            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+            name = textInfo.ToTitleCase(name);
+
+            return name;
         }
     }
 }

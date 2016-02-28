@@ -6,6 +6,7 @@ using ArwicEngine.TypeConverters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,12 @@ namespace Dominion.Common.Data
         [DisplayName("Name"), Browsable(true), Category("General")]
         [XmlElement("Name")]
         public string Name { get; set; } = "TECH_NULL";
+
+        /// <summary>
+        /// The name of the technology in a display ready format
+        /// </summary>
+        [XmlIgnore]
+        public string DisplayName { get; set; } = "Null";
 
         /// <summary>
         /// The tech node's description
@@ -97,5 +104,39 @@ namespace Dominion.Common.Data
         public int Progress { get; set; } = 0;
 
         public Technology() { }
+
+        /// <summary>
+        /// Converts a technology name to a presentable form
+        /// I.e. converts "TECH_MY_NAME" to "My Name"
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static string FormatName(string name)
+        {
+            string prefix = "TECH_";
+
+            // check if the string is valid
+            if (!name.Contains(prefix))
+                return name;
+
+            // strip "TECH_"
+            // "TECH_MY_NAME" -> "MY_NAME"
+            name = name.Remove(0, prefix.Length);
+
+            // replace all "_"
+            // "MY_NAME" -> "MY NAME"
+            name = name.Replace('_', ' ');
+
+            // convert to lower case
+            // "MY NAME" -> "my name"
+            name = name.ToLowerInvariant();
+
+            // convert to title case
+            // "my name" -> "My Name"
+            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+            name = textInfo.ToTitleCase(name);
+
+            return name;
+        }
     }
 }

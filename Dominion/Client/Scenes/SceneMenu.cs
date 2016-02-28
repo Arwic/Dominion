@@ -37,7 +37,7 @@ namespace Dominion.Client.Scenes
             {
                 // format the text with the empire's colours
                 Empire = empire;
-                Text = $"<[{Empire.PrimaryColor.ToRichFormat()}]{Empire.Name}>".ToRichText();
+                Text = $"<[{Empire.PrimaryColor.ToRichFormat()}]{Empire.DisplayName}>".ToRichText();
             }
         }
 
@@ -63,9 +63,9 @@ namespace Dominion.Client.Scenes
                     EmpireName = "FACTORY=NULL";
 
                 if (player.InstanceID == 0)
-                    Text = $"$(capital) {Player.Name} - <[{empireColor.R},{empireColor.G},{empireColor.B}]{EmpireName}>".ToRichText();
+                    Text = $"$(capital) {Player.Name} - <[{empireColor.ToRichFormat()}]{Empire.FormatName(EmpireName)}>".ToRichText();
                 else
-                    Text = new RichText(new RichTextSection($"{Player.Name} - ", Color.White), new RichTextSection(EmpireName, empireColor));
+                    Text = $"{Player.Name} - <[{empireColor.ToRichFormat()}]{Empire.FormatName(EmpireName)}>".ToRichText();
             }
         }
 
@@ -435,7 +435,8 @@ namespace Dominion.Client.Scenes
             BasicPlayer myPlayer = e.LobbyState.Players.Find(p => p.InstanceID == manager.Client.Player.InstanceID);
             BasicPlayer hostPlayer = e.LobbyState.Players.Find(p => p.InstanceID == 0);
             frm_lobby.Text = $"{hostPlayer.Name}'s Lobby".ToRichText();
-            lobby_btnEmpireSelect.Text = $"Empire: {manager.Client.EmpireManager.GetEmpire(myPlayer.EmpireID).Name}".ToRichText();
+            Empire myEmpire = manager.Client.EmpireManager.GetEmpire(myPlayer.EmpireID);
+            lobby_btnEmpireSelect.Text = $"Empire: <[{myEmpire.PrimaryColor.ToRichFormat()}]{myEmpire.DisplayName}>".ToRichText();
             lobby_btnWorldSize.Text = $"World Size: {e.LobbyState.WorldSize}".ToRichText();
             lobby_btnWorldType.Text = $"World Type: {e.LobbyState.WorldType}".ToRichText();
             lobby_btnGameSpeed.Text = $"Game Speed: {e.LobbyState.GameSpeed}".ToRichText();

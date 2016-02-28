@@ -6,6 +6,7 @@ using ArwicEngine.TypeConverters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Xml.Serialization;
 
 namespace Dominion.Common.Data
@@ -37,6 +38,12 @@ namespace Dominion.Common.Data
         [DisplayName("Name"), Browsable(true), Category("General")]
         [XmlElement("Name")]
         public string Name { get; set; } = "UNIT_NULL";
+
+        /// <summary>
+        /// The name of the unit in a display ready format
+        /// </summary>
+        [XmlIgnore]
+        public string DisplayName { get; set; } = "Null";
 
         /// <summary>
         /// Maximum HP of the unit
@@ -143,5 +150,39 @@ namespace Dominion.Common.Data
         public List<string> Tags { get; set; } = new List<string>();
 
         public Unit() { }
+
+        /// <summary>
+        /// Converts a unit name to a presentable form
+        /// I.e. converts "UNIT_MY_NAME" to "My Name"
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static string FormatName(string name)
+        {
+            string prefix = "UNIT_";
+
+            // check if the string is valid
+            if (!name.Contains(prefix))
+                return name;
+
+            // strip "UNIT_"
+            // "UNIT_MY_NAME" -> "MY_NAME"
+            name = name.Remove(0, prefix.Length);
+
+            // replace all "_"
+            // "MY_NAME" -> "MY NAME"
+            name = name.Replace('_', ' ');
+
+            // convert to lower case
+            // "MY NAME" -> "my name"
+            name = name.ToLowerInvariant();
+
+            // convert to title case
+            // "my name" -> "My Name"
+            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+            name = textInfo.ToTitleCase(name);
+
+            return name;
+        }
     }
 }

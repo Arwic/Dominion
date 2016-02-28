@@ -56,6 +56,7 @@ namespace Dominion.Common.Managers
 
             foreach (Building b in pack.Buildings)
             {
+                b.DisplayName = Building.FormatName(b.Name);
                 data.Add(b.Name, b);
             }
         }

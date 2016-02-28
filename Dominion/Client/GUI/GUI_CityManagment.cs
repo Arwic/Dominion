@@ -316,7 +316,7 @@ namespace Dominion.Client.GUI
             foreach (string buildingID in client.SelectedCity.Buildings)
             {
                 Building building = client.BuildingManager.GetBuilding(buildingID);
-                items.Add(new StringListItem($"{building.Name}".ToRichText(), buildingID));
+                items.Add(new StringListItem($"{building.DisplayName}".ToRichText(), buildingID));
             }
             return items;
         }

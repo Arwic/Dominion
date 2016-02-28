@@ -59,6 +59,7 @@ namespace Dominion.Common.Managers
 
             foreach (Unit u in pack.Units)
             {
+                u.DisplayName = Unit.FormatName(u.Name);
                 data.Add(u.Name, u);
             }
         }
@@ -144,7 +145,7 @@ namespace Dominion.Common.Managers
         {
             unit.BaseUnit = data[unit.UnitID];
             if (unit.Name == null || unit.Name.Equals(""))
-                unit.Name = unit.BaseUnit.Name;
+                unit.Name = unit.BaseUnit.DisplayName;
 
             unit.Rebuild();
         }
