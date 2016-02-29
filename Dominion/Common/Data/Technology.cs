@@ -28,6 +28,7 @@ namespace Dominion.Common.Data
         /// <summary>
         /// The name of the technology in a display ready format
         /// </summary>
+        [Browsable(false)]
         [XmlIgnore]
         public string DisplayName { get; set; } = "Null";
 
