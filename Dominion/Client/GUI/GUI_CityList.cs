@@ -29,6 +29,10 @@ namespace Dominion.Client.GUI
                 else
                     Text = $"{city.Population} - {city.Name}".ToRichText();
             }
+
+            public void OnDraw(object sender, DrawEventArgs e)
+            {
+            }
         }
 
         private FormConfig formConfig;

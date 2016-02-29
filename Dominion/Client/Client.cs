@@ -138,25 +138,30 @@ namespace Dominion.Client
         /// </summary>
         public NetClientStats ClientStatistics => client.Statistics;
 
-        /// <summary>
-        /// Gets or sets the building data manager
-        /// </summary>
-        public BuildingManager BuildingManager { get; private set; }
+        ///// <summary>
+        ///// Gets or sets the building data manager
+        ///// </summary>
+        //public BuildingManager BuildingManager { get; private set; }
+
+        ///// <summary>
+        ///// Gets or sets the empire data manager
+        ///// </summary>
+        //public EmpireManager EmpireManager { get; private set; }
+
+        ///// <summary>
+        ///// Gets or sets the unit data manager
+        ///// </summary>
+        //public UnitManager UnitManager { get; private set; }
+
+        ///// <summary>
+        ///// Gets or sets the tech data manager
+        ///// </summary>
+        //public TechnologyManager TechManager { get; private set; }
 
         /// <summary>
-        /// Gets or sets the empire data manager
+        /// Gets or sets the data manager
         /// </summary>
-        public EmpireManager EmpireManager { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the unit data manager
-        /// </summary>
-        public UnitManager UnitManager { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the tech data manager
-        /// </summary>
-        public TechnologyManager TechManager { get; private set; }
+        public DataManager DataManager { get; private set; }
 
         /// <summary>
         /// Game options that are set in the lobby and other lobby information
@@ -247,7 +252,7 @@ namespace Dominion.Client
                 _allUnits = value;
                 if (_allUnits != null)
                     foreach (UnitInstance unit in _allUnits)
-                        UnitManager.Reconstruct(unit);
+                        DataManager.Unit.Reconstruct(unit);
                 OnUnitsUpdated(new UnitListEventArgs(_allUnits));
             }
         }
@@ -478,6 +483,7 @@ namespace Dominion.Client
             Cities = new List<City>();
             CachedUnits = new List<UnitInstance>();
             CachedCities = new List<City>();
+            DataManager = new DataManager();
             NetOperationTimeOut = Convert.ToInt32(ConfigManager.Instance.GetVar(Constants.CONFIG_NET_CLIENT_TIMEOUT));
         }
 
@@ -608,10 +614,10 @@ namespace Dominion.Client
         {
             int i = 0;
             Player = (Player)p.Items[i++];
-            BuildingManager = (BuildingManager)p.Items[i++];
-            EmpireManager = (EmpireManager)p.Items[i++];
-            UnitManager = (UnitManager)p.Items[i++];
-            TechManager = (TechnologyManager)p.Items[i++];
+            DataManager.Building = (BuildingManager)p.Items[i++];
+            DataManager.Empire = (EmpireManager)p.Items[i++];
+            DataManager.Unit = (UnitManager)p.Items[i++];
+            DataManager.Tech = (TechnologyManager)p.Items[i++];
             ConsoleManager.Instance.WriteLine("Initialised data managers", MsgType.Info);
         }
         
@@ -692,7 +698,7 @@ namespace Dominion.Client
             UnitInstance oldUnit = AllUnits.Find(u => u.InstanceID == unit.InstanceID);
             if (!AllUnits.Remove(oldUnit))
                 return;
-            UnitManager.Reconstruct(unit);
+            DataManager.Unit.Reconstruct(unit);
             AllUnits.Add(unit);
             UpdateCache();
             ConsoleManager.Instance.WriteLine($"Updated unit {unit.InstanceID}:{unit.UnitID}:{unit.Name}");
@@ -703,7 +709,7 @@ namespace Dominion.Client
         private void ParseUnitAdded(Packet p)
         {
             UnitInstance unit = (UnitInstance)p.Item;
-            UnitManager.Reconstruct(unit);
+            DataManager.Unit.Reconstruct(unit);
             AllUnits.Add(unit);
             UpdateCache();
             ConsoleManager.Instance.WriteLine($"Added a unit {unit.InstanceID}:{unit.UnitID}:{unit.Name}");

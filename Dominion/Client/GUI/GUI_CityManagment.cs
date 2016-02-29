@@ -4,9 +4,11 @@
 
 using ArwicEngine.Core;
 using ArwicEngine.Forms;
+using ArwicEngine.Graphics;
 using Dominion.Client.Scenes;
 using Dominion.Common.Data;
 using Dominion.Common.Entities;
+using Dominion.Common.Managers;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -22,8 +24,9 @@ namespace Dominion.Client.GUI
             public Button Button { get; set; }
             public RichText Text { get; set; }
             public Production Production { get; set; }
+            public Sprite Icon { get; set; }
 
-            public ProductionListItem(Production prod, int turnsLeft)
+            public ProductionListItem(Production prod, int turnsLeft, DataManager dataManager)
             {
                 Production = prod;
 
@@ -35,11 +38,22 @@ namespace Dominion.Client.GUI
                 {
                     case ProductionType.UNIT:
                         Text = $"{Unit.FormatName(Production.Name)}{suffix}".ToRichText();
+                        Unit unit = dataManager.Unit.GetUnit(prod.Name);
+                        SpriteAtlas unitAtlas = Engine.Instance.Content.GetAsset<SpriteAtlas>(unit.IconAtlas);
+                        Icon = new Sprite(unitAtlas, unit.IconKey);
                         break;
                     case ProductionType.BUILDING:
                         Text = $"{Building.FormatName(Production.Name)}{suffix}".ToRichText();
+                        Building building = dataManager.Building.GetBuilding(prod.Name);
+                        SpriteAtlas buildingAtlas = Engine.Instance.Content.GetAsset<SpriteAtlas>(building.IconAtlas);
+                        Icon = new Sprite(buildingAtlas, building.IconKey);
                         break;
                 }
+            }
+
+            public void OnDraw(object sender, DrawEventArgs e)
+            {
+                Icon.Draw(e.SpriteBatch, new Rectangle(Button.AbsoluteLocation.X, Button.AbsoluteLocation.Y, Button.Size.Height, Button.Size.Height));
             }
         }
 
@@ -55,6 +69,10 @@ namespace Dominion.Client.GUI
                 Text = text;
                 Int = i;
             }
+
+            public void OnDraw(object sender, DrawEventArgs e)
+            {
+            }
         }
 
         // defines a list item that holds a string, used mainly for building list
@@ -68,6 +86,10 @@ namespace Dominion.Client.GUI
             {
                 Text = text;
                 String = s;
+            }
+
+            public void OnDraw(object sender, DrawEventArgs e)
+            {
             }
         }
 
@@ -119,15 +141,15 @@ namespace Dominion.Client.GUI
 
                 int yOffset = 40;
 
-                // setup the stats form
-                canvas.RemoveChild(frmStats);
-                frmStats = new Form(frmStatsConfig, canvas);
-                frmStats.Location = new Point(0, yOffset);
-
                 // setup the production list/selection form
                 canvas.RemoveChild(frmProduction);
                 frmProduction = new Form(frmProductionConfig, canvas);
                 frmProduction.Location = new Point(0, 1080 - frmProduction.Size.Height);
+
+                // setup the stats form
+                canvas.RemoveChild(frmStats);
+                frmStats = new Form(frmStatsConfig, canvas);
+                frmStats.Location = new Point(frmProduction.Size.Width, yOffset);
 
                 // setup the citizen focus form
                 canvas.RemoveChild(frmFocus);
@@ -290,7 +312,7 @@ namespace Dominion.Client.GUI
         {
             List<IListItem> items = new List<IListItem>();
             foreach (Production prod in client.SelectedCity.ValidProductions)
-                items.Add(new ProductionListItem(prod, GetTurnsToProduce(client.SelectedCity, prod)));
+                items.Add(new ProductionListItem(prod, GetTurnsToProduce(client.SelectedCity, prod), client.DataManager));
             return items;
         }
 
@@ -299,7 +321,7 @@ namespace Dominion.Client.GUI
         {
             List<IListItem> items = new List<IListItem>();
             foreach (Production prod in client.SelectedCity.ProductionQueue)
-                items.Add(new ProductionListItem(prod, GetTurnsToProduce(client.SelectedCity, prod)));
+                items.Add(new ProductionListItem(prod, GetTurnsToProduce(client.SelectedCity, prod), client.DataManager));
             return items;
         }
 
@@ -323,7 +345,7 @@ namespace Dominion.Client.GUI
             List<IListItem> items = new List<IListItem>();
             foreach (string buildingID in client.SelectedCity.Buildings)
             {
-                Building building = client.BuildingManager.GetBuilding(buildingID);
+                Building building = client.DataManager.Building.GetBuilding(buildingID);
                 items.Add(new StringListItem($"{building.DisplayName}".ToRichText(), buildingID));
             }
             return items;
@@ -332,16 +354,16 @@ namespace Dominion.Client.GUI
         // returns the number of turns required to produce the given production at the given city
         private int GetTurnsToProduce(City city, Production prod)
         {
-            int prodIncome = city.GetProductionIncome(prod, client.BuildingManager, client.UnitManager);
+            int prodIncome = city.GetProductionIncome(prod, client.DataManager.Building, client.DataManager.Unit);
             int prodRequired = -1;
             switch (prod.ProductionType)
             {
                 case ProductionType.BUILDING:
-                    Building b = client.BuildingManager.GetBuilding(prod.Name);
+                    Building b = client.DataManager.Building.GetBuilding(prod.Name);
                     prodRequired = b.Cost;
                     break;
                 case ProductionType.UNIT:
-                    Unit u = client.UnitManager.GetUnit(prod.Name);
+                    Unit u = client.DataManager.Unit.GetUnit(prod.Name);
                     prodRequired = u.Cost;
                     break;
             }

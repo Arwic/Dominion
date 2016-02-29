@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <SpriteAtlasDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <TexturePath>Core:Textures/Game/TileAtlas</TexturePath>
+  <TexturePath>Core:Textures/Game/BuildingAtlas</TexturePath>
   <SpriteDefinitions>
     <SpriteDefinition>
-      <Key>TILEBASE_TUNDRA</Key>
+      <Key>BUILDING_BARRACKS</Key>
       <Source>
         <X>0</X>
         <Y>0</Y>
@@ -12,7 +12,7 @@
       </Source>
     </SpriteDefinition>
     <SpriteDefinition>
-      <Key>TILEBASE_GRASSLAND</Key>
+      <Key>BUILDING_CIRCUS</Key>
       <Source>
         <X>100</X>
         <Y>0</Y>
@@ -21,7 +21,7 @@
       </Source>
     </SpriteDefinition>
     <SpriteDefinition>
-      <Key>TILEBASE_DESERT</Key>
+      <Key>BUILDING_GRANARY</Key>
       <Source>
         <X>200</X>
         <Y>0</Y>
@@ -30,7 +30,7 @@
       </Source>
     </SpriteDefinition>
     <SpriteDefinition>
-      <Key>TILEBASE_SEA</Key>
+      <Key>BUILDING_LIBRARY</Key>
       <Source>
         <X>300</X>
         <Y>0</Y>
@@ -39,7 +39,7 @@
       </Source>
     </SpriteDefinition>
     <SpriteDefinition>
-      <Key>TILEBASE_COAST</Key>
+      <Key>BUILDING_MONUMENT</Key>
       <Source>
         <X>400</X>
         <Y>0</Y>
@@ -48,7 +48,7 @@
       </Source>
     </SpriteDefinition>
     <SpriteDefinition>
-      <Key>TILEBASE_SNOW</Key>
+      <Key>BUILDING_SHRINE</Key>
       <Source>
         <X>500</X>
         <Y>0</Y>
@@ -57,7 +57,7 @@
       </Source>
     </SpriteDefinition>
     <SpriteDefinition>
-      <Key>TILEBASE_PLAINS</Key>
+      <Key>BUILDING_STONE_WORKS</Key>
       <Source>
         <X>600</X>
         <Y>0</Y>
@@ -66,100 +66,19 @@
       </Source>
     </SpriteDefinition>
     <SpriteDefinition>
-      <Key>TILEUTIL_CLOUD</Key>
+      <Key>BUILDING_WALLS</Key>
       <Source>
-        <X>0</X>
-        <Y>300</Y>
+        <X>700</X>
+        <Y>0</Y>
         <Width>100</Width>
         <Height>100</Height>
       </Source>
     </SpriteDefinition>
     <SpriteDefinition>
-      <Key>TILEUTIL_BLANK</Key>
+      <Key>BUILDING_WATER_MILL</Key>
       <Source>
-        <X>100</X>
-        <Y>300</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEUTIL_HIGHLIGHT</Key>
-      <Source>
-        <X>200</X>
-        <Y>300</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEUTIL_OUTLINE</Key>
-      <Source>
-        <X>300</X>
-        <Y>300</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEIMPROVMENT_FOREST</Key>
-      <Source>
-        <X>0</X>
-        <Y>400</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEIMPROVMENT_JUNGLE</Key>
-      <Source>
-        <X>100</X>
-        <Y>400</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEIMPROVMENT_FARM</Key>
-      <Source>
-        <X>200</X>
-        <Y>400</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEIMPROVMENT_PLANTATION</Key>
-      <Source>
-        <X>300</X>
-        <Y>400</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEIMPROVMENT_CITY</Key>
-      <Source>
-        <X>400</X>
-        <Y>400</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEFEATURE_HILL</Key>
-      <Source>
-        <X>0</X>
-        <Y>500</Y>
-        <Width>100</Width>
-        <Height>100</Height>
-      </Source>
-    </SpriteDefinition>
-    <SpriteDefinition>
-      <Key>TILEFEATURE_MOUNTAIN</Key>
-      <Source>
-        <X>100</X>
-        <Y>500</Y>
+        <X>800</X>
+        <Y>0</Y>
         <Width>100</Width>
         <Height>100</Height>
       </Source>

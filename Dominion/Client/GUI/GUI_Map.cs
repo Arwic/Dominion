@@ -195,7 +195,7 @@ namespace Dominion.Client.GUI
                         if (city != null)
                         {
                             // draw the tile with the empire's colours
-                            Empire empire = client.EmpireManager.GetEmpire(city.EmpireID);
+                            Empire empire = client.DataManager.Empire.GetEmpire(city.EmpireID);
                             DrawTile(sb, tile, empire.PrimaryColor, empire.SecondaryColor);
                         }
                     }

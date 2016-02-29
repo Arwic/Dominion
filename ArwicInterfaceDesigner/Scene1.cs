@@ -21,6 +21,10 @@ namespace ArwicInterfaceDesigner
             {
                 Text = s.ToRichText();
             }
+
+            public void OnDraw(object sender, DrawEventArgs e)
+            {
+            }
         }
 
         private const int START_POS_X = 100;

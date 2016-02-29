@@ -64,7 +64,7 @@ namespace Dominion.Client.GUI
                 form.Draggable = false;
                 form.CloseButtonEnabled = true;
                 // format the form text
-                form.Text = $"Unit - {client.EmpireManager.GetEmpire(client.Player.EmpireID).Adjective} {client.SelectedUnit.Name}".ToRichText();
+                form.Text = $"Unit - {client.DataManager.Empire.GetEmpire(client.Player.EmpireID).Adjective} {client.SelectedUnit.Name}".ToRichText();
                 form.CloseButton.MouseClick += (s, a) =>
                 {
                     // when the form is closed, deselect the selected unit

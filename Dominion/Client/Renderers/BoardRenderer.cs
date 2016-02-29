@@ -382,8 +382,8 @@ namespace Dominion.Client.Renderers
                         City city = client.Cities.Find(c => c.InstanceID == cachedTile.CityID);
                         if (city != null)
                         {
-                            Color empColorPri = client.EmpireManager.GetEmpire(city.EmpireID).PrimaryColor;
-                            Color empColorSec = client.EmpireManager.GetEmpire(city.EmpireID).SecondaryColor;
+                            Color empColorPri = client.DataManager.Empire.GetEmpire(city.EmpireID).PrimaryColor;
+                            Color empColorSec = client.DataManager.Empire.GetEmpire(city.EmpireID).SecondaryColor;
                             if (city.PlayerID == client.Player.InstanceID && tileUnderMouse != null && tileUnderMouse.Location == city.Location)
                                 empColorPri = Color.Lerp(empColorPri, Color.White, 0.1f);
                             empColorPri.A = 255;

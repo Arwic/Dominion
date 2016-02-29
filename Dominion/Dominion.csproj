@@ -63,6 +63,7 @@
     </StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Client\DataManager.cs" />
     <Compile Include="Client\Dominion.cs" />
     <Compile Include="Client\GUI\GUI_GameMenu.cs" />
     <Compile Include="Client\GUI\GUI_CityManagment.cs" />

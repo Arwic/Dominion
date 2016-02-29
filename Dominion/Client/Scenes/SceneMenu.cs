@@ -39,6 +39,10 @@ namespace Dominion.Client.Scenes
                 Empire = empire;
                 Text = $"<[{Empire.PrimaryColor.ToRichFormat()}]{Empire.DisplayName}>".ToRichText();
             }
+
+            public void OnDraw(object sender, DrawEventArgs e)
+            {
+            }
         }
 
         // defines a list item that holds a player
@@ -67,6 +71,10 @@ namespace Dominion.Client.Scenes
                 else
                     Text = $"{Player.Name} - <[{empireColor.ToRichFormat()}]{Empire.FormatName(EmpireName)}>".ToRichText();
             }
+
+            public void OnDraw(object sender, DrawEventArgs e)
+            {
+            }
         }
 
         // defines a list item that holds a string 
@@ -79,8 +87,12 @@ namespace Dominion.Client.Scenes
             {
                 Text = s;
             }
+
+            public void OnDraw(object sender, DrawEventArgs e)
+            {
+            }
         }
-        
+
         private object _lock_guiSetUp = new object();
 
         private SpriteBatch sbGUI;
@@ -435,7 +447,7 @@ namespace Dominion.Client.Scenes
             BasicPlayer myPlayer = e.LobbyState.Players.Find(p => p.InstanceID == manager.Client.Player.InstanceID);
             BasicPlayer hostPlayer = e.LobbyState.Players.Find(p => p.InstanceID == 0);
             frm_lobby.Text = $"{hostPlayer.Name}'s Lobby".ToRichText();
-            Empire myEmpire = manager.Client.EmpireManager.GetEmpire(myPlayer.EmpireID);
+            Empire myEmpire = manager.Client.DataManager.Empire.GetEmpire(myPlayer.EmpireID);
             lobby_btnEmpireSelect.Text = $"Empire: <[{myEmpire.PrimaryColor.ToRichFormat()}]{myEmpire.DisplayName}>".ToRichText();
             lobby_btnWorldSize.Text = $"World Size: {e.LobbyState.WorldSize}".ToRichText();
             lobby_btnWorldType.Text = $"World Type: {e.LobbyState.WorldType}".ToRichText();
@@ -449,7 +461,7 @@ namespace Dominion.Client.Scenes
                     lobby_cbOtherOptions[i].Value = manager.Client.LobbyState.OtherOptions[i];
 
             if (myPlayer.EmpireID != lastEmpireID)
-                PlayAnthem(manager.Client.EmpireManager.GetEmpire(myPlayer.EmpireID).Name);
+                PlayAnthem(manager.Client.DataManager.Empire.GetEmpire(myPlayer.EmpireID).Name);
             lastEmpireID = myPlayer.EmpireID;
         }
         private void Client_LostConnection(object sender, EventArgs e)
@@ -593,7 +605,7 @@ namespace Dominion.Client.Scenes
             frm_lobby_configWindow.Text = "Select an empire".ToRichText();
             int yOffset = 35;
             ScrollBox sb = new ScrollBox(new Rectangle(5, yOffset + 5, frm_lobby_configWindow.Bounds.Width - 10, frm_lobby_configWindow.Bounds.Height - yOffset - 10), GetEmpires(), frm_lobby_configWindow);
-            sb.SelectedIndex = manager.Client.EmpireManager.IndexOf(manager.Client.LobbyState.Players.Find(p => p.InstanceID == manager.Client.Player.InstanceID).EmpireID);
+            sb.SelectedIndex = manager.Client.DataManager.Empire.IndexOf(manager.Client.LobbyState.Players.Find(p => p.InstanceID == manager.Client.Player.InstanceID).EmpireID);
             sb.SelectedChanged += (s, a) =>
             {
                 EmpireListItem eli = (EmpireListItem)sb.Selected;
@@ -628,7 +640,7 @@ namespace Dominion.Client.Scenes
             {
                 List<IListItem> items = new List<IListItem>();
                 foreach (BasicPlayer player in manager.Client.LobbyState.Players)
-                    items.Add(new PlayerListItem(player, manager.Client.EmpireManager));
+                    items.Add(new PlayerListItem(player, manager.Client.DataManager.Empire));
                 return items;
             }
             catch (Exception)
@@ -640,10 +652,10 @@ namespace Dominion.Client.Scenes
         // returns all the available empires as list items
         private List<IListItem> GetEmpires()
         {
-            if (manager.Client.EmpireManager == null)
+            if (manager.Client.DataManager.Empire == null)
                 return new List<IListItem>();
             List<IListItem> items = new List<IListItem>();
-            foreach (Empire empire in manager.Client.EmpireManager.GetAllEmpires())
+            foreach (Empire empire in manager.Client.DataManager.Empire.GetAllEmpires())
                 items.Add(new EmpireListItem(empire));
             return items;
         }

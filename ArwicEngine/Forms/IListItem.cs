@@ -10,5 +10,7 @@ namespace ArwicEngine.Forms
     {
         Button Button { get; set; }
         RichText Text { get; set; }
+
+        void OnDraw(object sender, DrawEventArgs e);
     }
 }

@@ -437,11 +437,12 @@ namespace ArwicEngine.Forms
                     SelectedIndex = locali;
                 };
                 Items[i].Button.MouseWheel += ScrollBox_MouseWheel;
+                Items[i].Button.Drawn += Items[i].OnDraw;
             }
             if (Selected != null && Selected.Button != null)
                 Selected.Button.Sprite = SelectedItemSprite;
         }
-
+        
         public override bool Update()
         {
             if (scrubberPos.Contains(InputManager.Instance.MouseScreenPos()) && InputManager.Instance.OnMouseDown(MouseButton.Left))

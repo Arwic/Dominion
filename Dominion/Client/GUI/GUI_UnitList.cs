@@ -26,6 +26,10 @@ namespace Dominion.Client.GUI
                 Unit = unit;
                 Text = $"{unit.Name}".ToRichText();
             }
+
+            public void OnDraw(object sender, DrawEventArgs e)
+            {
+            }
         }
 
         private FormConfig formConfig;
