@@ -136,7 +136,7 @@ namespace ArwicEngine.Forms
 
                 if (!Enabled)
                     color = Color.Multiply(Color, DisabledColorPercent);
-                
+
                 if (Sprite != null)
                 {
                     if (NineCutDraw)
@@ -145,10 +145,13 @@ namespace ArwicEngine.Forms
                         Sprite.Draw(sb, AbsoluteBounds, null, color);
                 }
 
-                Vector2 textMeasure = Text.Measure();
-                Vector2 textPos = new Vector2(AbsoluteLocation.X + Size.Width / 2 - textMeasure.X / 2, AbsoluteLocation.Y + Size.Height / 2 - textMeasure.Y / 2);
+                if (Text != null && !string.IsNullOrWhiteSpace(Text.Text))
+                {
+                    Vector2 textMeasure = Text.Measure();
+                    Vector2 textPos = new Vector2(AbsoluteLocation.X + Size.Width / 2 - textMeasure.X / 2, AbsoluteLocation.Y + Size.Height / 2 - textMeasure.Y / 2);
 
-                Text.Draw(sb, textPos);
+                    Text.Draw(sb, textPos);
+                }
             }
 
             base.Draw(sb);

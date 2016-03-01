@@ -2,6 +2,7 @@
 // GUI_CityManagment.cs
 // This file defines classes that manage the city managment gui elements
 
+using ArwicEngine;
 using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using ArwicEngine.Graphics;
@@ -18,32 +19,59 @@ namespace Dominion.Client.GUI
 {
     public class GUI_CityManagment : IGUIElement
     {
+        private enum ProductionListItem_Mode
+        {
+            ProductionList,
+            ProductionQueue
+        }
+
         // defines list items that hold city productions
         private class ProductionListItem : IListItem
         {
             public Button Button { get; set; }
             public RichText Text { get; set; }
+            public RichText ProductionName { get; set; }
+            public RichText ProductionProgress { get; set; }
             public Production Production { get; set; }
             public Sprite Icon { get; set; }
+            public ProductionListItem_Mode DisplayMode { get; set; }
 
-            public ProductionListItem(Production prod, int turnsLeft, DataManager dataManager)
+            public ProductionListItem(Production prod, int turnsLeft, ProductionListItem_Mode mode, DataManager dataManager)
             {
+                DisplayMode = mode;
                 Production = prod;
 
+                switch (mode)
+                {
+                    case ProductionListItem_Mode.ProductionList:
+                        ProductionProgress = $"$(production) {turnsLeft} turns".ToRichText();
+                        foreach (RichTextSection section in ProductionProgress.Sections)
+                            section.Scale = 0.75f;
+                        break;
+                    case ProductionListItem_Mode.ProductionQueue:
+                        ProductionProgress = $"$(production) {Production.Progress}/{Production.Cost} ({Production.Progress/(float)Production.Cost}%) - {turnsLeft} turns left".ToRichText();
+                        foreach (RichTextSection section in ProductionProgress.Sections)
+                            section.Scale = 0.75f;
+                        break;
+                }
+
+
                 // format the items text to show construction information
-                string suffix = "";
-                if (turnsLeft != -1)
-                    suffix = $" - {turnsLeft} turns";
+                //string suffix = "";
+                //if (turnsLeft != -1)
+                //    suffix = $" - {turnsLeft} turns";
                 switch (prod.ProductionType)
                 {
                     case ProductionType.UNIT:
-                        Text = $"{Unit.FormatName(Production.Name)}{suffix}".ToRichText();
+                        //Text = $"{Unit.FormatName(Production.Name)}{suffix}".ToRichText();
+                        ProductionName = Unit.FormatName(Production.Name).ToRichText();
                         Unit unit = dataManager.Unit.GetUnit(prod.Name);
                         SpriteAtlas unitAtlas = Engine.Instance.Content.GetAsset<SpriteAtlas>(unit.IconAtlas);
                         Icon = new Sprite(unitAtlas, unit.IconKey);
                         break;
                     case ProductionType.BUILDING:
-                        Text = $"{Building.FormatName(Production.Name)}{suffix}".ToRichText();
+                        //Text = $"{Building.FormatName(Production.Name)}{suffix}".ToRichText();
+                        ProductionName = Building.FormatName(Production.Name).ToRichText();
                         Building building = dataManager.Building.GetBuilding(prod.Name);
                         SpriteAtlas buildingAtlas = Engine.Instance.Content.GetAsset<SpriteAtlas>(building.IconAtlas);
                         Icon = new Sprite(buildingAtlas, building.IconKey);
@@ -54,6 +82,8 @@ namespace Dominion.Client.GUI
             public void OnDraw(object sender, DrawEventArgs e)
             {
                 Icon.Draw(e.SpriteBatch, new Rectangle(Button.AbsoluteLocation.X, Button.AbsoluteLocation.Y, Button.Size.Height, Button.Size.Height));
+                ProductionName.Draw(e.SpriteBatch, new Vector2(Button.AbsoluteLocation.X + Button.Size.Height + 5, Button.AbsoluteLocation.Y + 5));
+                ProductionProgress.Draw(e.SpriteBatch, new Vector2(Button.AbsoluteLocation.X + Button.Size.Height + 5, Button.AbsoluteLocation.Y + Button.Size.Height - 25));
             }
         }
 
@@ -140,6 +170,7 @@ namespace Dominion.Client.GUI
                     return;
 
                 int yOffset = 40;
+                int itemHeight = 50;
 
                 // setup the production list/selection form
                 canvas.RemoveChild(frmProduction);
@@ -196,10 +227,12 @@ namespace Dominion.Client.GUI
 
                 // get and setup the production form elements
                 sbProductionQueue = (ScrollBox)frmProduction.GetChildByName("sbProductionQueue");
+                sbProductionQueue.ItemHeight = itemHeight;
                 sbProductionQueue.Items = GetProductionQueueListItems();
                 sbProductionQueue.SelectedIndex = sbProductionQueueSelected;
                 sbProductionQueue.SelectedChanged += (s, a) => sbProductionQueueSelected = sbProductionQueue.SelectedIndex;
                 sbProductionList = (ScrollBox)frmProduction.GetChildByName("sbProductionList");
+                sbProductionList.ItemHeight = itemHeight;
                 sbProductionList.Items = GetProductionListListItems();
                 sbProductionList.SelectedIndex = sbProductionListSelected;
                 sbProductionList.SelectedChanged += (s, a) => sbProductionListSelected = sbProductionList.SelectedIndex;
@@ -220,6 +253,7 @@ namespace Dominion.Client.GUI
                 sbCitizenFocus.SelectedIndex = (int)client.SelectedCity.CitizenFocus;
                 sbCitizenFocus.SelectedChanged += SbCitizenFocus_SelectedChanged;
                 sbBuildingList = (ScrollBox)frmFocus.GetChildByName("sbBuildingList");
+                sbBuildingList.ItemHeight = itemHeight;
                 sbBuildingList.Items = GetBuildingList();
                 sbBuildingList.SelectedIndex = 0;
                 Button btnDemolish = (Button)frmFocus.GetChildByName("btnDemolish");
@@ -312,7 +346,7 @@ namespace Dominion.Client.GUI
         {
             List<IListItem> items = new List<IListItem>();
             foreach (Production prod in client.SelectedCity.ValidProductions)
-                items.Add(new ProductionListItem(prod, GetTurnsToProduce(client.SelectedCity, prod), client.DataManager));
+                items.Add(new ProductionListItem(prod, GetTurnsToProduce(client.SelectedCity, prod), ProductionListItem_Mode.ProductionList, client.DataManager));
             return items;
         }
 
@@ -321,7 +355,7 @@ namespace Dominion.Client.GUI
         {
             List<IListItem> items = new List<IListItem>();
             foreach (Production prod in client.SelectedCity.ProductionQueue)
-                items.Add(new ProductionListItem(prod, GetTurnsToProduce(client.SelectedCity, prod), client.DataManager));
+                items.Add(new ProductionListItem(prod, GetTurnsToProduce(client.SelectedCity, prod), ProductionListItem_Mode.ProductionQueue, client.DataManager));
             return items;
         }
 

@@ -155,6 +155,7 @@ namespace ArwicEngine.Forms
         public Color Color { get; set; }
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public Font Font { get { return _font; } set { _font = value; } }
+        public float Scale { get; set; } = 1f;
         [NonSerialized]
         private Font _font;
         
@@ -171,7 +172,7 @@ namespace ArwicEngine.Forms
         
         public void Draw(SpriteBatch sb, Vector2 pos)
         {
-            Font.DrawString(sb, Text, pos, Color);
+            Font.DrawString(sb, Text, pos, Color, Scale * 0.5f);
         }
 
         public Vector2 Measure()

@@ -163,46 +163,62 @@ namespace Dominion.Server.Controllers
         // changes a production at the given city, if it is valid
         private void ChangeProduction(City city, string name)
         {
-            Production proposedProd = new Production(name);
+            ProductionType prodType = ProductionType.BUILDING;
+            if (name.StartsWith("BUILDING_"))
+                prodType = ProductionType.BUILDING;
+            else if(name.StartsWith("UNIT_"))
+                prodType = ProductionType.UNIT;
+            else
+                return;
 
-            // don't queue more than one of the same building
-            switch (proposedProd.ProductionType)
+            Production proposedProd;
+            switch (prodType)
             {
+                case ProductionType.UNIT:
+                    proposedProd = new Production(Controllers.Data.Unit.GetUnit(name));
+                    city.ProductionQueue.AddFirst(proposedProd);
+                    break;
                 case ProductionType.BUILDING:
+                    // don't queue more than one of the same building
                     foreach (Production prod in city.ProductionQueue)
-                    {
                         if (prod.Name == name)
-                        {
                             return;
-                        }
-                    }
+                    proposedProd = new Production(Controllers.Data.Building.GetBuilding(name));
+                    city.ProductionQueue.AddFirst(proposedProd);
                     break;
             }
 
-            city.ProductionQueue.AddFirst(proposedProd);
             CalculateValidProductions(city);
         }
 
         // queues a production at the given city if, it is valid
         private void QueueProduction(City city, string name)
         {
-            Production proposedProd = new Production(name);
+            ProductionType prodType = ProductionType.BUILDING;
+            if (name.StartsWith("BUILDING_"))
+                prodType = ProductionType.BUILDING;
+            else if (name.StartsWith("UNIT_"))
+                prodType = ProductionType.UNIT;
+            else
+                return;
 
-            // don't queue more than one of the same building
-            switch (proposedProd.ProductionType)
+            Production proposedProd;
+            switch (prodType)
             {
+                case ProductionType.UNIT:
+                    proposedProd = new Production(Controllers.Data.Unit.GetUnit(name));
+                    city.ProductionQueue.Enqueue(proposedProd);
+                    break;
                 case ProductionType.BUILDING:
+                    // don't queue more than one of the same building
                     foreach (Production prod in city.ProductionQueue)
-                    {
                         if (prod.Name == name)
-                        {
                             return;
-                        }
-                    }
+                    proposedProd = new Production(Controllers.Data.Building.GetBuilding(name));
+                    city.ProductionQueue.Enqueue(proposedProd);
                     break;
             }
 
-            city.ProductionQueue.Enqueue(proposedProd);
             CalculateValidProductions(city);
         }
 
@@ -720,7 +736,7 @@ namespace Dominion.Server.Controllers
                 }
 
                 // if the building is still valid, add it to the valid productions list
-                city.ValidProductions.Enqueue(new Production(building.Name));
+                city.ValidProductions.Enqueue(new Production(building));
             }
 
             // get all valid units
@@ -755,7 +771,7 @@ namespace Dominion.Server.Controllers
                     continue;
 
                 // if the unit is still valid, add it to the valid productions list
-                city.ValidProductions.Enqueue(new Production(unit.Name));
+                city.ValidProductions.Enqueue(new Production(unit));
             }
         }
 

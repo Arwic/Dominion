@@ -153,10 +153,12 @@ namespace ArwicEngine.Forms
     public class DrawEventArgs : EventArgs
     {
         public SpriteBatch SpriteBatch { get; }
+        public Font Font { get; }
 
-        public DrawEventArgs(SpriteBatch sb)
+        public DrawEventArgs(SpriteBatch sb, Font font)
         {
             SpriteBatch = sb;
+            Font = font;
         }
     }
 
@@ -1059,7 +1061,7 @@ namespace ArwicEngine.Forms
                         continue;
                     Children[i].Draw(sb);
                 }
-                OnDrawn(new DrawEventArgs(sb));
+                OnDrawn(new DrawEventArgs(sb, Font));
             }
         }
     }
