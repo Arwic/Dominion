@@ -49,7 +49,7 @@ namespace Dominion.Client.GUI
                             section.Scale = 0.75f;
                         break;
                     case ProductionListItem_Mode.ProductionQueue:
-                        ProductionProgress = $"$(production) {Production.Progress}/{Production.Cost} ({Production.Progress/(float)Production.Cost}%) - {turnsLeft} turns left".ToRichText();
+                        ProductionProgress = $"$(production) {Production.Progress}/{Production.Cost} ({(Production.Progress / (float)Production.Cost * 100).ToString("0")}%) - {turnsLeft} turns left".ToRichText();
                         foreach (RichTextSection section in ProductionProgress.Sections)
                             section.Scale = 0.75f;
                         break;
