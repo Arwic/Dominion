@@ -124,7 +124,7 @@ namespace Dominion.Client.GUI
                     Rectangle dest = new Rectangle(offsetX + tech.GridX * (itemWidth + sepX) + scrollIndex * (itemWidth + tech.GridX + sepX), offsetY + tech.GridY * (itemHeight + sepY), itemWidth, itemHeight);
                     Button b = new Button(dest, form);
                     int turnsLeft = GetTurnsUntilTech(tech);
-                    string text = tech.Name;
+                    string text = tech.DisplayName;
                     if (!tech.Unlocked)
                     {
                         // -2 indicates the tech will take a very long time to research
