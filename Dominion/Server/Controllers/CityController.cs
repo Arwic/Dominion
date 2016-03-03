@@ -1022,6 +1022,7 @@ namespace Dominion.Server.Controllers
             TryExpandBorders(city); // expand the city's borders
             UpdateCity(city); // update city data
             OnCitySettled(new CityEventArgs(city)); // trigger the CitySettled event
+            //OnCityUpdated(new CityEventArgs(city)); // trigger the CityUpdated event
             return true; // the city was settled
         }
 

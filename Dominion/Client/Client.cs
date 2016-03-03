@@ -137,27 +137,7 @@ namespace Dominion.Client
         /// Gets the client statistics
         /// </summary>
         public NetClientStats ClientStatistics => client.Statistics;
-
-        ///// <summary>
-        ///// Gets or sets the building data manager
-        ///// </summary>
-        //public BuildingManager BuildingManager { get; private set; }
-
-        ///// <summary>
-        ///// Gets or sets the empire data manager
-        ///// </summary>
-        //public EmpireManager EmpireManager { get; private set; }
-
-        ///// <summary>
-        ///// Gets or sets the unit data manager
-        ///// </summary>
-        //public UnitManager UnitManager { get; private set; }
-
-        ///// <summary>
-        ///// Gets or sets the tech data manager
-        ///// </summary>
-        //public TechnologyManager TechManager { get; private set; }
-
+        
         /// <summary>
         /// Gets or sets the data manager
         /// </summary>
@@ -538,8 +518,8 @@ namespace Dominion.Client
         {
             PacketHeader header = (PacketHeader)p.Header;
             ConsoleManager.Instance.WriteLine($"Parsing a packet with header {header}");
-            try
-            {
+            //try
+            //{
                 switch (header)
                 {
                     case PacketHeader.LobbyInit: // Their player id and factory data
@@ -590,23 +570,23 @@ namespace Dominion.Client
                         break;
                 }
                 consecutiveParsingErrors = 0;
-            }
-            catch (Exception e)
-            {
-                consecutiveParsingErrors++;
-                ConsoleManager.Instance.WriteLine($"Error parsing {(PacketHeader)p.Header}", MsgType.Failed);
-                Exception exp = e;
-                int i = 0;
-                while (exp != null)
-                {
-                    ConsoleManager.Instance.WriteLine($"{i++}: {exp.Message}", MsgType.Failed);
-                    exp = exp.InnerException;
-                }
-                if (consecutiveParsingErrors >= maxConsecutiveParsingErrors)
-                    Dissconnect();
-                else
-                    RoutePacket(p);
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    consecutiveParsingErrors++;
+            //    ConsoleManager.Instance.WriteLine($"Error parsing {(PacketHeader)p.Header}", MsgType.Failed);
+            //    Exception exp = e;
+            //    int i = 0;
+            //    while (exp != null)
+            //    {
+            //        ConsoleManager.Instance.WriteLine($"{i++}: {exp.Message}", MsgType.Failed);
+            //        exp = exp.InnerException;
+            //    }
+            //    if (consecutiveParsingErrors >= maxConsecutiveParsingErrors)
+            //        Dissconnect();
+            //    else
+            //        RoutePacket(p);
+            //}
         }
         
         // parses a packet with the header LobbyInit

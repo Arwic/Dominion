@@ -258,6 +258,7 @@ namespace ArwicEngine.Net
                     {
                         ConsoleManager.Instance.WriteLine($"Error recieving data from {conn.Address}, {e.Message}", MsgType.ServerWarning);
                     }
+                    Thread.Sleep(1); // This feels dirty
                 }
             }
         }
@@ -300,7 +301,7 @@ namespace ArwicEngine.Net
             {
                 c.Close();
             }
-            //Engine.Console.WriteLine($"Sent {p.Data.Length} bytes to {c.Client.Client.RemoteEndPoint}", MsgType.ServerInfo);
+            //ConsoleManager.Instance.WriteLine($"Sent {p.Data.Length} bytes to {c.Client.Client.RemoteEndPoint}", MsgType.ServerInfo);
         }
 
         /// <summary>

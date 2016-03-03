@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ArwicEngine.Net
@@ -90,7 +91,7 @@ namespace ArwicEngine.Net
         /// Gets a value indicating whether the client is listening
         /// </summary>
         public bool Listening { get; set; }
-
+        
         public NetClientStats Statistics { get; private set; }
 
         private TcpClient client;
@@ -230,7 +231,7 @@ namespace ArwicEngine.Net
                     // await some data
                     int bytesLeft = await stream.ReadAsync(buffer, 0, buffer.Length);
                     Statistics.BytesRecieved += bytesLeft;
-                    //Engine.Console.WriteLine($"Recieved {bytesLeft} bytes from server", MsgType.Info);
+                    //ConsoleManager.Instance.WriteLine($"Recieved {bytesLeft} bytes from server", MsgType.Info);
                     int packetLength;
                     int offset = 0;
                     do
@@ -242,11 +243,15 @@ namespace ArwicEngine.Net
                         bytesLeft -= packetLength; // update the number of bytes left to parse
                         Packet p = new Packet(data, null); // parse the packet, as a client we know the server sent it to us
                         Statistics.PacketsRecieved++;
-                        //Engine.Console.WriteLine($"Constructed a packet of {packetLength} bytes, {bytesLeft} bytes remaining", MsgType.Info);
+                        //ConsoleManager.Instance.WriteLine($"Constructed a packet of {packetLength} bytes, {bytesLeft} bytes remaining", MsgType.Info);
                         OnPacketRecieved(new PacketRecievedEventArgs(p));
                     } while (bytesLeft > 0); // keep parsing packets from the buffer until there are none left
                 }
-                catch (Exception e) { ConsoleManager.Instance.WriteLine($"Error recieving data, {e.Message}", MsgType.Warning); }
+                catch (Exception e)
+                {
+                    ConsoleManager.Instance.WriteLine($"Error recieving data, {e.Message}", MsgType.Warning);
+                }
+                Thread.Sleep(1); // This feels dirty
             }
             OnLostConnection(EventArgs.Empty);
         }
