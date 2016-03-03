@@ -460,8 +460,6 @@ namespace Dominion.Server.Controllers
             attacker.HP -= attackerTakes;
             defender.HP -= defenderTakes;
 
-            attacker.Actions = 0;
-
             if (defender.HP <= 0)
             {
                 RemoveUnit(defender);
@@ -473,7 +471,7 @@ namespace Dominion.Server.Controllers
             }
             if (attacker.HP <= 0)
                 RemoveUnit(attacker);
-            ConsoleManager.Instance.WriteLine($"{Controllers.Player.GetPlayer(attacker.PlayerID).Name}'s {attacker.Name} is melee attacking {Controllers.Player.GetPlayer(defender.PlayerID).Name}'s {defender.Name}", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"{Controllers.Player.GetPlayer(attacker.PlayerID).Name}'s unit, {attacker.Name}, is melee attacking {Controllers.Player.GetPlayer(defender.PlayerID).Name}'s unit, {defender.Name}", MsgType.ServerInfo);
             ConsoleManager.Instance.WriteLine($"attacker had combat strength {attacker.BaseUnit.CombatStrength} (+{(attackerModifier - 1) * 100}%) and suffered {attackerTakes}", MsgType.ServerInfo);
             ConsoleManager.Instance.WriteLine($"defender had modifier of {defender.BaseUnit.CombatStrength} (+{(defenderModifier - 1) * 100}%) and suffered {defenderTakes}", MsgType.ServerInfo);
         }
@@ -490,12 +488,28 @@ namespace Dominion.Server.Controllers
             if (!Controllers.Board.GetTile(attacker.Location).GetNeighbourTileLocations().Contains(defender.Location))
                 return;
 
+            float attackerModifier = 1f;
+            // +25% for hills
+            if (Controllers.Board.GetTile(attacker.Location).TerrainFeature == TileTerrainFeature.HILL)
+                attackerModifier += 0.25f;
+            // +25% for forests
+            if (Controllers.Board.GetTile(attacker.Location).Improvement == TileImprovment.FOREST)
+                attackerModifier += 0.25f;
+            // +25% for jungles
+            if (Controllers.Board.GetTile(attacker.Location).Improvement == TileImprovment.JUNGLE)
+                attackerModifier += 0.25f;
+
             attacker.Movement = 0;
             attacker.Actions = 0;
-            attacker.HP -= UnitInstance.GetDamageAttackerSuffered(attacker.BaseUnit.CombatStrength, defender.Defense, attacker.HP, attacker.BaseUnit.MaxHP);
-            Controllers.City.DamageCity(defender, UnitInstance.GetDamageDefenderSuffered(attacker.BaseUnit.CombatStrength, defender.Defense, attacker.HP, attacker.BaseUnit.MaxHP));
+            int attackerTakes = UnitInstance.GetDamageAttackerSuffered(attacker.BaseUnit.CombatStrength * attackerModifier,
+                defender.Defense * defender.DefenseModifier,
+                attacker.HP, attacker.BaseUnit.MaxHP);
+            int defenderTakes = UnitInstance.GetDamageDefenderSuffered(attacker.BaseUnit.CombatStrength * attackerModifier,
+                defender.Defense * defender.DefenseModifier,
+                attacker.HP, attacker.BaseUnit.MaxHP);
 
-            attacker.Actions = 0;
+            attacker.HP -= attackerTakes;
+            defender.HP -= defenderTakes;
 
             if (defender.HP <= 1)
                 Controllers.City.CaptureCity(defender, attacker.PlayerID);
@@ -506,6 +520,9 @@ namespace Dominion.Server.Controllers
                 attacker.MovementQueue.Clear();
                 attacker.Location = defender.Location;
             }
+            ConsoleManager.Instance.WriteLine($"{Controllers.Player.GetPlayer(attacker.PlayerID).Name}'s unit, {attacker.Name}, is melee attacking {Controllers.Player.GetPlayer(defender.PlayerID).Name}'s city, {defender.Name}", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"attacker had combat strength {attacker.BaseUnit.CombatStrength} (+{(attackerModifier - 1) * 100}%) and suffered {attackerTakes}", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"defender had modifier of {defender.Defense} (+{(defender.DefenseModifier - 1) * 100}%) and suffered {defenderTakes}", MsgType.ServerInfo);
         }
 
         // makes a unit ranged attack another

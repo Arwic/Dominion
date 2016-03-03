@@ -105,6 +105,7 @@ namespace Dominion.Server.Controllers
                 TryExpandBorders(city);
                 CalculateTurnsUntilPopulationGrowth(city);
                 CalculateTurnsUntilBorderGrowth(city);
+                CalculateDefense(city);
             }
         }
 
@@ -160,6 +161,16 @@ namespace Dominion.Server.Controllers
             OnCityUpdated(new CityEventArgs(city));
         }
 
+        // updates properties of the given city
+        private void UpdateCity(City city)
+        {
+            CalculateIncome(city);
+            CalculateDefense(city);
+            CalculateTurnsUntilPopulationGrowth(city);
+            CalculateTurnsUntilBorderGrowth(city);
+            CalculateValidProductions(city);
+        }
+
         // changes a production at the given city, if it is valid
         private void ChangeProduction(City city, string name)
         {
@@ -188,7 +199,7 @@ namespace Dominion.Server.Controllers
                     break;
             }
 
-            CalculateValidProductions(city);
+            UpdateCity(city);
         }
 
         // queues a production at the given city if, it is valid
@@ -219,7 +230,7 @@ namespace Dominion.Server.Controllers
                     break;
             }
 
-            CalculateValidProductions(city);
+            UpdateCity(city);
         }
 
         // calculates the turns until a city's population will grow and assigns the value to city.TurnsUntilPopulationGrowth
@@ -279,6 +290,15 @@ namespace Dominion.Server.Controllers
             }
             // assign the value to the city
             city.TurnsUntilBorderGrowth = requiredTurns;
+        }
+
+        // calculates the combat effectivness of a city
+        private void CalculateDefense(City city)
+        {
+            int baseDefense = 10;
+            city.Defense = baseDefense + city.Population;
+            int moddedDef = (int)Math.Round(city.Defense * city.DefenseModifier);
+            city.Defense = moddedDef;
         }
 
         // calculates the income the given city is to earn this turn
@@ -801,6 +821,7 @@ namespace Dominion.Server.Controllers
             int incomeFood = city.IncomeFood - ((city.Population - 1) * 2);
             int requiredFood = (int)Math.Floor(15 + 6 * (city.Population - 1) + Math.Pow(city.Population - 1, 1.8));
             city.ExcessFood += incomeFood;
+            city.PopulationGorwthProgress = city.ExcessFood / (float)requiredFood; // keep track of propgress
             if (city.ExcessFood >= requiredFood)
             {
                 city.Population++;

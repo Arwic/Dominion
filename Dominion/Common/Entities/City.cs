@@ -320,6 +320,11 @@ namespace Dominion.Common.Entities
         public int TurnsUntilPopulationGrowth { get; set; }
 
         /// <summary>
+        /// The estemated progress of the city's population gorwth
+        /// </summary>
+        public float PopulationGorwthProgress { get; set; }
+
+        /// <summary>
         /// The city's production queue
         /// </summary>
         public LinkedList<Production> ProductionQueue { get; set; } = new LinkedList<Production>();
@@ -364,7 +369,7 @@ namespace Dominion.Common.Entities
             EmpireID = player.EmpireID;
             MaxHP = 200;
             HP = MaxHP;
-            Defense = 50;
+            Defense = 1;
             Location = location;
             Buildings = new List<string>();
             CitizenLocations = new List<Point>();
