@@ -1020,8 +1020,7 @@ namespace Dominion.Server.Controllers
             }
             cities.Add(city); // add the city to the city list
             TryExpandBorders(city); // expand the city's borders
-            CalculateIncome(city); // calculate the city's income
-            CalculateValidProductions(city); // calculate the city's possible productions
+            UpdateCity(city); // update city data
             OnCitySettled(new CityEventArgs(city)); // trigger the CitySettled event
             return true; // the city was settled
         }
