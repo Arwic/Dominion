@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!--Generated with ArwicXmlEditor (29 Feb 2016 00:33) by Tim Ings-->
+<!--Generated with ArwicXmlEditor (03 Mar 2016 17:31) by Tim Ings-->
 <UnitDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Dominion Core Unit Data">
   <Units>
     <Unit>
@@ -71,7 +71,7 @@
       <MaxHP>10</MaxHP>
       <Range>1</Range>
       <RangedStrength>0</RangedStrength>
-      <CombatStrength>0</CombatStrength>
+      <CombatStrength>8</CombatStrength>
       <Movement>2</Movement>
       <Actions>1</Actions>
       <Sight>2</Sight>
@@ -89,6 +89,35 @@
       <Tags>
         <Tag>MILITARY</Tag>
         <Tag>MELEE</Tag>
+      </Tags>
+    </Unit>
+    <Unit>
+      <IconKey>UNIT_ARCHER</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/UnitAtlasDefinition</IconAtlas>
+      <Name>UNIT_ARCHER</Name>
+      <MaxHP>10</MaxHP>
+      <Range>2</Range>
+      <RangedStrength>7</RangedStrength>
+      <CombatStrength>5</CombatStrength>
+      <Movement>2</Movement>
+      <Actions>1</Actions>
+      <Sight>2</Sight>
+      <Commands>
+        <Command>UNITCMD_MOVE</Command>
+        <Command>UNITCMD_BOMBARD</Command>
+        <Command>UNITCMD_SKIP</Command>
+        <Command>UNITCMD_GUARD</Command>
+        <Command>UNITCMD_SLEEP</Command>
+        <Command>UNITCMD_DISBAND</Command>
+      </Commands>
+      <BuildingPrereqs />
+      <TechPrereqs>
+        <TechPrereq>TECH_ARCHERY</TechPrereq>
+      </TechPrereqs>
+      <Cost>40</Cost>
+      <Tags>
+        <Tag>MILITARY</Tag>
+        <Tag>RANGED</Tag>
       </Tags>
     </Unit>
   </Units>
