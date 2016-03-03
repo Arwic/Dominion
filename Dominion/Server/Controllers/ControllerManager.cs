@@ -35,11 +35,11 @@ namespace Dominion.Server.Controllers
         {
             Data = new DataPackController(this);
             Board = new BoardController(this);
-            Player = new PlayerController(this);
             City = new CityController(this);
             Unit = new UnitController(this);
+            Player = new PlayerController(this);
         }
-        
+
         /// <summary>
         /// Prepares every controller managed by the controller manager for the next turn
         /// </summary>

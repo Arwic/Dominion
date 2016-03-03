@@ -76,6 +76,33 @@ namespace Dominion.Server.Controllers
             : base(manager)
         {
             players = new List<Player>();
+            Controllers.City.CityUpdated += City_CityUpdated;
+            Controllers.City.CityCaptured += City_CityCaptured;
+            Controllers.City.CityBorderExpanded += City_CityBorderExpanded;
+        }
+
+        private void City_CityBorderExpanded(object sender, TileEventArgs e)
+        {
+            Tile tile = e.Tiles.First();
+            if (tile == null)
+                return;
+            Player player = GetPlayer(Controllers.City.GetCity(tile.CityID).PlayerID);
+            CalculateIncome(player);
+            OnPlayerUpdated(new PlayerEventArgs(player));
+        }
+
+        private void City_CityCaptured(object sender, CityEventArgs e)
+        {
+            Player player = GetPlayer(e.City.PlayerID);
+            CalculateIncome(player);
+            OnPlayerUpdated(new PlayerEventArgs(player));
+        }
+
+        private void City_CityUpdated(object sender, CityEventArgs e)
+        {
+            Player player = GetPlayer(e.City.PlayerID);
+            CalculateIncome(player);
+            OnPlayerUpdated(new PlayerEventArgs(player));
         }
 
         /// <summary>
