@@ -518,8 +518,8 @@ namespace Dominion.Client
         {
             PacketHeader header = (PacketHeader)p.Header;
             ConsoleManager.Instance.WriteLine($"Parsing a packet with header {header}");
-            //try
-            //{
+            try
+            {
                 switch (header)
                 {
                     case PacketHeader.LobbyInit: // Their player id and factory data
@@ -570,23 +570,23 @@ namespace Dominion.Client
                         break;
                 }
                 consecutiveParsingErrors = 0;
-            //}
-            //catch (Exception e)
-            //{
-            //    consecutiveParsingErrors++;
-            //    ConsoleManager.Instance.WriteLine($"Error parsing {(PacketHeader)p.Header}", MsgType.Failed);
-            //    Exception exp = e;
-            //    int i = 0;
-            //    while (exp != null)
-            //    {
-            //        ConsoleManager.Instance.WriteLine($"{i++}: {exp.Message}", MsgType.Failed);
-            //        exp = exp.InnerException;
-            //    }
-            //    if (consecutiveParsingErrors >= maxConsecutiveParsingErrors)
-            //        Dissconnect();
-            //    else
-            //        RoutePacket(p);
-            //}
+            }
+            catch (Exception e)
+            {
+                consecutiveParsingErrors++;
+                ConsoleManager.Instance.WriteLine($"Error parsing {(PacketHeader)p.Header}", MsgType.Failed);
+                Exception exp = e;
+                int i = 0;
+                while (exp != null)
+                {
+                    ConsoleManager.Instance.WriteLine($"{i++}: {exp.Message}", MsgType.Failed);
+                    exp = exp.InnerException;
+                }
+                if (consecutiveParsingErrors >= maxConsecutiveParsingErrors)
+                    Dissconnect();
+                else
+                    RoutePacket(p);
+            }
         }
         
         // parses a packet with the header LobbyInit
