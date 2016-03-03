@@ -140,8 +140,8 @@ namespace Dominion.Client.Renderers
                         boardRenderer.TileSize,
                         boardRenderer.TileSize);
             // draw the correct sprite at the unit's position
-            unitAtlas.Draw(sb, unit.UnitID, dest); // TODO DEBUG this is temp unit rendering
-            //unitSprites[unit.BaseUnit.GraphicID].Draw(sb, dest);
+            SpriteAtlas atlas = Engine.Instance.Content.GetAsset<SpriteAtlas>(unit.BaseUnit.IconAtlas);
+            atlas.Draw(sb, unit.BaseUnit.IconKey, dest); // TODO this might be bad for performance
         }
 
         // draws the given unit's movement path
