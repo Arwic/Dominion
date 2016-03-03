@@ -43,50 +43,55 @@ namespace ArwicEngine.Content
 
             string name = Path.GetFileNameWithoutExtension(fullPath);
 
-            ZipArchive archive = new ZipArchive(File.Open(fullPath, FileMode.Open), ZipArchiveMode.Read);
-            loadedArchives.Add(name, archive);
-
-            foreach (ZipArchiveEntry entry in archive.Entries)
+            using (ZipArchive archive = new ZipArchive(File.Open(fullPath, FileMode.Open), ZipArchiveMode.Read))
             {
-                try
-                {
-                    if (entry.FullName.Last() == '/')
-                        continue; // don't try and parse directories
-                    string entryPath = $"{name}:{entry.FullName}";
+                loadedArchives.Add(name, archive);
 
-                    string typeDir = entry.FullName.Split('/').First();
-                    // Model, Effect, SpriteFont, Texture, Texture2D, and TextureCube
-                    ConsoleManager.Instance.WriteLine($"Loading '{entryPath}'");
-                    switch (typeDir)
+                foreach (ZipArchiveEntry entry in archive.Entries)
+                {
+                    try
                     {
-                        case "Textures":
-                            LoadSprite(entryPath);
-                            break;
-                        case "Cursors":
-                            LoadCursor(entryPath);
-                            break;
-                        case "Fonts":
-                            LoadFont(entryPath);
-                            break;
-                        case "Audio":
-                            LoadAudio(entryPath);
-                            break;
-                        case "Shaders":
-                            Load<Effect>(entryPath);
-                            break;
-                        case "XML":
-                            LoadXml(entryPath);
-                            break;
-                        default:
-                            ConsoleManager.Instance.WriteLine($"Error in content pack '{name}', unknown root directory '{typeDir}'", MsgType.Failed);
-                            break;
+                        if (entry.FullName.Last() == '/')
+                            continue; // don't try and parse directories
+                        string entryPath = $"{name}:{entry.FullName}";
+
+                        string typeDir = entry.FullName.Split('/').First();
+                        // Model, Effect, SpriteFont, Texture, Texture2D, and TextureCube
+                        ConsoleManager.Instance.WriteLine($"Loading '{entryPath}'");
+                        switch (typeDir)
+                        {
+                            case "Textures":
+                                LoadSprite(entryPath);
+                                break;
+                            case "Cursors":
+                                LoadCursor(entryPath);
+                                break;
+                            case "Fonts":
+                                LoadFont(entryPath);
+                                break;
+                            case "Audio":
+                                LoadAudio(entryPath);
+                                break;
+                            case "Shaders":
+                                Load<Effect>(entryPath);
+                                break;
+                            case "XML":
+                                LoadXml(entryPath);
+                                break;
+                            default:
+                                ConsoleManager.Instance.WriteLine($"Error in content pack '{name}', unknown root directory '{typeDir}'", MsgType.Failed);
+                                break;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        ConsoleManager.Instance.WriteLine($"Error in content pack '{name}', item '{entry.FullName}'", MsgType.Failed);
                     }
                 }
-                catch (Exception)
-                {
-                    ConsoleManager.Instance.WriteLine($"Error in content pack '{name}', item '{entry.FullName}'", MsgType.Failed);
-                }
+
+                loadedArchives.Remove(name); // dereference the archive
             }
+            //ZipArchive archive = new ZipArchive(File.Open(fullPath, FileMode.Open), ZipArchiveMode.Read);
         }
 
         // loads a sprite
