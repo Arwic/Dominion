@@ -43,10 +43,12 @@ namespace ArwicEngine.Content
 
             string name = Path.GetFileNameWithoutExtension(fullPath);
 
+            // don't keep the archive open after we are done loading assets from it
             using (ZipArchive archive = new ZipArchive(File.Open(fullPath, FileMode.Open), ZipArchiveMode.Read))
             {
-                loadedArchives.Add(name, archive);
+                loadedArchives.Add(name, archive); // keep a reference to the archive
 
+                // load every asset in the archive
                 foreach (ZipArchiveEntry entry in archive.Entries)
                 {
                     try
@@ -91,7 +93,6 @@ namespace ArwicEngine.Content
 
                 loadedArchives.Remove(name); // dereference the archive
             }
-            //ZipArchive archive = new ZipArchive(File.Open(fullPath, FileMode.Open), ZipArchiveMode.Read);
         }
 
         // loads a sprite
