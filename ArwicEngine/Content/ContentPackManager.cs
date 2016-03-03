@@ -29,7 +29,7 @@ namespace ArwicEngine.Content
         }
 
         /// <summary>
-        /// Loads
+        /// Loads all the assets in the given content pack
         /// </summary>
         /// <param name="path"></param>
         public void LoadPack(string path)
@@ -92,9 +92,11 @@ namespace ArwicEngine.Content
         // loads a sprite
         private void LoadSprite(string assetName)
         {
+            // load texture and create new sprite
             Texture2D texture = Load<Texture2D>(assetName);
             Sprite sprite = new Sprite(texture);
-            AddLoadedAsset(assetName, sprite);
+            LoadedAssets.Remove(assetName); // remove texture's reference from loaded assets
+            AddLoadedAsset(assetName, sprite); // add the sprite to the loaded assets
         }
 
         // loads a cursor
@@ -148,16 +150,19 @@ namespace ArwicEngine.Content
         // loads a font
         private void LoadFont(string assetName)
         {
+            // load spritefont and create a new font
             SpriteFont spriteFont = Load<SpriteFont>(assetName);
             Font font = new Font(spriteFont);
-            AddLoadedAsset(assetName, font);
+            LoadedAssets.Remove(assetName); // remove spritefont's reference from loaded assets
+            AddLoadedAsset(assetName, font); // add the font to the loaded assets
         }
 
         // loads audio
         private void LoadAudio(string assetName)
         {
             SoundEffect soundEffect = Load<SoundEffect>(assetName);
-            AddLoadedAsset(assetName, soundEffect);
+            LoadedAssets.Remove(assetName); // remove the sound effect with key extension (pack:dir/dir/file.xnb)
+            AddLoadedAsset(assetName, soundEffect); // add the sound effect without an extension (pack:dir/dir/file)
         }
 
         // loads xml files as streams
@@ -166,9 +171,6 @@ namespace ArwicEngine.Content
             // standardise
             assetName = assetName.Replace('\\', '/');
             
-            // Core:XML/AtlasDefinitions/TileAtlasDefinition.xml
-            // package:root/type/file.xml
-
             // get xml type
             string xmlType = assetName.Split('/')[1];
 
@@ -271,6 +273,14 @@ namespace ArwicEngine.Content
             return null;
         }
 
+        /// <summary>
+        /// Gets the asset with the given name
+        /// names are to be fornmatted as such:
+        /// pack:dir/subdir/file
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public T GetAsset<T>(string name)
         {
             object asset;
