@@ -251,7 +251,6 @@ namespace ArwicEngine.Net
                 {
                     ConsoleManager.Instance.WriteLine($"Error recieving data, {e.Message}", MsgType.Warning);
                 }
-                Thread.Sleep(1); // This feels dirty
             }
             OnLostConnection(EventArgs.Empty);
         }

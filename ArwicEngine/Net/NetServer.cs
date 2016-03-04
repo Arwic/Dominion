@@ -258,7 +258,6 @@ namespace ArwicEngine.Net
                     {
                         ConsoleManager.Instance.WriteLine($"Error recieving data from {conn.Address}, {e.Message}", MsgType.ServerWarning);
                     }
-                    Thread.Sleep(1); // This feels dirty
                 }
             }
         }

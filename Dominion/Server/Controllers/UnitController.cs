@@ -8,6 +8,7 @@ using Dominion.Common.Entities;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Dominion.Server.Controllers
 {
@@ -138,7 +139,6 @@ namespace Dominion.Server.Controllers
         public void RemoveUnit(UnitInstance unit)
         {
             units.Remove(unit);
-
             OnUnitRemoved(new UnitEventArgs(unit));
         }
 
@@ -287,7 +287,10 @@ namespace Dominion.Server.Controllers
                     break;
                 case UnitCommandID.UNITCMD_SETTLE:
                     if (Controllers.City.SettleCity(unit))
+                    {
+                        Thread.Sleep(10);
                         RemoveUnit(unit);
+                    }
                     break;
                 case UnitCommandID.UNITCMD_MELEE:
                     if (unitTarget != null)

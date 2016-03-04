@@ -1021,8 +1021,8 @@ namespace Dominion.Server.Controllers
             cities.Add(city); // add the city to the city list
             TryExpandBorders(city); // expand the city's borders
             UpdateCity(city); // update city data
-            OnCitySettled(new CityEventArgs(city)); // trigger the CitySettled event
-            //OnCityUpdated(new CityEventArgs(city)); // trigger the CityUpdated event
+            //OnCitySettled(new CityEventArgs(city)); // trigger the CitySettled event
+            OnCityUpdated(new CityEventArgs(city)); // trigger the CityUpdated event
             return true; // the city was settled
         }
 
