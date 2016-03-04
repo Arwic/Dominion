@@ -296,14 +296,21 @@ namespace ArwicEngine.Forms
             {
                 lock (_childrenModifyLock)
                 {
-                    Control[] children = new Control[_children.Count];
-                    LinkedListNode<Control> child = _children.First;
-                    for (int i = 0; i < _children.Count; i++)
+                    try
                     {
-                        children[i] = child.Value;
-                        child = child.Next;
+                        Control[] children = new Control[_children.Count];
+                        LinkedListNode<Control> child = _children.First;
+                        for (int i = 0; i < _children.Count; i++)
+                        {
+                            children[i] = child.Value;
+                            child = child.Next;
+                        }
+                        return children;
                     }
-                    return children;
+                    catch (Exception) // if this still fails, returns an empty array
+                    {
+                        return new Control[0];
+                    }
                 }
             }
             set
