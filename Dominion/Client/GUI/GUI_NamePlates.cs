@@ -159,7 +159,8 @@ namespace Dominion.Client.GUI
 
                 // position the name plate
                 Vector2 tileCentre = camera.ConvertWorldToScreen(boardRenderer.GetTileCentre(city.Location));
-                Rectangle dest = new Rectangle((int)(tileCentre.X - cityLabelWidth / 2), (int)(tileCentre.Y - boardRenderer.TileHeight * camera.Zoom.Y), (int)(cityLabelWidth + lblCityNameMeasure.X / 2), cityLabelHeight);
+                int labelWidth = (int)(cityLabelWidth + lblCityNameMeasure.X / 2);
+                Rectangle dest = new Rectangle((int)(tileCentre.X - labelWidth / 2), (int)(tileCentre.Y - boardRenderer.TileHeight * camera.Zoom.Y), labelWidth, cityLabelHeight);
                 Rectangle defDest = new Rectangle(dest.X + dest.Width / 2 - cityDefensePlateWidth / 2, dest.Y - cityDefensePlateHeight, cityDefensePlateWidth, cityDefensePlateHeight);
 
                 // draw the name plate
