@@ -212,7 +212,7 @@ namespace Dominion.Client.GUI
                     sprite.Draw(sb, prodIconDest);
 
                     // draw current production progress bar
-                    float prodProgress = city.PopulationGorwthProgress;
+                    float prodProgress = curProd.Progress / (float)curProd.Cost;
                     // clamp progress between 0% and 100%
                     if (prodProgress > 1f)
                         prodProgress = 1f;
