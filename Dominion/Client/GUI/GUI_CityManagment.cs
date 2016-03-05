@@ -246,6 +246,8 @@ namespace Dominion.Client.GUI
                 btnChangeProduction.MouseClick += BtnChangeProduction_MouseClick;
                 Button btnQueueProduction = (Button)frmProduction.GetChildByName("btnQueueProduction");
                 btnQueueProduction.MouseClick += BtnQueueProduction_MouseClick;
+                Button btnPurchase = (Button)frmProduction.GetChildByName("btnPurchase");
+                btnPurchase.MouseClick += BtnPurchase_MouseClick;
 
                 // get and setup the citizen focus form elements
                 sbCitizenFocus = (ScrollBox)frmFocus.GetChildByName("sbCitizenFocus");
@@ -265,6 +267,12 @@ namespace Dominion.Client.GUI
                 Button btnReturnToMap = (Button)frmReturnBuy.GetChildByName("btnReturnToMap");
                 btnReturnToMap.MouseClick += (s, a) => Hide();
             }
+        }
+
+        private void BtnPurchase_MouseClick(object sender, MouseEventArgs e)
+        {
+            // tell the server to purchase the selected building with gold
+            client.CommandCity(new CityCommand(CityCommandID.PurchaseProduction, client.SelectedCity, ((ProductionListItem)sbProductionList.Selected).Production.Name));
         }
 
         private void BtnDemolish_MouseClick(object sender, MouseEventArgs e)

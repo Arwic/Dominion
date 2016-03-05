@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!--Generated with ArwicXmlEditor (05 Mar 2016 16:14) by Tim Ings-->
+<!--Generated with ArwicXmlEditor (05 Mar 2016 16:46) by Tim Ings-->
 <BuildingDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Dominion Core Building Data">
   <Buildings>
     <Building>
@@ -8,6 +8,7 @@
       <Tags />
       <GoldUpkeep>0</GoldUpkeep>
       <Demolishable>false</Demolishable>
+      <Purchasable>false</Purchasable>
       <Water>false</Water>
       <River>false</River>
       <FreshWater>false</FreshWater>
@@ -90,6 +91,7 @@
       </Tags>
       <GoldUpkeep>1</GoldUpkeep>
       <Demolishable>true</Demolishable>
+      <Purchasable>true</Purchasable>
       <Water>false</Water>
       <River>false</River>
       <FreshWater>false</FreshWater>
@@ -172,6 +174,7 @@
       <Tags />
       <GoldUpkeep>0</GoldUpkeep>
       <Demolishable>true</Demolishable>
+      <Purchasable>true</Purchasable>
       <Water>false</Water>
       <River>false</River>
       <FreshWater>false</FreshWater>
@@ -254,6 +257,7 @@
       <Tags />
       <GoldUpkeep>1</GoldUpkeep>
       <Demolishable>true</Demolishable>
+      <Purchasable>true</Purchasable>
       <Water>false</Water>
       <River>false</River>
       <FreshWater>false</FreshWater>
@@ -336,6 +340,7 @@
       <Tags />
       <GoldUpkeep>1</GoldUpkeep>
       <Demolishable>true</Demolishable>
+      <Purchasable>true</Purchasable>
       <Water>false</Water>
       <River>false</River>
       <FreshWater>false</FreshWater>
@@ -418,6 +423,7 @@
       <Tags />
       <GoldUpkeep>1</GoldUpkeep>
       <Demolishable>true</Demolishable>
+      <Purchasable>true</Purchasable>
       <Water>false</Water>
       <River>false</River>
       <FreshWater>false</FreshWater>
@@ -498,6 +504,7 @@
       <Tags />
       <GoldUpkeep>1</GoldUpkeep>
       <Demolishable>true</Demolishable>
+      <Purchasable>true</Purchasable>
       <Water>false</Water>
       <River>false</River>
       <FreshWater>false</FreshWater>
@@ -580,6 +587,7 @@
       <Tags />
       <GoldUpkeep>1</GoldUpkeep>
       <Demolishable>true</Demolishable>
+      <Purchasable>true</Purchasable>
       <Water>false</Water>
       <River>false</River>
       <FreshWater>false</FreshWater>
@@ -664,6 +672,7 @@
       </Tags>
       <GoldUpkeep>0</GoldUpkeep>
       <Demolishable>true</Demolishable>
+      <Purchasable>true</Purchasable>
       <Water>false</Water>
       <River>false</River>
       <FreshWater>false</FreshWater>
@@ -746,6 +755,7 @@
       <Tags />
       <GoldUpkeep>2</GoldUpkeep>
       <Demolishable>true</Demolishable>
+      <Purchasable>true</Purchasable>
       <Water>false</Water>
       <River>true</River>
       <FreshWater>false</FreshWater>

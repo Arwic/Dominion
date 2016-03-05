@@ -48,6 +48,14 @@ namespace Dominion.Common.Data
         public string DisplayName { get; set; } = "Null";
 
         /// <summary>
+        /// Indicates whether the unit can be purchased with gold
+        /// </summary>
+        [Description("Indicates whether the unit can be purchased with gold")]
+        [DisplayName("Purchasable"), Browsable(true), Category("General")]
+        [XmlElement("Purchasable")]
+        public bool Purchasable { get; set; } = true;
+
+        /// <summary>
         /// Maximum HP of the unit
         /// </summary>
         [Description("Maximum HP of the unit")]

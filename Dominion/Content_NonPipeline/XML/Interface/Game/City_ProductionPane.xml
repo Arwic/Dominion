@@ -11,33 +11,10 @@
     <PackedValue>4294967295</PackedValue>
   </Color>
   <Children>
-    <Child xsi:type="ScrollBoxConfig">
-      <TypeName>ArwicEngine.Forms.ScrollBox</TypeName>
-      <Name>sbProductionQueue</Name>
-      <Text />
-      <Color>
-        <B>255</B>
-        <G>255</G>
-        <R>255</R>
-        <A>255</A>
-        <PackedValue>4294967295</PackedValue>
-      </Color>
-      <Children />
-      <LocationX>5</LocationX>
-      <LocationY>545</LocationY>
-      <LocationWidth>291</LocationWidth>
-      <LocationHeight>400</LocationHeight>
-      <BackgroundSpritePath>Core:Textures/Interface/Controls/ScrollBox_Back.xnb</BackgroundSpritePath>
-      <SelectedItemSpritePath>Core:Textures/Interface/Controls/ScrollBox_Selected.xnb</SelectedItemSpritePath>
-      <ListItemSpritePath>Core:Textures/Interface/Controls/ScrollBox_Button.xnb</ListItemSpritePath>
-      <ScrubberSpritePath>Core:Textures/Interface/Controls/ScrollBox_Scrubber.xnb</ScrubberSpritePath>
-      <ScrollBarWidth>15</ScrollBarWidth>
-      <ItemHeight>30</ItemHeight>
-    </Child>
     <Child xsi:type="ButtonConfig">
       <TypeName>ArwicEngine.Forms.Button</TypeName>
-      <Name>btnMoveDown</Name>
-      <Text>Move Down</Text>
+      <Name>btnPurchase</Name>
+      <Text>Purchase</Text>
       <Color>
         <B>255</B>
         <G>255</G>
@@ -47,136 +24,7 @@
       </Color>
       <Children />
       <LocationX>5</LocationX>
-      <LocationY>975</LocationY>
-      <LocationWidth>290</LocationWidth>
-      <LocationHeight>30</LocationHeight>
-      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
-      <OverColorPercent>0.6</OverColorPercent>
-      <DownColorPercent>0.4</DownColorPercent>
-      <DisabledColorPercent>0.5</DisabledColorPercent>
-      <DestBorderSize>15</DestBorderSize>
-      <SourceBorderSize>15</SourceBorderSize>
-      <NineCutDraw>true</NineCutDraw>
-    </Child>
-    <Child xsi:type="ButtonConfig">
-      <TypeName>ArwicEngine.Forms.Button</TypeName>
-      <Name>btnQueueProduction</Name>
-      <Text>Queue</Text>
-      <Color>
-        <B>255</B>
-        <G>255</G>
-        <R>255</R>
-        <A>255</A>
-        <PackedValue>4294967295</PackedValue>
-      </Color>
-      <Children />
-      <LocationX>5</LocationX>
-      <LocationY>455</LocationY>
-      <LocationWidth>290</LocationWidth>
-      <LocationHeight>30</LocationHeight>
-      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
-      <OverColorPercent>0.6</OverColorPercent>
-      <DownColorPercent>0.4</DownColorPercent>
-      <DisabledColorPercent>0.5</DisabledColorPercent>
-      <DestBorderSize>15</DestBorderSize>
-      <SourceBorderSize>15</SourceBorderSize>
-      <NineCutDraw>true</NineCutDraw>
-    </Child>
-    <Child xsi:type="ScrollBoxConfig">
-      <TypeName>ArwicEngine.Forms.ScrollBox</TypeName>
-      <Name>sbProductionList</Name>
-      <Text />
-      <Color>
-        <B>255</B>
-        <G>255</G>
-        <R>255</R>
-        <A>255</A>
-        <PackedValue>4294967295</PackedValue>
-      </Color>
-      <Children />
-      <LocationX>5</LocationX>
-      <LocationY>25</LocationY>
-      <LocationWidth>289</LocationWidth>
-      <LocationHeight>400</LocationHeight>
-      <BackgroundSpritePath>Core:Textures/Interface/Controls/ScrollBox_Back.xnb</BackgroundSpritePath>
-      <SelectedItemSpritePath>Core:Textures/Interface/Controls/ScrollBox_Selected.xnb</SelectedItemSpritePath>
-      <ListItemSpritePath>Core:Textures/Interface/Controls/ScrollBox_Button.xnb</ListItemSpritePath>
-      <ScrubberSpritePath>Core:Textures/Interface/Controls/ScrollBox_Scrubber.xnb</ScrubberSpritePath>
-      <ScrollBarWidth>15</ScrollBarWidth>
-      <ItemHeight>30</ItemHeight>
-    </Child>
-    <Child>
-      <TypeName>ArwicEngine.Forms.Label</TypeName>
-      <Name>ArwicEngine.Forms.Label</Name>
-      <Text>Production Queue</Text>
-      <Color>
-        <B>255</B>
-        <G>255</G>
-        <R>255</R>
-        <A>255</A>
-        <PackedValue>4294967295</PackedValue>
-      </Color>
-      <Children />
-      <LocationX>10</LocationX>
-      <LocationY>523</LocationY>
-      <LocationWidth>149</LocationWidth>
-      <LocationHeight>21</LocationHeight>
-    </Child>
-    <Child>
-      <TypeName>ArwicEngine.Forms.Label</TypeName>
-      <Name>ArwicEngine.Forms.Label</Name>
-      <Text>Choose a production</Text>
-      <Color>
-        <B>255</B>
-        <G>255</G>
-        <R>255</R>
-        <A>255</A>
-        <PackedValue>4294967295</PackedValue>
-      </Color>
-      <Children />
-      <LocationX>10</LocationX>
-      <LocationY>5</LocationY>
-      <LocationWidth>171</LocationWidth>
-      <LocationHeight>21</LocationHeight>
-    </Child>
-    <Child xsi:type="ButtonConfig">
-      <TypeName>ArwicEngine.Forms.Button</TypeName>
-      <Name>btnMoveUp</Name>
-      <Text>Move Up</Text>
-      <Color>
-        <B>255</B>
-        <G>255</G>
-        <R>255</R>
-        <A>255</A>
-        <PackedValue>4294967295</PackedValue>
-      </Color>
-      <Children />
-      <LocationX>5</LocationX>
-      <LocationY>945</LocationY>
-      <LocationWidth>290</LocationWidth>
-      <LocationHeight>30</LocationHeight>
-      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
-      <OverColorPercent>0.6</OverColorPercent>
-      <DownColorPercent>0.4</DownColorPercent>
-      <DisabledColorPercent>0.5</DisabledColorPercent>
-      <DestBorderSize>15</DestBorderSize>
-      <SourceBorderSize>15</SourceBorderSize>
-      <NineCutDraw>true</NineCutDraw>
-    </Child>
-    <Child xsi:type="ButtonConfig">
-      <TypeName>ArwicEngine.Forms.Button</TypeName>
-      <Name>btnCancelProduction</Name>
-      <Text>Cancel</Text>
-      <Color>
-        <B>255</B>
-        <G>255</G>
-        <R>255</R>
-        <A>255</A>
-        <PackedValue>4294967295</PackedValue>
-      </Color>
-      <Children />
-      <LocationX>5</LocationX>
-      <LocationY>1005</LocationY>
+      <LocationY>485</LocationY>
       <LocationWidth>290</LocationWidth>
       <LocationHeight>30</LocationHeight>
       <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
@@ -213,8 +61,8 @@
     </Child>
     <Child xsi:type="ButtonConfig">
       <TypeName>ArwicEngine.Forms.Button</TypeName>
-      <Name>btnBuy</Name>
-      <Text>Purchase</Text>
+      <Name>btnCancelProduction</Name>
+      <Text>Cancel</Text>
       <Color>
         <B>255</B>
         <G>255</G>
@@ -224,7 +72,7 @@
       </Color>
       <Children />
       <LocationX>5</LocationX>
-      <LocationY>485</LocationY>
+      <LocationY>1005</LocationY>
       <LocationWidth>290</LocationWidth>
       <LocationHeight>30</LocationHeight>
       <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
@@ -234,6 +82,158 @@
       <DestBorderSize>15</DestBorderSize>
       <SourceBorderSize>15</SourceBorderSize>
       <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnMoveUp</Name>
+      <Text>Move Up</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>5</LocationX>
+      <LocationY>945</LocationY>
+      <LocationWidth>290</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>ArwicEngine.Forms.Label</Name>
+      <Text>Choose a production</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>10</LocationX>
+      <LocationY>5</LocationY>
+      <LocationWidth>171</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>ArwicEngine.Forms.Label</Name>
+      <Text>Production Queue</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>10</LocationX>
+      <LocationY>523</LocationY>
+      <LocationWidth>149</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child xsi:type="ScrollBoxConfig">
+      <TypeName>ArwicEngine.Forms.ScrollBox</TypeName>
+      <Name>sbProductionList</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>5</LocationX>
+      <LocationY>25</LocationY>
+      <LocationWidth>289</LocationWidth>
+      <LocationHeight>400</LocationHeight>
+      <BackgroundSpritePath>Core:Textures/Interface/Controls/ScrollBox_Back.xnb</BackgroundSpritePath>
+      <SelectedItemSpritePath>Core:Textures/Interface/Controls/ScrollBox_Selected.xnb</SelectedItemSpritePath>
+      <ListItemSpritePath>Core:Textures/Interface/Controls/ScrollBox_Button.xnb</ListItemSpritePath>
+      <ScrubberSpritePath>Core:Textures/Interface/Controls/ScrollBox_Scrubber.xnb</ScrubberSpritePath>
+      <ScrollBarWidth>15</ScrollBarWidth>
+      <ItemHeight>30</ItemHeight>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnQueueProduction</Name>
+      <Text>Queue</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>5</LocationX>
+      <LocationY>455</LocationY>
+      <LocationWidth>290</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnMoveDown</Name>
+      <Text>Move Down</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>5</LocationX>
+      <LocationY>975</LocationY>
+      <LocationWidth>290</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ScrollBoxConfig">
+      <TypeName>ArwicEngine.Forms.ScrollBox</TypeName>
+      <Name>sbProductionQueue</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>5</LocationX>
+      <LocationY>545</LocationY>
+      <LocationWidth>291</LocationWidth>
+      <LocationHeight>400</LocationHeight>
+      <BackgroundSpritePath>Core:Textures/Interface/Controls/ScrollBox_Back.xnb</BackgroundSpritePath>
+      <SelectedItemSpritePath>Core:Textures/Interface/Controls/ScrollBox_Selected.xnb</SelectedItemSpritePath>
+      <ListItemSpritePath>Core:Textures/Interface/Controls/ScrollBox_Button.xnb</ListItemSpritePath>
+      <ScrubberSpritePath>Core:Textures/Interface/Controls/ScrollBox_Scrubber.xnb</ScrubberSpritePath>
+      <ScrollBarWidth>15</ScrollBarWidth>
+      <ItemHeight>30</ItemHeight>
     </Child>
   </Children>
   <LocationX>0</LocationX>

@@ -69,6 +69,14 @@ namespace Dominion.Common.Data
         public bool Demolishable { get; set; } = true;
 
         /// <summary>
+        /// Indicates whether the building can be purchased with gold
+        /// </summary>
+        [Description("Indicates whether the building can be purchased with gold")]
+        [DisplayName("Purchasable"), Browsable(true), Category("General")]
+        [XmlElement("Purchasable")]
+        public bool Purchasable { get; set; } = true;
+
+        /// <summary>
         /// If the city requires access to water
         /// </summary>
         [Description("If the city requires access to water")]

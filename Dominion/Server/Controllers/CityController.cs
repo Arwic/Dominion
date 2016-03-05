@@ -143,8 +143,9 @@ namespace Dominion.Server.Controllers
                         selectedNode = city.ProductionQueue.GetNode((int)cmd.Arguments[0]);
                         city.ProductionQueue.Swap(selectedNode, selectedNode.Next);
                         break;
-                    case CityCommandID.BuyProduction: // completes a production with gold
-                        // TODO implement buying producibles with gold
+                    case CityCommandID.PurchaseProduction: // completes a production with gold
+                        string prodID = (string)cmd.Arguments[0];
+                        PurchaseProduction(city, prodID);
                         break;
                     case CityCommandID.ChangeCitizenFocus: // changes the focus of the citizens in the city
                         city.CitizenFocus = (CityCitizenFocus)cmd.Arguments[0];
@@ -179,6 +180,54 @@ namespace Dominion.Server.Controllers
             CalculateTurnsUntilPopulationGrowth(city);
             CalculateTurnsUntilBorderGrowth(city);
             CalculateValidProductions(city);
+        }
+
+        // purchases a production with gold
+        private void PurchaseProduction(City city, string name)
+        {
+            Production prod;
+            if (name.StartsWith("BUILDING_"))
+            {
+                Building building = Controllers.Data.Building.GetBuilding(name);
+                if (!building.Purchasable)
+                    return;
+                prod = new Production(building);
+            }
+            else if (name.StartsWith("UNIT_"))
+            {
+                Unit unit = Controllers.Data.Unit.GetUnit(name);
+                if (!unit.Purchasable)
+                    return;
+                prod = new Production(unit);
+            }
+            else
+                return;
+
+            // calculate gold cost
+            float ratio = 5; // TODO move this to a game settings file
+            int goldCost = (int)Math.Round(prod.Cost * ratio);
+
+            // check if we can afford the purchase
+            Player player = Controllers.Player.GetPlayer(city.PlayerID);
+            if (player.Gold < goldCost)
+                return;
+
+            // make the purchase
+            player.Gold -= goldCost;
+
+            // produce the production
+            switch (prod.ProductionType)
+            {
+                case ProductionType.BUILDING:
+                    // add the produced building to the city's building list
+                    city.Buildings.Add(prod.Name);
+                    CalculateIncome(city);
+                    break;
+                case ProductionType.UNIT:
+                    // add the produced unit to the unit controller
+                    Controllers.Unit.AddUnit(prod.Name, city.PlayerID, city.Location);
+                    break;
+            }
         }
 
         // changes a production at the given city, if it is valid
