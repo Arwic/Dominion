@@ -29,6 +29,7 @@ namespace Dominion.Client.GUI
         private class ProductionListItem : IListItem
         {
             public Button Button { get; set; }
+            public ToolTip ToolTip { get; set; }
             public RichText Text { get; set; }
             public RichText ProductionName { get; set; }
             public RichText ProductionProgress { get; set; }
@@ -55,7 +56,6 @@ namespace Dominion.Client.GUI
                         break;
                 }
 
-
                 // format the items text to show construction information
                 //string suffix = "";
                 //if (turnsLeft != -1)
@@ -68,6 +68,12 @@ namespace Dominion.Client.GUI
                         Unit unit = dataManager.Unit.GetUnit(prod.Name);
                         SpriteAtlas unitAtlas = Engine.Instance.Content.GetAsset<SpriteAtlas>(unit.IconAtlas);
                         Icon = new Sprite(unitAtlas, unit.IconKey);
+                        string unitToolTipText;
+                        if (unit.Range > 1)
+                            unitToolTipText = $"Cost: {unit.Cost}\n Movement: {unit.Movement}\n Sight: {unit.Sight}\n Ranged Strenght: {unit.RangedStrength}\n Range: {unit.Range}";
+                        else
+                            unitToolTipText = $"Cost: {unit.Cost}\n Movement: {unit.Movement}\n Sight: {unit.Sight}\n Combat Strenght: {unit.CombatStrength}";
+                        ToolTip = new ToolTip(unitToolTipText, 400);
                         break;
                     case ProductionType.BUILDING:
                         //Text = $"{Building.FormatName(Production.Name)}{suffix}".ToRichText();
@@ -75,6 +81,8 @@ namespace Dominion.Client.GUI
                         Building building = dataManager.Building.GetBuilding(prod.Name);
                         SpriteAtlas buildingAtlas = Engine.Instance.Content.GetAsset<SpriteAtlas>(building.IconAtlas);
                         Icon = new Sprite(buildingAtlas, building.IconKey);
+                        string buildingToolTipText = $"Cost: {building.Cost}\n{building.Description}";
+                        ToolTip = new ToolTip(buildingToolTipText, 400);
                         break;
                 }
             }
@@ -91,6 +99,7 @@ namespace Dominion.Client.GUI
         private class IntListItem : IListItem
         {
             public Button Button { get; set; }
+            public ToolTip ToolTip { get; set; }
             public RichText Text { get; set; }
             public int Int { get; set; }
 
@@ -109,6 +118,7 @@ namespace Dominion.Client.GUI
         private class StringListItem : IListItem
         {
             public Button Button { get; set; }
+            public ToolTip ToolTip { get; set; }
             public RichText Text { get; set; }
             public string String { get; set; }
 

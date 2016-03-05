@@ -18,6 +18,7 @@ namespace Dominion.Client.GUI
         private class UnitListitem : IListItem
         {
             public Button Button { get; set; }
+            public ToolTip ToolTip { get; set; }
             public RichText Text { get; set; }
             public UnitInstance Unit { get; }
 

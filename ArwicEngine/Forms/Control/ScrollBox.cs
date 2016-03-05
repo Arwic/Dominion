@@ -438,6 +438,8 @@ namespace ArwicEngine.Forms
                 };
                 Items[i].Button.MouseWheel += ScrollBox_MouseWheel;
                 Items[i].Button.Drawn += Items[i].OnDraw;
+                if (Items[i].ToolTip != null)
+                    Items[i].Button.ToolTip = Items[i].ToolTip;
             }
             if (Selected != null && Selected.Button != null)
                 Selected.Button.Sprite = SelectedItemSprite;

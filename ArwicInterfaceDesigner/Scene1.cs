@@ -15,6 +15,7 @@ namespace ArwicInterfaceDesigner
         private class StringListItem : IListItem
         {
             public Button Button { get; set; }
+            public ToolTip ToolTip { get; set; }
             public RichText Text { get; set; }
 
             public StringListItem(string s)

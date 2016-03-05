@@ -30,6 +30,7 @@ namespace Dominion.Client.Scenes
         private class EmpireListItem : IListItem
         {
             public Button Button { get; set; }
+            public ToolTip ToolTip { get; set; }
             public RichText Text { get; set; }
             public Empire Empire { get; set; }
 
@@ -49,6 +50,7 @@ namespace Dominion.Client.Scenes
         private class PlayerListItem : IListItem
         {
             public Button Button { get; set; }
+            public ToolTip ToolTip { get; set; }
             public RichText Text { get; set; }
             public BasicPlayer Player { get; set; }
             public string EmpireName { get; }
@@ -81,6 +83,7 @@ namespace Dominion.Client.Scenes
         private class StringListItem : IListItem
         {
             public Button Button { get; set; }
+            public ToolTip ToolTip { get; set; }
             public RichText Text { get; set; }
 
             public StringListItem(RichText s)
