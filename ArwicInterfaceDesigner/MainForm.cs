@@ -18,7 +18,7 @@ namespace ArwicInterfaceDesigner
             new ArwicEngine.Forms.RichTextParseRule("food", ((char)ArwicEngine.Forms.FontSymbol.Apple).ToString(), Microsoft.Xna.Framework.Color.PaleGreen, ArwicEngine.Forms.RichText.SymbolFont),
             new ArwicEngine.Forms.RichTextParseRule("production", ((char)ArwicEngine.Forms.FontSymbol.Gavel).ToString(), Microsoft.Xna.Framework.Color.Orange, ArwicEngine.Forms.RichText.SymbolFont),
             new ArwicEngine.Forms.RichTextParseRule("gold", ((char)ArwicEngine.Forms.FontSymbol.Coin).ToString(), Microsoft.Xna.Framework.Color.Goldenrod, ArwicEngine.Forms.RichText.SymbolFont),
-            new ArwicEngine.Forms.RichTextParseRule("science", ((char)ArwicEngine.Forms.FontSymbol.Flask).ToString(), Microsoft.Xna.Framework.Color.LightSkyBlue, ArwicEngine.Forms.RichText.SymbolFont),
+            new ArwicEngine.Forms.RichTextParseRule("science", ((char)ArwicEngine.Forms.FontSymbol.ConicalFlask).ToString(), Microsoft.Xna.Framework.Color.LightSkyBlue, ArwicEngine.Forms.RichText.SymbolFont),
             new ArwicEngine.Forms.RichTextParseRule("culture", ((char)ArwicEngine.Forms.FontSymbol.BookOpen).ToString(), Microsoft.Xna.Framework.Color.MediumPurple, ArwicEngine.Forms.RichText.SymbolFont)
         };
 

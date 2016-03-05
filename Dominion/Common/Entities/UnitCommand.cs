@@ -120,20 +120,20 @@ namespace Dominion.Common.Entities
         /// <returns></returns>
         public static RichText GetCommandIcon(UnitCommandID cmdid)
         {
-            string iconCode = ((char)FontSymbol.CrossCircle).ToString();
+            string iconCode = ((char)FontSymbol.NA).ToString();
             switch (cmdid)
             {
                 case UnitCommandID.UNITCMD_MOVE:
-                    iconCode = ((char)FontSymbol.Footsteps).ToString();
+                    iconCode = ((char)FontSymbol.ArrowRight).ToString();
                     break;
                 case UnitCommandID.UNITCMD_DISBAND:
-                    iconCode = ((char)FontSymbol.UserRemove).ToString();
+                    iconCode = ((char)FontSymbol.NA).ToString();
                     break;
                 case UnitCommandID.UNITCMD_SLEEP:
-                    iconCode = ((char)FontSymbol.PowerIcon).ToString();
+                    iconCode = ((char)FontSymbol.Bed).ToString();
                     break;
                 case UnitCommandID.UNITCMD_SKIP:
-                    iconCode = ((char)FontSymbol.Cog).ToString();
+                    iconCode = ((char)FontSymbol.Feather).ToString();
                     break;
                 case UnitCommandID.UNITCMD_SETTLE:
                     iconCode = ((char)FontSymbol.Flag).ToString();
@@ -142,7 +142,7 @@ namespace Dominion.Common.Entities
                     iconCode = ((char)FontSymbol.Crosshairs).ToString();
                     break;
                 case UnitCommandID.UNITCMD_BOMBARD:
-                    iconCode = ((char)FontSymbol.Crosshairs).ToString();
+                    iconCode = ((char)FontSymbol.Bomb).ToString();
                     break;
                 case UnitCommandID.UNITCMD_BUILD_FARM:
                     iconCode = ((char)FontSymbol.Gavel).ToString();
@@ -209,7 +209,7 @@ namespace Dominion.Common.Entities
                     break;
                 case UnitCommandID.UNITCMD_NULL:
                 default:
-                    iconCode = ((char)FontSymbol.CrossCircle).ToString();
+                    iconCode = ((char)FontSymbol.NA).ToString();
                     break;
             }
             return iconCode.ToRichText(null, RichText.SymbolFont);

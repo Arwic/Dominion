@@ -172,14 +172,12 @@ namespace ArwicEngine.Graphics
                         {
                             string subWord = wordSplit[i];
                             words.Add(new RichTextSection($"{subWord} ", section.Color, section.Font, section.Scale));
-                            Console.WriteLine($"Added word (N): {subWord}");
                             if (i != wordSplit.Length - 1) // don't add a new line if this is the last item in the array
                                 words.Add(new RichTextSection("\n"));
                         }
                     }
                     else
                     {
-                        Console.WriteLine($"Added word (B): {word}");
                         words.Add(new RichTextSection($"{word} ", section.Color, section.Font, section.Scale));
                     }
                 }
@@ -202,10 +200,6 @@ namespace ArwicEngine.Graphics
                     if (lineWidth + wordWidth < width)
                     {
                         lines[lineIndex].Sections.Add(word);
-                        Console.WriteLine();
-                        foreach (var section in lines[lineIndex].Sections)
-                            Console.Write(section.Text);
-                        Console.WriteLine();
                     }
                     else
                     {
