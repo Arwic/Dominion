@@ -269,7 +269,9 @@ namespace Dominion.Client.GUI
 
         private void BtnDemolish_MouseClick(object sender, MouseEventArgs e)
         {
-            // TODO city command to demolish the selected building
+            // tell the server to demolish the selected building
+            // TODO add a confirmation dialogue
+            client.CommandCity(new CityCommand(CityCommandID.DemolishBuilding, client.SelectedCity, ((StringListItem)sbBuildingList.Selected).String));
         }
 
         private void SbCitizenFocus_SelectedChanged(object sender, ListItemEventArgs e)

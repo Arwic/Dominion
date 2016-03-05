@@ -16,7 +16,8 @@ namespace Dominion.Common.Entities
         ReorderProductionMoveUp,
         ReorderProductionMoveDown,
         BuyProduction,
-        ChangeCitizenFocus
+        ChangeCitizenFocus,
+        DemolishBuilding
     }
 
     [Serializable]

@@ -123,33 +123,43 @@ namespace Dominion.Server.Controllers
             {
                 switch (cmd.CommandID)
                 {
-                    case CityCommandID.Rename:
+                    case CityCommandID.Rename: // renames the city
                         city.Name = (string)cmd.Arguments[0];
                         break;
-                    case CityCommandID.ChangeProduction:
+                    case CityCommandID.ChangeProduction: // changes the city's production
                         ChangeProduction(city, (string)cmd.Arguments[0]);
                         break;
-                    case CityCommandID.QueueProduction:
+                    case CityCommandID.QueueProduction: // add a production to the end of the city's production queue
                         QueueProduction(city, (string)cmd.Arguments[0]);
                         break;
-                    case CityCommandID.CancelProduction:
+                    case CityCommandID.CancelProduction: // cancels the given production
                         city.ProductionQueue.Remove((int)cmd.Arguments[0]);
                         break;
-                    case CityCommandID.ReorderProductionMoveUp:
+                    case CityCommandID.ReorderProductionMoveUp: // moves the given production up the queue
                         LinkedListNode<Production> selectedNode = city.ProductionQueue.GetNode((int)cmd.Arguments[0]);
                         city.ProductionQueue.Swap(selectedNode, selectedNode.Previous);
                         break;
-                    case CityCommandID.ReorderProductionMoveDown:
+                    case CityCommandID.ReorderProductionMoveDown: // moves the given production down the queue
                         selectedNode = city.ProductionQueue.GetNode((int)cmd.Arguments[0]);
                         city.ProductionQueue.Swap(selectedNode, selectedNode.Next);
                         break;
-                    case CityCommandID.BuyProduction:
+                    case CityCommandID.BuyProduction: // completes a production with gold
                         // TODO implement buying producibles with gold
                         break;
-                    case CityCommandID.ChangeCitizenFocus:
+                    case CityCommandID.ChangeCitizenFocus: // changes the focus of the citizens in the city
                         city.CitizenFocus = (CityCitizenFocus)cmd.Arguments[0];
                         RelocateCitizens(city);
-                        CalculateIncome(city);
+                        UpdateCity(city);
+                        break;
+                    case CityCommandID.DemolishBuilding: // removes the given building from the city
+                        string buildingID = (string)cmd.Arguments[0];
+                        Building building = Controllers.Data.Building.GetBuilding(buildingID);
+                        if (buildingID == null)
+                            break;
+                        if (!building.Demolishable) // don't demolish a buildign that can't be demolished
+                            break;
+                        city.Buildings.Remove(buildingID);
+                        UpdateCity(city);
                         break;
                 }
             }

@@ -61,6 +61,14 @@ namespace Dominion.Common.Data
         public int GoldMaintenance { get; set; } = 0;
 
         /// <summary>
+        /// Indicates whether the building can be demolished
+        /// </summary>
+        [Description("Indicates whether the building can be demolished")]
+        [DisplayName("Demolishable"), Browsable(true), Category("General")]
+        [XmlElement("Demolishable")]
+        public bool Demolishable { get; set; } = true;
+
+        /// <summary>
         /// If the city requires access to water
         /// </summary>
         [Description("If the city requires access to water")]

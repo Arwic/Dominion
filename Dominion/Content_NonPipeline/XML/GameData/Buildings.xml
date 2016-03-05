@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!--Generated with ArwicXmlEditor (29 Feb 2016 00:33) by Tim Ings-->
+<!--Generated with ArwicXmlEditor (05 Mar 2016 16:14) by Tim Ings-->
 <BuildingDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Dominion Core Building Data">
   <Buildings>
     <Building>
@@ -7,6 +7,7 @@
       <Description>Indicates this City is the $(captial) Capital of the empire. Connecting other Cities to the capital Capital by Road will produce additional $(gold) Gold.</Description>
       <Tags />
       <GoldUpkeep>0</GoldUpkeep>
+      <Demolishable>false</Demolishable>
       <Water>false</Water>
       <River>false</River>
       <FreshWater>false</FreshWater>
@@ -88,6 +89,7 @@
         <Tag>MILITARY</Tag>
       </Tags>
       <GoldUpkeep>1</GoldUpkeep>
+      <Demolishable>true</Demolishable>
       <Water>false</Water>
       <River>false</River>
       <FreshWater>false</FreshWater>
@@ -169,6 +171,7 @@
       <Description>+2 $(happiness) Happiness</Description>
       <Tags />
       <GoldUpkeep>0</GoldUpkeep>
+      <Demolishable>true</Demolishable>
       <Water>false</Water>
       <River>false</River>
       <FreshWater>false</FreshWater>
@@ -250,6 +253,7 @@
       <Description>+2 $(food)</Description>
       <Tags />
       <GoldUpkeep>1</GoldUpkeep>
+      <Demolishable>true</Demolishable>
       <Water>false</Water>
       <River>false</River>
       <FreshWater>false</FreshWater>
@@ -331,6 +335,7 @@
       <Description>+1 $(science) Science for every 2 $population) Citizens in this City.</Description>
       <Tags />
       <GoldUpkeep>1</GoldUpkeep>
+      <Demolishable>true</Demolishable>
       <Water>false</Water>
       <River>false</River>
       <FreshWater>false</FreshWater>
@@ -412,6 +417,7 @@
       <Description>+2 $(culture) Culture</Description>
       <Tags />
       <GoldUpkeep>1</GoldUpkeep>
+      <Demolishable>true</Demolishable>
       <Water>false</Water>
       <River>false</River>
       <FreshWater>false</FreshWater>
@@ -491,6 +497,7 @@
       <Description>+1 $(faith) Faith</Description>
       <Tags />
       <GoldUpkeep>1</GoldUpkeep>
+      <Demolishable>true</Demolishable>
       <Water>false</Water>
       <River>false</River>
       <FreshWater>false</FreshWater>
@@ -572,6 +579,7 @@
       <Description>+1 $(happiness) Happiness\n+1 $(production) Production\n+1 $(production) Production from each source of Marble and Stone worked by this city.</Description>
       <Tags />
       <GoldUpkeep>1</GoldUpkeep>
+      <Demolishable>true</Demolishable>
       <Water>false</Water>
       <River>false</River>
       <FreshWater>false</FreshWater>
@@ -655,6 +663,7 @@
         <Tag>WALL</Tag>
       </Tags>
       <GoldUpkeep>0</GoldUpkeep>
+      <Demolishable>true</Demolishable>
       <Water>false</Water>
       <River>false</River>
       <FreshWater>false</FreshWater>
@@ -736,6 +745,7 @@
       <Description>+2 $(food) Food\n+1 $(production) Production</Description>
       <Tags />
       <GoldUpkeep>2</GoldUpkeep>
+      <Demolishable>true</Demolishable>
       <Water>false</Water>
       <River>true</River>
       <FreshWater>false</FreshWater>
