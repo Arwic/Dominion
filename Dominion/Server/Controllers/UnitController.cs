@@ -71,9 +71,9 @@ namespace Dominion.Server.Controllers
         {
             foreach (UnitInstance unit in units)
             {
-                ProcessMovment(unit); // update the units movement
+                ProcessMovement(unit); // update the units movement
                 BuildUnitCommands(unit); // build a list of commands based on the unit's context
-                unit.Movement = unit.BaseUnit.Movement; // reset the units movment points
+                unit.Movement = unit.BaseUnit.Movement; // reset the units movement points
                 unit.Actions = unit.BaseUnit.Actions; // reset the units action points
                 unit.Skipping = false; // remove the skipping flag
             }
@@ -274,7 +274,7 @@ namespace Dominion.Server.Controllers
             {
                 case UnitCommandID.UNITCMD_MOVE:
                     unit.MovementQueue = Board.FindPath(unit.Location, tile.Location, Controllers.Board.Board);
-                    ProcessMovment(unit);
+                    ProcessMovement(unit);
                     break;
                 case UnitCommandID.UNITCMD_DISBAND:
                     RemoveUnit(unit);
@@ -378,10 +378,10 @@ namespace Dominion.Server.Controllers
         }
         
         /// <summary>
-        /// Moves the unit along its movment queue for as long as its movement points allow
+        /// Moves the unit along its movement queue for as long as its movement points allow
         /// </summary>
         /// <param name="unit"></param>
-        private void ProcessMovment(UnitInstance unit)
+        private void ProcessMovement(UnitInstance unit)
         {
             if (unit.MovementQueue == null)
                 return;

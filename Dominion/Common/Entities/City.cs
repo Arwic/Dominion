@@ -283,7 +283,7 @@ namespace Dominion.Common.Entities
 
         #region other obscure props
         /// <summary>
-        /// If the city hinders enemy unit movment in it's borders
+        /// If the city hinders enemy unit movement in it's borders
         /// </summary>
         public bool BorderObstacle { get; set; } = false;
 

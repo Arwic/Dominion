@@ -297,7 +297,7 @@ namespace Dominion.Common.Entities
         }
 
         /// <summary>
-        /// Returns the movment cost of the tile
+        /// Returns the movement cost of the tile
         /// </summary>
         /// <returns></returns>
         public int GetMovementCost()

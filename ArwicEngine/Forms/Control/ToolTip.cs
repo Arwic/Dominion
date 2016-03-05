@@ -27,7 +27,7 @@ namespace ArwicEngine.Forms
         /// <summary>
         /// Gets or sets the text associated with this control
         /// </summary>
-        public new string Text
+        public new RichText Text
         {
             get
             {
@@ -35,13 +35,13 @@ namespace ArwicEngine.Forms
             }
             set
             {
-                string last = _text;
+                RichText last = _text;
                 _text = value;
                 if (last != _text)
                     OnTextChanged(EventArgs.Empty);
             }
         }
-        private string _text;
+        private RichText _text;
         /// <summary>
         /// Gets or sets a value that indicate whether the tooltip follows the cursor
         /// </summary>
@@ -68,10 +68,11 @@ namespace ArwicEngine.Forms
         /// Gets or sets the sprite used to draw the background of the tooltip
         /// </summary>
         public Sprite Sprite { get; set; }
-        private string[] wrappedText;
+        private RichText[] wrappedText;
         private int padding;
         private int lineSpacing;
         private int lineHeight;
+        private int maxLineWidth;
         #endregion
 
         #region Events
@@ -91,7 +92,7 @@ namespace ArwicEngine.Forms
         /// </summary>
         /// <param name="pos">Position of the Button</param>
         /// <param name="parent">required parent</param>
-        public ToolTip(string text, int width)
+        public ToolTip(RichText text, int width)
             : base(new Rectangle(0, 0, width, 0), null)
         {
             Sprite = DefaultSprite;
@@ -132,11 +133,17 @@ namespace ArwicEngine.Forms
         private void UpdateLines()
         {
             wrappedText = Font.WordWrap(Text, Size.Width - padding * 2).ToArray();
-            foreach (string s in wrappedText)
+            foreach (RichText line in wrappedText)
             {
-                int height = (int)Font.MeasureString(s).Y;
+                Vector2 measure = line.Measure();
+
+                int height = (int)measure.Y;
                 if (height > lineHeight)
                     lineHeight = height;
+
+                int width = (int)measure.X;
+                if (width > maxLineWidth)
+                    maxLineWidth = width;
             }
         }
 
@@ -153,7 +160,7 @@ namespace ArwicEngine.Forms
                         AbsoluteBounds = new Rectangle(
                             CursorOffset.X + InputManager.Instance.MouseScreenPos().X,
                             CursorOffset.Y + InputManager.Instance.MouseScreenPos().Y,
-                            Size.Width,
+                            maxLineWidth + padding * 2,
                             (2 * padding + (lineSpacing + lineHeight) * wrappedText.Length - 1));
                     }
                     else
@@ -161,7 +168,7 @@ namespace ArwicEngine.Forms
                         Bounds = new Rectangle(
                             Location.X,
                             Location.Y,
-                            Size.Width,
+                            maxLineWidth + padding * 2,
                             (2 * padding + (lineSpacing + lineHeight) * wrappedText.Length - 1));
                     }
                 }
@@ -181,7 +188,7 @@ namespace ArwicEngine.Forms
                 Sprite.DrawNineCut(sb, AbsoluteBounds, null, Color);
                 for (int i = 0; i < wrappedText.Length; i++)
                 {
-                    Font.DrawString(sb, wrappedText[i], AbsoluteLocation.ToVector2() + new Vector2(padding, padding + (lineSpacing + lineHeight) * i));
+                    wrappedText[i].Draw(sb, AbsoluteLocation.ToVector2() + new Vector2(padding, padding + (lineSpacing + lineHeight) * i));
                 }
             }
             base.Draw(sb);

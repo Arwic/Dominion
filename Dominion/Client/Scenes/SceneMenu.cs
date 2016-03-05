@@ -231,17 +231,17 @@ namespace Dominion.Client.Scenes
                 // get and setup the form elements
                 tbAddress = (TextBox)frm_hostGame.GetChildByName("tbAddress");
                 tbAddress.Text = "Retrieving WAN Address...";
-                tbAddress.ToolTip = new ToolTip("This is your public IP address that people can use join to join your game over the internet", 500);
+                tbAddress.ToolTip = new ToolTip("This is your public IP address that people can use join to join your game over the internet".ToRichText(), 500);
                 SetCurrentAddressAsync();
                 tbPort = (TextBox)frm_hostGame.GetChildByName("tbPort");
                 tbPort.Text = "7894";
-                tbPort.ToolTip = new ToolTip("You need to forward this TCP port to play over the internet", 500);
+                tbPort.ToolTip = new ToolTip("You need to forward this TCP port to play over the internet".ToRichText(), 500);
                 tbUsername = (TextBox)frm_hostGame.GetChildByName("tbUsername");
                 tbUsername.Text = Environment.MachineName;
-                tbUsername.ToolTip = new ToolTip("This is the name other players will see you as", 500);
+                tbUsername.ToolTip = new ToolTip("This is the name other players will see you as".ToRichText(), 500);
                 tbPassword = (TextBox)frm_hostGame.GetChildByName("tbPassword");
                 tbPassword.Text = "dog";
-                tbPassword.ToolTip = new ToolTip("This is the password people will need to join your lobby", 500);
+                tbPassword.ToolTip = new ToolTip("This is the password people will need to join your lobby".ToRichText(), 500);
                 Button btnBack = (Button)frm_hostGame.GetChildByName("btnBack");
                 btnBack.MouseClick += Host_BtnBack_MouseClick;
                 Button btnHost = (Button)frm_hostGame.GetChildByName("btnHost");

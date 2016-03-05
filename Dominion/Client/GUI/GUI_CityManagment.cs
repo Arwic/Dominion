@@ -56,6 +56,8 @@ namespace Dominion.Client.GUI
                         break;
                 }
 
+                float prodToGold = 5f; // TODOD replace this with a game wide (config?) var
+
                 // format the items text to show construction information
                 //string suffix = "";
                 //if (turnsLeft != -1)
@@ -68,11 +70,11 @@ namespace Dominion.Client.GUI
                         Unit unit = dataManager.Unit.GetUnit(prod.Name);
                         SpriteAtlas unitAtlas = Engine.Instance.Content.GetAsset<SpriteAtlas>(unit.IconAtlas);
                         Icon = new Sprite(unitAtlas, unit.IconKey);
-                        string unitToolTipText;
+                        RichText unitToolTipText;
                         if (unit.Range > 1)
-                            unitToolTipText = $"Cost: {unit.Cost}\n Movement: {unit.Movement}\n Sight: {unit.Sight}\n Ranged Strenght: {unit.RangedStrength}\n Range: {unit.Range}";
+                            unitToolTipText = $"Cost: {unit.Cost} $(production) / {unit.Cost * prodToGold} $(gold)\n$(movement) Movement: {unit.Movement}\n$(sight) Sight: {unit.Sight}\n$(strength) Ranged Strenght: {unit.RangedStrength}\n$(range) Range: {unit.Range}".ToRichText();
                         else
-                            unitToolTipText = $"Cost: {unit.Cost}\n Movement: {unit.Movement}\n Sight: {unit.Sight}\n Combat Strenght: {unit.CombatStrength}";
+                            unitToolTipText = $"Cost: {unit.Cost} $(production) / {unit.Cost * prodToGold} $(gold)\n$(movement) Movement: {unit.Movement}\n$(sight) Sight: {unit.Sight}\n$(strength) Combat Strenght: {unit.CombatStrength}".ToRichText();
                         ToolTip = new ToolTip(unitToolTipText, 400);
                         break;
                     case ProductionType.BUILDING:
@@ -81,7 +83,7 @@ namespace Dominion.Client.GUI
                         Building building = dataManager.Building.GetBuilding(prod.Name);
                         SpriteAtlas buildingAtlas = Engine.Instance.Content.GetAsset<SpriteAtlas>(building.IconAtlas);
                         Icon = new Sprite(buildingAtlas, building.IconKey);
-                        string buildingToolTipText = $"Cost: {building.Cost}\n{building.Description}";
+                        RichText buildingToolTipText = $"Cost: {building.Cost} $(production) / {building.Cost * prodToGold} $(gold)\n{building.Description}".ToRichText();
                         ToolTip = new ToolTip(buildingToolTipText, 400);
                         break;
                 }

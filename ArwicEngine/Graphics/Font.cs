@@ -3,6 +3,7 @@
 // This file contains wrapper classes for xna sprite fonts
 
 using ArwicEngine.Core;
+using ArwicEngine.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -140,6 +141,77 @@ namespace ArwicEngine.Graphics
                 {
                     lines.Add(words[wi]);
                     lineIndex++;
+                }
+            }
+
+            return lines;
+        }
+
+        /// <summary>
+        /// Wraps the given string into a number of lines containing words that are not longer than the given width
+        /// Words are defined as strings of characters seperated by a space ' '
+        /// </summary>
+        /// <param name="text">the string of words to wrap</param>
+        /// <param name="width">the max width</param>
+        /// <returns></returns>
+        public List<RichText> WordWrap(RichText text, float width)
+        {
+            List<RichText> lines = new List<RichText>();
+            List<RichTextSection> words = new List<RichTextSection>();
+
+            // separate words
+            foreach (RichTextSection section in text.Sections)
+            {
+                string[] sectionSplit = section.Text.Split(' ');
+                foreach (string word in sectionSplit)
+                {
+                    if (word.Contains("\n"))
+                    {
+                        string[] wordSplit = word.Split('\n');
+                        for (int i = 0; i < wordSplit.Length; i++)
+                        {
+                            string subWord = wordSplit[i];
+                            words.Add(new RichTextSection($"{subWord} ", section.Color, section.Font, section.Scale));
+                            Console.WriteLine($"Added word (N): {subWord}");
+                            if (i != wordSplit.Length - 1) // don't add a new line if this is the last item in the array
+                                words.Add(new RichTextSection("\n"));
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Added word (B): {word}");
+                        words.Add(new RichTextSection($"{word} ", section.Color, section.Font, section.Scale));
+                    }
+                }
+            }
+
+            // compose lines that are less than the desired width
+            lines.Add("".ToRichText());
+            int lineIndex = 0;
+            foreach (RichTextSection word in words)
+            {
+                if (word.Text == "\n")
+                {
+                    lines.Add("".ToRichText());
+                    lineIndex++;
+                }
+                else
+                {
+                    float lineWidth = lines[lineIndex].Measure().X;
+                    float wordWidth = word.Measure().X;
+                    if (lineWidth + wordWidth < width)
+                    {
+                        lines[lineIndex].Sections.Add(word);
+                        Console.WriteLine();
+                        foreach (var section in lines[lineIndex].Sections)
+                            Console.Write(section.Text);
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        lines.Add(new RichText(word));
+                        lineIndex++;
+                    }
                 }
             }
 

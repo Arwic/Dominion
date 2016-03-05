@@ -59,7 +59,7 @@ namespace Dominion.Client.GUI
 
                 // setup form elements
                 Button btnMenu = (Button)form.GetChildByName("btnMenu");
-                btnMenu.ToolTip = new ToolTip("Opens the game menu", toolTipWidth);
+                btnMenu.ToolTip = new ToolTip("Opens the game menu".ToRichText(), toolTipWidth);
                 btnMenu.MouseClick += (s, a) =>
                 {
                     // toggle game menu visibility
@@ -70,7 +70,7 @@ namespace Dominion.Client.GUI
                 };
 
                 Button btnTech = (Button)form.GetChildByName("btnTech");
-                btnTech.ToolTip = new ToolTip("Opens the technology tree interface", toolTipWidth);
+                btnTech.ToolTip = new ToolTip("Opens the technology tree interface".ToRichText(), toolTipWidth);
                 btnTech.MouseClick += (s, a) =>
                 {
                     // toggle tech tree visibility
@@ -81,21 +81,21 @@ namespace Dominion.Client.GUI
                 };
 
                 Button btnSocialPolicy = (Button)form.GetChildByName("btnSocialPolicy");
-                btnSocialPolicy.ToolTip = new ToolTip("Opens the social policy interface", toolTipWidth);
+                btnSocialPolicy.ToolTip = new ToolTip("Opens the social policy interface".ToRichText(), toolTipWidth);
                 btnSocialPolicy.MouseClick += (s, a) =>
                 {
                     // NYI
                 };
 
                 Button btnDiplomacy = (Button)form.GetChildByName("btnDiplomacy");
-                btnDiplomacy.ToolTip = new ToolTip("Opens the diplomacy interface", toolTipWidth);
+                btnDiplomacy.ToolTip = new ToolTip("Opens the diplomacy interface".ToRichText(), toolTipWidth);
                 btnDiplomacy.MouseClick += (s, a) =>
                 {
                     // NYI
                 };
 
                 Button btnCityList = (Button)form.GetChildByName("btnCityList");
-                btnCityList.ToolTip = new ToolTip("Opens a list of your empire's controlled cities", toolTipWidth);
+                btnCityList.ToolTip = new ToolTip("Opens a list of your empire's controlled cities".ToRichText(), toolTipWidth);
                 btnCityList.MouseClick += (s, a) =>
                 {
                     // toggle city list visibility
@@ -106,7 +106,7 @@ namespace Dominion.Client.GUI
                 };
 
                 Button btnUnitList = (Button)form.GetChildByName("btnUnitList");
-                btnUnitList.ToolTip = new ToolTip("Opens a list of your empire's controlled units", toolTipWidth);
+                btnUnitList.ToolTip = new ToolTip("Opens a list of your empire's controlled units".ToRichText(), toolTipWidth);
                 btnUnitList.MouseClick += (s, a) =>
                 {
                     // toggle unit list visibility

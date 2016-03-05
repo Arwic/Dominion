@@ -141,9 +141,9 @@ namespace Dominion.Common.Data
         //public bool IsWonder { get; set; } = false;
 
         /// <summary>
-        /// If the building hinders enemy unit movment in the city's borders
+        /// If the building hinders enemy unit movement in the city's borders
         /// </summary>
-        [Description("If the building hinders enemy unit movment in the city's borders")]
+        [Description("If the building hinders enemy unit movement in the city's borders")]
         [DisplayName("BorderObstacle"), Browsable(true), Category("City")]
         [XmlElement("BorderObstacle")]
         public bool BorderObstacle { get; set; } = false;

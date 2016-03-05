@@ -160,7 +160,7 @@ namespace Dominion.Client.GUI
                     // register events
                     b.MouseWheel += Form_MouseWheel;
                     // add a tool tip with more info about the tech
-                    b.ToolTip = new ToolTip(tech.Description, 500);
+                    b.ToolTip = new ToolTip(tech.Description.ToRichText(), 500);
                     b.ToolTip.FollowCurosr = true;
 
                     // add a line from the current tech to all its prereqs

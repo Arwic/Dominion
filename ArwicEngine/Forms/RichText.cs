@@ -159,7 +159,7 @@ namespace ArwicEngine.Forms
         [NonSerialized]
         private Font _font;
         
-        public RichTextSection(string text, Color? color = null, Font font = null)
+        public RichTextSection(string text, Color? color = null, Font font = null, float scale = 1f)
         {
             if (font == null)
                 font = Control.DefaultFont;
@@ -168,6 +168,7 @@ namespace ArwicEngine.Forms
             Text = text;
             Color = color.Value;
             Font = font;
+            Scale = scale;
         }
         
         public void Draw(SpriteBatch sb, Vector2 pos)

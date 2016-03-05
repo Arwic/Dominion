@@ -51,6 +51,9 @@ namespace Dominion.Client
                 new RichTextParseRule("barchart", ((char)FontSymbol.BarChart).ToString(), Color.White, RichText.SymbolFont),
                 new RichTextParseRule("expand", ((char)FontSymbol.ResizeArrows).ToString(), Color.White, RichText.SymbolFont),
                 new RichTextParseRule("flag", ((char)FontSymbol.Flag).ToString(), Color.White, RichText.SymbolFont),
+                new RichTextParseRule("movement", ((char)FontSymbol.ArrowRight).ToString(), Color.White, RichText.SymbolFont),
+                new RichTextParseRule("range", ((char)FontSymbol.Lorry).ToString(), Color.White, RichText.SymbolFont),
+                new RichTextParseRule("sight", ((char)FontSymbol.Footsteps).ToString(), Color.White, RichText.SymbolFont),
             };
 
             //string[] symbols = Enum.GetNames(typeof(FontSymbol));
