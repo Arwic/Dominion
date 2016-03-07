@@ -17,12 +17,14 @@ namespace Dominion.Client.GUI
         private SceneGame sceneGame;
         private Canvas canvas;
         private Form form;
+        private GUI_Settings guiSettings;
         public bool Visible { get { if (form != null) return form.Visible; else return false; } }
 
         public GUI_GameMenu(Client client, SceneGame sceneGame, Canvas canvas)
         {
             // get the form config
             formConfig = FormConfig.FromStream(Engine.Instance.Content.GetAsset<Stream>("Core:XML/Interface/Game/GameMenu"));
+            guiSettings = new GUI_Settings(canvas);
             this.client = client;
             this.sceneGame = sceneGame;
             this.canvas = canvas;
@@ -47,6 +49,10 @@ namespace Dominion.Client.GUI
                 Button btnLoadGame = (Button)form.GetChildByName("btnLoadGame"); // NYI
 
                 Button btnOptions = (Button)form.GetChildByName("btnOptions"); // NYI
+                btnOptions.MouseClick += (s, a) =>
+                {
+                    guiSettings.Show();
+                };
 
                 Button btnMainMenu = (Button)form.GetChildByName("btnMainMenu");
                 btnMainMenu.MouseClick += (s, a) =>
