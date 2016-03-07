@@ -878,6 +878,9 @@ namespace ArwicEngine.Forms
             Text = RichText.ParseText(config.Text, Color, Font);
             foreach (dynamic child in config.Children)
             {
+                if (child is ComboBoxConfig) // TODO fix combo boxes
+                    continue;
+
                 Assembly assembly = typeof(Control).Assembly;
                 Type controlType = assembly.GetType(child.TypeName);
                 ConstructorInfo[] ctors = controlType.GetConstructors();

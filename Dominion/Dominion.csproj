@@ -70,6 +70,7 @@
     <Compile Include="Client\GUI\GUI_CityList.cs" />
     <Compile Include="Client\GUI\GUI_EndTurn.cs" />
     <Compile Include="Client\GUI\GUI_NamePlates.cs" />
+    <Compile Include="Client\GUI\GUI_Settings.cs" />
     <Compile Include="Client\GUI\GUI_Tech.cs" />
     <Compile Include="Client\GUI\GUI_UnitActions.cs" />
     <Compile Include="Client\GUI\GUI_UnitList.cs" />

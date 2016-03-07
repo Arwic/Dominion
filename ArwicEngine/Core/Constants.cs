@@ -49,17 +49,36 @@ namespace ArwicEngine
         public const string ASSET_CONTROL_SCROLLBOX_SELECTED = "Core:Textures/Interface/Controls/ScrollBox_Selected";
         public const string ASSET_CONTROL_SCROLLBOX_SCRUBBER = "Core:Textures/Interface/Controls/ScrollBox_Scrubber";
         public const string ASSET_CONTROL_TEXTBOX = "Core:Textures/Interface/Controls/TextBox";
-        
+
         // config vars
-        public const string CONFIG_RESOLUTION = "gfx_resolution";
-        public const string CONFIG_VSYNC = "gfx_vsync";
-        public const string CONFIG_DISPLAYMODE = "gfx_displaymode";
-        public const string CONFIG_SOUNDVOLUME = "aud_sound";
-        public const string CONFIG_MUSICVOLUME = "aud_music";
+        public const string CONFIG_GFX_RESOLUTION = "gfx_resolution";
+        public const string CONFIG_GFX_VSYNC = "gfx_vsync";
+        public const string CONFIG_GFX_DISPLAY_MODE = "gfx_display_mode";
+        public const string CONFIG_AUD_MUSIC_ENABLED = "aud_music_enabled";
+        public const string CONFIG_AUD_MUSIC = "aud_music";
+        public const string CONFIG_AUD_SFX_ENABLED = "aud_sfx_enabled";
+        public const string CONFIG_AUD_SFX = "aud_sfx";
         public const string CONFIG_NET_SERVER_PORT = "net_server_port";
         public const string CONFIG_NET_SERVER_TIMEOUT = "net_server_timeout";
         public const string CONFIG_NET_CLIENT_PORT = "net_client_port";
         public const string CONFIG_NET_CLIENT_TIMEOUT = "net_client_timeout";
         public const string CONFIG_NET_CLIENT_ADDRESS = "net_client_address";
+        public const string CONFIG_GAME_AUTO_WORKER_DONT_REPLACE_IMPROVEMENTS = "game_auto_worker_dont_replace_improvements";
+        public const string CONFIG_GAME_AUTO_WORKER_DONT_REMOVE_FEATURES = "game_auto_worker_dont_remove_features";
+        public const string CONFIG_GAME_SHOW_REWARD_POPUPS = "game_show_reward_popups";
+        public const string CONFIG_GAME_SHOW_TILE_RECOMMENDATIONS = "game_show_tile_recommendations";
+        public const string CONFIG_GAME_AUTO_UNIT_CYCLE = "game_auto_unit_cycle";
+        public const string CONFIG_GAME_SP_AUTO_END_TURN = "game_sp_auto_end_turn";
+        public const string CONFIG_GAME_MP_AUTO_END_TURN = "game_mp_auto_end_turn";
+        public const string CONFIG_GAME_SP_QUICK_COMBAT = "game_sp_quick_combat";
+        public const string CONFIG_GAME_MP_QUICK_COMBAT = "game_mp_quick_combat";
+        public const string CONFIG_GAME_SP_QUICK_MOVEMENT = "game_sp_quick_movement";
+        public const string CONFIG_GAME_MP_QUICK_MOVEMENT = "game_mp_quick_movement";
+        public const string CONFIG_GAME_SHOW_ALL_POLICY_INFO = "game_show_all_policy_info";
+        public const string CONFIG_GAME_SP_SCORE_LIST = "game_sp_score_list";
+        public const string CONFIG_GAME_MP_SCORE_LIST = "game_mp_score_list";
+        public const string CONFIG_GAME_AUTOSAVE_ENABLED = "game_autosave_enabled";
+        public const string CONFIG_GAME_TURNS_BETWEEN_AUTOSAVES = "game_turns_between_auotsaves";
+        public const string CONFIG_GAME_AUTOSAVES_TO_KEEP = "game_autosaves_to_keep";
     }
 }

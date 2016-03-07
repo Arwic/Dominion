@@ -9,6 +9,7 @@ using ArwicEngine.Forms;
 using ArwicEngine.Graphics;
 using ArwicEngine.Net;
 using ArwicEngine.Scenes;
+using Dominion.Client.GUI;
 using Dominion.Common;
 using Dominion.Common.Data;
 using Dominion.Common.Entities;
@@ -121,6 +122,7 @@ namespace Dominion.Client.Scenes
         private TextBox tbPort;
         private TextBox tbUsername;
         private TextBox tbPassword;
+        private GUI_Settings guiSettings;
         private bool host;
         private CancellationTokenSource getWANcancellationToken;
         private string lastEmpireID = "NULL";
@@ -147,6 +149,15 @@ namespace Dominion.Client.Scenes
             ConsoleForm consoleForm = new ConsoleForm(canvas);
             background = new Image(new Rectangle(0, 0, 1920, 1080), Engine.Instance.Content.GetAsset<Sprite>($"Core:Textures/Backgrounds/Menu_{RandomHelper.Next(0, 6)}"), null, null);
             //empireAnthems = Engine.Instance.Content.LoadListContent<SoundEffect>("Audio/Music/Anthems");
+
+            // setup settings form
+            guiSettings = new GUI_Settings(canvas);
+            guiSettings.FormClosed += (s, a) =>
+            {
+                SetUpMainForm();
+            };
+
+            // setup other forms
             SetUpMainForm();
 
             // Play all anthems on shuffle
@@ -193,7 +204,17 @@ namespace Dominion.Client.Scenes
         }
         private void Main_BtnOptions_MouseClick(object sender, MouseEventArgs e)
         {
-            // NYI
+            if (frm_hostGame != null)
+                frm_hostGame.Visible = false;
+            if (frm_joinGame != null)
+                frm_joinGame.Visible = false;
+            if (frm_lobby != null)
+                frm_lobby.Visible = false;
+            if (frm_lobby_configWindow != null)
+                frm_lobby_configWindow.Visible = false;
+            if (frm_main != null)
+                frm_main.Visible = false;
+            guiSettings.Show();
         }
         private void Main_BtnJoin_MouseClick(object sender, MouseEventArgs e)
         {

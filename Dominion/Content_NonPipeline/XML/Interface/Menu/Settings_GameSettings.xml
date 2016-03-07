@@ -316,8 +316,8 @@
     </Child>
     <Child xsi:type="ButtonConfig">
       <TypeName>ArwicEngine.Forms.Button</TypeName>
-      <Name>btnCancel</Name>
-      <Text>Cancel</Text>
+      <Name>btnBack</Name>
+      <Text>Back</Text>
       <Color>
         <B>255</B>
         <G>255</G>
@@ -340,8 +340,8 @@
     </Child>
     <Child xsi:type="ButtonConfig">
       <TypeName>ArwicEngine.Forms.Button</TypeName>
-      <Name>btnOK</Name>
-      <Text>OK</Text>
+      <Name>btnApply</Name>
+      <Text>Apply</Text>
       <Color>
         <B>255</B>
         <G>255</G>
@@ -561,8 +561,8 @@
   <LocationY>0</LocationY>
   <LocationWidth>900</LocationWidth>
   <LocationHeight>530</LocationHeight>
-  <Draggable>true</Draggable>
-  <CloseButtonEnabled>true</CloseButtonEnabled>
+  <Draggable>false</Draggable>
+  <CloseButtonEnabled>false</CloseButtonEnabled>
   <HotKey>0</HotKey>
   <DrawTitlebar>true</DrawTitlebar>
 </FormConfig>

@@ -11,95 +11,10 @@
     <PackedValue>4294967295</PackedValue>
   </Color>
   <Children>
-    <Child>
-      <TypeName>ArwicEngine.Forms.Label</TypeName>
-      <Name>ArwicEngine.Forms.Label</Name>
-      <Text>Resolution</Text>
-      <Color>
-        <B>255</B>
-        <G>255</G>
-        <R>255</R>
-        <A>255</A>
-        <PackedValue>4294967295</PackedValue>
-      </Color>
-      <Children />
-      <LocationX>28</LocationX>
-      <LocationY>100</LocationY>
-      <LocationWidth>86</LocationWidth>
-      <LocationHeight>21</LocationHeight>
-    </Child>
-    <Child xsi:type="ComboBoxConfig">
-      <TypeName>ArwicEngine.Forms.ComboBox</TypeName>
-      <Name>ArwicEngine.Forms.ComboBox</Name>
-      <Text>1920x1080</Text>
-      <Color>
-        <B>255</B>
-        <G>255</G>
-        <R>255</R>
-        <A>255</A>
-        <PackedValue>4294967295</PackedValue>
-      </Color>
-      <Children>
-        <Child xsi:type="ButtonConfig">
-          <TypeName>ArwicEngine.Forms.Button</TypeName>
-          <Name>ArwicEngine.Forms.Button</Name>
-          <Text>1920x1080</Text>
-          <Color>
-            <B>255</B>
-            <G>255</G>
-            <R>255</R>
-            <A>255</A>
-            <PackedValue>4294967295</PackedValue>
-          </Color>
-          <Children />
-          <LocationX>0</LocationX>
-          <LocationY>0</LocationY>
-          <LocationWidth>230</LocationWidth>
-          <LocationHeight>30</LocationHeight>
-          <SpritePath>Core:Textures/Interface/Controls/ComboBox_Button.xnb</SpritePath>
-          <OverColorPercent>0.6</OverColorPercent>
-          <DownColorPercent>0.4</DownColorPercent>
-          <DisabledColorPercent>0.5</DisabledColorPercent>
-          <DestBorderSize>15</DestBorderSize>
-          <SourceBorderSize>15</SourceBorderSize>
-          <NineCutDraw>true</NineCutDraw>
-        </Child>
-      </Children>
-      <LocationX>126</LocationX>
-      <LocationY>95</LocationY>
-      <LocationWidth>230</LocationWidth>
-      <LocationHeight>30</LocationHeight>
-      <HeadButtonSpritePath>Core:Textures/Interface/Controls/ComboBox_Button.xnb</HeadButtonSpritePath>
-      <ListButtonSpritePath>Core:Textures/Interface/Controls/ComboBox_Button.xnb</ListButtonSpritePath>
-    </Child>
     <Child xsi:type="ButtonConfig">
       <TypeName>ArwicEngine.Forms.Button</TypeName>
-      <Name>btnDefaults</Name>
-      <Text>Defaults</Text>
-      <Color>
-        <B>255</B>
-        <G>255</G>
-        <R>255</R>
-        <A>255</A>
-        <PackedValue>4294967295</PackedValue>
-      </Color>
-      <Children />
-      <LocationX>300</LocationX>
-      <LocationY>500</LocationY>
-      <LocationWidth>300</LocationWidth>
-      <LocationHeight>30</LocationHeight>
-      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
-      <OverColorPercent>0.6</OverColorPercent>
-      <DownColorPercent>0.4</DownColorPercent>
-      <DisabledColorPercent>0.5</DisabledColorPercent>
-      <DestBorderSize>15</DestBorderSize>
-      <SourceBorderSize>15</SourceBorderSize>
-      <NineCutDraw>true</NineCutDraw>
-    </Child>
-    <Child xsi:type="ButtonConfig">
-      <TypeName>ArwicEngine.Forms.Button</TypeName>
-      <Name>btnOK</Name>
-      <Text>OK</Text>
+      <Name>btnTabGameSettings</Name>
+      <Text>Game Settings</Text>
       <Color>
         <B>255</B>
         <G>255</G>
@@ -109,54 +24,6 @@
       </Color>
       <Children />
       <LocationX>0</LocationX>
-      <LocationY>500</LocationY>
-      <LocationWidth>300</LocationWidth>
-      <LocationHeight>30</LocationHeight>
-      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
-      <OverColorPercent>0.6</OverColorPercent>
-      <DownColorPercent>0.4</DownColorPercent>
-      <DisabledColorPercent>0.5</DisabledColorPercent>
-      <DestBorderSize>15</DestBorderSize>
-      <SourceBorderSize>15</SourceBorderSize>
-      <NineCutDraw>true</NineCutDraw>
-    </Child>
-    <Child xsi:type="ButtonConfig">
-      <TypeName>ArwicEngine.Forms.Button</TypeName>
-      <Name>btnCancel</Name>
-      <Text>Cancel</Text>
-      <Color>
-        <B>255</B>
-        <G>255</G>
-        <R>255</R>
-        <A>255</A>
-        <PackedValue>4294967295</PackedValue>
-      </Color>
-      <Children />
-      <LocationX>600</LocationX>
-      <LocationY>500</LocationY>
-      <LocationWidth>300</LocationWidth>
-      <LocationHeight>30</LocationHeight>
-      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
-      <OverColorPercent>0.6</OverColorPercent>
-      <DownColorPercent>0.4</DownColorPercent>
-      <DisabledColorPercent>0.5</DisabledColorPercent>
-      <DestBorderSize>15</DestBorderSize>
-      <SourceBorderSize>15</SourceBorderSize>
-      <NineCutDraw>true</NineCutDraw>
-    </Child>
-    <Child xsi:type="ButtonConfig">
-      <TypeName>ArwicEngine.Forms.Button</TypeName>
-      <Name>btnTabAudioSettings</Name>
-      <Text>Audio Settings</Text>
-      <Color>
-        <B>255</B>
-        <G>255</G>
-        <R>255</R>
-        <A>255</A>
-        <PackedValue>4294967295</PackedValue>
-      </Color>
-      <Children />
-      <LocationX>599</LocationX>
       <LocationY>42</LocationY>
       <LocationWidth>300</LocationWidth>
       <LocationHeight>30</LocationHeight>
@@ -194,8 +61,8 @@
     </Child>
     <Child xsi:type="ButtonConfig">
       <TypeName>ArwicEngine.Forms.Button</TypeName>
-      <Name>btnTabGameSettings</Name>
-      <Text>Game Settings</Text>
+      <Name>btnTabAudioSettings</Name>
+      <Text>Audio Settings</Text>
       <Color>
         <B>255</B>
         <G>255</G>
@@ -204,7 +71,7 @@
         <PackedValue>4294967295</PackedValue>
       </Color>
       <Children />
-      <LocationX>0</LocationX>
+      <LocationX>599</LocationX>
       <LocationY>42</LocationY>
       <LocationWidth>300</LocationWidth>
       <LocationHeight>30</LocationHeight>
@@ -216,13 +83,102 @@
       <SourceBorderSize>15</SourceBorderSize>
       <NineCutDraw>true</NineCutDraw>
     </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnBack</Name>
+      <Text>Back</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>600</LocationX>
+      <LocationY>500</LocationY>
+      <LocationWidth>300</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnApply</Name>
+      <Text>Apply</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>0</LocationX>
+      <LocationY>500</LocationY>
+      <LocationWidth>300</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnDefaults</Name>
+      <Text>Defaults</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>300</LocationX>
+      <LocationY>500</LocationY>
+      <LocationWidth>300</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>ArwicEngine.Forms.Label</Name>
+      <Text>Resolution</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>28</LocationX>
+      <LocationY>100</LocationY>
+      <LocationWidth>86</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
   </Children>
   <LocationX>0</LocationX>
   <LocationY>0</LocationY>
   <LocationWidth>900</LocationWidth>
   <LocationHeight>530</LocationHeight>
-  <Draggable>true</Draggable>
-  <CloseButtonEnabled>true</CloseButtonEnabled>
+  <Draggable>false</Draggable>
+  <CloseButtonEnabled>false</CloseButtonEnabled>
   <HotKey>0</HotKey>
   <DrawTitlebar>true</DrawTitlebar>
 </FormConfig>

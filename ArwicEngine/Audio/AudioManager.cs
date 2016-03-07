@@ -113,7 +113,7 @@ namespace ArwicEngine.Audio
             try
             {
                 // set variables
-                MusicVolume = Convert.ToSingle(ConfigManager.Instance.GetVar(CONFIG_MUSICVOLUME));
+                MusicVolume = Convert.ToSingle(ConfigManager.Instance.GetVar(CONFIG_AUD_MUSIC));
 
                 // update current music with new variables
                 if (currentMusic != null)

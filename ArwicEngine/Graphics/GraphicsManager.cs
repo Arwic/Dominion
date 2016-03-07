@@ -69,11 +69,11 @@ namespace ArwicEngine.Graphics
                 if (true || drawSurface == null)
                 {
                     // Sets graphics values
-                    string[] resolution = ConfigManager.Instance.GetVar(CONFIG_RESOLUTION).Split('x');
+                    string[] resolution = ConfigManager.Instance.GetVar(CONFIG_GFX_RESOLUTION).Split('x');
                     int resX = Convert.ToInt32(resolution[0]);
                     int resY = Convert.ToInt32(resolution[1]);
-                    bool fullscreen = Convert.ToInt32(ConfigManager.Instance.GetVar(CONFIG_DISPLAYMODE)) == 1;
-                    bool vsync = Convert.ToInt32(ConfigManager.Instance.GetVar(CONFIG_VSYNC)) == 1;
+                    bool fullscreen = Convert.ToInt32(ConfigManager.Instance.GetVar(CONFIG_GFX_DISPLAY_MODE)) == 1;
+                    bool vsync = Convert.ToInt32(ConfigManager.Instance.GetVar(CONFIG_GFX_VSYNC)) == 1;
 
                     DeviceManager.PreferredBackBufferWidth = resX;
                     DeviceManager.PreferredBackBufferHeight = resY;

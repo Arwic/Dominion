@@ -117,16 +117,35 @@ namespace ArwicEngine.Core
             vars = new List<Variable>();
 
             // set default variables
-            SetVar(CONFIG_RESOLUTION, "1920x1080");
-            SetVar(CONFIG_VSYNC, "0");
-            SetVar(CONFIG_DISPLAYMODE, "0");
-            SetVar(CONFIG_SOUNDVOLUME, "1");
-            SetVar(CONFIG_MUSICVOLUME, "1");
+            SetVar(CONFIG_GFX_RESOLUTION, "1920x1080");
+            SetVar(CONFIG_GFX_VSYNC, "0");
+            SetVar(CONFIG_GFX_DISPLAY_MODE, "0");
+            SetVar(CONFIG_AUD_MUSIC_ENABLED, "1");
+            SetVar(CONFIG_AUD_MUSIC, "1");
+            SetVar(CONFIG_AUD_SFX_ENABLED, "1");
+            SetVar(CONFIG_AUD_SFX, "1");
             SetVar(CONFIG_NET_SERVER_PORT, "7894");
             SetVar(CONFIG_NET_SERVER_TIMEOUT, "2000");
             SetVar(CONFIG_NET_CLIENT_PORT, "7894");
             SetVar(CONFIG_NET_CLIENT_TIMEOUT, "2000");
             SetVar(CONFIG_NET_CLIENT_ADDRESS, "localhost");
+            SetVar(CONFIG_GAME_AUTO_WORKER_DONT_REPLACE_IMPROVEMENTS, "0");
+            SetVar(CONFIG_GAME_AUTO_WORKER_DONT_REMOVE_FEATURES, "0");
+            SetVar(CONFIG_GAME_SHOW_REWARD_POPUPS, "1");
+            SetVar(CONFIG_GAME_SHOW_TILE_RECOMMENDATIONS, "1");
+            SetVar(CONFIG_GAME_AUTO_UNIT_CYCLE, "0");
+            SetVar(CONFIG_GAME_SP_AUTO_END_TURN, "0");
+            SetVar(CONFIG_GAME_MP_AUTO_END_TURN, "0");
+            SetVar(CONFIG_GAME_SP_QUICK_COMBAT, "0");
+            SetVar(CONFIG_GAME_MP_QUICK_COMBAT, "0");
+            SetVar(CONFIG_GAME_SP_QUICK_MOVEMENT, "0");
+            SetVar(CONFIG_GAME_MP_QUICK_MOVEMENT, "0");
+            SetVar(CONFIG_GAME_SHOW_ALL_POLICY_INFO, "0");
+            SetVar(CONFIG_GAME_SP_SCORE_LIST, "1");
+            SetVar(CONFIG_GAME_MP_SCORE_LIST, "1");
+            SetVar(CONFIG_GAME_AUTOSAVE_ENABLED, "1");
+            SetVar(CONFIG_GAME_TURNS_BETWEEN_AUTOSAVES, "10");
+            SetVar(CONFIG_GAME_AUTOSAVES_TO_KEEP, "10");
         }
 
         /// <summary>
