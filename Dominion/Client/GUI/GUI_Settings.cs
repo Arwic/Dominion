@@ -223,7 +223,7 @@ namespace Dominion.Client.GUI
             btnTabAudioSettings.MouseClick += (s, a) => ShowAudioSettings();
 
             // settings
-            //ComboBox cbResolution = (ComboBox)frmVideoSettings.GetChildByName("cbResolution"); // combo boxes are borken in the interface editor
+            //ComboBox cbResolution = (ComboBox)frmVideoSettings.GetChildByName("cbResolution"); // combo boxes are borken in the interface editor, so this is hard coded for now
             List<IListItem> resItems = new List<IListItem>();
             string[] supportedRes =
             {
@@ -240,7 +240,13 @@ namespace Dominion.Client.GUI
                 StringListItem item = new StringListItem(res);
                 resItems.Add(item);
             }
-            ComboBox cbResolution = new ComboBox(new Rectangle(126, 95, 230, 30), resItems, frmVideoSettings);
+            ComboBox cbResolution = new ComboBox(new Rectangle(20, 180, 230, 30), resItems, frmVideoSettings);
+
+            CheckBox cbFullScreen = (CheckBox)frmVideoSettings.GetChildByName("cbFullScreen");
+            SetCheckBoxValue(cbFullScreen, CONFIG_GFX_DISPLAY_MODE, false);
+
+            CheckBox cbVsync = (CheckBox)frmVideoSettings.GetChildByName("cbVsync");
+            SetCheckBoxValue(cbVsync, CONFIG_GFX_VSYNC, false);
 
             string resString = ConfigManager.Instance.GetVar(CONFIG_GFX_RESOLUTION);
             bool foundRes = false;
@@ -266,6 +272,8 @@ namespace Dominion.Client.GUI
             btnApply.MouseClick += (s, a) =>
             {
                 ConfigManager.Instance.SetVar(CONFIG_GFX_RESOLUTION, ((StringListItem)cbResolution.Selected).Text.Text);
+                ConfigManager.Instance.SetVar(CONFIG_GFX_VSYNC, Convert.ToInt32(cbVsync.Value).ToString());
+                ConfigManager.Instance.SetVar(CONFIG_GFX_DISPLAY_MODE, Convert.ToInt32(cbFullScreen.Value).ToString());
 
                 GraphicsManager.Instance.Apply();
                 ConfigManager.Instance.Write(CONFIG_PATH);
