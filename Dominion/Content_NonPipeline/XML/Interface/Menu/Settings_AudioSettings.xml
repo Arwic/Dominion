@@ -1,0 +1,295 @@
+<?xml version="1.0"?>
+<FormConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeName>ArwicEngine.Forms.Form</TypeName>
+  <Name>frmVideoSettings</Name>
+  <Text>Audio Settings</Text>
+  <Color>
+    <B>255</B>
+    <G>255</G>
+    <R>255</R>
+    <A>255</A>
+    <PackedValue>4294967295</PackedValue>
+  </Color>
+  <Children>
+    <Child xsi:type="TextBoxConfig">
+      <TypeName>ArwicEngine.Forms.TextBox</TypeName>
+      <Name>tbSoundEffectsVolume</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>20</LocationX>
+      <LocationY>221</LocationY>
+      <LocationWidth>50</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <Masked>false</Masked>
+      <MaskedCharacter>0</MaskedCharacter>
+      <MaxCharacters>2147483647</MaxCharacters>
+      <SpritePath>Core:Textures/Interface/Controls/TextBox.xnb</SpritePath>
+      <TextOffset>
+        <X>10</X>
+        <Y>5</Y>
+      </TextOffset>
+      <CaretBlinkTimer>500</CaretBlinkTimer>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>ArwicEngine.Forms.Label</Name>
+      <Text>Sound Effects Volume</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>75</LocationX>
+      <LocationY>225</LocationY>
+      <LocationWidth>183</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>ArwicEngine.Forms.Label</Name>
+      <Text>Music Volume</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>75</LocationX>
+      <LocationY>119</LocationY>
+      <LocationWidth>115</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child xsi:type="TextBoxConfig">
+      <TypeName>ArwicEngine.Forms.TextBox</TypeName>
+      <Name>tbMusicVolume</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>20</LocationX>
+      <LocationY>115</LocationY>
+      <LocationWidth>50</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <Masked>false</Masked>
+      <MaskedCharacter>0</MaskedCharacter>
+      <MaxCharacters>2147483647</MaxCharacters>
+      <SpritePath>Core:Textures/Interface/Controls/TextBox.xnb</SpritePath>
+      <TextOffset>
+        <X>10</X>
+        <Y>5</Y>
+      </TextOffset>
+      <CaretBlinkTimer>500</CaretBlinkTimer>
+    </Child>
+    <Child xsi:type="CheckBoxConfig">
+      <TypeName>ArwicEngine.Forms.CheckBox</TypeName>
+      <Name>ArwicEngine.Forms.CheckBox</Name>
+      <Text>Sound Effects</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>20</LocationX>
+      <LocationY>185</LocationY>
+      <LocationWidth>30</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpriteTruePath>Core:Textures/Interface/Controls/CheckBox_True.xnb</SpriteTruePath>
+      <SpriteFalsePath>Core:Textures/Interface/Controls/CheckBox_False.xnb</SpriteFalsePath>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <Value>true</Value>
+    </Child>
+    <Child xsi:type="CheckBoxConfig">
+      <TypeName>ArwicEngine.Forms.CheckBox</TypeName>
+      <Name>cbMusic</Name>
+      <Text>Music</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>20</LocationX>
+      <LocationY>80</LocationY>
+      <LocationWidth>30</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpriteTruePath>Core:Textures/Interface/Controls/CheckBox_True.xnb</SpriteTruePath>
+      <SpriteFalsePath>Core:Textures/Interface/Controls/CheckBox_False.xnb</SpriteFalsePath>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <Value>true</Value>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnDefaults</Name>
+      <Text>Defaults</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>300</LocationX>
+      <LocationY>500</LocationY>
+      <LocationWidth>300</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnOK</Name>
+      <Text>OK</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>0</LocationX>
+      <LocationY>500</LocationY>
+      <LocationWidth>300</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnCancel</Name>
+      <Text>Cancel</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>600</LocationX>
+      <LocationY>500</LocationY>
+      <LocationWidth>300</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnTabAudioSettings</Name>
+      <Text>Audio Settings</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>50</A>
+        <PackedValue>855638015</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>599</LocationX>
+      <LocationY>42</LocationY>
+      <LocationWidth>300</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnTabVideoSettings</Name>
+      <Text>Video Settings</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>300</LocationX>
+      <LocationY>42</LocationY>
+      <LocationWidth>300</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnTabGameSettings</Name>
+      <Text>Game Settings</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>0</LocationX>
+      <LocationY>42</LocationY>
+      <LocationWidth>300</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+  </Children>
+  <LocationX>0</LocationX>
+  <LocationY>0</LocationY>
+  <LocationWidth>900</LocationWidth>
+  <LocationHeight>530</LocationHeight>
+  <Draggable>true</Draggable>
+  <CloseButtonEnabled>true</CloseButtonEnabled>
+  <HotKey>0</HotKey>
+  <DrawTitlebar>true</DrawTitlebar>
+</FormConfig>

@@ -1,0 +1,568 @@
+<?xml version="1.0"?>
+<FormConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeName>ArwicEngine.Forms.Form</TypeName>
+  <Name>frmGameSettings</Name>
+  <Text>Game Settings</Text>
+  <Color>
+    <B>255</B>
+    <G>255</G>
+    <R>255</R>
+    <A>255</A>
+    <PackedValue>4294967295</PackedValue>
+  </Color>
+  <Children>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>ArwicEngine.Forms.Label</Name>
+      <Text>Autosaves To Keep</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>577</LocationX>
+      <LocationY>293</LocationY>
+      <LocationWidth>161</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child xsi:type="TextBoxConfig">
+      <TypeName>ArwicEngine.Forms.TextBox</TypeName>
+      <Name>tbAutosavesToKeep</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>529</LocationX>
+      <LocationY>290</LocationY>
+      <LocationWidth>40</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <Masked>false</Masked>
+      <MaskedCharacter>0</MaskedCharacter>
+      <MaxCharacters>2147483647</MaxCharacters>
+      <SpritePath>Core:Textures/Interface/Controls/TextBox.xnb</SpritePath>
+      <TextOffset>
+        <X>10</X>
+        <Y>5</Y>
+      </TextOffset>
+      <CaretBlinkTimer>500</CaretBlinkTimer>
+    </Child>
+    <Child xsi:type="CheckBoxConfig">
+      <TypeName>ArwicEngine.Forms.CheckBox</TypeName>
+      <Name>cbAutosave</Name>
+      <Text>Autosave</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>529</LocationX>
+      <LocationY>220</LocationY>
+      <LocationWidth>30</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpriteTruePath>Core:Textures/Interface/Controls/CheckBox_True.xnb</SpriteTruePath>
+      <SpriteFalsePath>Core:Textures/Interface/Controls/CheckBox_False.xnb</SpriteFalsePath>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <Value>true</Value>
+    </Child>
+    <Child>
+      <TypeName>ArwicEngine.Forms.Label</TypeName>
+      <Name>ArwicEngine.Forms.Label</Name>
+      <Text>Turns Between Autosaves</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>577</LocationX>
+      <LocationY>260</LocationY>
+      <LocationWidth>214</LocationWidth>
+      <LocationHeight>21</LocationHeight>
+    </Child>
+    <Child xsi:type="TextBoxConfig">
+      <TypeName>ArwicEngine.Forms.TextBox</TypeName>
+      <Name>tbTurnsBetweenAutosaves</Name>
+      <Text />
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>529</LocationX>
+      <LocationY>255</LocationY>
+      <LocationWidth>40</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <Masked>false</Masked>
+      <MaskedCharacter>0</MaskedCharacter>
+      <MaxCharacters>2147483647</MaxCharacters>
+      <SpritePath>Core:Textures/Interface/Controls/TextBox.xnb</SpritePath>
+      <TextOffset>
+        <X>10</X>
+        <Y>5</Y>
+      </TextOffset>
+      <CaretBlinkTimer>500</CaretBlinkTimer>
+    </Child>
+    <Child xsi:type="CheckBoxConfig">
+      <TypeName>ArwicEngine.Forms.CheckBox</TypeName>
+      <Name>cbMultiplayerScoreList</Name>
+      <Text>Multiplayer Score List</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>530</LocationX>
+      <LocationY>151</LocationY>
+      <LocationWidth>30</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpriteTruePath>Core:Textures/Interface/Controls/CheckBox_True.xnb</SpriteTruePath>
+      <SpriteFalsePath>Core:Textures/Interface/Controls/CheckBox_False.xnb</SpriteFalsePath>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <Value>true</Value>
+    </Child>
+    <Child xsi:type="CheckBoxConfig">
+      <TypeName>ArwicEngine.Forms.CheckBox</TypeName>
+      <Name>cbSinglePlayerScoreList</Name>
+      <Text>Single Player Score List</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>530</LocationX>
+      <LocationY>117</LocationY>
+      <LocationWidth>30</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpriteTruePath>Core:Textures/Interface/Controls/CheckBox_True.xnb</SpriteTruePath>
+      <SpriteFalsePath>Core:Textures/Interface/Controls/CheckBox_False.xnb</SpriteFalsePath>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <Value>true</Value>
+    </Child>
+    <Child xsi:type="CheckBoxConfig">
+      <TypeName>ArwicEngine.Forms.CheckBox</TypeName>
+      <Name>cbShowAllPolicyInfo</Name>
+      <Text>Show All Policy Information</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>529</LocationX>
+      <LocationY>81</LocationY>
+      <LocationWidth>30</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpriteTruePath>Core:Textures/Interface/Controls/CheckBox_True.xnb</SpriteTruePath>
+      <SpriteFalsePath>Core:Textures/Interface/Controls/CheckBox_False.xnb</SpriteFalsePath>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <Value>false</Value>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnDefaults</Name>
+      <Text>Defaults</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>300</LocationX>
+      <LocationY>500</LocationY>
+      <LocationWidth>300</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnOK</Name>
+      <Text>OK</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>0</LocationX>
+      <LocationY>500</LocationY>
+      <LocationWidth>300</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnCancel</Name>
+      <Text>Cancel</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>600</LocationX>
+      <LocationY>500</LocationY>
+      <LocationWidth>300</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="CheckBoxConfig">
+      <TypeName>ArwicEngine.Forms.CheckBox</TypeName>
+      <Name>cbMultiplayerQuickMovement</Name>
+      <Text>Multiplayer Quick Movement</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>20</LocationX>
+      <LocationY>430</LocationY>
+      <LocationWidth>30</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpriteTruePath>Core:Textures/Interface/Controls/CheckBox_True.xnb</SpriteTruePath>
+      <SpriteFalsePath>Core:Textures/Interface/Controls/CheckBox_False.xnb</SpriteFalsePath>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <Value>true</Value>
+    </Child>
+    <Child xsi:type="CheckBoxConfig">
+      <TypeName>ArwicEngine.Forms.CheckBox</TypeName>
+      <Name>cbSinglePlayerQuickMovement</Name>
+      <Text>Single Player Quick Movement</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>20</LocationX>
+      <LocationY>396</LocationY>
+      <LocationWidth>30</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpriteTruePath>Core:Textures/Interface/Controls/CheckBox_True.xnb</SpriteTruePath>
+      <SpriteFalsePath>Core:Textures/Interface/Controls/CheckBox_False.xnb</SpriteFalsePath>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <Value>true</Value>
+    </Child>
+    <Child xsi:type="CheckBoxConfig">
+      <TypeName>ArwicEngine.Forms.CheckBox</TypeName>
+      <Name>cbMultiplayerQuickCombat</Name>
+      <Text>Multiplayer Quick Combat</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>20</LocationX>
+      <LocationY>360</LocationY>
+      <LocationWidth>30</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpriteTruePath>Core:Textures/Interface/Controls/CheckBox_True.xnb</SpriteTruePath>
+      <SpriteFalsePath>Core:Textures/Interface/Controls/CheckBox_False.xnb</SpriteFalsePath>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <Value>true</Value>
+    </Child>
+    <Child xsi:type="CheckBoxConfig">
+      <TypeName>ArwicEngine.Forms.CheckBox</TypeName>
+      <Name>cbSinglePlayerQuickCombat</Name>
+      <Text>Single Player Quick Combat</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>20</LocationX>
+      <LocationY>326</LocationY>
+      <LocationWidth>30</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpriteTruePath>Core:Textures/Interface/Controls/CheckBox_True.xnb</SpriteTruePath>
+      <SpriteFalsePath>Core:Textures/Interface/Controls/CheckBox_False.xnb</SpriteFalsePath>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <Value>true</Value>
+    </Child>
+    <Child xsi:type="CheckBoxConfig">
+      <TypeName>ArwicEngine.Forms.CheckBox</TypeName>
+      <Name>cbMultiplayerAutoEndTurn</Name>
+      <Text>Multiplayer Auto End Turn</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>19</LocationX>
+      <LocationY>290</LocationY>
+      <LocationWidth>30</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpriteTruePath>Core:Textures/Interface/Controls/CheckBox_True.xnb</SpriteTruePath>
+      <SpriteFalsePath>Core:Textures/Interface/Controls/CheckBox_False.xnb</SpriteFalsePath>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <Value>false</Value>
+    </Child>
+    <Child xsi:type="CheckBoxConfig">
+      <TypeName>ArwicEngine.Forms.CheckBox</TypeName>
+      <Name>cbSinglePlayerAutoEndTurn</Name>
+      <Text>Single Player Auto End Turn</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>19</LocationX>
+      <LocationY>256</LocationY>
+      <LocationWidth>30</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpriteTruePath>Core:Textures/Interface/Controls/CheckBox_True.xnb</SpriteTruePath>
+      <SpriteFalsePath>Core:Textures/Interface/Controls/CheckBox_False.xnb</SpriteFalsePath>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <Value>false</Value>
+    </Child>
+    <Child xsi:type="CheckBoxConfig">
+      <TypeName>ArwicEngine.Forms.CheckBox</TypeName>
+      <Name>cbAutoUnitCycle</Name>
+      <Text>Auto Unit Cycle</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>19</LocationX>
+      <LocationY>220</LocationY>
+      <LocationWidth>30</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpriteTruePath>Core:Textures/Interface/Controls/CheckBox_True.xnb</SpriteTruePath>
+      <SpriteFalsePath>Core:Textures/Interface/Controls/CheckBox_False.xnb</SpriteFalsePath>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <Value>false</Value>
+    </Child>
+    <Child xsi:type="CheckBoxConfig">
+      <TypeName>ArwicEngine.Forms.CheckBox</TypeName>
+      <Name>cbShowTileReccomendations</Name>
+      <Text>Show Tile Recommendations</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>20</LocationX>
+      <LocationY>186</LocationY>
+      <LocationWidth>30</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpriteTruePath>Core:Textures/Interface/Controls/CheckBox_True.xnb</SpriteTruePath>
+      <SpriteFalsePath>Core:Textures/Interface/Controls/CheckBox_False.xnb</SpriteFalsePath>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <Value>true</Value>
+    </Child>
+    <Child xsi:type="CheckBoxConfig">
+      <TypeName>ArwicEngine.Forms.CheckBox</TypeName>
+      <Name>cbShowRewardPopups</Name>
+      <Text>Show Reward Popups</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>20</LocationX>
+      <LocationY>151</LocationY>
+      <LocationWidth>30</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpriteTruePath>Core:Textures/Interface/Controls/CheckBox_True.xnb</SpriteTruePath>
+      <SpriteFalsePath>Core:Textures/Interface/Controls/CheckBox_False.xnb</SpriteFalsePath>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <Value>true</Value>
+    </Child>
+    <Child xsi:type="CheckBoxConfig">
+      <TypeName>ArwicEngine.Forms.CheckBox</TypeName>
+      <Name>cbAutoWorkerDontRemoveFeatures</Name>
+      <Text>Automated Workers Don't Remove Features</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>20</LocationX>
+      <LocationY>114</LocationY>
+      <LocationWidth>30</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpriteTruePath>Core:Textures/Interface/Controls/CheckBox_True.xnb</SpriteTruePath>
+      <SpriteFalsePath>Core:Textures/Interface/Controls/CheckBox_False.xnb</SpriteFalsePath>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <Value>false</Value>
+    </Child>
+    <Child xsi:type="CheckBoxConfig">
+      <TypeName>ArwicEngine.Forms.CheckBox</TypeName>
+      <Name>cbAutoWorkerDontReplaceImprovements</Name>
+      <Text>Automated Workers Don't Replace Improvements</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>20</LocationX>
+      <LocationY>79</LocationY>
+      <LocationWidth>30</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpriteTruePath>Core:Textures/Interface/Controls/CheckBox_True.xnb</SpriteTruePath>
+      <SpriteFalsePath>Core:Textures/Interface/Controls/CheckBox_False.xnb</SpriteFalsePath>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <Value>false</Value>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnTabAudioSettings</Name>
+      <Text>Audio Settings</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>599</LocationX>
+      <LocationY>42</LocationY>
+      <LocationWidth>300</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnTabVideoSettings</Name>
+      <Text>Video Settings</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>255</A>
+        <PackedValue>4294967295</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>300</LocationX>
+      <LocationY>42</LocationY>
+      <LocationWidth>300</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+    <Child xsi:type="ButtonConfig">
+      <TypeName>ArwicEngine.Forms.Button</TypeName>
+      <Name>btnTabGameSettings</Name>
+      <Text>Game Settings</Text>
+      <Color>
+        <B>255</B>
+        <G>255</G>
+        <R>255</R>
+        <A>50</A>
+        <PackedValue>855638015</PackedValue>
+      </Color>
+      <Children />
+      <LocationX>0</LocationX>
+      <LocationY>42</LocationY>
+      <LocationWidth>300</LocationWidth>
+      <LocationHeight>30</LocationHeight>
+      <SpritePath>Core:Textures/Interface/Controls/Button.xnb</SpritePath>
+      <OverColorPercent>0.6</OverColorPercent>
+      <DownColorPercent>0.4</DownColorPercent>
+      <DisabledColorPercent>0.5</DisabledColorPercent>
+      <DestBorderSize>15</DestBorderSize>
+      <SourceBorderSize>15</SourceBorderSize>
+      <NineCutDraw>true</NineCutDraw>
+    </Child>
+  </Children>
+  <LocationX>0</LocationX>
+  <LocationY>0</LocationY>
+  <LocationWidth>900</LocationWidth>
+  <LocationHeight>530</LocationHeight>
+  <Draggable>true</Draggable>
+  <CloseButtonEnabled>true</CloseButtonEnabled>
+  <HotKey>0</HotKey>
+  <DrawTitlebar>true</DrawTitlebar>
+</FormConfig>
