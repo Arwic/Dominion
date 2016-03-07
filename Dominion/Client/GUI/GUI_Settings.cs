@@ -66,6 +66,17 @@ namespace Dominion.Client.GUI
             ShowGameSettings();
         }
         
+        // hides all the "tabs"
+        private void HideAllForms()
+        {
+            if (frmAudioSettings != null)
+                frmAudioSettings.Visible = false;
+            if (frmGameSettings != null)
+                frmGameSettings.Visible = false;
+            if (frmVideoSettings != null)
+                frmVideoSettings.Visible = false;
+        }
+
         private void SetCheckBoxValue(CheckBox cb, string varName, bool defaultVal)
         {
             try
@@ -80,6 +91,8 @@ namespace Dominion.Client.GUI
 
         private void ShowGameSettings()
         {
+            HideAllForms();
+
             // form
             canvas.RemoveChild(frmGameSettings);
             frmGameSettings = new Form(configGameSettings, canvas);
@@ -191,6 +204,8 @@ namespace Dominion.Client.GUI
 
         private void ShowVideoSettings()
         {
+            HideAllForms();
+
             // form
             canvas.RemoveChild(frmVideoSettings);
             frmVideoSettings = new Form(configVideoSettings, canvas);
@@ -265,6 +280,8 @@ namespace Dominion.Client.GUI
 
         private void ShowAudioSettings()
         {
+            HideAllForms();
+
             // form
             canvas.RemoveChild(frmAudioSettings);
             frmAudioSettings = new Form(configAudioSettings, canvas);
@@ -370,12 +387,7 @@ namespace Dominion.Client.GUI
 
         public void Hide()
         {
-            if (frmAudioSettings != null)
-                frmAudioSettings.Visible = false;
-            if (frmGameSettings != null)
-                frmGameSettings.Visible = false;
-            if (frmVideoSettings != null)
-                frmVideoSettings.Visible = false;
+            HideAllForms();
 
             OnFormClosed(EventArgs.Empty);
         }
