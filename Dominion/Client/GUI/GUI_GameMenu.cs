@@ -48,7 +48,7 @@ namespace Dominion.Client.GUI
 
                 Button btnLoadGame = (Button)form.GetChildByName("btnLoadGame"); // NYI
 
-                Button btnOptions = (Button)form.GetChildByName("btnOptions"); // NYI
+                Button btnOptions = (Button)form.GetChildByName("btnOptions");
                 btnOptions.MouseClick += (s, a) =>
                 {
                     guiSettings.Show();
