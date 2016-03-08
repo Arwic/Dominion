@@ -3,7 +3,7 @@
 <EmpireDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Dominion Core Empire Data">
   <Empires>
     <Empire>
-      <Name>EMPIRE_ENGLAND</Name>
+      <ID>EMPIRE_ENGLAND</ID>
       <Adjective>English</Adjective>
       <DefaultCityNames>
         <Name>London</Name>
@@ -87,7 +87,7 @@
       <IconAtlas>Core:XML/AtlasDefinitions/EmpireAtlasDefinition</IconAtlas>
     </Empire>
     <Empire>
-      <Name>EMPIRE_FRANCE</Name>
+      <ID>EMPIRE_FRANCE</ID>
       <Adjective>French</Adjective>
       <DefaultCityNames>
         <Name>Paris</Name>
@@ -172,7 +172,7 @@
       <IconAtlas>Core:XML/AtlasDefinitions/EmpireAtlasDefinition</IconAtlas>
     </Empire>
     <Empire>
-      <Name>EMPIRE_GERMANY</Name>
+      <ID>EMPIRE_GERMANY</ID>
       <Adjective>German</Adjective>
       <DefaultCityNames>
         <Name>Berlin</Name>
@@ -272,7 +272,7 @@
       <IconAtlas>Core:XML/AtlasDefinitions/EmpireAtlasDefinition</IconAtlas>
     </Empire>
     <Empire>
-      <Name>EMPIRE_CHINA</Name>
+      <ID>EMPIRE_CHINA</ID>
       <Adjective>Chinese</Adjective>
       <DefaultCityNames>
         <Name>Beijing</Name>
@@ -362,7 +362,7 @@
       <IconAtlas>Core:XML/AtlasDefinitions/EmpireAtlasDefinition</IconAtlas>
     </Empire>
     <Empire>
-      <Name>EMPIRE_AZTEC</Name>
+      <ID>EMPIRE_AZTEC</ID>
       <Adjective>Aztec</Adjective>
       <DefaultCityNames>
         <Name>Tenochtitlan</Name>

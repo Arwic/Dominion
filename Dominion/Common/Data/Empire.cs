@@ -73,19 +73,19 @@ namespace Dominion.Common.Data
     public class Empire
     {
         /// <summary>
-        /// The name of the empire
+        /// The ID of the empire
         /// </summary>
-        [Description("The name of the empire")]
-        [DisplayName("Name"), Browsable(true), Category("General")]
-        [XmlElement("Name")]
-        public string Name { get; set; } = "EMPIRE_NULL";
+        [Description("The ID of the empire")]
+        [DisplayName("ID"), Browsable(true), Category("General")]
+        [XmlElement("ID")]
+        public string ID { get; set; } = "EMPIRE_NULL";
 
         /// <summary>
         /// The name of the empire in a display ready format
         /// </summary>
         [Browsable(false)]
         [XmlIgnore]
-        public string DisplayName { get; set; } = "Null";
+        public string Name { get; set; } = "Null";
 
         /// <summary>
         /// Adjective used to describe items owned by this empire

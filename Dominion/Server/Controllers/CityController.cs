@@ -691,7 +691,7 @@ namespace Dominion.Server.Controllers
             foreach (Building building in Controllers.Data.Building.GetAllBuildings())
             {
                 // check if the building has already been constructed
-                if (city.Buildings.Contains(building.Name))
+                if (city.Buildings.Contains(building.ID))
                     continue;
 
                 // control flag
@@ -700,7 +700,7 @@ namespace Dominion.Server.Controllers
                 // check if building is already in the production queue
                 foreach (Production prod in city.ProductionQueue)
                 {
-                    if (prod.Name == building.Name)
+                    if (prod.Name == building.ID)
                     {
                         valid = false;
                         break;

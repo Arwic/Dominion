@@ -24,7 +24,7 @@ namespace Dominion.Common.Managers
             foreach (Technology tech in techs)
             {
                 tech.Unlocked = false;
-                data.Add(tech.Name, tech);
+                data.Add(tech.ID, tech);
             }
         }
 
@@ -113,8 +113,8 @@ namespace Dominion.Common.Managers
 
             foreach (Technology t in pack.Technologies)
             {
-                t.DisplayName = Technology.FormatName(t.Name);
-                data.Add(t.Name, t);
+                t.Name = Technology.FormatName(t.ID);
+                data.Add(t.ID, t);
             }
         }
 
@@ -142,7 +142,7 @@ namespace Dominion.Common.Managers
             {
                 foreach (Technology t in dp.Technologies)
                 {
-                    data.Add(t.Name, t);
+                    data.Add(t.ID, t);
                 }
             }
         }

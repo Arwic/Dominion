@@ -813,7 +813,7 @@ namespace Dominion.Server
         // tells every client that the game is over
         private void SendGameOver(Player winner, VictoryType vtype)
         {
-            ConsoleManager.Instance.WriteLine($"Game over! {winner.Name}, {controllers.Data.Empire.GetEmpire(winner.EmpireID).DisplayName}, has won with a {vtype} victory", MsgType.ServerInfo);
+            ConsoleManager.Instance.WriteLine($"Game over! {winner.Name}, {controllers.Data.Empire.GetEmpire(winner.EmpireID).Name}, has won with a {vtype} victory", MsgType.ServerInfo);
             Packet pOut = new Packet((int)PacketHeader.GameOver, winner, vtype);
             server.SendDataToAll(pOut);
             StopServer();

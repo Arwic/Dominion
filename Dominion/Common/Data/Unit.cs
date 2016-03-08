@@ -33,19 +33,19 @@ namespace Dominion.Common.Data
         public string IconAtlas { get; set; } = "Core:XML/AtlasDefinitions/UnitAtlasDefinition";
 
         /// <summary>
-        /// The name of unit
+        /// The ID of unit
         /// </summary>
-        [Description("The name of unit")]
-        [DisplayName("Name"), Browsable(true), Category("General")]
-        [XmlElement("Name")]
-        public string Name { get; set; } = "UNIT_NULL";
+        [Description("The ID of unit")]
+        [DisplayName("ID"), Browsable(true), Category("General")]
+        [XmlElement("ID")]
+        public string ID { get; set; } = "UNIT_NULL";
 
         /// <summary>
         /// The name of the unit in a display ready format
         /// </summary>
         [Browsable(false)]
         [XmlIgnore]
-        public string DisplayName { get; set; } = "Null";
+        public string Name { get; set; } = "Null";
 
         /// <summary>
         /// Indicates whether the unit can be purchased with gold

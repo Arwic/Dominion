@@ -57,8 +57,8 @@ namespace Dominion.Common.Managers
 
             foreach (Empire e in pack.Empires)
             {
-                e.DisplayName = Empire.FormatName(e.Name);
-                data.Add(e.Name, e);
+                e.Name = Empire.FormatName(e.ID);
+                data.Add(e.ID, e);
             }
         }
 
@@ -86,7 +86,7 @@ namespace Dominion.Common.Managers
             {
                 foreach (Empire e in dp.Empires)
                 {
-                    data.Add(e.Name, e);
+                    data.Add(e.ID, e);
                 }
             }
         }
@@ -141,7 +141,7 @@ namespace Dominion.Common.Managers
         {
             for (int i = 0; i < data.Count; i++)
             {
-                if (data.Values.ElementAt(i).Name == name)
+                if (data.Values.ElementAt(i).ID == name)
                 {
                     return i;
                 }

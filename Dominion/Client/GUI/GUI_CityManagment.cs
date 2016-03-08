@@ -402,7 +402,7 @@ namespace Dominion.Client.GUI
             foreach (string buildingID in client.SelectedCity.Buildings)
             {
                 Building building = client.DataManager.Building.GetBuilding(buildingID);
-                items.Add(new StringListItem($"{building.DisplayName}".ToRichText(), buildingID));
+                items.Add(new StringListItem($"{building.Name}".ToRichText(), buildingID));
             }
             return items;
         }

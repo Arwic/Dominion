@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!--Generated with ArwicXmlEditor (05 Mar 2016 16:46) by Tim Ings-->
-<BuildingDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Dominion Core Building Data">
+<BuildingDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="Dominion Core Building Data">
   <Buildings>
     <Building>
-      <Name>BUILDING_PALACE</Name>
+      <ID>BUILDING_PALACE</ID>
       <Description>Indicates this City is the $(captial) Capital of the empire. Connecting other Cities to the capital Capital by Road will produce additional $(gold) Gold.</Description>
       <Tags />
       <GoldUpkeep>0</GoldUpkeep>
@@ -84,7 +84,7 @@
       <YieldTourismModifier>1</YieldTourismModifier>
     </Building>
     <Building>
-      <Name>BUILDING_BARRACKS</Name>
+      <ID>BUILDING_BARRACKS</ID>
       <Description>+15 XP for all military units produced in this city.</Description>
       <Tags>
         <Tag>MILITARY</Tag>
@@ -169,7 +169,7 @@
       <YieldTourismModifier>1</YieldTourismModifier>
     </Building>
     <Building>
-      <Name>BUILDING_CIRCUS</Name>
+      <ID>BUILDING_CIRCUS</ID>
       <Description>+2 $(happiness) Happiness</Description>
       <Tags />
       <GoldUpkeep>0</GoldUpkeep>
@@ -252,7 +252,7 @@
       <YieldTourismModifier>1</YieldTourismModifier>
     </Building>
     <Building>
-      <Name>BUILDING_GRANARY</Name>
+      <ID>BUILDING_GRANARY</ID>
       <Description>+2 $(food)</Description>
       <Tags />
       <GoldUpkeep>1</GoldUpkeep>
@@ -335,7 +335,7 @@
       <YieldTourismModifier>1</YieldTourismModifier>
     </Building>
     <Building>
-      <Name>BUILDING_LIBRARY</Name>
+      <ID>BUILDING_LIBRARY</ID>
       <Description>+1 $(science) Science for every 2 $population) Citizens in this City.</Description>
       <Tags />
       <GoldUpkeep>1</GoldUpkeep>
@@ -418,7 +418,7 @@
       <YieldTourismModifier>1</YieldTourismModifier>
     </Building>
     <Building>
-      <Name>BUILDING_MONUMENT</Name>
+      <ID>BUILDING_MONUMENT</ID>
       <Description>+2 $(culture) Culture</Description>
       <Tags />
       <GoldUpkeep>1</GoldUpkeep>
@@ -499,7 +499,7 @@
       <YieldTourismModifier>1</YieldTourismModifier>
     </Building>
     <Building>
-      <Name>BUILDING_SHRINE</Name>
+      <ID>BUILDING_SHRINE</ID>
       <Description>+1 $(faith) Faith</Description>
       <Tags />
       <GoldUpkeep>1</GoldUpkeep>
@@ -582,7 +582,7 @@
       <YieldTourismModifier>1</YieldTourismModifier>
     </Building>
     <Building>
-      <Name>BUILDING_STONE_WORKS</Name>
+      <ID>BUILDING_STONE_WORKS</ID>
       <Description>+1 $(happiness) Happiness\n+1 $(production) Production\n+1 $(production) Production from each source of Marble and Stone worked by this city.</Description>
       <Tags />
       <GoldUpkeep>1</GoldUpkeep>
@@ -665,7 +665,7 @@
       <YieldTourismModifier>1</YieldTourismModifier>
     </Building>
     <Building>
-      <Name>BUILDING_WALLS</Name>
+      <ID>BUILDING_WALLS</ID>
       <Description>+5 City Defense Strength\n+50 City Hit points</Description>
       <Tags>
         <Tag>WALL</Tag>
@@ -750,7 +750,7 @@
       <YieldTourismModifier>1</YieldTourismModifier>
     </Building>
     <Building>
-      <Name>BUILDING_WATER_MILL</Name>
+      <ID>BUILDING_WATER_MILL</ID>
       <Description>+2 $(food) Food\n+1 $(production) Production</Description>
       <Tags />
       <GoldUpkeep>2</GoldUpkeep>

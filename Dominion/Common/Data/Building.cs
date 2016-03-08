@@ -20,19 +20,19 @@ namespace Dominion.Common.Data
     public class Building
     {
         /// <summary>
-        /// The name of the building
+        /// The ID of the building
         /// </summary>
-        [Description("The name of the building")]
-        [DisplayName("Name"), Browsable(true), Category("General")]
-        [XmlElement("Name")]
-        public string Name { get; set; } = "BUILDING_NULL";
+        [Description("The ID of the building")]
+        [DisplayName("ID"), Browsable(true), Category("General")]
+        [XmlElement("ID")]
+        public string ID { get; set; } = "BUILDING_NULL";
 
         /// <summary>
         /// The name of the building in a display ready format
         /// </summary>
         [Browsable(false)]
         [XmlIgnore]
-        public string DisplayName { get; set; } = "Null";
+        public string Name { get; set; } = "Null";
 
         /// <summary>
         /// The building's description

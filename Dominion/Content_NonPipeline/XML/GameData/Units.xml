@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!--Generated with ArwicXmlEditor (05 Mar 2016 16:51) by Tim Ings-->
-<UnitDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Dominion Core Unit Data">
+<UnitDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="Dominion Core Unit Data">
   <Units>
     <Unit>
       <IconKey>UNIT_SETTLER</IconKey>
       <IconAtlas>Core:XML/AtlasDefinitions/UnitAtlasDefinition</IconAtlas>
-      <Name>UNIT_SETTLER</Name>
+      <ID>UNIT_SETTLER</ID>
       <Purchasable>true</Purchasable>
       <MaxHP>10</MaxHP>
       <Range>1</Range>
@@ -31,7 +31,7 @@
     <Unit>
       <IconKey>UNIT_WORKER</IconKey>
       <IconAtlas>Core:XML/AtlasDefinitions/UnitAtlasDefinition</IconAtlas>
-      <Name>UNIT_WORKER</Name>
+      <ID>UNIT_WORKER</ID>
       <Purchasable>true</Purchasable>
       <MaxHP>10</MaxHP>
       <Range>1</Range>
@@ -69,7 +69,7 @@
     <Unit>
       <IconKey>UNIT_WARRIOR</IconKey>
       <IconAtlas>Core:XML/AtlasDefinitions/UnitAtlasDefinition</IconAtlas>
-      <Name>UNIT_WARRIOR</Name>
+      <ID>UNIT_WARRIOR</ID>
       <Purchasable>true</Purchasable>
       <MaxHP>10</MaxHP>
       <Range>1</Range>
@@ -97,7 +97,7 @@
     <Unit>
       <IconKey>UNIT_ARCHER</IconKey>
       <IconAtlas>Core:XML/AtlasDefinitions/UnitAtlasDefinition</IconAtlas>
-      <Name>UNIT_ARCHER</Name>
+      <ID>UNIT_ARCHER</ID>
       <Purchasable>true</Purchasable>
       <MaxHP>10</MaxHP>
       <Range>2</Range>

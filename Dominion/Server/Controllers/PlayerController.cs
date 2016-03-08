@@ -191,7 +191,7 @@ namespace Dominion.Server.Controllers
         public void AddPlayer(Connection connection, string userName)
         {
             Player player = new Player(connection, players.Count, "NULL", userName, Controllers.Data.Tech.GetNewTree());
-            player.EmpireID =  Controllers.Data.Empire.GetAllEmpires().ElementAt(RandomHelper.Next(0, Controllers.Data.Empire.EmpireCount)).Name;
+            player.EmpireID =  Controllers.Data.Empire.GetAllEmpires().ElementAt(RandomHelper.Next(0, Controllers.Data.Empire.EmpireCount)).ID;
             player.TechTree.GetTech("TECH_AGRICULTURE").Unlocked = true;
             players.Add(player);
             OnPlayerAdded(new PlayerEventArgs(player));

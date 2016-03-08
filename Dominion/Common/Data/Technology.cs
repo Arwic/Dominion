@@ -18,19 +18,19 @@ namespace Dominion.Common.Data
     public class Technology
     {
         /// <summary>
-        /// The tech node's name
+        /// The tech node's ID
         /// </summary>
-        [Description("The name of the technology")]
-        [DisplayName("Name"), Browsable(true), Category("General")]
-        [XmlElement("Name")]
-        public string Name { get; set; } = "TECH_NULL";
+        [Description("The ID of the technology")]
+        [DisplayName("ID"), Browsable(true), Category("General")]
+        [XmlElement("ID")]
+        public string ID { get; set; } = "TECH_NULL";
 
         /// <summary>
         /// The name of the technology in a display ready format
         /// </summary>
         [Browsable(false)]
         [XmlIgnore]
-        public string DisplayName { get; set; } = "Null";
+        public string Name { get; set; } = "Null";
 
         /// <summary>
         /// The tech node's description

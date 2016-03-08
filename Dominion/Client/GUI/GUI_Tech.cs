@@ -124,26 +124,26 @@ namespace Dominion.Client.GUI
                     Rectangle dest = new Rectangle(offsetX + tech.GridX * (itemWidth + sepX) + scrollIndex * (itemWidth + tech.GridX + sepX), offsetY + tech.GridY * (itemHeight + sepY), itemWidth, itemHeight);
                     Button b = new Button(dest, form);
                     int turnsLeft = GetTurnsUntilTech(tech);
-                    string text = tech.DisplayName;
+                    string text = tech.Name;
                     if (!tech.Unlocked)
                     {
                         // -2 indicates the tech will take a very long time to research
                         if (turnsLeft == -2)
-                            text = $"{tech.DisplayName} - ~ turns";
+                            text = $"{tech.Name} - ~ turns";
                         else if (turnsLeft != -1)
-                            text = $"{tech.DisplayName} - {turnsLeft} turns";
+                            text = $"{tech.Name} - {turnsLeft} turns";
                     }
                     // format the button text
                     b.Text = text.ToRichText();
                     // pick an appropriate sprite
                     if (tech.Unlocked)
                         b.Sprite = techUnlockedSprite;
-                    else if (client.Player.SelectedTechNodeID == tech.Name)
+                    else if (client.Player.SelectedTechNodeID == tech.ID)
                         b.Sprite = techSelectedSprite;
                     else
                         b.Sprite = techLockedSprite;
 
-                    string techID = tech.Name; // cache id because of closure
+                    string techID = tech.ID; // cache id because of closure
                     b.MouseClick += (s, a) =>
                     {
                         // only tell the server to select a new tech if all the prereqs are unlocked

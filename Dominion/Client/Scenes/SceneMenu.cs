@@ -39,7 +39,7 @@ namespace Dominion.Client.Scenes
             {
                 // format the text with the empire's colours
                 Empire = empire;
-                Text = $"<[{Empire.PrimaryColor.ToRichFormat()}]{Empire.DisplayName}>".ToRichText();
+                Text = $"<[{Empire.PrimaryColor.ToRichFormat()}]{Empire.Name}>".ToRichText();
             }
 
             public void OnDraw(object sender, DrawEventArgs e)
@@ -472,7 +472,7 @@ namespace Dominion.Client.Scenes
             BasicPlayer hostPlayer = e.LobbyState.Players.Find(p => p.InstanceID == 0);
             frm_lobby.Text = $"{hostPlayer.Name}'s Lobby".ToRichText();
             Empire myEmpire = manager.Client.DataManager.Empire.GetEmpire(myPlayer.EmpireID);
-            lobby_btnEmpireSelect.Text = $"Empire: <[{myEmpire.PrimaryColor.ToRichFormat()}]{myEmpire.DisplayName}>".ToRichText();
+            lobby_btnEmpireSelect.Text = $"Empire: <[{myEmpire.PrimaryColor.ToRichFormat()}]{myEmpire.Name}>".ToRichText();
             lobby_btnWorldSize.Text = $"World Size: {e.LobbyState.WorldSize}".ToRichText();
             lobby_btnWorldType.Text = $"World Type: {e.LobbyState.WorldType}".ToRichText();
             lobby_btnGameSpeed.Text = $"Game Speed: {e.LobbyState.GameSpeed}".ToRichText();
@@ -485,7 +485,7 @@ namespace Dominion.Client.Scenes
                     lobby_cbOtherOptions[i].Value = manager.Client.LobbyState.OtherOptions[i];
 
             if (myPlayer.EmpireID != lastEmpireID)
-                PlayAnthem(manager.Client.DataManager.Empire.GetEmpire(myPlayer.EmpireID).Name);
+                PlayAnthem(manager.Client.DataManager.Empire.GetEmpire(myPlayer.EmpireID).ID);
             lastEmpireID = myPlayer.EmpireID;
         }
         private void Client_LostConnection(object sender, EventArgs e)
@@ -633,7 +633,7 @@ namespace Dominion.Client.Scenes
             sb.SelectedChanged += (s, a) =>
             {
                 EmpireListItem eli = (EmpireListItem)sb.Selected;
-                manager.Client.Lobby_SelectNewEmpire(eli.Empire.Name);
+                manager.Client.Lobby_SelectNewEmpire(eli.Empire.ID);
             };
         }
         private void Lobby_BtnStart_MouseClick(object sender, MouseEventArgs e)

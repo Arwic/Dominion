@@ -24,7 +24,7 @@ namespace Dominion.Common.Entities
         public Production(Unit unit)
         {
             ProductionType = ProductionType.UNIT;
-            Name = unit.Name;
+            Name = unit.ID;
             Cost = unit.Cost;
             Progress = 0;
         }
@@ -32,7 +32,7 @@ namespace Dominion.Common.Entities
         public Production(Building building)
         {
             ProductionType = ProductionType.BUILDING;
-            Name = building.Name;
+            Name = building.ID;
             Cost = building.Cost;
             Progress = 0;
         }
