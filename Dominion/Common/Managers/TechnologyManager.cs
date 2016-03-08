@@ -1,6 +1,6 @@
 ﻿// Dominion - Copyright (C) Timothy Ings
-// BuildingManager.cs
-// This file defines classes that define the building manager
+// TechnologyManager.cs
+// This file defines classes that define the technology manager
 
 using ArwicEngine.Core;
 using ArwicEngine.TypeConverters;
@@ -14,11 +14,11 @@ using System.Xml.Serialization;
 namespace Dominion.Common.Managers
 {
     [Serializable]
-    public class TechnologyTree
+    public class TechnologyInstance
     {
         private Dictionary<string, Technology> data = new Dictionary<string, Technology>();
 
-        public TechnologyTree(TechnologyManager manager)
+        public TechnologyInstance(TechnologyManager manager)
         {
             List<Technology> techs = (List<Technology>)manager.GetAllTechnologies();
             foreach (Technology tech in techs)
@@ -147,9 +147,9 @@ namespace Dominion.Common.Managers
             }
         }
 
-        public TechnologyTree GetNewTree()
+        public TechnologyInstance GetNewTree()
         {
-            TechnologyTree tree = new TechnologyTree(this);
+            TechnologyInstance tree = new TechnologyInstance(this);
             return tree;
         }
 

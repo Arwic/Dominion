@@ -110,7 +110,7 @@ namespace Dominion.Common.Entities
         /// <summary>
         /// The player's tech tree
         /// </summary>
-        public TechnologyTree TechTree { get; set; }
+        public TechnologyInstance TechTree { get; set; }
 
         /// <summary>
         /// The player's selected tech node's id
@@ -307,7 +307,7 @@ namespace Dominion.Common.Entities
         public int FreeSocialPoliciesAvailable { get; set; } = 1;
         #endregion
 
-        public Player(Connection conn, int playerD, string empireID, string username, TechnologyTree blankTechManager)
+        public Player(Connection conn, int playerD, string empireID, string username, TechnologyInstance blankTechManager)
         {
             Connection = conn;
             CurrentEra = GameEra.Ancient;

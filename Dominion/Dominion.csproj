@@ -85,12 +85,14 @@
     <Compile Include="Common\Data\Building.cs" />
     <Compile Include="Common\Data\Empire.cs" />
     <Compile Include="Common\Data\SocialPolicy.cs" />
+    <Compile Include="Common\Data\SocialPolicyTree.cs" />
     <Compile Include="Common\Data\Technology.cs" />
     <Compile Include="Common\Data\Unit.cs" />
     <Compile Include="Common\Entities\PlayerCommand.cs" />
     <Compile Include="Common\Entities\CityCommand.cs" />
     <Compile Include="Common\Entities\Production.cs" />
     <Compile Include="Common\Entities\UnitCommand.cs" />
+    <Compile Include="Common\Managers\SocialPolicyManager.cs" />
     <Compile Include="Common\Managers\TechnologyManager.cs" />
     <Compile Include="Common\Managers\BuildingManager.cs" />
     <Compile Include="Client\Scenes\SceneGame.cs" />
