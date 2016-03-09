@@ -6,6 +6,7 @@ using ArwicEngine.TypeConverters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,18 @@ namespace Dominion.Common.Data
     [Serializable]
     public class Technology
     {
+        public class Editor : CollectionEditor
+        {
+            public Editor(Type type) : base(type) { }
+
+            protected override string GetDisplayText(object value)
+            {
+                if (value is Technology)
+                    return ((Technology)value).ID;
+                return value.ToString();
+            }
+        }
+
         /// <summary>
         /// The tech node's ID
         /// </summary>

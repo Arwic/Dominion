@@ -8,6 +8,7 @@ using Dominion.Common.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Design;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -19,6 +20,7 @@ namespace Dominion.Common.Managers
         [XmlAttribute("Name")]
         public string Name { get; set; } = "New Building Data Pack";
 
+        [Editor(typeof(Building.Editor), typeof(UITypeEditor))]
         [TypeConverter(typeof(ListConverter))]
         [XmlArray("Buildings"), XmlArrayItem(typeof(Building), ElementName = "Building")]
         public List<Building> Buildings { get; set; } = new List<Building>();

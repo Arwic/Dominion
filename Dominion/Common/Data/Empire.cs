@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Globalization;
 using System.IO;
 using System.Xml.Serialization;
@@ -72,6 +73,18 @@ namespace Dominion.Common.Data
     [Serializable()]
     public class Empire
     {
+        public class Editor : CollectionEditor
+        {
+            public Editor(Type type) : base(type) { }
+
+            protected override string GetDisplayText(object value)
+            {
+                if (value is Empire)
+                    return ((Empire)value).ID;
+                return value.ToString();
+            }
+        }
+
         /// <summary>
         /// The ID of the empire
         /// </summary>

@@ -8,6 +8,7 @@ using Dominion.Common.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Design;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -76,6 +77,7 @@ namespace Dominion.Common.Managers
         [XmlAttribute("Name")]
         public string Name { get; set; } = "New Technology Data Pack";
 
+        [Editor(typeof(Technology.Editor), typeof(UITypeEditor))]
         [TypeConverter(typeof(ListConverter))]
         [XmlArray("Technologies"), XmlArrayItem(typeof(Technology), ElementName = "Technology")]
         public List<Technology> Technologies { get; set; } = new List<Technology>();

@@ -9,6 +9,7 @@ using Dominion.Common.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Design;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -20,6 +21,7 @@ namespace Dominion.Common.Managers
         [XmlAttribute("Name")]
         public string Name { get; set; } = "New Unit Data Pack";
 
+        [Editor(typeof(Unit.Editor), typeof(UITypeEditor))]
         [TypeConverter(typeof(ListConverter))]
         [XmlArray("Units"), XmlArrayItem(typeof(Unit), ElementName = "Unit")]
         public List<Unit> Units { get; set; } = new List<Unit>();

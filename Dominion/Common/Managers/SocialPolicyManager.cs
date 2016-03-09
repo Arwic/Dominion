@@ -8,6 +8,7 @@ using Dominion.Common.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Design;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -76,6 +77,7 @@ namespace Dominion.Common.Managers
         [XmlAttribute("Name")]
         public string Name { get; set; } = "New Social Policy Data Pack";
 
+        [Editor(typeof(SocialPolicy.Editor), typeof(UITypeEditor))]
         [TypeConverter(typeof(ListConverter))]
         [XmlArray("SocialPolicies"), XmlArrayItem(typeof(SocialPolicy), ElementName = "SocialPolicy")]
         public List<SocialPolicy> SocialPolicies { get; set; } = new List<SocialPolicy>();

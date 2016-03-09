@@ -6,6 +6,7 @@ using ArwicEngine.TypeConverters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Globalization;
 using System.Xml.Serialization;
 
@@ -15,6 +16,18 @@ namespace Dominion.Common.Data
     [Serializable]
     public class SocialPolicy
     {
+        public class Editor : CollectionEditor
+        {
+            public Editor(Type type) : base(type) { }
+
+            protected override string GetDisplayText(object value)
+            {
+                if (value is SocialPolicy)
+                    return ((SocialPolicy)value).ID;
+                return value.ToString();
+            }
+        }
+
         /// <summary>
         /// The ID of the social policy
         /// </summary>

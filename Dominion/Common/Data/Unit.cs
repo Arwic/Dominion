@@ -7,6 +7,7 @@ using Dominion.Common.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Globalization;
 using System.Xml.Serialization;
 
@@ -16,6 +17,18 @@ namespace Dominion.Common.Data
     [Serializable()]
     public class Unit
     {
+        public class Editor : CollectionEditor
+        {
+            public Editor(Type type) : base(type) { }
+
+            protected override string GetDisplayText(object value)
+            {
+                if (value is Unit)
+                    return ((Unit)value).ID;
+                return value.ToString();
+            }
+        }
+
         /// <summary>
         /// The key to used to get the icon from the icon atlas
         /// </summary>
