@@ -29,6 +29,11 @@ namespace Dominion.Client
         /// </summary>
         public TechnologyManager Tech { get; set; }
 
+        /// <summary>
+        /// Gets the social policy dfata manager
+        /// </summary>
+        public SocialPolicyManager SocialPolicy { get; set; }
+
         public DataManager() { }
     }
 }

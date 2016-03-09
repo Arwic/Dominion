@@ -598,6 +598,7 @@ namespace Dominion.Client
             DataManager.Empire = (EmpireManager)p.Items[i++];
             DataManager.Unit = (UnitManager)p.Items[i++];
             DataManager.Tech = (TechnologyManager)p.Items[i++];
+            DataManager.SocialPolicy = (SocialPolicyManager)p.Items[i++];
             ConsoleManager.Instance.WriteLine("Initialised data managers", MsgType.Info);
         }
         

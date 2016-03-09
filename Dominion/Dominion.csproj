@@ -73,6 +73,7 @@
     <Compile Include="Client\GUI\GUI_Settings.cs" />
     <Compile Include="Client\GUI\GUI_Tech.cs" />
     <Compile Include="Client\GUI\GUI_UnitActions.cs" />
+    <Compile Include="Client\GUI\GUI_SocialPolicy.cs" />
     <Compile Include="Client\GUI\GUI_UnitList.cs" />
     <Compile Include="Client\GameManager.cs" />
     <Compile Include="Client\Renderers\BoardRenderer.cs" />
@@ -85,7 +86,6 @@
     <Compile Include="Common\Data\Building.cs" />
     <Compile Include="Common\Data\Empire.cs" />
     <Compile Include="Common\Data\SocialPolicy.cs" />
-    <Compile Include="Common\Data\SocialPolicyTree.cs" />
     <Compile Include="Common\Data\Technology.cs" />
     <Compile Include="Common\Data\Unit.cs" />
     <Compile Include="Common\Entities\PlayerCommand.cs" />

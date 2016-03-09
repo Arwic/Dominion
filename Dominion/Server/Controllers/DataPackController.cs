@@ -31,6 +31,11 @@ namespace Dominion.Server.Controllers
         /// </summary>
         public TechnologyManager Tech { get; } = new TechnologyManager();
 
+        /// <summary>
+        /// Gets the social policy manager
+        /// </summary>
+        public SocialPolicyManager SocialPolicy { get; } = new SocialPolicyManager();
+
         public DataPackController(ControllerManager manager)
             : base(manager)
         {

@@ -40,6 +40,7 @@ namespace Dominion.Client.Scenes
         public GUI_UnitList UnitList { get; private set; }
         public GUI_CityManagment CityManagment { get; private set; }
         public GUI_UnitActions UnitActions { get; private set; }
+        public GUI_SocialPolicy SocialPolicy { get; private set; }
 
         private bool flag_drawInfo_client;
         private bool flag_drawInfo_server;
@@ -144,6 +145,7 @@ namespace Dominion.Client.Scenes
             GUI_NamePlates namePlates = new GUI_NamePlates(manager.Client, canvas, camera, boardRenderer);
             TechTree = new GUI_Tech(manager.Client, this, canvas);
             GameMenu = new GUI_GameMenu(manager.Client, this, canvas);
+            SocialPolicy = new GUI_SocialPolicy(manager.Client, this, canvas);
         }
 
         /// <summary>

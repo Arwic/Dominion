@@ -84,7 +84,11 @@ namespace Dominion.Client.GUI
                 btnSocialPolicy.ToolTip = new ToolTip("Opens the social policy interface".ToRichText(), toolTipWidth);
                 btnSocialPolicy.MouseClick += (s, a) =>
                 {
-                    // NYI
+                    // toggle social policy visibility
+                    if (sceneGame.SocialPolicy.Visible)
+                        sceneGame.SocialPolicy.Hide();
+                    else
+                        sceneGame.SocialPolicy.Show();
                 };
 
                 Button btnDiplomacy = (Button)form.GetChildByName("btnDiplomacy");

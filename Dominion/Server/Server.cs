@@ -570,7 +570,8 @@ namespace Dominion.Server
                 controllers.Data.Building,
                 controllers.Data.Empire,
                 controllers.Data.Unit,
-                controllers.Data.Tech);
+                controllers.Data.Tech,
+                controllers.Data.SocialPolicy);
             server.SendData(pOutLobbyInit, e.Player.Connection);
 
             SendLobbyStateToAll();

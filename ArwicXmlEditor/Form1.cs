@@ -28,6 +28,7 @@ namespace ArwicXmlEditor
             cb_xmlType.Items.Add(typeof(UnitDataPack));
             cb_xmlType.Items.Add(typeof(BuildingDataPack));
             cb_xmlType.Items.Add(typeof(TechnologyDataPack));
+            cb_xmlType.Items.Add(typeof(SocialPolicyDataPack));
             cb_xmlType.SelectedIndex = 0;
         }
 

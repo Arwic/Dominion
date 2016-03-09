@@ -3,6 +3,7 @@
 // This file defines classes that define a social policy
 
 using ArwicEngine.TypeConverters;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -10,6 +11,8 @@ using System.Xml.Serialization;
 
 namespace Dominion.Common.Data
 {
+    [TypeConverter(typeof(ExpandableObjectConverter))]
+    [Serializable]
     public class SocialPolicy
     {
         /// <summary>
@@ -31,8 +34,8 @@ namespace Dominion.Common.Data
         /// The Tree ID of the social policy
         /// </summary>
         [Description("The Tree ID of the social policy")]
-        [DisplayName("ID"), Browsable(true), Category("General")]
-        [XmlElement("ID")]
+        [DisplayName("TreeID"), Browsable(true), Category("General")]
+        [XmlElement("TreeID")]
         public string TreeID { get; set; } = "POLICYTREE_NULL";
 
         /// <summary>
@@ -41,7 +44,7 @@ namespace Dominion.Common.Data
         [Description("The descriptions of the social policy")]
         [DisplayName("Description"), Browsable(true), Category("General")]
         [XmlElement("Description")]
-        public string Description { get; set; } = "New Tech";
+        public string Description { get; set; } = "New Social Policy";
 
         /// <summary>
         /// The x position of the social policy in its tree
@@ -65,15 +68,15 @@ namespace Dominion.Common.Data
         [Description("The key to used to get the icon from the icon atlas")]
         [DisplayName("Icon Key"), Browsable(true), Category("Graphics")]
         [XmlElement("IconKey")]
-        public string IconKey { get; set; } = "TECH_NULL";
+        public string IconKey { get; set; } = "POLICY_NULL";
 
         /// <summary>
-        /// The icon atlas to source the technology's icon from
+        /// The icon atlas to source the social policy's icon from
         /// </summary>
-        [Description("The icon atlas to source the technology's icon from")]
+        [Description("The icon atlas to source the social policy's icon from")]
         [DisplayName("Icon Atlas"), Browsable(true), Category("Graphics")]
         [XmlElement("IconAtlas")]
-        public string IconAtlas { get; set; } = "Core:XML/AtlasDefinitions/TechnologyAtlasDefinition";
+        public string IconAtlas { get; set; } = "Core:XML/AtlasDefinitions/SocialPolicyAtlasDefinition";
 
         /// <summary>
         /// A list of social policies that have to be unlocked in order to unlock this node

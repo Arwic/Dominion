@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!--Generated with ArwicXmlEditor (05 Mar 2016 16:46) by Tim Ings-->
-<BuildingDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="Dominion Core Building Data">
+<!--Generated with ArwicXmlEditor (09 Mar 2016 23:28) by Tim Ings-->
+<BuildingDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Dominion Core Building Data">
   <Buildings>
     <Building>
       <ID>BUILDING_PALACE</ID>

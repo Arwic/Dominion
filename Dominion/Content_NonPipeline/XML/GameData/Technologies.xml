@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!--Generated with ArwicXmlEditor (28 Feb 2016 18:49) by Tim Ings-->
-<TechnologyDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="Dominion Core Technology Data">
+<!--Generated with ArwicXmlEditor (09 Mar 2016 23:28) by Tim Ings-->
+<TechnologyDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Dominion Core Technology Data">
   <Technologies>
     <Technology>
       <ID>TECH_AGRICULTURE</ID>
