@@ -69,7 +69,7 @@ namespace Dominion.Client.GUI
                 };
 
                 Label lblEmpire = (Label)form.GetChildByName("lblEmpireValue");
-                lblEmpire.Text = client.Player.EmpireID.ToRichText();
+                lblEmpire.Text = client.DataManager.Empire.GetEmpire(client.Player.EmpireID).Name.ToRichText();
 
                 Label lblWorldType = (Label)form.GetChildByName("lblWorldTypeValue");
                 lblWorldType.Text = client.LobbyState.WorldType.GetName().ToRichText();
@@ -84,7 +84,7 @@ namespace Dominion.Client.GUI
                 lblGameSpeed.Text = client.LobbyState.GameSpeed.ToString().ToRichText();
 
                 Label lblPlayerCount = (Label)form.GetChildByName("lblPlayerCountValue");
-                lblPlayerCount.Text = "NYI".ToRichText();
+                lblPlayerCount.Text = client.LobbyState.Players.Count.ToString().ToRichText();
 
             }
         }
