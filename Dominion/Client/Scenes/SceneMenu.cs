@@ -104,7 +104,7 @@ namespace Dominion.Client.Scenes
         private Canvas canvas;
         private Image background;
         private Form frm_main;
-        //private Dictionary<string, SoundEffect> empireAnthems;
+        private Dictionary<string, SoundEffect> empireAnthems;
         private Form frm_lobby;
         private Form frm_lobby_configWindow;
         private ScrollBox lobby_sbPlayers;
@@ -148,8 +148,7 @@ namespace Dominion.Client.Scenes
             canvas = new Canvas(GraphicsManager.Instance.Viewport.Bounds);
             ConsoleForm consoleForm = new ConsoleForm(canvas);
             background = new Image(new Rectangle(0, 0, 1920, 1080), Engine.Instance.Content.GetAsset<Sprite>($"Core:Textures/Backgrounds/Menu_{RandomHelper.Next(0, 6)}"), null, null);
-            //empireAnthems = Engine.Instance.Content.LoadListContent<SoundEffect>("Audio/Music/Anthems");
-
+            
             // setup settings form
             guiSettings = new GUI_Settings(canvas);
             guiSettings.FormClosed += (s, a) =>
@@ -159,12 +158,6 @@ namespace Dominion.Client.Scenes
 
             // setup other forms
             SetUpMainForm();
-
-            // Play all anthems on shuffle
-            //AudioManager.Instance.MusicQueue.Clear();
-            //foreach (KeyValuePair<string, SoundEffect> pair in empireAnthems)
-            //    AudioManager.Instance.MusicQueue.Enqueue(pair.Value);
-            //AudioManager.Instance.PlayerState = MusicPlayerState.Shuffle;
         }
 
         /// <summary>
@@ -389,7 +382,7 @@ namespace Dominion.Client.Scenes
             lock (_lock_guiSetUp)
             {
                 // set the audio manager to play the selected empire's anthem over and over
-                //AudioManager.Instance.PlayerState = MusicPlayerState.RepeatOne;
+                AudioManager.Instance.PlayerState = MusicPlayerState.RepeatOne;
 
                 // register events
                 manager.Client.LostConnection += Client_LostConnection;
@@ -442,8 +435,8 @@ namespace Dominion.Client.Scenes
                 lobby_sbPlayers = (ScrollBox)frm_lobby.GetChildByName("sbPlayers");
                 lobby_sbPlayers.Items = GetPlayers();
 
-                // fake an event to change the music
-                Lobby_BtnEmpireSelect_MouseClick(lobby_btnEmpireSelect, new MouseEventArgs(false, false, false, Point.Zero, 0));
+                // fake an event to open the empire select menu
+                Lobby_BtnEmpireSelect_MouseClick(lobby_btnEmpireSelect, new MouseEventArgs(true, false, false, lobby_btnEmpireSelect.AbsoluteLocation, 0));
             }
         }
         private void Lobby_BtnBan_MouseClick(object sender, MouseEventArgs e)
@@ -485,7 +478,7 @@ namespace Dominion.Client.Scenes
                     lobby_cbOtherOptions[i].Value = manager.Client.LobbyState.OtherOptions[i];
 
             if (myPlayer.EmpireID != lastEmpireID)
-                PlayAnthem(manager.Client.DataManager.Empire.GetEmpire(myPlayer.EmpireID).ID);
+                PlayAnthem(manager.Client.DataManager.Empire.GetEmpire(myPlayer.EmpireID).Name);
             lastEmpireID = myPlayer.EmpireID;
         }
         private void Client_LostConnection(object sender, EventArgs e)
@@ -696,16 +689,14 @@ namespace Dominion.Client.Scenes
         // plays the anthem of the given empire
         private void PlayAnthem(string empireName)
         {
-            //try
-            //{
-            //    SoundEffect anthem = empireAnthems[empireName];
-            //    AudioManager.Instance.PlayMusic(anthem);
-            //    AudioManager.Instance.PlayerState = MusicPlayerState.RepeatOne;
-            //}
-            //catch (Exception)
-            //{
-            //    ConsoleManager.Instance.WriteLine($"Could not find an anthem for {empireName}", MsgType.Warning);
-            //}
+            SoundEffect anthem = Engine.Instance.Content.GetAsset<SoundEffect>($"Core:Audio/Music/Anthems/{empireName}");
+            if (anthem == null)
+            {
+                ConsoleManager.Instance.WriteLine($"Could not find an anthem for {empireName}", MsgType.Warning);
+                return;
+            }
+            AudioManager.Instance.PlayMusic(anthem);
+            AudioManager.Instance.PlayerState = MusicPlayerState.RepeatOne;
         }
         
         // removes and resets all the forms used in this scene

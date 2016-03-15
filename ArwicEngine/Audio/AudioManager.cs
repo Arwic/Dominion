@@ -218,6 +218,9 @@ namespace ArwicEngine.Audio
         /// <param name="music"></param>
         public void PlayMusic(SoundEffect music)
         {
+            if (music == null)
+                return;
+
             // stop the current track
             StopMusic();
             // set up new track
