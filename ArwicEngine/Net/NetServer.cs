@@ -103,7 +103,7 @@ namespace ArwicEngine.Net
         /// </summary>
         public event EventHandler<ConnectionEventArgs> ConnectionAccepted;
         /// <summary>
-        /// Occurs when the server looses connection to a client
+        /// Occurs when the server loses connection to a client
         /// </summary>
         public event EventHandler<ConnectionEventArgs> ConnectionLost;
         #endregion
