@@ -49,7 +49,7 @@ Used for unit/tile/empire editing, useful for modding.
 ##Dominion
 The game itself.
 - Client/server based
-- Single player games simple start local server
+- Single player games simply start local server
 - Full GUI config
 - Full GUI lobby
 - Procedural map generation
