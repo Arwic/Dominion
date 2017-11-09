@@ -19,48 +19,6 @@
 /processorParam:Quality=Best
 /build:Audio/Effects/Click.wav
 
-#begin Audio/Music/Anthems/China.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/Anthems/China.mp3
-
-#begin Audio/Music/Anthems/England.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/Anthems/England.mp3
-
-#begin Audio/Music/Anthems/France.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/Anthems/France.mp3
-
-#begin Audio/Music/Anthems/Italy.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/Anthems/Italy.mp3
-
-#begin Audio/Music/Anthems/Japan.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/Anthems/Japan.mp3
-
-#begin Audio/Music/Anthems/Russia.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/Anthems/Russia.mp3
-
-#begin Audio/Music/Rule_Britannia_Phonograph.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/Rule_Britannia_Phonograph.wav
-
 #begin Fonts/Arial.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
