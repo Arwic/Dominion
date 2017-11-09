@@ -2,6 +2,7 @@
 // GUI_CityList.cs
 // This file defines classes that manage the city list gui element
 
+using ArwicEngine;
 using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using Dominion.Client.Scenes;
@@ -9,6 +10,7 @@ using Dominion.Common.Entities;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.IO;
+
 
 namespace Dominion.Client.GUI
 {
@@ -89,7 +91,9 @@ namespace Dominion.Client.GUI
                 sceneGame.HideForms(); // hide other forms
                 canvas.RemoveChild(form); // remove this form from the canvas
                 form = new Form(formConfig, canvas); // re build the form from the config
-                form.Location = new Point(0, 200); // position the form
+                string gfx_res = ConfigManager.Instance.GetVar(Constants.CONFIG_GFX_RESOLUTION);
+                int res_w = int.Parse(gfx_res.Split('x')[0]);
+                form.Location = new Point(res_w - form.Size.Width, 100); // position the form
 
                 // retrieve form components and set them up
                 ScrollBox sbCities = (ScrollBox)form.GetChildByName("sbCityList");

@@ -2,6 +2,7 @@
 // GUI_UnitList.cs
 // This file defines classes that manage the unit list gui elements
 
+using ArwicEngine;
 using ArwicEngine.Core;
 using ArwicEngine.Forms;
 using Dominion.Client.Scenes;
@@ -78,7 +79,9 @@ namespace Dominion.Client.GUI
                 sceneGame.HideForms();
                 canvas.RemoveChild(form);
                 form = new Form(formConfig, canvas);
-                form.Location = new Point(0, 200);
+                string gfx_res = ConfigManager.Instance.GetVar(Constants.CONFIG_GFX_RESOLUTION);
+                int res_w = int.Parse(gfx_res.Split('x')[0]);
+                form.Location = new Point(res_w - form.Size.Width, 100); // position the form
 
                 // get and setup the form elements
                 ScrollBox sbUnitList = (ScrollBox)form.GetChildByName("sbUnitList");
