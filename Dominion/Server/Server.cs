@@ -616,6 +616,8 @@ namespace Dominion.Server
             {
                 switch (header)
                 {
+                    case PacketHeader.Null:
+                        break;
                     case PacketHeader.LobbyInit: // Desired username
                         ParseLobbyInit(p);
                         break;
@@ -760,6 +762,9 @@ namespace Dominion.Server
         // checks whether the current turn is over
         private bool IsTurnOver()
         {
+#if DEBUG
+            return true;
+#endif
             int playersEndedTurnCount = 0;
             foreach (Player player in controllers.Player.GetAllPlayers())
             {

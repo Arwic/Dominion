@@ -288,7 +288,7 @@ namespace Dominion.Server.Controllers
                 case UnitCommandID.UNITCMD_SETTLE:
                     if (Controllers.City.SettleCity(unit))
                     {
-                        Thread.Sleep(10);
+                        //Thread.Sleep(10);
                         RemoveUnit(unit);
                     }
                     break;

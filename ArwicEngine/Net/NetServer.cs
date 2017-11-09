@@ -223,41 +223,58 @@ namespace ArwicEngine.Net
         private async void HandleClient(Connection conn)
         {
             conn.Listening = true;
-            byte[] buffer = new byte[conn.Client.ReceiveBufferSize];
             NetworkStream stream = conn.Client.GetStream();
-            while (conn.Listening)
+            bool bufferInUse = false;
+            byte[] buffer = new byte[conn.Client.ReceiveBufferSize];
+            byte[] packetData = null;
+            int packetBytesRead = 0;
+
+            while (conn.Listening && conn.Client != null && conn.Client.Connected)
             {
-                if (conn.Client != null && conn.Client.Connected)
+                try
                 {
-                    try
+                    int bytesRead = 0;
+                    // check if we should start building a new packet
+                    if (packetData == null)
                     {
-                        int bytesLeft = await stream.ReadAsync(buffer, 0, buffer.Length);
-                        Statistics.BytesRecieved += bytesLeft;
-                        //Engine.Console.WriteLine($"Recieved {bytesLeft} bytes from {conn.Address}", MsgType.ServerInfo);
-                        if (bytesLeft == 0)
-                            DissconnectClient(conn);
-                        else
+                        bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
+                        bufferInUse = true;
+                        Statistics.BytesRecieved += bytesRead;
+                        // get the length of the next packet in the stream
+                        int packetLength = BitConverter.ToInt32(buffer, 4) + 8; // 4 byte header, 4 byte length, n byte payload. Add 8 to include header and length
+                        packetData = new byte[packetLength]; // make a buffer for the packet
+                    }
+                    // check if we have a packet to build
+                    if (packetData != null)
+                    {
+                        // build the packet
+                        while (packetBytesRead < packetData.Length)
                         {
-                            int packetLength;
-                            int offset = 0;
-                            do
+                            // check if the buffer contains new data
+                            if (!bufferInUse)
                             {
-                                packetLength = BitConverter.ToInt32(buffer, offset + 4) + 8; // get the length of the next packet in the stream
-                                byte[] data = new byte[packetLength]; // read only the next packet's data from the stream
-                                Buffer.BlockCopy(buffer, offset, data, 0, packetLength); // copy the packet data from the buffer to the data array
-                                offset = packetLength; // update the offset as we have already parsed the packet(s) before it
-                                bytesLeft -= packetLength; // update the number of bytes left to parse
-                                Packet p = new Packet(data, conn); // parse the packet
-                                //Engine.Console.WriteLine($"Constructed a packet of {packetLength} bytes, {bytesLeft} bytes remaining", MsgType.ServerInfo);
-                                Statistics.PacketsRecieved++;
-                                OnPacketRecieved(new PacketRecievedEventArgs(p));
-                            } while (bytesLeft > 0); // keep parsing packets from the buffer until there are none left
+                                bytesRead = await stream.ReadAsync(buffer, 0, Math.Min(buffer.Length, packetData.Length - packetBytesRead));
+                                bufferInUse = true;
+                            }
+                            // copy the packet data from the buffer to the packet data array
+                            Buffer.BlockCopy(buffer, 0, packetData, packetBytesRead, Math.Min(bytesRead, packetData.Length));
+                            bufferInUse = false;
+                            packetBytesRead += bytesRead;
+                        }
+                        if (packetBytesRead >= packetData.Length)
+                        {
+                            Packet p = new Packet(packetData, conn); // parse the packet, as a client we know the server sent it to us
+                            Statistics.PacketsRecieved++;
+                            packetData = null;
+                            packetBytesRead = 0;
+                            //ConsoleManager.Instance.WriteLine($"Constructed a packet of {packetLength} bytes, {bytesLeft} bytes remaining", MsgType.Info);
+                            OnPacketRecieved(new PacketRecievedEventArgs(p));
                         }
                     }
-                    catch (Exception e)
-                    {
-                        ConsoleManager.Instance.WriteLine($"Error recieving data from {conn.Address}, {e.Message}", MsgType.ServerWarning);
-                    }
+                }
+                catch (Exception e)
+                {
+                    ConsoleManager.Instance.WriteLine($"Error recieving data from {conn.Address}, {e.Message}", MsgType.ServerWarning);
                 }
             }
         }
