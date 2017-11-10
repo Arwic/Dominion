@@ -87,10 +87,10 @@ namespace Dominion.Client.GUI
                     maxScrollIndex = tech.GridX;
 
             // load sprites
-            techLockedSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.ASSET_CONTROL_SCROLLBOX_BACK);
-            techUnlockedSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.ASSET_CONTROL_SCROLLBOX_BUTTON);
-            techSelectedSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.ASSET_CONTROL_FORM_BACK);
-            techSelectable = Engine.Instance.Content.GetAsset<Sprite>(Constants.ASSET_CONTROL_SCROLLBOX_BACK);
+            techLockedSprite = Engine.Instance.Content.GetAsset<Sprite>("Core:Textures/Interface/Tech_Locked");
+            techUnlockedSprite = Engine.Instance.Content.GetAsset<Sprite>("Core:Textures/Interface/Tech_Unlocked");
+            techSelectedSprite = Engine.Instance.Content.GetAsset<Sprite>("Core:Textures/Interface/Tech_Selected");
+            techSelectable = Engine.Instance.Content.GetAsset<Sprite>("Core:Textures/Interface/Tech_Selectedable");
         }
 
         /// <summary>
@@ -136,10 +136,19 @@ namespace Dominion.Client.GUI
                     // format the button text
                     b.Text = text.ToRichText();
                     // pick an appropriate sprite
+                    bool prereqsUnlocked = true;
+                    foreach (string prereqID in tech.Prerequisites)
+                    {
+                        Technology prereq = client.Player.TechTreeInstance.GetTech(prereqID);
+                        if (prereq != null && !prereq.Unlocked)
+                            prereqsUnlocked = false;
+                    }
                     if (tech.Unlocked)
                         b.Sprite = techUnlockedSprite;
                     else if (client.Player.SelectedTechNodeID == tech.ID)
                         b.Sprite = techSelectedSprite;
+                    else if (prereqsUnlocked)
+                        b.Sprite = techSelectable;
                     else
                         b.Sprite = techLockedSprite;
 
