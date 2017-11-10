@@ -85,6 +85,12 @@ namespace Dominion.Client.GUI
             this.sceneGame = sceneGame;
             this.canvas = canvas;
 
+            client.PlayerUpdated += (s, a) =>
+            {
+                if (Visible)
+                    Show();
+            };
+
             // load sprites
             policyLockedSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.ASSET_CONTROL_SCROLLBOX_BACK);
             policyUnlockedSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.ASSET_CONTROL_FORM_BACK);
