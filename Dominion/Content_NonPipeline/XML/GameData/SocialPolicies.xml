@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--Generated with ArwicXmlEditor (10 Nov 2017 13:40) by Tim Ings-->
+<SocialPolicyDataPack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="New Social Policy Data Pack">
+  <SocialPolicies>
+    <SocialPolicy>
+      <ID>POLICY_ARISTOCRACY</ID>
+      <TreeID>POLICYTREE_TRADITION</TreeID>
+      <Description>+15% $(production) Production when building Wonders (any Era) and +1 $(happiness) Happiness for every 10 $(population) Citizens in a City.</Description>
+      <GridX>0</GridX>
+      <GridY>0</GridY>
+      <IconKey>POLICY_ARISTOCRACY</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/SocialPolicyAtlasDefinition</IconAtlas>
+      <Prerequisites />
+    </SocialPolicy>
+    <SocialPolicy>
+      <ID>POLICY_OLIGARCHY</ID>
+      <TreeID>POLICYTREE_TRADITION</TreeID>
+      <Description>Garrisoned units cost no maintenance and cities with a garrison gain +50% Ranged Combat Strength.	</Description>
+      <GridX>0</GridX>
+      <GridY>1</GridY>
+      <IconKey>POLICY_OLIGARCHY</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/SocialPolicyAtlasDefinition</IconAtlas>
+      <Prerequisites />
+    </SocialPolicy>
+    <SocialPolicy>
+      <ID>POLICY_LEGALISM</ID>
+      <TreeID>POLICYTREE_TRADITION</TreeID>
+      <Description>Provides a free culture building in your first 4 cities.</Description>
+      <GridX>1</GridX>
+      <GridY>1</GridY>
+      <IconKey>POLICY_LEGALISM</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/SocialPolicyAtlasDefinition</IconAtlas>
+      <Prerequisites>
+        <Prerequisite>POLICY_OLIGARCHY</Prerequisite>
+      </Prerequisites>
+    </SocialPolicy>
+    <SocialPolicy>
+      <ID>POLICY_MONARCHY</ID>
+      <TreeID>POLICYTREE_TRADITION</TreeID>
+      <Description>+1 $(gold) Gold and -1 $(unhappiness) Unhappiness for every 2 $(population) Citizens in the $(capital) Capital.</Description>
+      <GridX>2</GridX>
+      <GridY>0</GridY>
+      <IconKey>POLICY_MONARCHY</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/SocialPolicyAtlasDefinition</IconAtlas>
+      <Prerequisites>
+        <Prerequisite>POLICY_LEGALISM</Prerequisite>
+      </Prerequisites>
+    </SocialPolicy>
+    <SocialPolicy>
+      <ID>POLICY_LANDED_ELITE</ID>
+      <TreeID>POLICYTREE_TRADITION</TreeID>
+      <Description>+10% $(food) Growth and +2 $(food) Food in the $(capital) Capital only.	</Description>
+      <GridX>2</GridX>
+      <GridY>2</GridY>
+      <IconKey>POLICY_LANDED_ELITE</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/SocialPolicyAtlasDefinition</IconAtlas>
+      <Prerequisites>
+        <Prerequisite>POLICY_LEGALISM</Prerequisite>
+      </Prerequisites>
+    </SocialPolicy>
+  </SocialPolicies>
+  <SocialPolicyTrees>
+    <SocialPolicyTrees>
+      <ID>POLICYTREE_TRADITION</ID>
+      <Description>Tradition</Description>
+      <ListIndex>0</ListIndex>
+      <IconKey>POLICYTREE_TRADITION</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/SocialPolicyAtlasDefinition</IconAtlas>
+    </SocialPolicyTrees>
+    <SocialPolicyTrees>
+      <ID>POLICYTREE_LIBERTY</ID>
+      <Description>Liberty</Description>
+      <ListIndex>1</ListIndex>
+      <IconKey>POLICYTREE_LIBERTY</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/SocialPolicyAtlasDefinition</IconAtlas>
+    </SocialPolicyTrees>
+    <SocialPolicyTrees>
+      <ID>POLICYTREE_HONOR</ID>
+      <Description>Honor</Description>
+      <ListIndex>2</ListIndex>
+      <IconKey>POLICYTREE_HONOR</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/SocialPolicyAtlasDefinition</IconAtlas>
+    </SocialPolicyTrees>
+    <SocialPolicyTrees>
+      <ID>POLICYTREE_PIETY</ID>
+      <Description>Piety</Description>
+      <ListIndex>3</ListIndex>
+      <IconKey>POLICYTREE_PIETY</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/SocialPolicyAtlasDefinition</IconAtlas>
+    </SocialPolicyTrees>
+    <SocialPolicyTrees>
+      <ID>POLICYTREE_PATRONAGE</ID>
+      <Description>Patronage</Description>
+      <ListIndex>4</ListIndex>
+      <IconKey>POLICYTREE_PATRONAGE</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/SocialPolicyAtlasDefinition</IconAtlas>
+    </SocialPolicyTrees>
+    <SocialPolicyTrees>
+      <ID>POLICYTREE_AESTHETICS</ID>
+      <Description>Aesthetics</Description>
+      <ListIndex>5</ListIndex>
+      <IconKey>POLICYTREE_AESTHETICS</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/SocialPolicyAtlasDefinition</IconAtlas>
+    </SocialPolicyTrees>
+    <SocialPolicyTrees>
+      <ID>POLICYTREE_COMMERCE</ID>
+      <Description>Commerce</Description>
+      <ListIndex>6</ListIndex>
+      <IconKey>POLICYTREE_COMMERCE</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/SocialPolicyAtlasDefinition</IconAtlas>
+    </SocialPolicyTrees>
+    <SocialPolicyTrees>
+      <ID>POLICYTREE_EXPLORATION</ID>
+      <Description>Exploration</Description>
+      <ListIndex>7</ListIndex>
+      <IconKey>POLICYTREE_EXPLORATION</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/SocialPolicyAtlasDefinition</IconAtlas>
+    </SocialPolicyTrees>
+    <SocialPolicyTrees>
+      <ID>POLICYTREE_RATIONALISM</ID>
+      <Description>Rationalism</Description>
+      <ListIndex>8</ListIndex>
+      <IconKey>POLICYTREE_RATIONALISM</IconKey>
+      <IconAtlas>Core:XML/AtlasDefinitions/SocialPolicyAtlasDefinition</IconAtlas>
+    </SocialPolicyTrees>
+  </SocialPolicyTrees>
+</SocialPolicyDataPack>

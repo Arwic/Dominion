@@ -110,7 +110,12 @@ namespace Dominion.Common.Entities
         /// <summary>
         /// The player's tech tree
         /// </summary>
-        public TechnologyInstance TechTree { get; set; }
+        public TechnologyInstance TechTreeInstance { get; set; }
+
+        /// <summary>
+        /// The player's social policy
+        /// </summary>
+        public SocialPolicyInstance SocialPolicyInstance { get; set; }
 
         /// <summary>
         /// The player's selected tech node's id
@@ -304,17 +309,18 @@ namespace Dominion.Common.Entities
         /// <summary>
         /// Number of free social policies able to be chosen
         /// </summary>
-        public int FreeSocialPoliciesAvailable { get; set; } = 1;
+        public int FreeSocialPoliciesAvailable { get; set; } = 0;
         #endregion
 
-        public Player(Connection conn, int playerD, string empireID, string username, TechnologyInstance blankTechManager)
+        public Player(Connection conn, int playerD, string empireID, string username, TechnologyInstance blankTechManager, SocialPolicyInstance blankSocialPolicyManager)
         {
             Connection = conn;
             CurrentEra = GameEra.Ancient;
             InstanceID = playerD;
             EmpireID = empireID;
             Name = username;
-            TechTree = blankTechManager;
+            TechTreeInstance = blankTechManager;
+            SocialPolicyInstance = blankSocialPolicyManager;
         }
 
     }

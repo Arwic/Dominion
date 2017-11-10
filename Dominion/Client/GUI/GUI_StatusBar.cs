@@ -8,6 +8,8 @@ using Dominion.Client.Scenes;
 using Microsoft.Xna.Framework;
 using System.IO;
 using System.Text;
+using System.Linq;
+using System;
 
 namespace Dominion.Client.GUI
 {
@@ -131,12 +133,20 @@ namespace Dominion.Client.GUI
             if (lblResources == null)
                 return;
 
+            // calculate cost of next soicial policy
+            const int baseCost = 25;
+            int playerCityCount = client.GetMyCities().Count;
+            int playerPolicyCount = client.Player.SocialPolicyInstance.GetAllSocialPolicies().Count(sp => sp.Unlocked);
+            double cityCountMultiplier = Math.Max(1 + 0.1 * (playerCityCount - 1), 1);
+            double exactCost = (baseCost + Math.Pow(3 * playerPolicyCount, 2.01)) * cityCountMultiplier * client.Player.PolicyCostModifier;
+            int nextSocialPolicyCost = (int)Math.Floor(exactCost / 5) * 5;
+
             // build the label string
             StringBuilder sb = new StringBuilder();
             sb.Append($"$(science) +{client.Player.IncomeScience}  ");
             sb.Append($"$(gold) {client.Player.Gold} (+{client.Player.IncomeGold})   ");
             sb.Append($"$(happiness) {client.Player.Happiness}   ");
-            sb.Append($"$(culture) {client.Player.Culture}/{"NYI"} (+{client.Player.IncomeCulture})   ");
+            sb.Append($"$(culture) {client.Player.Culture}/{nextSocialPolicyCost} (+{client.Player.IncomeCulture})   ");
             sb.Append($"$(tourism) +{client.Player.IncomeTourism}   ");
             sb.Append($"$(faith) {client.Player.Faith} (+{client.Player.IncomeFaith})   ");
 

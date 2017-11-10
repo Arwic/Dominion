@@ -82,7 +82,7 @@ namespace Dominion.Client.GUI
             };
 
             // calculate the max scroll index
-            foreach (Technology tech in client.Player.TechTree.GetAllTechnologies())
+            foreach (Technology tech in client.Player.TechTreeInstance.GetAllTechnologies())
                 if (tech.GridX > maxScrollIndex)
                     maxScrollIndex = tech.GridX;
 
@@ -119,7 +119,7 @@ namespace Dominion.Client.GUI
                 int sepY = 10;
 
                 // build a button for every node in the tech tree
-                foreach (Technology tech in client.Player.TechTree.GetAllTechnologies())
+                foreach (Technology tech in client.Player.TechTreeInstance.GetAllTechnologies())
                 {
                     Rectangle dest = new Rectangle(offsetX + tech.GridX * (itemWidth + sepX) + scrollIndex * (itemWidth + tech.GridX + sepX), offsetY + tech.GridY * (itemHeight + sepY), itemWidth, itemHeight);
                     Button b = new Button(dest, form);
@@ -147,10 +147,10 @@ namespace Dominion.Client.GUI
                     b.MouseClick += (s, a) =>
                     {
                         // only tell the server to select a new tech if all the prereqs are unlocked
-                        Technology clicked = client.Player.TechTree.GetTech(techID);
+                        Technology clicked = client.Player.TechTreeInstance.GetTech(techID);
                         foreach (string prereqID in clicked.Prerequisites)
                         {
-                            Technology prereq = client.Player.TechTree.GetTech(prereqID);
+                            Technology prereq = client.Player.TechTreeInstance.GetTech(prereqID);
                             if (prereq != null && !prereq.Unlocked)
                                 return;
                         }
@@ -166,7 +166,7 @@ namespace Dominion.Client.GUI
                     // add a line from the current tech to all its prereqs
                     foreach (string prereqID in tech.Prerequisites)
                     {
-                        Technology prereq = client.Player.TechTree.GetTech(prereqID);
+                        Technology prereq = client.Player.TechTreeInstance.GetTech(prereqID);
                         if (prereq == null)
                             continue;
                         Rectangle prereqRect = new Rectangle(offsetX + prereq.GridX * (itemWidth + sepX) + scrollIndex * (itemWidth + prereq.GridX), offsetY + prereq.GridY * (itemHeight + sepY), itemWidth, itemHeight);

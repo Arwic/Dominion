@@ -30,7 +30,7 @@ namespace Dominion.Common.Managers
         }
 
         /// <summary>
-        /// Gets a collection of all the social policies in the social policy manager
+        /// Gets a collection of all the social policies in the social policy instance
         /// </summary>
         /// <returns></returns>
         public ICollection<SocialPolicy> GetAllSocialPolicies()
@@ -43,6 +43,22 @@ namespace Dominion.Common.Managers
             return allPolicies;
         }
 
+        /// <summary>
+        /// Gets a collection of all the social policies in the social policy instance that belong to the given tree
+        /// </summary>
+        /// <returns></returns>
+        public ICollection<SocialPolicy> GetAllSocialPoliciesInTree(string treeID)
+        {
+            List<SocialPolicy> allPolicies = new List<SocialPolicy>();
+            foreach (KeyValuePair<string, SocialPolicy> kvp in data)
+            {
+                if (kvp.Value.TreeID == treeID)
+                {
+                    allPolicies.Add(kvp.Value);
+                }
+            }
+            return allPolicies;
+        }
         /// <summary>
         /// Gets the building with the given name
         /// </summary>
@@ -82,15 +98,19 @@ namespace Dominion.Common.Managers
         [XmlArray("SocialPolicies"), XmlArrayItem(typeof(SocialPolicy), ElementName = "SocialPolicy")]
         public List<SocialPolicy> SocialPolicies { get; set; } = new List<SocialPolicy>();
 
+        [Editor(typeof(SocialPolicyTree.Editor), typeof(UITypeEditor))]
+        [TypeConverter(typeof(ListConverter))]
+        [XmlArray("SocialPolicyTrees"), XmlArrayItem(typeof(SocialPolicyTree), ElementName = "SocialPolicyTrees")]
+        public List<SocialPolicyTree> SocialPolicyTrees { get; set; } = new List<SocialPolicyTree>();
+
         public SocialPolicyDataPack() { }
     }
 
     [Serializable]
     public class SocialPolicyManager
     {
-        private Dictionary<string, SocialPolicy> data = new Dictionary<string, SocialPolicy>();
-
-        private HashSet<string> policyTrees = new HashSet<string>();
+        private Dictionary<string, SocialPolicy> policyData = new Dictionary<string, SocialPolicy>();
+        private Dictionary<string, SocialPolicyTree> policyTreeData = new Dictionary<string, SocialPolicyTree>();
 
         private List<SocialPolicyDataPack> dataPacks = new List<SocialPolicyDataPack>();
 
@@ -114,8 +134,13 @@ namespace Dominion.Common.Managers
             foreach (SocialPolicy p in pack.SocialPolicies)
             {
                 p.Name = SocialPolicy.FormatName(p.ID);
-                policyTrees.Add(p.TreeID);
-                data.Add(p.ID, p);
+                policyData.Add(p.ID, p);
+            }
+
+            foreach (SocialPolicyTree t in pack.SocialPolicyTrees)
+            {
+                t.Name = SocialPolicyTree.FormatName(t.ID);
+                policyTreeData.Add(t.ID, t);
             }
         }
 
@@ -133,15 +158,10 @@ namespace Dominion.Common.Managers
         private void ConstructData()
         {
             // clear the data dictionary
-            if (data == null)
-                data = new Dictionary<string, SocialPolicy>();
+            if (policyData == null)
+                policyData = new Dictionary<string, SocialPolicy>();
             else
-                data.Clear();
-
-            if (policyTrees == null)
-                policyTrees = new HashSet<string>();
-            else
-                policyTrees.Clear();
+                policyData.Clear();
 
             // fill it with technologies from all the data packs
             foreach (SocialPolicyDataPack dp in dataPacks)
@@ -149,8 +169,13 @@ namespace Dominion.Common.Managers
                 foreach (SocialPolicy p in dp.SocialPolicies)
                 {
                     p.Name = SocialPolicy.FormatName(p.ID);
-                    policyTrees.Add(p.TreeID);
-                    data.Add(p.ID, p);
+                    policyData.Add(p.ID, p);
+                }
+
+                foreach (SocialPolicyTree t in dp.SocialPolicyTrees)
+                {
+                    t.Name = SocialPolicyTree.FormatName(t.ID);
+                    policyTreeData.Add(t.ID, t);
                 }
             }
         }
@@ -172,7 +197,7 @@ namespace Dominion.Common.Managers
         public ICollection<SocialPolicy> GetAllSocialPolicies()
         {
             List<SocialPolicy> allPolicies = new List<SocialPolicy>();
-            foreach (KeyValuePair<string, SocialPolicy> kvp in data)
+            foreach (KeyValuePair<string, SocialPolicy> kvp in policyData)
             {
                 allPolicies.Add(kvp.Value);
             }
@@ -183,9 +208,14 @@ namespace Dominion.Common.Managers
         /// Gets a collection of all the social policy trees in the social policy manager
         /// </summary>
         /// <returns></returns>
-        public ICollection<string> GetAllSocialPolicyTrees()
+        public ICollection<SocialPolicyTree> GetAllSocialPolicyTrees()
         {
-            return policyTrees;
+            List<SocialPolicyTree> allPolicyTrees = new List<SocialPolicyTree>();
+            foreach (KeyValuePair<string, SocialPolicyTree> kvp in policyTreeData)
+            {
+                allPolicyTrees.Add(kvp.Value);
+            }
+            return allPolicyTrees;
         }
 
         /// <summary>
@@ -214,9 +244,22 @@ namespace Dominion.Common.Managers
         public SocialPolicy GetSocialPolicy(string id)
         {
             SocialPolicy policy;
-            if (!data.TryGetValue(id, out policy))
+            if (!policyData.TryGetValue(id, out policy))
                 return null;
             return policy;
+        }
+
+        /// <summary>
+        /// Gets the social policy tree with the given name
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public SocialPolicyTree GetSocialPolicyTree(string id)
+        {
+            SocialPolicyTree policyTree;
+            if (!policyTreeData.TryGetValue(id, out policyTree))
+                return null;
+            return policyTree;
         }
 
         /// <summary>
@@ -227,6 +270,16 @@ namespace Dominion.Common.Managers
         public bool SocialPolicyExists(string name)
         {
             return GetSocialPolicy(name) != null;
+        }
+
+        /// <summary>
+        /// Determines if a social policy with the given name exists
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public bool SocialPolicyTreeExists(string name)
+        {
+            return GetSocialPolicyTree(name) != null;
         }
     }
 }

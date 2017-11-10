@@ -207,7 +207,7 @@ namespace ArwicEngine.Net
         /// <param name="p"></param>
         public async void SendData(Packet p)
         {
-            await Task.Delay(10); // FIXME add more robust flow control
+            await Task.Delay(30); // FIXME add more robust flow control
             NetworkStream stream = client.GetStream();
             await stream.WriteAsync(p.Data, 0, p.Data.Length);
             Statistics.PacketsSent++;

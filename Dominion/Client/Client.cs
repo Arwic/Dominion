@@ -816,7 +816,7 @@ namespace Dominion.Client
         // checks if the user is required to select a new research node
         private bool RequireNewResearch()
         {
-            if (Player.SelectedTechNodeID == "TECH_NULL" || Player.TechTree.GetTech(Player.SelectedTechNodeID).Unlocked)
+            if (Player.SelectedTechNodeID == "TECH_NULL" || Player.TechTreeInstance.GetTech(Player.SelectedTechNodeID).Unlocked)
                 return true;
             return false;
         }

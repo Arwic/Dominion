@@ -50,6 +50,7 @@ namespace Dominion.Server.Controllers
             Building.AddDataPack(Engine.Instance.Content.GetAsset<Stream>($"{contentPackName}:XML/GameData/Buildings"));
             Unit.AddDataPack(Engine.Instance.Content.GetAsset<Stream>($"{contentPackName}:XML/GameData/Units"));
             Tech.AddDataPack(Engine.Instance.Content.GetAsset<Stream>($"{contentPackName}:XML/GameData/Technologies"));
+            SocialPolicy.AddDataPack(Engine.Instance.Content.GetAsset<Stream>($"{contentPackName}:XML/GameData/SocialPolicies"));
         }
     }
 }

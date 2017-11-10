@@ -13,7 +13,8 @@ namespace Dominion.Common.Entities
     public enum PlayerCommandID
     {
         Null,
-        SelectTech
+        SelectTech,
+        UnlockPolicy
     }
 
     [Serializable]

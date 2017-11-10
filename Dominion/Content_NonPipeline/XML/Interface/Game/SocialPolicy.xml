@@ -39,7 +39,7 @@
   <LocationY>0</LocationY>
   <LocationWidth>1000</LocationWidth>
   <LocationHeight>600</LocationHeight>
-  <Draggable>true</Draggable>
+  <Draggable>false</Draggable>
   <CloseButtonEnabled>true</CloseButtonEnabled>
   <HotKey>0</HotKey>
   <DrawTitlebar>true</DrawTitlebar>

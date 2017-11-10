@@ -135,6 +135,9 @@ namespace Dominion.Server.Controllers
                     case PlayerCommandID.SelectTech:
                         player.SelectedTechNodeID = (string)cmd.Arguments[0];
                         break;
+                    case PlayerCommandID.UnlockPolicy:
+                        UnlockSocialPolicy(player, (string)cmd.Arguments[0]);
+                        break;
                 }
             }
             catch (Exception)
@@ -143,6 +146,48 @@ namespace Dominion.Server.Controllers
             }
 
             OnPlayerUpdated(new PlayerEventArgs(player));
+        }
+
+        private void UnlockSocialPolicy(Player player, string policyID)
+        {
+            // get the policy
+            SocialPolicy policy = player.SocialPolicyInstance.GetSocialPolicy(policyID);
+            
+            // check if we have already unlocked it
+            if (policy.Unlocked)
+                return;
+            
+            // check for prereqs
+            foreach (string prereqID in policy.Prerequisites)
+            {
+                SocialPolicy prereq = Controllers.Data.SocialPolicy.GetSocialPolicy(prereqID);
+                if (prereq != null && !prereq.Unlocked)
+                    return; // prereqs are still locked
+            }
+
+            // try and use free social policy points
+            if (player.FreeSocialPoliciesAvailable > 0)
+            {
+                policy.Unlocked = true;
+                player.FreeSocialPoliciesAvailable--;
+                OnPlayerUpdated(new PlayerEventArgs(player));
+                return;
+            }
+
+            // unlock the policy with culture
+            const int baseCost = 25;
+            int playerCityCount = Controllers.City.GetPlayerCities(player.InstanceID).Count;
+            int playerPolicyCount = player.SocialPolicyInstance.GetAllSocialPolicies().Count(sp => sp.Unlocked);
+            double cityCountMultiplier = Math.Max(1 + 0.1 * (playerCityCount - 1), 1);
+            double exactCost = (baseCost + Math.Pow(3 * playerPolicyCount, 2.01)) * cityCountMultiplier * player.PolicyCostModifier;
+            int finalCost = (int)Math.Floor(exactCost / 5) * 5;
+
+            if (player.Culture >= finalCost)
+            {
+                player.Culture -= finalCost;
+                policy.Unlocked = true;
+                OnPlayerUpdated(new PlayerEventArgs(player));
+            }
         }
 
         // calculates the income of the given player
@@ -170,7 +215,7 @@ namespace Dominion.Server.Controllers
                 return;
 
             // get the selected node
-            Technology currentTech = player.TechTree.GetTech(player.SelectedTechNodeID);
+            Technology currentTech = player.TechTreeInstance.GetTech(player.SelectedTechNodeID);
             // add the player's overflow and income to the nodes progress
             currentTech.Progress += player.ScienceOverflow;
             currentTech.Progress += player.IncomeScience;
@@ -190,9 +235,9 @@ namespace Dominion.Server.Controllers
         /// <param name="userName"></param>
         public void AddPlayer(Connection connection, string userName)
         {
-            Player player = new Player(connection, players.Count, "NULL", userName, Controllers.Data.Tech.GetNewTree());
+            Player player = new Player(connection, players.Count, "NULL", userName, Controllers.Data.Tech.GetNewTree(), Controllers.Data.SocialPolicy.GetNewInstance());
             player.EmpireID =  Controllers.Data.Empire.GetAllEmpires().ElementAt(RandomHelper.Next(0, Controllers.Data.Empire.EmpireCount)).ID;
-            player.TechTree.GetTech("TECH_AGRICULTURE").Unlocked = true;
+            player.TechTreeInstance.GetTech("TECH_AGRICULTURE").Unlocked = true;
             players.Add(player);
             OnPlayerAdded(new PlayerEventArgs(player));
         }

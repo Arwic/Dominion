@@ -724,7 +724,7 @@ namespace Dominion.Server.Controllers
                 // check if tech prereqs are unlocked
                 foreach (string prereq in building.TechPrereq)
                 {
-                    Technology prereqTech = cityOwner.TechTree.GetTech(prereq);
+                    Technology prereqTech = cityOwner.TechTreeInstance.GetTech(prereq);
                     if (prereqTech != null && !prereqTech.Unlocked)
                     {
                         valid = false;
@@ -839,7 +839,7 @@ namespace Dominion.Server.Controllers
                 // check if tech prereqs are unlocked
                 foreach (string prereq in unit.TechPrereq)
                 {
-                    Technology prereqTech = cityOwner.TechTree.GetTech(prereq);
+                    Technology prereqTech = cityOwner.TechTreeInstance.GetTech(prereq);
                     if (prereqTech != null && !prereqTech.Unlocked)
                     {
                         valid = false;

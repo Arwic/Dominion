@@ -177,62 +177,62 @@ namespace Dominion.Server.Controllers
                         unit.Commands.Add(cmd);
                         break;
                     case UnitCommandID.UNITCMD_BUILD_FORT:
-                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_ENGINEERING");
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTreeInstance.GetTech("TECH_ENGINEERING");
                         if (tech != null && tech.Unlocked)
                             unit.Commands.Add(cmd);
                         break;
                     case UnitCommandID.UNITCMD_BUILD_LUMBERMILL:
-                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_CONSTRUCTION");
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTreeInstance.GetTech("TECH_CONSTRUCTION");
                         if (tech != null && tech.Unlocked)
                             unit.Commands.Add(cmd);
                         break;
                     case UnitCommandID.UNITCMD_BUILD_MINE:
-                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_MINING");
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTreeInstance.GetTech("TECH_MINING");
                         if (tech != null && tech.Unlocked)
                             unit.Commands.Add(cmd);
                         break;
                     case UnitCommandID.UNITCMD_BUILD_TRADINGPOST:
-                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_GUILDS");
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTreeInstance.GetTech("TECH_GUILDS");
                         if (tech != null && tech.Unlocked)
                             unit.Commands.Add(cmd);
                         break;
                     case UnitCommandID.UNITCMD_BUILD_ROADS:
-                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_THE_WHEEL");
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTreeInstance.GetTech("TECH_THE_WHEEL");
                         if (tech != null && tech.Unlocked)
                             unit.Commands.Add(cmd);
                         break;
                     case UnitCommandID.UNITCMD_BUILD_RAILROADS:
-                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_RAILROAD");
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTreeInstance.GetTech("TECH_RAILROAD");
                         if (tech != null && tech.Unlocked)
                             unit.Commands.Add(cmd);
                         break;
                     case UnitCommandID.UNITCMD_BUILD_CAMP:
-                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_TRAPPING");
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTreeInstance.GetTech("TECH_TRAPPING");
                         if (tech != null && tech.Unlocked)
                             unit.Commands.Add(cmd);
                         break;
                     case UnitCommandID.UNITCMD_BUILD_FISHINGBOATS:
-                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_SAILING");
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTreeInstance.GetTech("TECH_SAILING");
                         if (tech != null && tech.Unlocked)
                             unit.Commands.Add(cmd);
                         break;
                     case UnitCommandID.UNITCMD_BUILD_OFFSHOREPLATFORM:
-                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_REFRIGERATION");
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTreeInstance.GetTech("TECH_REFRIGERATION");
                         if (tech != null && tech.Unlocked)
                             unit.Commands.Add(cmd);
                         break;
                     case UnitCommandID.UNITCMD_BUILD_PASTURE:
-                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_ANIMAL_HUSBANDRY");
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTreeInstance.GetTech("TECH_ANIMAL_HUSBANDRY");
                         if (tech != null && tech.Unlocked)
                             unit.Commands.Add(cmd);
                         break;
                     case UnitCommandID.UNITCMD_BUILD_PLANTATION:
-                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_CALENDAR");
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTreeInstance.GetTech("TECH_CALENDAR");
                         if (tech != null && tech.Unlocked)
                             unit.Commands.Add(cmd);
                         break;
                     case UnitCommandID.UNITCMD_BUILD_QUARRY:
-                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTree.GetTech("TECH_MASONRY");
+                        tech = Controllers.Player.GetPlayer(unit.PlayerID).TechTreeInstance.GetTech("TECH_MASONRY");
                         if (tech != null && tech.Unlocked)
                             unit.Commands.Add(cmd);
                         break;
