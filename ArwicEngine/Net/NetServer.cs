@@ -308,6 +308,7 @@ namespace ArwicEngine.Net
             {
                 if (c!= null && !c.Client.Connected)
                     return;
+                Thread.Sleep(10); // FIXME add more robust flow control
                 NetworkStream stream = c.Client.GetStream();
                 stream.WriteAsync(p.Data, 0, p.Data.Length);
                 Statistics.PacketsSent++;
