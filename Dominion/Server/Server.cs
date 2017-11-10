@@ -178,7 +178,6 @@ namespace Dominion.Server
                     controllers.Unit.GetAllUnits());
                 server.SendData(pStartGame, player.Connection);
             }
-            Thread.Sleep(100); // FIXME: This is required to successfully update clients (even the host) to turn 1 
             EndTurn(TurnEndReason.HostForced);
 
             Thread loopThread = new Thread(UpdateLoop);
