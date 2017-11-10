@@ -92,9 +92,9 @@ namespace Dominion.Client.GUI
             };
 
             // load sprites
-            policyLockedSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.ASSET_CONTROL_SCROLLBOX_BACK);
-            policyUnlockedSprite = Engine.Instance.Content.GetAsset<Sprite>(Constants.ASSET_CONTROL_FORM_BACK);
-            policyAdoptable = Engine.Instance.Content.GetAsset<Sprite>(Constants.ASSET_CONTROL_SCROLLBOX_BUTTON);
+            policyLockedSprite = Engine.Instance.Content.GetAsset<Sprite>("Core:Textures/Interface/Tech_Locked");
+            policyUnlockedSprite = Engine.Instance.Content.GetAsset<Sprite>("Core:Textures/Interface/Tech_Unlocked");
+            policyAdoptable = Engine.Instance.Content.GetAsset<Sprite>("Core:Textures/Interface/Tech_Selectedable");
         }
 
         /// <summary>
