@@ -162,6 +162,7 @@ namespace Dominion.Client.Scenes
             if (hideCityManagment)
                 CityManagment.Hide();
             TechTree.Hide();
+            SocialPolicy.Hide();
         }
 
         /// <summary>
