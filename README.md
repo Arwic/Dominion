@@ -9,7 +9,7 @@
 - Windows 7, 8.1, 10
 
 ##ArwicEngine
-The games's engine, built ontop of MonoGame 3.4.
+The games's engine, built on top of MonoGame 3.4.
 Features:
 - Full winforms-like event based GUI for MonoGame
   - Canvas
