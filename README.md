@@ -2,13 +2,13 @@
 
 4X (eXplore, eXpand, eXploit, and eXterminate) grand stratergy game based on Civilization 5
 
-##Requirements:
+## Requirements:
 - C# 6.0
 - .Net framework 4.6
 - MonoGame 3.4 (DX11)
 - Windows 7, 8.1, 10
 
-##ArwicEngine
+## ArwicEngine
 The games's engine, built on top of MonoGame 3.4.
 Features:
 - Full winforms-like event based GUI for MonoGame
@@ -37,16 +37,16 @@ Features:
 - Ping utility
 - Console variables, config script run on startup can set user settings
 
-##ArwicInterfaceDesigner
+## ArwicInterfaceDesigner
 Simple interface designer for ArwicEngine.Forms
 - GUI editor
 - Most properties editable
 
-##ArwicXmlEditor
+## ArwicXmlEditor
 Edits xml files (must specify types at compile time).  
 Used for unit/tile/empire editing, useful for modding.
 
-##Dominion
+## Dominion
 The game itself.
 - Client/server based
 - Single player games simply start local server
